@@ -19,107 +19,95 @@ describe("NCMB DataStore", function(){
   }
 
   describe("オブジェクト登録", function(){
-    context("クラス定義が存在すれば、登録に成功し", function(){
-      var Food = ncmb.DataStore("food");
-      var food = new Food({name: "orange", type: "fruit", status: "success"});
-      it("callback で取得できる", function(done){
-        food.save(function(err, res, newFood){
-          done(err ? err : null);
+    describe("save", function(){
+      context("クラス定義が存在すれば、登録に成功し", function(){
+        var Food = ncmb.DataStore("food");
+        var food = new Food({name: "orange", type: "fruit", status: "success"});
+        it("callback で取得できる", function(done){
+          food.save(function(err, obj){
+            done(err ? err : null);
+          });
+        });
+        it("promise で取得できる", function(done){
+          food.save()
+              .then(function(newFood){
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
         });
       });
-      it("promise で取得できる", function(done){
-        food.save()
-          .then(function(newFood){
+      context("クラス定義が存在しなければ、登録に失敗し", function(){
+        var NonExist = ncmb.DataStore("nonexist");
+        var food = new NonExist({name: "orange", type: "fruit", status: "failure"});
+        it("callback で取得できる", function(done){
+          food.save(function(err, obj){
+            if(!err) return done(new Error("error が返されなければならない"));
+            expect(err.status).to.be.eql(400);
             done();
-          })
-          .catch(function(err){
-            done(err);
           });
-      });
-    });
-    context("クラス定義が存在しなければ、登録に失敗し", function(){
-      var NonExist = ncmb.DataStore("nonexist");
-      var food = new NonExist({name: "orange", type: "fruit", status: "failure"});
-      it("callback で取得できる", function(done){
-        food.save(function(err, res, newNonExist){
-          expect(res.statusCode).to.be.gte(400);
-          done(err ? err : null);
         });
-      });
-      it("promise で取得できる", function(done){
-        food.save()
-          .then(function(newNonExist){
-            done(new Error("error が返されなければならない"));
-          })
-          .catch(function(err){
-            done();
-          });
+        it("promise で取得できる", function(done){
+          food.save()
+              .then(function(obj){
+                done(new Error("error が返されなければならない"));
+              })
+              .catch(function(err){
+                done();
+              });
+        });
       });
     });
   });
   describe("オブジェクト取得", function(){
-    it("fetch");
-    it("fetchById");
+    describe("fetch", function(){
+      it("fetch");
+      it("fetchById");
+    });
+    describe("fetchById", function(){
+      it("fetch");
+      it("fetchById");
+    });
   });
   describe("オブジェクト更新", function(){
   });
   describe("オブジェクト削除", function(){
   });
   describe("オブジェクト検索", function(){
-    context("クラス定義が存在しなければ、取得に失敗しエラーが返り", function(){
-      var Food = ncmb.DataStore("food");
-      it("callback で補足できる", function(done){
-        Food.fetchAll(function(err, res, foods){
-          console.log(foods[0].className)
-          done(err ? err : null);
+    describe("fetchAll", function(){
+      context("クラス定義が存在しなければ、取得に失敗しエラーが返り", function(){
+        var Food = ncmb.DataStore("bizarrefruit");
+        it("callback で補足できる", function(done){
+          Food.fetchAll(function(err, objs){
+            if(err){
+              return done();
+            }else{
+              return done(new Error("エラーが返ってきていない"));
+            }
+          });
+        });
+        it("promise で補足できる", function(done){
+          Food.fetchAll()
+              .then(function(foods){
+                done(new Error("エラーが返ってきていない"));
+              })
+              .catch(function(err){
+                return done();
+              });
         });
       });
-      it("promise で補足できる", function(done){
-        Food.fetchAll()
-          .then(function(foods){
-            done();
-          })
-          .catch(function(err){
-            done(err);
-          });
+      context("クラス定義が存在し、データがなければ、空のリストが返り", function(){
+        var NonExist = ncmb.DataStore("nonexist");
+        var food = new NonExist({name: "orange", type: "fruit", status: "failure"});
+        it("callback で取得できる");
+        it("promise で取得できる");
       });
-    });
-    context("クラス定義が存在し、データがなければ、空のリストが返り", function(){
-      var NonExist = ncmb.DataStore("nonexist");
-      var food = new NonExist({name: "orange", type: "fruit", status: "failure"});
-      it("callback で取得できる", function(done){
-        food.save(function(err, res, newNonExist){
-          expect(res.statusCode).to.be.gte(400);
-          done(err ? err : null);
-        });
-      });
-      it("promise で取得できる", function(done){
-        food.save()
-          .then(function(newNonExist){
-            done(new Error("error が返されなければならない"));
-          })
-          .catch(function(err){
-            done();
-          });
-      });
-    });
-    context("クラス定義が存在し、データがあれば、リストが返り", function(){
-      var NonExist = ncmb.DataStore("nonexist");
-      var food = new NonExist({name: "orange", type: "fruit", status: "failure"});
-      it("callback で取得できる", function(done){
-        food.save(function(err, res, newNonExist){
-          expect(res.statusCode).to.be.gte(400);
-          done(err ? err : null);
-        });
-      });
-      it("promise で取得できる", function(done){
-        food.save()
-          .then(function(newNonExist){
-            done(new Error("error が返されなければならない"));
-          })
-          .catch(function(err){
-            done();
-          });
+      context("クラス定義が存在し、データがあれば、リストが返り", function(){
+        var NonExist = ncmb.DataStore("nonexist");
+        var food = new NonExist({name: "orange", type: "fruit", status: "failure"});
+        it("callback で取得できる");
+        it("promise で取得できる");
       });
     });
   });

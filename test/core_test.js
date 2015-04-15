@@ -44,7 +44,7 @@ describe("NCMB core", function(){
       ncmb.request({
         path: "/"+ncmb.version+"/classes/TestClass",
         timestamp: "2015-02-25T08:01:08.908Z"
-      }, function(err, res, body){
+      }, function(err, res){
         if(err) return done(err);
         return done();
       });

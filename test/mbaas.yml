@@ -28,6 +28,15 @@
     status: 400
     file: 2013-09-01_classes_nonexist_post_failure.json
 
+# push
+-
+  request:
+    url: /2013-09-01/push
+    method: POST
+  response:
+    status: 201
+    body: '{"createDate":"2015-04-15T04:57:36.432Z","objectId":"pNiIhMIWZ3NYs5Zi"}'
+
 # users/:user
 -
   request:

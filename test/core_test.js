@@ -40,7 +40,7 @@ describe("NCMB core", function(){
         .set("proxy", config.apiserver.proxy || "");
     }
 
-    it("callback によりデータを取得できる", function(done){
+    it("callback によりデータを取得できる (GET)", function(done){
       ncmb.request({
         path: "/"+ncmb.version+"/classes/TestClass",
         timestamp: "2015-02-25T08:01:08.908Z"
@@ -49,9 +49,85 @@ describe("NCMB core", function(){
         return done();
       });
     });
-    it("promise によりデータを取得できる", function(done){
+    it("promise によりデータを取得できる (GET)", function(done){
       ncmb.request({
         path: "/"+ncmb.version+"/classes/TestClass",
+        timestamp: "2015-02-25T08:01:08.908Z"
+      })
+      .then(function(body){
+        done();
+      })
+      .catch(function(err){
+        done(err);
+      });
+    });
+
+    it("callback によりデータを登録できる (POST)", function(done){
+      ncmb.request({
+        method: "POST",
+        path: "/"+ ncmb.version +"/classes/TestClass",
+        timestamp: "2015-02-25T08:01:08.908Z",
+        data: {'key': 'value'}
+      }, function(err, res, body){
+        if(err) return done(err);
+        return done();
+      });
+    });
+    it("promise によりデータを登録できる (POST)", function(done){
+      ncmb.request({
+        method: "POST",
+        path: "/"+ncmb.version+"/classes/TestClass",
+        timestamp: "2015-02-25T08:01:08.908Z",
+        data: {"key": "value"}
+      })
+      .then(function(body){
+        done();
+      })
+      .catch(function(err){
+        done(err);
+      });
+    });
+    
+    it("callback によりデータを更新できる (PUT)", function(done){
+      ncmb.request({
+        method: "PUT",
+        path: "/"+ ncmb.version +"/classes/TestClass/object_id",
+        timestamp: "2015-02-25T08:01:08.908Z",
+        data: {'key': 'value_new'}
+      }, function(err, res, body){
+        if(err) return done(err);
+        return done();
+      });
+    });
+    it("promise によりデータを更新できる (PUT)", function(done){
+      ncmb.request({
+        method: "PUT",
+        path: "/"+ncmb.version+"/classes/TestClass/object_id",
+        timestamp: "2015-02-25T08:01:08.908Z",
+        data: {"key": "value_new"}
+      })
+      .then(function(body){
+        done();
+      })
+      .catch(function(err){
+        done(err);
+      });
+    });
+    
+    it("callback によりデータを削除できる (DELETE)", function(done){
+      ncmb.request({
+        method: "DEL",
+        path: "/"+ ncmb.version +"/classes/TestClass/object_id",
+        timestamp: "2015-02-25T08:01:08.908Z"
+      }, function(err, res, body){
+        if(err) return done(err);
+        return done();
+      });
+    });
+    it("promise によりデータを削除できる (DELETE)", function(done){
+      ncmb.request({
+        method: "DEL",
+        path: "/"+ncmb.version+"/classes/TestClass/object_id",
         timestamp: "2015-02-25T08:01:08.908Z"
       })
       .then(function(body){

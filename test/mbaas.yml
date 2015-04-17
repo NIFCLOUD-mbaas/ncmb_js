@@ -6,6 +6,31 @@
   response:
     status: 200
     file: 2013-09-01_classes_TestClass_get_success.json
+-
+  request:
+    url: /2013-09-01/classes/TestClass
+    method: POST
+    body: 
+      "key": "value"
+  response:
+    status: 201
+    file: 2013-09-01_classes_TestClass_post_success.json
+-
+  request:
+    url: /2013-09-01/classes/TestClass/object_id
+    method: PUT
+    body: 
+      "key": "value_new"
+  response:
+    status: 200
+    file: 2013-09-01_classes_TestClass_put_success.json
+-
+  request:
+    url: /2013-09-01/classes/TestClass/object_id
+    method: DELETE
+  response: 
+    status: 200
+    file: 2013-09-01_classes_TestClass_delete_success.json
 
 # datastore
 -

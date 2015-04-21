@@ -38,6 +38,7 @@ describe("NCMB DataStore", function(){
               });
         });
       });
+
       context("クラス定義が存在しなければ、登録に失敗し", function(){
         var NonExist = ncmb.DataStore("nonexist");
         var food = new NonExist({name: "orange", type: "fruit", status: "failure"});
@@ -60,17 +61,77 @@ describe("NCMB DataStore", function(){
       });
     });
   });
+
   describe("オブジェクト取得", function(){
-    describe("fetch", function(){
-      it("fetch");
-      it("fetchById");
+    describe("クラスからオブジェクトを取得fetch", function(){
+       context("fetch", function(){
+        var Food = ncmb.DataStore("food");
+        var food = new Food({objectId: "object_id"});
+
+        it("callback で取得できる", function(done){
+          food.fetch(function(err, obj){
+            done(err ? err : null);
+          });
+        });
+
+        it("promise で取得できる", function(done){
+          food.fetch()
+              .then(function(newFood){
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+      });
     });
-    describe("fetchById", function(){
-      it("fetch");
-      it("fetchById");
+
+    describe("クラスからオブジェクトを取得fetchById", function(){
+       context("fetchById", function(){
+        var Food = ncmb.DataStore("food");
+        var food = new Food();
+
+        it("callback で取得できる", function(done){
+          food.fetchById("object_id", function(err, obj){
+            done(err ? err : null);
+          });
+        });
+
+        it("promise で取得できる", function(done){
+          food.fetchById("object_id")
+              .then(function(newFood){
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+      });
     });
   });
   describe("オブジェクト更新", function(){
+    describe("クラスからオブジェクトを更新", function(){
+       context("update", function(){
+        var Food = ncmb.DataStore("food");
+        var food = new Food({objectId: "object_id", key: "new_value"});
+
+        it("callback で取得できる", function(done){
+          food.update(function(err, obj){
+            done(err ? err : null);
+          });
+        });
+
+        it("promise で取得できる", function(done){
+          food.update()
+              .then(function(newFood){
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+      });
+    });
   });
   describe("オブジェクト削除", function(){
   });

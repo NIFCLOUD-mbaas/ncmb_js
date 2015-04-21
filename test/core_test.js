@@ -93,7 +93,7 @@ describe("NCMB core", function(){
         method: "PUT",
         path: "/"+ ncmb.version +"/classes/TestClass/object_id",
         timestamp: "2015-02-25T08:01:08.908Z",
-        data: {'key': 'value_new'}
+        data: {'key': 'new_value'}
       }, function(err, res, body){
         if(err) return done(err);
         return done();
@@ -104,7 +104,7 @@ describe("NCMB core", function(){
         method: "PUT",
         path: "/"+ncmb.version+"/classes/TestClass/object_id",
         timestamp: "2015-02-25T08:01:08.908Z",
-        data: {"key": "value_new"}
+        data: {"key": "new_value"}
       })
       .then(function(body){
         done();

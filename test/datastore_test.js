@@ -94,6 +94,7 @@ describe("NCMB DataStore", function(){
             });
       });
     });
+
     context("失敗した理由が", function(){
       context("ObjectId がないときに", function(){
         var Food = ncmb.DataStore("food");
@@ -112,7 +113,7 @@ describe("NCMB DataStore", function(){
                 done(new Error("失敗すべき"));
               })
               .catch(function(err){
-                console.log(err);
+                expect(err).to.be.an.instanceof(Error);
                 done();
               });
         });

@@ -62,56 +62,11 @@ describe("NCMB DataStore", function(){
     });
   });
 
-  describe("オブジェクト取得", function(){
-    describe("クラスからオブジェクトを取得fetch", function(){
-       context("fetch", function(){
-        var Food = ncmb.DataStore("food");
-        var food = new Food({objectId: "object_id"});
-
-        it("callback で取得できる", function(done){
-          food.fetch(function(err, obj){
-            done(err ? err : null);
-          });
-        });
-
-        it("promise で取得できる", function(done){
-          food.fetch()
-              .then(function(newFood){
-                done();
-              })
-              .catch(function(err){
-                done(err);
-              });
-        });
-      });
-    });
-
-    describe("クラスからオブジェクトを取得fetchById", function(){
-       context("fetchById", function(){
-        var Food = ncmb.DataStore("food");
-        var food = new Food();
-
-        it("callback で取得できる", function(done){
-          food.fetchById("object_id", function(err, obj){
-            done(err ? err : null);
-          });
-        });
-
-        it("promise で取得できる", function(done){
-          food.fetchById("object_id")
-              .then(function(newFood){
-                done();
-              })
-              .catch(function(err){
-                done(err);
-              });
-        });
-      });
-    });
-  });
+ 
   describe("オブジェクト更新", function(){
     describe("クラスからオブジェクトを更新", function(){
-       context("update", function(){
+
+      context("update成功", function(){
         var Food = ncmb.DataStore("food");
         var food = new Food({objectId: "object_id", key: "new_value"});
 
@@ -131,6 +86,30 @@ describe("NCMB DataStore", function(){
               });
         });
       });
+
+      context("update失敗_objectIdがない理由で", function(){
+        var Food = ncmb.DataStore("food");
+        var food = new Food({key: "new_value"});
+
+        it("callback で取得できる", function(done){
+          food.update(function(err, obj){
+            expect(err).to.be.an.instanceof(Error);
+            done();
+          });
+        });
+
+        it("promise で取得できる", function(done){
+          food.update()
+              .then(function(newFood){
+                done(new Error("Must throw error"));
+              })
+              .catch(function(err){
+                console.log(err);
+                done();
+              });
+        });
+      });
+
     });
   });
   describe("オブジェクト削除", function(){

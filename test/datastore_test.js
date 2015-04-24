@@ -74,6 +74,42 @@ describe("NCMB DataStore", function(){
   });
   describe("オブジェクト削除", function(){
   });
+
+  describe("オブジェクト複数操作", function(){
+    describe("saveAll", function(){
+      var Food = ncmb.DataStore("food");
+      var food1 = new Food({key: "value1"});
+      var food2 = new Food({key: "value2"});
+
+      it("saveAll (callback取得できる)", function(){
+        ncmb.saveAll([food1, food2], function(err, list){
+            done(err ? err : null);
+        });
+      });
+
+      it("saveAll (promise取得できる)", function(){
+        ncmb.saveAll([food1, food2])
+              .then(function(list){
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+      });
+    });
+
+    describe("updateAll", function(){
+       it("updateAll (callback取得できる)");
+       it("updateAll (promise取得できる)");
+    });
+
+    describe("deleteAll", function(){
+       it("deleteAll (callback取得できる)");
+       it("deleteAll (promise取得できる)");
+    });
+
+  });
+
   describe("オブジェクト検索", function(){
     describe("fetchAll", function(){
       context("クラス定義が存在しなければ、取得に失敗しエラーが返り", function(){

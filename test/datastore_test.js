@@ -72,8 +72,55 @@ describe("NCMB DataStore", function(){
   });
   describe("オブジェクト更新", function(){
   });
+
   describe("オブジェクト削除", function(){
+    context("成功した場合", function(){
+      var Food = ncmb.DataStore("food");
+      var food = new Food({objectId: "object_id"});
+
+      it("callback で削除結果を取得できる", function(done){
+        food.delete(function(err){
+          done(err ? err : null);
+        });
+      });
+
+      it("promise で削除結果を取得できる", function(done){
+        food.delete()
+            .then(function(){
+              done();
+            })
+            .catch(function(err){
+              done(err);
+            });
+      });
+    });
+
+    context("失敗した理由が", function(){
+      context("ObjectId がないときに", function(){
+        var Food = ncmb.DataStore("food");
+        var food = new Food({});
+
+        it("callback で削除結果を取得できる", function(done){
+          food.delete(function(err){
+            expect(err).to.be.an.instanceof(Error);
+            done();
+          });
+        });
+
+        it("promise で削除結果を取得できる", function(done){
+          food.delete()
+              .then(function(){
+                done(new Error("失敗すべき"));
+              })
+              .catch(function(err){
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+        });
+      });
+    });
   });
+
   describe("オブジェクト検索", function(){
     describe("fetchAll", function(){
       context("クラス定義が存在しなければ、取得に失敗しエラーが返り", function(){

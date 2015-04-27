@@ -110,6 +110,27 @@ describe("NCMB DataStore", function(){
         });
       });
 
+      context("複数オブジェクトを更新", function(){
+        var Food = ncmb.DataStore("food");
+        var food = new Food({objectId: "object_id", key: "new_value"});
+        var other_food = new Food({objectId: "other_object_id", key: "new_other_value"});
+        it("callback で取得できる", function(done){
+          food.update(function(err, obj){
+            done(err ? err : null);
+          });
+        });
+
+        it("promise で取得できる", function(done){
+          food.update()
+              .then(function(newFood){
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+      });
+
     });
   });
   describe("オブジェクト削除", function(){

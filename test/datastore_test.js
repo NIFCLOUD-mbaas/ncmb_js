@@ -62,6 +62,51 @@ describe("NCMB DataStore", function(){
     });
   });
 
+  describe("オブジェクト取得", function(){
+    describe("クラスからオブジェクトを取得fetch", function(){
+       context("fetch", function(){
+        var Food = ncmb.DataStore("food");
+
+        it("callback で取得できる", function(done){
+          Food.fetchFirst(function(err, obj){
+            done(err ? err : null);
+          });
+        });
+
+        it("promise で取得できる", function(done){
+          Food.fetchFirst()
+              .then(function(obj){
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+      });
+    });
+
+    describe("クラスからオブジェクトを取得fetchById", function(){
+       context("fetchById", function(){
+        var Food = ncmb.DataStore("food");
+
+        it("callback で取得できる", function(done){
+          Food.fetchById("object_id", function(err, obj){
+            done(err ? err : null);
+          });
+        });
+
+        it("promise で取得できる", function(done){
+          Food.fetchById("object_id")
+              .then(function(newFood){
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+      });
+    });
+  });
  
   describe("オブジェクト更新", function(){
     describe("クラスからオブジェクトを更新", function(){

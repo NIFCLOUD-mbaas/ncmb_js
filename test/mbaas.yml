@@ -60,8 +60,10 @@
     file: 2013-09-01_classes_TestClass_fetch_success.json
 -
   request:
-    url: /2013-09-01/classes/food?where=%7B%22objectId%22%3A%22object_id%22%7D
+    url: /2013-09-01/classes/food
     method: GET
+    query:
+      where: '{"objectId":"object_id"}'
   response:
     status: 200
     file: 2013-09-01_classes_food_get_success.json    

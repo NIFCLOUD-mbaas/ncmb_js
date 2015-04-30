@@ -68,13 +68,13 @@ describe("NCMB DataStore", function(){
         var Food = ncmb.DataStore("food");
 
         it("callback で取得できる", function(done){
-          Food.fetchFirst(function(err, obj){
+          Food.fetchOne(function(err, obj){
             done(err ? err : null);
           });
         });
 
         it("promise で取得できる", function(done){
-          Food.fetchFirst()
+          Food.fetchOne()
               .then(function(obj){
                 done();
               })

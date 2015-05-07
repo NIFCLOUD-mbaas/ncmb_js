@@ -82,13 +82,13 @@ describe("NCMB DataStore", function(){
       var food2 = new Food({key: "value2"});
 
       it("saveAll (callback取得できる)", function(){
-        ncmb.saveAll([food1, food2], function(err, list){
+        Food.saveAll([food1, food2], function(err, list){
             done(err ? err : null);
         });
       });
 
       it("saveAll (promise取得できる)", function(){
-        ncmb.saveAll([food1, food2])
+        Food.saveAll([food1, food2])
               .then(function(list){
                 done();
               })

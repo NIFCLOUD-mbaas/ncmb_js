@@ -77,25 +77,53 @@ describe("NCMB DataStore", function(){
 
   describe("オブジェクト複数操作", function(){
     describe("saveAll", function(){
-      var Food = ncmb.DataStore("food");
-      var food1 = new Food({key: "value1"});
-      var food2 = new Food({key: "value2"});
 
-      it("saveAll (callback取得できる)", function(){
-        Food.saveAll([food1, food2], function(err, list){
-            done(err ? err : null);
+      context("saveAll 成功", function(){
+        var Food = ncmb.DataStore("food");
+        var food1 = new Food({key: "value1"});
+        var food2 = new Food({key: "value2"});
+
+        it("saveAll (callback取得できる)", function(){
+          Food.saveAll([food1, food2], function(err, list){
+              done(err ? err : null);
+          });
+        });
+
+        it("saveAll (promise取得できる)", function(){
+          Food.saveAll([food1, food2])
+                .then(function(list){
+                  done();
+                })
+                .catch(function(err){
+                  done(err);
+                });
         });
       });
+      
+      context("saveAll 成功", function(){
+        var Food = ncmb.DataStore("food");
 
-      it("saveAll (promise取得できる)", function(){
-        Food.saveAll([food1, food2])
-              .then(function(list){
-                done();
+        it("saveAll (callback取得できる)", function(done){
+          Food.saveAll([], function(err){
+            expect(err).to.be.an.instanceof(Error);
+            done();
+          });
+        });
+
+        it("saveAll (promise取得できる)", function(done){
+          Food.saveAll([])
+              .then(function(){
+                done(new Error("失敗すべき"));
               })
               .catch(function(err){
-                done(err);
+                expect(err).to.be.an.instanceof(Error);
+                done();
               });
-      });
+        });                     
+      });  
+
+
+
     });
 
     describe("updateAll", function(){

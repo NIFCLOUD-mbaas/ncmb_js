@@ -57,21 +57,10 @@
     url: /2013-09-01/batch
     method: POST
     body: 
-      "requests": [
-        {
-          "method":"POST",
-          "path":"2013-09-01/classes/food",
-          "body":{"key":"value1"}
-        },
-        {
-          "method":"POST",
-          "path":"2013-09-01/classes/food",
-          "body":{"key":"value2"}
-        }
-      ]
+      "requests": '[{"method":"POST", "path":"2013-09-01/classes/food", "body":{"key":"value1"}}, {"method":"POST", "path":"2013-09-01/classes/food", "body":{"key":"value2"}}]'
   response:
     status: 201
-    file: 2013-09-01_classes_TestClass_post_success.json
+    file: 2013-09-01_classes_TestClass_batch_success.json
 
 # push
 -

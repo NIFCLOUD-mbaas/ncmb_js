@@ -148,7 +148,6 @@ describe("NCMB DataStore", function(){
                   done(new Error("Must throw error"));
                 })
                 .catch(function(err){
-                  console.log(err);
                   done();
                 });
           });
@@ -208,7 +207,7 @@ describe("NCMB DataStore", function(){
         it("callback で取得できる");
         it("promise で取得できる");
       });
-      
+
       context("クラス定義が存在し、データがあれば、リストが返り", function(){
         var NonExist = ncmb.DataStore("nonexist");
         var food = new NonExist({name: "orange", type: "fruit", status: "failure"});

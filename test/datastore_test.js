@@ -63,8 +63,8 @@ describe("NCMB DataStore", function(){
   });
 
   describe("オブジェクト取得", function(){
-    describe("クラスからオブジェクトを取得fetch", function(){
-       context("fetch", function(){
+    describe("クラスからオブジェクト１個取得", function(){
+      context("fetchOne", function(){
         var Food = ncmb.DataStore("food");
 
         it("callback で取得できる", function(done){
@@ -85,8 +85,8 @@ describe("NCMB DataStore", function(){
       });
     });
 
-    describe("クラスからオブジェクトを取得fetchById", function(){
-       context("fetchById", function(){
+    describe("ObjectIdでオブジェクト取得", function(){
+      context("fetchById", function(){
         var Food = ncmb.DataStore("food");
 
         it("callback で取得できる", function(done){
@@ -109,8 +109,6 @@ describe("NCMB DataStore", function(){
   });
  
   describe("オブジェクト更新", function(){
-    describe("クラスからオブジェクトを更新", function(){
-
       context("update成功", function(){
         var Food = ncmb.DataStore("food");
         var food = new Food({objectId: "object_id", key: "new_value"});
@@ -132,29 +130,31 @@ describe("NCMB DataStore", function(){
         });
       });
 
-      context("update失敗_objectIdがない理由で", function(){
-        var Food = ncmb.DataStore("food");
-        var food = new Food({key: "new_value"});
+      context("update失敗", function(){
+        context("update失敗_objectIdがない理由で", function(){
+          var Food = ncmb.DataStore("food");
+          var food = new Food({key: "new_value"});
 
-        it("callback で取得できる", function(done){
-          food.update(function(err, obj){
-            expect(err).to.be.an.instanceof(Error);
-            done();
+          it("callback で取得できる", function(done){
+            food.update(function(err, obj){
+              expect(err).to.be.an.instanceof(Error);
+              done();
+            });
+          });
+
+          it("promise で取得できる", function(done){
+            food.update()
+                .then(function(newFood){
+                  done(new Error("Must throw error"));
+                })
+                .catch(function(err){
+                  console.log(err);
+                  done();
+                });
           });
         });
-
-        it("promise で取得できる", function(done){
-          food.update()
-              .then(function(newFood){
-                done(new Error("Must throw error"));
-              })
-              .catch(function(err){
-                console.log(err);
-                done();
-              });
-        });
       });
-
+      
       context("複数オブジェクトを更新", function(){
         var Food = ncmb.DataStore("food");
         var food = new Food({objectId: "object_id", key: "new_value"});
@@ -175,8 +175,6 @@ describe("NCMB DataStore", function(){
               });
         });
       });
-
-    });
   });
   describe("オブジェクト削除", function(){
   });
@@ -203,12 +201,14 @@ describe("NCMB DataStore", function(){
               });
         });
       });
+
       context("クラス定義が存在し、データがなければ、空のリストが返り", function(){
         var NonExist = ncmb.DataStore("nonexist");
         var food = new NonExist({name: "orange", type: "fruit", status: "failure"});
         it("callback で取得できる");
         it("promise で取得できる");
       });
+      
       context("クラス定義が存在し、データがあれば、リストが返り", function(){
         var NonExist = ncmb.DataStore("nonexist");
         var food = new NonExist({name: "orange", type: "fruit", status: "failure"});

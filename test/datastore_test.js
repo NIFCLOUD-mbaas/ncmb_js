@@ -131,7 +131,7 @@ describe("NCMB DataStore", function(){
       });
 
       context("update失敗", function(){
-        context("update失敗_objectIdがない理由で", function(){
+        context("objectIdがない理由で", function(){
           var Food = ncmb.DataStore("food");
           var food = new Food({key: "new_value"});
 

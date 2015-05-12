@@ -98,9 +98,21 @@ describe("NCMB DataStore", function(){
                   done(err);
                 });
         });
+
+        it("saveAll (60 objects)", function(){
+          var arr = [];
+          for(var i = 0; i<60; i++) {
+            arr.push(food1);
+          }
+          Food.saveAll(arr, function(err, list){
+              done(err ? err : null);
+          });
+        });
+
+
       });
       
-      context("saveAll 成功", function(){
+      context("saveAll 失敗", function(){
         var Food = ncmb.DataStore("food");
 
         it("saveAll (callback取得できる)", function(done){

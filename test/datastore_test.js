@@ -58,6 +58,25 @@ describe("NCMB DataStore", function(){
               });
         });
       });
+      context("dateデータータイプを指定し、オブジェクト保存に成功し", function(){
+        var Food = ncmb.DataStore("food");
+        var aSimpleDate = new Date(1999, 11, 31, 23, 59, 59, 999);
+        var food = new Food({harvestDate:  aSimpleDate});
+        it("callback で取得できる", function(done){
+          food.save(function(err, obj){
+            done(err ? err : null);
+          });
+        });
+        it("promise で取得できる", function(done){
+          food.save()
+              .then(function(newFood){
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+      });
     });
   });
   describe("オブジェクト取得", function(){

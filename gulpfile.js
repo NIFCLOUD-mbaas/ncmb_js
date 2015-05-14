@@ -36,7 +36,7 @@ gulp.task("build", function(){
   gulp.src("lib/ncmb.js")
     .pipe(browserify({}))
     .pipe(uglify())
-    .pipe(gulp.dest("../ncmb.js"))
+    .pipe(gulp.dest("../build/ncmb.js"))
     .on("error", gutil.log);
 });
 

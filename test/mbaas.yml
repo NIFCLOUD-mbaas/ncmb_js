@@ -42,7 +42,15 @@
   response:
     status: 201
     file: 2013-09-01_classes_food_post_success.json
-
+-
+  request:
+    url: /2013-09-01/classes/food
+    method: POST
+    body: 
+      "geoLocation": {"__type":"GeoPoint", "longitude":12, "latitude":133}
+  response:
+    status: 201
+    file: 2013-09-01_classes_TestClass_post_success.json
 -
   request:
     url: /2013-09-01/classes/nonexist

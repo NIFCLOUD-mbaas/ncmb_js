@@ -58,6 +58,25 @@ describe("NCMB DataStore", function(){
               });
         });
       });
+      context("geolocationデータータイプを指定し、オブジェクト保存にに成功", function(){
+        var Food = ncmb.DataStore("food");
+        var aSimpleGeolocation = new ncmb.Geolocation(12,133);
+        var food = new Food({geoLocation: aSimpleGeolocation});
+        it("callback で取得できる", function(done){
+          food.save(function(err, obj){
+            done(err ? err : null);
+          });
+        });
+        it("promise で取得できる", function(done){
+          food.save()
+              .then(function(newFood){
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+      });
     });
   });
   describe("オブジェクト取得", function(){

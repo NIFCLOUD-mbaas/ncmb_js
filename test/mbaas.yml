@@ -93,3 +93,4 @@
     method: DELETE
   response:
     status: 200
+    body: '{}'

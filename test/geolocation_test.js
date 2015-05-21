@@ -46,6 +46,16 @@ describe("NCMB Geolocation", function(){
   });
 
   describe("Geolocation異常設定", function(){
+    it("longitude latitude not number error ", function(done){
+      try {
+        var invalidGeoObject0 = new ncmb.Geolocation("aaa", "bbb");
+      }
+      catch(err) {
+        expect(err).to.be.an.instanceof(Error);
+        done();
+      }
+    });
+
     it("latitude < -90 Error ", function(done){
       try {
         var invalidGeoObject1 = new ncmb.Geolocation(-90.1, 0);

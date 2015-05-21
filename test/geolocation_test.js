@@ -7,12 +7,12 @@ var NCMB = require("../lib/ncmb");
 
 describe("NCMB Geolocation", function(){
   var ncmb = new NCMB();
-  describe("Geolocation", function(){
+  describe("Geolocation正常設定", function(){
     var geoObject1 = new ncmb.Geolocation();   // defaults to (0,0)
-	var geoObject2 = new ncmb.Geolocation(12,133);
-	var geoObject3 = new ncmb.Geolocation(30.0, 30.0);
-	var geoObject4 = new ncmb.Geolocation([30.0, 30.0]);
-	var geoObject5 = new ncmb.Geolocation({latitude: 30.0, longitude: 30.0});
+  	var geoObject2 = new ncmb.Geolocation(12,133);
+  	var geoObject3 = new ncmb.Geolocation(30.0, 30.0);
+  	var geoObject4 = new ncmb.Geolocation([30.0, 30.0]);
+  	var geoObject5 = new ncmb.Geolocation({latitude: 30.0, longitude: 30.0});
     
     it("default check", function(done){
       expect(geoObject1.latitude).to.be.eql(0);
@@ -43,6 +43,47 @@ describe("NCMB Geolocation", function(){
       expect(geoObject5.longitude).to.be.eql(30.0);
       done();
     });
+  });
 
-  });	
+  describe("Geolocation異常設定", function(){
+    it("latitude < -90 Error ", function(done){
+      try {
+        var invalidGeoObject1 = new ncmb.Geolocation(-90.1, 0);
+      }
+      catch(err) {
+        expect(err).to.be.an.instanceof(Error);
+        done();
+      }
+    });
+
+    it("latitude > 90 Error ", function(done){
+      try {
+        var invalidGeoObject2 = new ncmb.Geolocation(90.1, 0);
+      }
+      catch(err) {
+        expect(err).to.be.an.instanceof(Error);
+        done();
+      }
+    });
+
+    it("longitude < -180 Error ", function(done){
+      try {
+        var invalidGeoObject3 = new ncmb.Geolocation(0, -180.1);
+      }
+      catch(err) {
+        expect(err).to.be.an.instanceof(Error);
+        done();
+      }
+    });
+
+    it("longitude > 180 Error ", function(done){
+      try {
+        var invalidGeoObject4 = new ncmb.Geolocation(0, 180.1);
+      }
+      catch(err) {
+        expect(err).to.be.an.instanceof(Error);
+        done();
+      }
+    });
+  })
 });

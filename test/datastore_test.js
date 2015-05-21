@@ -64,17 +64,17 @@ describe("NCMB DataStore", function(){
 
   describe("オブジェクト取得", function(){
     describe("クラスからオブジェクト１個取得", function(){
-      context("fetchOne", function(){
+      context("fetch", function(){
         var Food = ncmb.DataStore("food");
 
         it("callback で取得できる", function(done){
-          Food.fetchOne(function(err, obj){
+          Food.fetch(function(err, obj){
             done(err ? err : null);
           });
         });
 
         it("promise で取得できる", function(done){
-          Food.fetchOne()
+          Food.fetch()
               .then(function(obj){
                 done();
               })

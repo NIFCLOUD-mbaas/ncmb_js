@@ -19,24 +19,22 @@ describe("NCMB Users", function(){
   }
 
   describe("ユーザー削除", function(){
-    describe("delete", function(){
-      context("成功した場合", function(){
-        var del_user = new ncmb.User({objectId: "object_id"});
+    context("成功した場合", function(){
+      var del_user = new ncmb.User({objectId: "object_id"});
 
-        it("callback でレスポンスを取得できる", function(done){
-          del_user.delete(function(err){
-            done(err ? err : null);
-          });
+      it("callback でレスポンスを取得できる", function(done){
+        del_user.delete(function(err){
+          done(err ? err : null);
         });
+      });
 
-        it("promise でレスポンスを取得できる", function(done){
-          del_user.delete()
-          .then(function(){
-            done();
-          })
-          .catch(function(err){
-            done(err);
-          });
+      it("promise でレスポンスを取得できる", function(done){
+        del_user.delete()
+        .then(function(){
+          done();
+        })
+        .catch(function(err){
+          done(err);
         });
       });
     });
@@ -45,28 +43,25 @@ describe("NCMB Users", function(){
       context("ObjectId がないときに", function(){
         var del_user = new ncmb.User({});
 
-        it("callback で削除結果を取得できる", function(done){
+        it("callback で削除時エラーを取得できる", function(done){
           del_user.delete(function(err){
             expect(err).to.be.an.instanceof(Error);
             done();
           });
         });
 
-        it("promise で削除結果を取得できる", function(done){
+        it("promise で削除時エラーを取得できる", function(done){
           del_user.delete()
-              .then(function(){
-                done(new Error("失敗すべき"));
-              })
-              .catch(function(err){
-                expect(err).to.be.an.instanceof(Error);
-                done();
-              });
+          .then(function(){
+             done(new Error("失敗すべき"));
+          })
+          .catch(function(err){
+            expect(err).to.be.an.instanceof(Error);
+            done();
+          });
         });
       });
     });
-
-
-
   });
 });
 

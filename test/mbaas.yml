@@ -86,3 +86,11 @@
   response:
     status: 404
     file: non_exists_user.json
+
+-
+  request:
+    url: /2013-09-01/users/object_id
+    method: DELETE
+  response:
+    status: 200
+    body: '{}'

@@ -86,6 +86,14 @@
     status: 200
     file: 2013-09-01_classes_TestClass_put_success.json
 
+-
+  request:
+    url: /2013-09-01/classes/food/object_id
+    method: DELETE
+  response: 
+    status: 200
+    file: 2013-09-01_classes_TestClass_delete_success.json
+
 # push
 -
   request:
@@ -118,3 +126,11 @@
   response:
     status: 404
     file: non_exists_user.json
+
+-
+  request:
+    url: /2013-09-01/users/object_id
+    method: DELETE
+  response:
+    status: 200
+    body: '{}'

@@ -6,19 +6,19 @@ var expect   = require("chai").expect;
 var NCMB = require("../lib/ncmb");
 
 describe("NCMB Push", function(){
-  var ncmb = new NCMB();
-  ncmb
+  it("create push", function(done){
+    var ncmb = new NCMB();
+    ncmb
     .set("apikey", config.apikey)
     .set("clientkey", config.clientkey);
-  if(config.apiserver){
-    ncmb
+    if(config.apiserver){
+      ncmb
       .set("protocol", config.apiserver.protocol || "http:")
       .set("fqdn", config.apiserver.fqdn)
       .set("port", config.apiserver.port)
       .set("proxy", config.apiserver.port || "");
-  }
+    }
 
-  it("create push", function(done){
     var p = new ncmb.Push({immediateDeliveryFlag: true});
     p.send().then(function(push){
       done();

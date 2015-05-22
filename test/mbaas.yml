@@ -10,7 +10,7 @@
   request:
     url: /2013-09-01/classes/TestClass
     method: POST
-    body: 
+    body:
       "key": "value"
   response:
     status: 201
@@ -19,8 +19,8 @@
   request:
     url: /2013-09-01/classes/TestClass/object_id
     method: PUT
-    body: 
-      "key": "new_value"
+    body:
+      "key": "value_new"
   response:
     status: 200
     file: 2013-09-01_classes_TestClass_put_success.json
@@ -28,7 +28,7 @@
   request:
     url: /2013-09-01/classes/TestClass/object_id
     method: DELETE
-  response: 
+  response:
     status: 200
     file: 2013-09-01_classes_TestClass_delete_success.json
 
@@ -66,7 +66,7 @@
       where: '{"objectId":"object_id"}'
   response:
     status: 200
-    file: 2013-09-01_classes_food_get_success.json    
+    file: 2013-09-01_classes_food_get_success.json
 -
   request:
     url: /2013-09-01/classes/food
@@ -75,13 +75,13 @@
       limit: 1
   response:
     status: 200
-    file: 2013-09-01_classes_food_get_success.json  
+    file: 2013-09-01_classes_food_get_success.json
 -
   request:
     url: /2013-09-01/classes/food/object_id
     method: PUT
-    body: 
-      "key": "new_value"
+    body:
+      "key": "value_new"
   response:
     status: 200
     file: 2013-09-01_classes_TestClass_put_success.json
@@ -90,7 +90,7 @@
   request:
     url: /2013-09-01/classes/food/object_id
     method: DELETE
-  response: 
+  response:
     status: 200
     file: 2013-09-01_classes_TestClass_delete_success.json
 

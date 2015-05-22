@@ -107,11 +107,11 @@ describe("NCMB DataStore", function(){
       });
     });
   });
- 
+
   describe("オブジェクト更新", function(){
       context("update成功", function(){
         var Food = ncmb.DataStore("food");
-        var food = new Food({objectId: "object_id", key: "new_value"});
+        var food = new Food({objectId: "object_id", key: "value_new"});
 
         it("callback で取得できる", function(done){
           food.update(function(err, obj){
@@ -133,7 +133,7 @@ describe("NCMB DataStore", function(){
       context("update失敗", function(){
         context("objectIdがない理由で", function(){
           var Food = ncmb.DataStore("food");
-          var food = new Food({key: "new_value"});
+          var food = new Food({key: "value_new"});
 
           it("callback で取得できる", function(done){
             food.update(function(err, obj){
@@ -153,7 +153,7 @@ describe("NCMB DataStore", function(){
           });
         });
       });
-      
+
   });
 
   describe("オブジェクト削除", function(){

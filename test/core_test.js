@@ -87,13 +87,13 @@ describe("NCMB core", function(){
         done(err);
       });
     });
-    
+
     it("callback によりデータを更新できる (PUT)", function(done){
       ncmb.request({
         method: "PUT",
         path: "/"+ ncmb.version +"/classes/TestClass/object_id",
         timestamp: "2015-02-25T08:01:08.908Z",
-        data: {'key': 'new_value'}
+        data: {'key': 'value_new'}
       }, function(err, res, body){
         if(err) return done(err);
         return done();
@@ -104,7 +104,7 @@ describe("NCMB core", function(){
         method: "PUT",
         path: "/"+ncmb.version+"/classes/TestClass/object_id",
         timestamp: "2015-02-25T08:01:08.908Z",
-        data: {"key": "new_value"}
+        data: {"key": "value_new"}
       })
       .then(function(body){
         done();
@@ -113,7 +113,7 @@ describe("NCMB core", function(){
         done(err);
       });
     });
-    
+
     it("callback によりデータを削除できる (DELETE)", function(done){
       ncmb.request({
         method: "DEL",

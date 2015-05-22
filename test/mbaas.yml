@@ -127,6 +127,15 @@
     status: 404
     file: non_exists_user.json
 
+# files
+-
+  request:
+    url: /2013-09-01/files/del_file.text
+    method: DELETE
+  response:
+    status: 200
+    body: '{}'
+
 -
   request:
     url: /2013-09-01/users/object_id

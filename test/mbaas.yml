@@ -36,18 +36,27 @@
 -
   request:
     url: /2013-09-01/classes/food
-    method: POST
-    data:
-      status: success
+    method: GET
+    query:
+      where: '{"objectId":"date_object_id"}'
   response:
-    status: 201
-    file: 2013-09-01_classes_food_post_success.json
+    status: 200
+    file: 2013-09-01_classes_food_get_date_success.json
 -
   request:
     url: /2013-09-01/classes/food
     method: POST
     data:
       harvestDate: {"__type":"Date","iso":"1999-12-31T14:59:59.999Z"}
+  response:
+    status: 201
+    file: 2013-09-01_classes_food_post_date_success.json
+-
+  request:
+    url: /2013-09-01/classes/food
+    method: POST
+    data:
+      status: success
   response:
     status: 201
     file: 2013-09-01_classes_food_post_success.json

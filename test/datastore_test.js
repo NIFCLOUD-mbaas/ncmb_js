@@ -64,13 +64,25 @@ describe("NCMB DataStore", function(){
         var food = new Food({harvestDate:  aSimpleDate});
         it("callback で取得できる", function(done){
           food.save(function(err, obj){
-            done(err ? err : null);
+            if(err) {
+              done(err);
+            } else {
+              Food.where({objectId: obj.objectId}).fetchAll()
+              .then(function(foods){
+                expect(foods[0].harvestDate).to.be.eql({ __type: 'Date', iso: '1999-12-31T14:59:59.999Z'});
+                done();
+              });
+            }
           });
         });
         it("promise で取得できる", function(done){
           food.save()
               .then(function(newFood){
-                done();
+                Food.where({objectId: newFood.objectId}).fetchAll()
+                .then(function(foods){
+                  expect(foods[0].harvestDate).to.be.eql({ __type: 'Date', iso: '1999-12-31T14:59:59.999Z'});
+                  done();
+                });
               })
               .catch(function(err){
                 done(err);

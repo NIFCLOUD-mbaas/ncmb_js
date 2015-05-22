@@ -64,13 +64,25 @@ describe("NCMB DataStore", function(){
         var food = new Food({geoLocation: aSimpleGeolocation});
         it("callback で取得できる", function(done){
           food.save(function(err, obj){
-            done(err ? err : null);
+            if(err) {
+              done(err);
+            } else {
+              Food.where({objectId: obj.objectId}).fetchAll()
+              .then(function(foods){
+                expect(foods[0].geoLocation).to.be.eql({"__type":"GeoPoint","longitude":133,"latitude":12});
+                done();
+              });
+            }
           });
         });
         it("promise で取得できる", function(done){
           food.save()
               .then(function(newFood){
-                done();
+                Food.where({objectId: newFood.objectId}).fetchAll()
+                .then(function(foods){
+                  expect(foods[0].geoLocation).to.be.eql({"__type":"GeoPoint","longitude":133,"latitude":12});
+                  done();
+                });
               })
               .catch(function(err){
                 done(err);

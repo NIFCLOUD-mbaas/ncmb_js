@@ -87,7 +87,7 @@ describe("NCMB core", function(){
         done(err);
       });
     });
-    
+
     it("callback によりデータを更新できる (PUT)", function(done){
       ncmb.request({
         method: "PUT",
@@ -113,7 +113,7 @@ describe("NCMB core", function(){
         done(err);
       });
     });
-    
+
     it("callback によりデータを削除できる (DELETE)", function(done){
       ncmb.request({
         method: "DEL",

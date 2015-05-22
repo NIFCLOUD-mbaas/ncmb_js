@@ -87,7 +87,7 @@
     status: 404
     file: non_exists_user.json
 
-# push
+# files
 -
   request:
     url: /2013-09-01/files/del_file.text
@@ -95,4 +95,6 @@
   response:
     status: 200
     body: '{}'
+
+
 

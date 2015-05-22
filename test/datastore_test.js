@@ -59,6 +59,37 @@ describe("NCMB DataStore", function(){
               });
         });
       });
+      context("Dateタイプを指定し、オブジェクト保存に成功し", function(){
+        var Food = ncmb.DataStore("food");
+        var aSimpleDate = new Date(1999, 11, 31, 23, 59, 59, 999);
+        var food = new Food({harvestDate:  aSimpleDate});
+        it("callback で取得できる", function(done){
+          food.save(function(err, obj){
+            if(err) {
+              done(err);
+            } else {
+              Food.where({objectId: obj.objectId}).fetchAll()
+              .then(function(foods){
+                expect(foods[0].harvestDate).to.be.eql({ __type: 'Date', iso: '1999-12-31T14:59:59.999Z'});
+                done();
+              });
+            }
+          });
+        });
+        it("promise で取得できる", function(done){
+          food.save()
+              .then(function(newFood){
+                Food.where({objectId: newFood.objectId}).fetchAll()
+                .then(function(foods){
+                  expect(foods[0].harvestDate).to.be.eql({ __type: 'Date', iso: '1999-12-31T14:59:59.999Z'});
+                  done();
+                });
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+      });
     });
   });
 

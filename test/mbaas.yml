@@ -10,7 +10,7 @@
   request:
     url: /2013-09-01/classes/TestClass
     method: POST
-    body: 
+    body:
       "key": "value"
   response:
     status: 201
@@ -19,7 +19,7 @@
   request:
     url: /2013-09-01/classes/TestClass/object_id
     method: PUT
-    body: 
+    body:
       "key": "value_new"
   response:
     status: 200
@@ -28,7 +28,7 @@
   request:
     url: /2013-09-01/classes/TestClass/object_id
     method: DELETE
-  response: 
+  response:
     status: 200
     file: 2013-09-01_classes_TestClass_delete_success.json
 
@@ -42,7 +42,6 @@
   response:
     status: 201
     file: 2013-09-01_classes_food_post_success.json
-
 -
   request:
     url: /2013-09-01/classes/nonexist
@@ -52,12 +51,46 @@
   response:
     status: 400
     file: 2013-09-01_classes_nonexist_post_failure.json
+-
+  request:
+    url: /2013-09-01/classes/food/object_id
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_TestClass_fetch_success.json
+-
+  request:
+    url: /2013-09-01/classes/food
+    method: GET
+    query:
+      where: '{"objectId":"object_id"}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_food_get_success.json
+-
+  request:
+    url: /2013-09-01/classes/food
+    method: GET
+    query:
+      limit: 1
+  response:
+    status: 200
+    file: 2013-09-01_classes_food_get_success.json
+-
+  request:
+    url: /2013-09-01/classes/food/object_id
+    method: PUT
+    body:
+      "key": "value_new"
+  response:
+    status: 200
+    file: 2013-09-01_classes_TestClass_put_success.json
 
 -
   request:
     url: /2013-09-01/classes/food/object_id
     method: DELETE
-  response: 
+  response:
     status: 200
     file: 2013-09-01_classes_TestClass_delete_success.json
 
@@ -69,6 +102,13 @@
   response:
     status: 201
     body: '{"createDate":"2015-04-15T04:57:36.432Z","objectId":"pNiIhMIWZ3NYs5Zi"}'
+-
+  request:
+    url: /2013-09-01/classes/TestClass
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_TestClass_get_success.json
 
 # users/:user
 -

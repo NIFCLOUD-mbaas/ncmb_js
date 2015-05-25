@@ -85,13 +85,22 @@ describe("NCMB DataStore", function(){
 
         it("saveAll (callback取得できる)", function(){
           Food.saveAll([food1, food2], function(err, list){
-              done(err ? err : null);
+              //done(err ? err : null);
+              if(err) {
+                done(err);
+              } else {
+                  expect(list[0].objectId).to.be.eql("food_id1");
+                  expect(list[1].objectId).to.be.eql("food_id2");
+                  done();                
+              }
           });
         });
 
         it("saveAll (promise取得できる)", function(){
           Food.saveAll([food1, food2])
                 .then(function(list){
+                  expect(list[0].objectId).to.be.eql("food_id1");
+                  expect(list[1].objectId).to.be.eql("food_id2");
                   done();
                 })
                 .catch(function(err){
@@ -108,7 +117,6 @@ describe("NCMB DataStore", function(){
               done(err ? err : null);
           });
         });
-
 
       });
       

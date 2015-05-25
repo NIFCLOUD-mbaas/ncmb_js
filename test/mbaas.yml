@@ -56,7 +56,7 @@
   request:
     url: /2013-09-01/batch
     method: POST
-    body: 
+    data:
       "requests": '[{"method":"POST", "path":"2013-09-01/classes/food", "body":{"key":"value1"}}, {"method":"POST", "path":"2013-09-01/classes/food", "body":{"key":"value2"}}]'
   response:
     status: 201

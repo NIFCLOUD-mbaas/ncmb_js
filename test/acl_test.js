@@ -19,11 +19,15 @@ describe("NCMB ACL", function(){
     }
 
     describe("default check", function() {
-      var aclObject1 = new ncmb.Acl();
- 
+      var aclObj = new ncmb.Acl();
       it("Public Read check", function(done) {
-        aclObject1.setPublicReadAccess();
-        console.log(aclObject1._toJSON());
+        aclObj.setPublicReadAccess(true);
+        expect(aclObj.toJSON()).to.be.eql({'*':{read: true}});
+        done();
+      });
+      it("Public Write check", function(done) {
+        aclObj.setPublicWriteAccess(true);
+        expect(aclObj.toJSON()).to.be.eql({'*':{write: true}});
         done();
       });
     });

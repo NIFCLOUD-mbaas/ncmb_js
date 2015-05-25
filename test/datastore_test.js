@@ -58,7 +58,7 @@ describe("NCMB DataStore", function(){
               });
         });
       });
-      context("geolocationデータータイプを指定し、オブジェクト保存に成功", function(){
+      context("geolocationデータタイプを指定し、オブジェクト保存に成功", function(){
         var Food = ncmb.DataStore("food");
         var aSimpleGeolocation = new ncmb.Geolocation(12,133);
         var food = new Food({geoLocation: aSimpleGeolocation});

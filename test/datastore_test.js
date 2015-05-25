@@ -58,37 +58,6 @@ describe("NCMB DataStore", function(){
               });
         });
       });
-      context("geolocationデータタイプを指定し、オブジェクト保存に成功", function(){
-        var Food = ncmb.DataStore("food");
-        var aSimpleGeolocation = new ncmb.Geolocation(12,133);
-        var food = new Food({geoLocation: aSimpleGeolocation});
-        it("callback で取得できる", function(done){
-          food.save(function(err, obj){
-            if(err) {
-              done(err);
-            } else {
-              Food.where({objectId: obj.objectId}).fetchAll()
-              .then(function(foods){
-                expect(foods[0].geoLocation).to.be.eql({"__type":"GeoPoint","longitude":133,"latitude":12});
-                done();
-              });
-            }
-          });
-        });
-        it("promise で取得できる", function(done){
-          food.save()
-              .then(function(newFood){
-                Food.where({objectId: newFood.objectId}).fetchAll()
-                .then(function(foods){
-                  expect(foods[0].geoLocation).to.be.eql({"__type":"GeoPoint","longitude":133,"latitude":12});
-                  done();
-                });
-              })
-              .catch(function(err){
-                done(err);
-              });
-        });
-      });
     });
   });
   describe("オブジェクト取得", function(){

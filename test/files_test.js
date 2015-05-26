@@ -20,17 +20,16 @@ describe("NCMB Files", function(){
 
   describe("ファイル取得", function(){
     context("成功した場合", function(){
-      var get_file = new ncmb.File({fileName: "file.text"});
 
       it("callback でレスポンスを取得できる", function(done){
-        get_file.getfile(function(err, text){
+        ncmb.File.get("get_file.text", function(err, file){
           done(err ? err : null);
         });
       });
 
       it("promise でレスポンスを取得できる", function(done){
-        get_file.getfile()
-        .then(function(text){
+        ncmb.File.get("get_file.text")
+        .then(function(file){
           done();
         })
         .catch(function(err){
@@ -41,18 +40,17 @@ describe("NCMB Files", function(){
 
     context("失敗した理由が", function(){
       context("fileName がないときに", function(){
-        var get_file = new ncmb.File({});
 
         it("callback で取得時エラーを取得できる", function(done){
-          get_file.getfile(function(err, text){
+          ncmb.File.get(null, function(err, file){
             expect(err).to.be.an.instanceof(Error);
             done();
           });
         });
 
         it("promise で取得時エラーを取得できる", function(done){
-          get_file.getfile()
-          .then(function(text){
+          ncmb.File.get()
+          .then(function(file){
             done(new Error("失敗すべき"));
           })
           .catch(function(err){

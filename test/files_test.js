@@ -18,6 +18,52 @@ describe("NCMB Files", function(){
     .set("proxy", config.apiserver.port || "");
   }
 
+  describe("ファイル取得", function(){
+    context("成功した場合", function(){
+      var get_file = new ncmb.File({fileName: "file.text"});
+
+      it("callback でレスポンスを取得できる", function(done){
+        get_file.getfile(function(err, text){
+          done(err ? err : null);
+        });
+      });
+
+      it("promise でレスポンスを取得できる", function(done){
+        get_file.getfile()
+        .then(function(text){
+          done();
+        })
+        .catch(function(err){
+          done(err);
+        });
+      });
+    });
+
+    context("失敗した理由が", function(){
+      context("fileName がないときに", function(){
+        var get_file = new ncmb.File({});
+
+        it("callback で取得時エラーを取得できる", function(done){
+          get_file.getfile(function(err, text){
+            expect(err).to.be.an.instanceof(Error);
+            done();
+          });
+        });
+
+        it("promise で取得時エラーを取得できる", function(done){
+          get_file.getfile()
+          .then(function(text){
+            done(new Error("失敗すべき"));
+          })
+          .catch(function(err){
+            expect(err).to.be.an.instanceof(Error);
+            done();
+          });
+        });
+      });
+    });
+  });
+
   describe("ファイル削除", function(){
     context("成功した場合", function(){
       var del_file = new ncmb.File({fileName: "del_file.text"});

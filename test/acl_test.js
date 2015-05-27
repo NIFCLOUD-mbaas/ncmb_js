@@ -20,12 +20,12 @@ describe("NCMB ACL", function(){
 
     describe("default check", function() {
       var aclObj = new ncmb.Acl();
-      it("Public Read check", function(done) {
+      it("Public Readを指定し、取得できる", function(done) {
         aclObj.setPublicReadAccess(true);
         expect(aclObj.toJSON()).to.be.eql({'*':{read: true}});
         done();
       });
-      it("Public Write check", function(done) {
+      it("Public Writeを指定し、取得できる", function(done) {
         aclObj.setPublicWriteAccess(true);
         expect(aclObj.toJSON()).to.be.eql({'*':{write: true}});
         done();

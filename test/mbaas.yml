@@ -56,10 +56,28 @@
     url: /2013-09-01/classes/food
     method: POST
     data:
-      status: success
+      geoLocation: { latitude: 12, longitude: 133, __type: 'GeoPoint' }
   response:
     status: 201
-    file: 2013-09-01_classes_food_post_success.json
+    file: 2013-09-01_classes_food_post_geolocation_success.json
+# -
+#   request:
+#     url: /2013-09-01/classes/food
+#     method: POST
+#     data:
+#       status: success
+#   response:
+#     status: 201
+#     file: 2013-09-01_classes_food_post_success.json
+-
+  request:
+    url: /2013-09-01/classes/food
+    method: GET
+    query:
+      where: '{"objectId":"geolocation_object_id"}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_food_get_geolocation_success.json
 -
   request:
     url: /2013-09-01/classes/nonexist

@@ -89,34 +89,22 @@ describe("NCMB Geolocation", function(){
   describe("Geolocation データを保存し", function(){
     context("成功した場合に", function(){
       var Food = null;
-      var food = null;
-      before(function(done){
+      var geo  = null;
+      before(function(){
         Food = ncmb.DataStore("food");
-        var geo = new ncmb.Geolocation(12,133);
-        new Food({geoLocation: geo}).save(function(err, obj){
-          food = obj;
-          done()
-        }).catch(done);
+        geo = new ncmb.Geolocation(12,133);
       });
 
       it("callback で取得できる", function(done){
-        Food.where({objectId: food.objectId}).fetchAll(function(err, foods){
-          if(err) throw err;
-          expect(foods[0].geoLocation).to.be.eql({
-            __type:"GeoPoint",
-            longitude:133,
-            latitude:12
-          });
+        new Food({geoLocation: geo}).save(function(err, food){
+          if(err) return done(err);
+          expect(food).to.be.an.instanceof(Food);
           done();
         });
       });
       it("promise で取得できる", function(done){
-        Food.where({objectId: food.objectId}).fetchAll().then(function(foods){
-          expect(foods[0].geoLocation).to.be.eql({
-            __type:"GeoPoint",
-            longitude:133,
-            latitude:12
-          });
+        new Food({geoLocation: geo}).save().then(function(food){
+          expect(food).to.be.an.instanceof(Food);
           done();
         }).catch(done);
       });

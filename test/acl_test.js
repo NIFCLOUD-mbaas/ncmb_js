@@ -19,16 +19,33 @@ describe("NCMB ACL", function(){
     }
 
     describe("default check", function() {
-      var aclObj = new ncmb.Acl();
-      it("Public Readを指定し、取得できる", function(done) {
-        aclObj.setPublicReadAccess(true);
-        expect(aclObj.toJSON()).to.be.eql({'*':{read: true}});
-        done();
+      it("Public Readを指定し、取得できる", function() {
+        var aclObj1 = new ncmb.Acl();
+        aclObj1.setPublicReadAccess(true);
+        expect(aclObj1.toJSON()).to.be.eql({"*":{read: true}});
       });
-      it("Public Writeを指定し、取得できる", function(done) {
+      it("Public Writeを指定し、取得できる", function() {
+        var aclObj2 = new ncmb.Acl();
+        aclObj2.setPublicWriteAccess(true);
+        expect(aclObj2.toJSON()).to.be.eql({"*":{write: true}});
+      });
+      it("Public Write, Public Readを指定し、取得できる", function() {
+        var aclObj = new ncmb.Acl();
+        aclObj.setPublicReadAccess(true);
         aclObj.setPublicWriteAccess(true);
-        expect(aclObj.toJSON()).to.be.eql({'*':{write: true}});
-        done();
+        expect(aclObj.toJSON()).to.be.eql({"*":{read: true, write: true}});
+      });
+      it("Public Write true, Public Write falseを連続指定し、最後に指定したfalseを取得できる", function() {
+        var aclObj = new ncmb.Acl();
+        aclObj.setPublicWriteAccess(true);
+        aclObj.setPublicWriteAccess(false);
+        expect(aclObj.toJSON()).to.be.eql({"*":{write: false}});
+      });
+      it("Public Read true, Public Read falseを連続指定し、最後に指定したfalseを取得できる", function() {
+        var aclObj = new ncmb.Acl();
+        aclObj.setPublicReadAccess(true);
+        aclObj.setPublicReadAccess(false);
+        expect(aclObj.toJSON()).to.be.eql({"*":{read: false}});
       });
     });
 

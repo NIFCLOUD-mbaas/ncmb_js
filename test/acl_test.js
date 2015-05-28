@@ -18,7 +18,7 @@ describe("NCMB ACL", function(){
         .set("proxy", config.apiserver.port || "");
     }
 
-    describe("default check", function() {
+    describe("権限を設定チェック", function() {
       it("Public Readを指定し、取得できる", function() {
         var aclObj1 = new ncmb.Acl();
         aclObj1.setPublicReadAccess(true);

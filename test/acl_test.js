@@ -18,6 +18,13 @@ describe("NCMB ACL", function(){
         .set("proxy", config.apiserver.port || "");
     }
 
+    describe("権限をconstructorで指定し、取得できる", function() {
+      it("permisionnのJSON指定", function() {
+        var aclObj = new ncmb.Acl({"*":{read: true}});
+        expect(aclObj.toJSON()).to.be.eql({"*":{read: true}});
+      });
+    });
+
     describe("権限を設定チェック", function() {
       it("Public Readを指定し、取得できる", function() {
         var aclObj1 = new ncmb.Acl();

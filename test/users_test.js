@@ -18,6 +18,77 @@ describe("NCMB Users", function(){
     .set("proxy", config.apiserver.port || "");
   }
 
+  describe("ログイン", function(){
+    context("userName, password でログインした場合", function(){
+      var user = new ncmb.User({userName:"name", password:"passwd"});
+
+      it("callback でレスポンスを取得できる", function(done){
+        ncmb.User.login(user, function(err, data){
+          console.log(err);
+          done(err ? err : null);
+        });
+      });
+
+      it("promise でレスポンスを取得できる", function(done){
+        ncmb.User.login(user)
+        .then(function(data){
+          done();
+        })
+        .catch(function(err){
+          console.log(err);
+          done(err);
+        });
+      });
+    });
+    context("mailAddress, password でログインした場合", function(){
+      var user = new ncmb.User({mailAddress:"test@example.com", password:"passwd"});
+
+      it("callback でレスポンスを取得できる", function(done){
+        ncmb.User.login(user, function(err, data){
+          console.log(err);
+          done(err ? err : null);
+        });
+      });
+
+      it("promise でレスポンスを取得できる", function(done){
+        ncmb.User.login(user)
+        .then(function(data){
+          done();
+        })
+        .catch(function(err){
+          console.log(err);
+          done(err);
+        });
+      });
+    });
+
+    context("失敗した理由が", function(){
+      context("username, mailAddress, password がない場合", function(){
+        var user = new ncmb.User();
+
+        it("callback でログインエラーを取得できる", function(done){
+          ncmb.User.login(user, function(err, data){
+            console.log(err);
+            expect(err).to.be.an.instanceof(Error);
+            done();
+          });
+        });
+
+        it("promise でログインエラーを取得できる", function(done){
+          ncmb.User.login(user)
+          .then(function(data){
+            done(new Error("失敗すべき"));
+          })
+          .catch(function(err){
+            console.log(err);
+            expect(err).to.be.an.instanceof(Error);
+            done();
+          });
+        });
+      });
+    });
+  });
+
   describe("ユーザー削除", function(){
     context("成功した場合", function(){
       var del_user = new ncmb.User({objectId: "object_id"});

@@ -163,6 +163,22 @@
     status: 404
     file: non_exists_user.json
 
+-
+  request:
+    url: '/2013-09-01/login?password=passwd&userName=name'
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_user_login_namepw_success.json
+
+-
+  request:
+    url: '/2013-09-01/login?password=passwd&mailAddress=test@example.com'
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_user_login_mailpw_success.json
+
 # files
 -
   request:

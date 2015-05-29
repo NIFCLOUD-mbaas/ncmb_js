@@ -23,13 +23,13 @@ describe("NCMB Files", function(){
     context("成功した場合", function(){
 
       it("callback でレスポンスを取得できる", function(done){
-        ncmb.File.get("get_file.text", function(err, file){
+        ncmb.File.fetch("get_file.text", function(err, file){
           done(err ? err : null);
         });
       });
 
       it("promise でレスポンスを取得できる", function(done){
-        ncmb.File.get("get_file.text")
+        ncmb.File.fetch("get_file.text")
         .then(function(file){
           done();
         })
@@ -43,14 +43,14 @@ describe("NCMB Files", function(){
       context("fileName がないときに", function(){
 
         it("callback で取得時エラーを取得できる", function(done){
-          ncmb.File.get(null, function(err, file){
+          ncmb.File.fetch(null, function(err, file){
             expect(err).to.be.an.instanceof(Error);
             done();
           });
         });
 
         it("promise で取得時エラーを取得できる", function(done){
-          ncmb.File.get()
+          ncmb.File.fetch()
           .then(function(file){
             done(new Error("失敗すべき"));
           })

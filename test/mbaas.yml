@@ -164,8 +164,8 @@
 
 -
   request:
-    url: /2013-09-01/files/get_file.text
+    url: /2013-09-01/files/fetch_file.text
     method: GET
   response:
     status: 200
-    file: 2013-09-01_file_get_success.json
+    file: 2013-09-01_file_fetch_success.json

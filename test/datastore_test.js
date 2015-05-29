@@ -83,7 +83,7 @@ describe("NCMB DataStore", function(){
         var food1 = new Food({key: "value1"});
         var food2 = new Food({key: "value2"});
 
-        it("saveAll (callback取得できる)", function(){
+        it("saveAll (callback取得できる)", function(done){
           Food.saveAll([food1, food2], function(err, list){
               //done(err ? err : null);
               if(err) {
@@ -96,7 +96,7 @@ describe("NCMB DataStore", function(){
           });
         });
 
-        it("saveAll (promise取得できる)", function(){
+        it("saveAll (promise取得できる)", function(done){
           Food.saveAll([food1, food2])
                 .then(function(list){
                   expect(list[0].objectId).to.be.eql("food_id1");
@@ -108,7 +108,7 @@ describe("NCMB DataStore", function(){
                 });
         });
 
-        it("saveAll (60 objects)", function(){
+        it("saveAll (60 objects)", function(done){
           var arr = [];
           for(var i = 0; i<60; i++) {
             arr.push(food1);

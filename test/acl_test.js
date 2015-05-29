@@ -54,6 +54,11 @@ describe("NCMB ACL", function(){
         aclObj.setPublicReadAccess(false);
         expect(aclObj.toJSON()).to.be.eql({"*":{read: false}});
       });
+      it("Public Read true, Public Read falseをchain指定し、最後に指定したfalseを取得できる", function() {
+        var aclObj = new ncmb.Acl();
+        aclObj.setPublicReadAccess(true).setPublicWriteAccess(false);
+        expect(aclObj.toJSON()).to.be.eql({"*":{read: true, write: false}});
+      });
     });
 
     describe("ACLデータが入っている状態で保存成功", function() {

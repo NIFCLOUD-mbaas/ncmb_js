@@ -61,7 +61,24 @@
   response:
     status: 201
     file: 2013-09-01_classes_TestClass_batch_success.json
-
+- 
+  request:
+    url: /2013-09-01/batch
+    method: POST
+    data:
+      "requests": " [  { method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} } ]"
+  response:
+    status: 201
+    file: 2013-09-01_classes_TestClass_batch_50requests_success.json
+- 
+  request:
+    url: /2013-09-01/batch
+    method: POST
+    data:
+      "requests": " [  { method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} } ]"
+  response:
+    status: 201
+    file: 2013-09-01_classes_TestClass_batch_10requests_success.json
 # push
 -
   request:

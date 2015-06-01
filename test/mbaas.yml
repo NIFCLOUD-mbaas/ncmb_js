@@ -197,3 +197,11 @@
   response:
     status: 200
     body: '{}'
+
+-
+  request:
+    url: /2013-09-01/files/fetch_file.text
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_file_fetch_success.json

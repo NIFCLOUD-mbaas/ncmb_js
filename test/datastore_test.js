@@ -68,22 +68,24 @@ describe("NCMB DataStore", function(){
             if(err) {
               done(err);
             } else {
-              Food.where({objectId: obj.objectId}).fetchAll()
-              .then(function(foods){
-                expect(foods[0].harvestDate).to.be.eql({ __type: 'Date', iso: '1999-12-31T14:59:59.999Z'});
-                done();
-              });
+              expect(obj).to.have.property("harvestDate");
+              expect(obj.harvestDate).to.have.property("__type", "Date");
+              expect(obj.harvestDate).to.have.property("iso");
+              expect(obj.save).to.be.a("function");
+
+              done();
             }
           });
         });
         it("promise で取得できる", function(done){
           food.save()
-              .then(function(newFood){
-                Food.where({objectId: newFood.objectId}).fetchAll()
-                .then(function(foods){
-                  expect(foods[0].harvestDate).to.be.eql({ __type: 'Date', iso: '1999-12-31T14:59:59.999Z'});
-                  done();
-                });
+              .then(function(obj){
+                expect(obj).to.have.property("harvestDate");
+                expect(obj.harvestDate).to.have.property("__type", "Date");
+                expect(obj.harvestDate).to.have.property("iso");
+                expect(obj.save).to.be.a("function");
+
+                done();
               })
               .catch(function(err){
                 done(err);

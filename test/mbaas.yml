@@ -33,6 +33,17 @@
     file: 2013-09-01_classes_TestClass_delete_success.json
 
 # datastore
+
+-
+  request:
+    url: /2013-09-01/classes/food
+    method: POST
+    data:
+      name: "orange"
+      acl: {'*':{read: true}}
+  response:
+    status: 201
+    file: 2013-09-01_classes_food_post_acl_success.json
 -
   request:
     url: /2013-09-01/classes/food
@@ -89,6 +100,13 @@
     file: 2013-09-01_classes_nonexist_post_failure.json
 -
   request:
+    url: /2013-09-01/classes/food
+    method: GET
+    query:
+      where: '{"objectId":"acl_object_id"}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_food_get_acl_success.json
     url: /2013-09-01/classes/food/object_id
     method: GET
   response:

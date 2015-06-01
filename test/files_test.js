@@ -135,52 +135,114 @@ describe("NCMB Files", function(){
   });
 
   describe("ファイル削除", function(){
-    context("成功した場合", function(){
-      var del_file = null;
-      before(function(){
-        del_file = new ncmb.File({fileName: "del_file.text"});
-      });
+    context("クラスメソッドで呼び出し", function(){
+      context("成功した場合", function(){
+        
+        it("callback でレスポンスを取得できる", function(done){
+          ncmb.File.delete("del_file.text", function(err){
+            done(err ? err : null);
+          });
+        });
 
-      it("callback でレスポンスを取得できる", function(done){
-        del_file.delete(function(err){
-          done(err ? err : null);
+        it("promise でレスポンスを取得できる", function(done){
+          ncmb.File.delete("del_file.text")
+          .then(function(){
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
         });
       });
 
-      it("promise でレスポンスを取得できる", function(done){
-        del_file.delete()
-        .then(function(){
-          done();
-        })
-        .catch(function(err){
-          done(err);
+      context("失敗した理由が", function(){
+        context("fileName がないときに", function(){
+
+          it("callback で削除時エラーを取得できる", function(done){
+            ncmb.File.delete(null, function(err){
+              try{
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              }catch(err){
+                done(err);
+              }
+            });
+          });
+
+          it("promise で削除時エラーを取得できる", function(done){
+            ncmb.File.delete(null)
+            .then(function(){
+              done(new Error("失敗すべき"));
+            })
+            .catch(function(err){
+              try{
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              }catch(err){
+                done(err);
+              }
+            });
+          });
         });
       });
     });
 
-    context("失敗した理由が", function(){
-      context("fileName がないときに", function(){
+    context("インスタンスメソッドで呼び出し", function(){
+      context("成功した場合", function(){
         var del_file = null;
         before(function(){
-          del_file = new ncmb.File({});
+          del_file = new ncmb.File({fileName: "del_file.text"});
         });
 
-        it("callback で削除時エラーを取得できる", function(done){
+        it("callback でレスポンスを取得できる", function(done){
           del_file.delete(function(err){
-            expect(err).to.be.an.instanceof(Error);
-            done();
+            done(err ? err : null);
           });
         });
 
-        it("promise で削除時エラーを取得できる", function(done){
+        it("promise でレスポンスを取得できる", function(done){
           del_file.delete()
-              .then(function(){
-                done(new Error("失敗すべき"));
-              })
-              .catch(function(err){
+          .then(function(){
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
+        });
+      });
+
+      context("失敗した理由が", function(){
+        context("fileName がないときに", function(){
+          var del_file = null;
+          before(function(){
+            del_file = new ncmb.File({});
+          });
+
+          it("callback で削除時エラーを取得できる", function(done){
+            del_file.delete(function(err){
+              try{
                 expect(err).to.be.an.instanceof(Error);
                 done();
-              });
+              }catch(err){
+                done(err);
+              }
+            });
+          });
+
+          it("promise で削除時エラーを取得できる", function(done){
+            del_file.delete()
+            .then(function(){
+              done(new Error("失敗すべき"));
+            })
+            .catch(function(err){
+              try{
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              }catch(err){
+                done(err);
+              }
+            });
+          });
         });
       });
     });

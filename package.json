@@ -33,6 +33,7 @@
     "gulp-stubcell": "^0.7.0",
     "gulp-uglify": "^1.1.0",
     "gulp-util": "^3.0.4",
+    "lodash": "^3.9.3",
     "mocha": "^2.1.0",
     "qs": "^2.4.1",
     "request": "^2.53.0",

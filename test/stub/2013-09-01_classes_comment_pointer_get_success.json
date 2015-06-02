@@ -1,0 +1,1 @@
+{"results":[{"objectId":"pointer_object_id","createDate":"2015-06-02T02:42:34.766Z","updateDate":"2015-06-02T02:42:34.767Z","acl": {"*":{"read":true,"write":true}},"content":"Lets do Sushirrito","parent": { "__type": "Pointer","className": "Post","objectId": "PQYtG1rGLDKYWutT" },"subparent": { "__type": "Pointer","className": "Post","objectId": "3hepMGQ6g1ONHrbJ" } }]}

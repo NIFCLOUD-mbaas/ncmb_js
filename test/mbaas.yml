@@ -205,3 +205,23 @@
   response:
     status: 200
     file: 2013-09-01_file_fetch_success.json
+
+-
+  request:
+    url: /2013-09-01/files
+    method: GET
+    query: 
+      where: 
+        '{"fileName":"find_file.text"}'
+  response:
+    status: 200
+    file: 2013-09-01_file_find_success.json
+
+-
+  request:
+    url: /2013-09-01/files
+    method: GET
+  response:
+    status: 200
+    body: '{"comment": "This should not get."}'
+

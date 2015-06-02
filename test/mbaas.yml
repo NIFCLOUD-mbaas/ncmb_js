@@ -53,21 +53,67 @@
     file: 2013-09-01_classes_food_post_date_success.json
 -
   request:
+    url: /2013-09-01/classes/post
+    method: POST
+    data:
+      title: "I'm hungry by parent"
+      content: "Where should we go for lunch?"
+  response:
+    status: 201
+    file: 2013-09-01_classes_parent_post_pointer_success.json
+-
+  request:
+    url: /2013-09-01/classes/post
+    method: POST
+    data: {"title": "Im hungry by parent", "content": "Where should we go for lunch?"}
+  response:
+    status: 201
+    file: 2013-09-01_classes_parent_post_pointer_success.json
+-
+  request:
+    url: /2013-09-01/classes/post
+    method: POST
+    data:
+      title: "Im hungry by sub_parent"
+      content: "Where should we go for lunch?"
+  response:
+    status: 201
+    file: 2013-09-01_classes_parent_sub_post_pointer_success.json
+-
+  request:
     url: /2013-09-01/classes/comment
     method: POST
     data:
       content: "Lets do Sushirrito"
-      parent: "{ __type: 'Pointer', className: 'Post', objectId: 'ndUgs29dFdIdtSXn'}"
-      subparent: "{ __type: 'Pointer', className: 'Post', objectId: 'DF7wdseYssBeDLi8'}"
+      parent: "{ __type: 'Pointer', className: 'Post', objectId: 'parent_id'}"
+      subparent: "{ __type: 'Pointer', className: 'Post', objectId: 'sub_parent_id'}"
   response:
     status: 201
     file: 2013-09-01_classes_comment_post_pointer_success.json
+-
+  request:
+    url: /2013-09-01/classes/comment
+    method: GET
+    query:
+      where: '{"objectId":"pointer_object_id"}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_comment_pointer_get_success.json
 -
   request:
     url: /2013-09-01/classes/food
     method: POST
     data:
       status: success
+  response:
+    status: 201
+    file: 2013-09-01_classes_food_post_success.json
+-
+  request:
+    url: /2013-09-01/classes/food
+    method: POST
+    body:
+      key: "value1"
   response:
     status: 201
     file: 2013-09-01_classes_food_post_success.json
@@ -114,7 +160,6 @@
   response:
     status: 200
     file: 2013-09-01_classes_TestClass_put_success.json
-
 -
   request:
     url: /2013-09-01/classes/food/object_id

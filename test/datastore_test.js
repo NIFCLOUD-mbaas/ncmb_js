@@ -91,8 +91,8 @@ describe("NCMB DataStore", function(){
         });
       });
       context("Datastoreタイプを指定し、オブジェクト保存に成功し", function(){
-        var Post = ncmb.DataStore("Post");
-        var Comment = ncmb.DataStore("Comment");
+        var Post = ncmb.DataStore("post");
+        var Comment = ncmb.DataStore("comment");
         var myPostParent = new Post({title: "I'm hungry by parent", content: "Where should we go for lunch?"});
         var myPostSubParent = new Post({title: "I'm hungry by sub_parent", content: "Where should we go for lunch?"});
         var myComment = new Comment({content: "Lets do Sushirrito", parent: myPostParent, subparent: myPostSubParent});

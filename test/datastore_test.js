@@ -286,10 +286,31 @@ describe("NCMB DataStore", function(){
       });
 
       context("クラス定義が存在し、データがあれば、リストが返り", function(){
-        var NonExist = ncmb.DataStore("nonexist");
-        //var food = new NonExist({name: "orange", type: "fruit", status: "failure"});
-        it("callback で取得できる");
-        it("promise で取得できる");
+        var FetchList = ncmb.DataStore("fetchlist");
+        it("callback で取得できる", function(done){
+          FetchList.fetchAll(function(err, objs){
+            if(err){
+              done(err);
+            }else{
+              expect(objs.length).to.be.equal(2);
+              expect(objs[0].objectId).to.be.equal("fetch_object_1");
+              expect(objs[1].objectId).to.be.equal("fetch_object_2");
+              done();
+            }
+          });
+        });
+        it("promise で取得できる", function(done){
+          FetchList.fetchAll()
+                  .then(function(objs){
+                    expect(objs.length).to.be.equal(2);
+                    expect(objs[0].objectId).to.be.equal("fetch_object_1");
+                    expect(objs[1].objectId).to.be.equal("fetch_object_2");
+                    done();
+                  })
+                  .catch(function(err){
+                    done(err);
+                  });
+        });
       });
     });
   });

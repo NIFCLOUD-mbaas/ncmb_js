@@ -263,8 +263,16 @@ describe("NCMB DataStore", function(){
 
       context("クラス定義が存在し、データがなければ、空のリストが返り", function(){
         var NonExist = ncmb.DataStore("nonexist");
-        var food = new NonExist({name: "orange", type: "fruit", status: "failure"});
-        it("callback で取得できる");
+        it("callback で取得できる", function(done){
+           NonExist.fetchAll(function(err, objs){
+            if(err){
+              done(err);
+            }else{
+              expect(JSON.stringify(objs)).to.be.equal("[]");
+              done();
+            }
+          });
+        });
         it("promise で取得できる");
       });
 

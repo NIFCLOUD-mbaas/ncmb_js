@@ -33,16 +33,62 @@
     file: 2013-09-01_classes_TestClass_delete_success.json
 
 # datastore
+
 -
   request:
     url: /2013-09-01/classes/food
     method: POST
     data:
-      status: success
+      name: "orange"
+      acl: {'*':{read: true}}
   response:
     status: 201
-    file: 2013-09-01_classes_food_post_success.json
-
+    file: 2013-09-01_classes_food_post_acl_success.json
+-
+  request:
+    url: /2013-09-01/classes/food
+    method: GET
+    query:
+      where: '{"objectId":"date_object_id"}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_food_get_date_success.json
+-
+  request:
+    url: /2013-09-01/classes/food
+    method: POST
+    data:
+      harvestDate: {"__type":"Date","iso":"1999-12-31T14:59:59.999Z"}
+  response:
+    status: 201
+    file: 2013-09-01_classes_food_post_date_success.json
+-
+  request:
+    url: /2013-09-01/classes/food
+    method: POST
+    data:
+      geoLocation: { latitude: 12, longitude: 133, __type: 'GeoPoint' }
+  response:
+    status: 201
+    file: 2013-09-01_classes_food_post_geolocation_success.json
+# -
+#   request:
+#     url: /2013-09-01/classes/food
+#     method: POST
+#     data:
+#       status: success
+#   response:
+#     status: 201
+#     file: 2013-09-01_classes_food_post_success.json
+-
+  request:
+    url: /2013-09-01/classes/food
+    method: GET
+    query:
+      where: '{"objectId":"geolocation_object_id"}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_food_get_geolocation_success.json
 -
   request:
     url: /2013-09-01/classes/nonexist
@@ -61,6 +107,7 @@
   response:
     status: 201
     file: 2013-09-01_classes_TestClass_batch_success.json
+
 -
   request:
     url: /2013-09-01/batch
@@ -79,6 +126,59 @@
   response:
     status: 201
     file: 2013-09-01_classes_TestClass_batch_10requests_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/food
+    method: GET
+    query:
+      where: '{"objectId":"acl_object_id"}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_food_get_acl_success.json
+-
+  request:
+    url: /2013-09-01/classes/food/object_id
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_TestClass_fetch_success.json
+-
+  request:
+    url: /2013-09-01/classes/food
+    method: GET
+    query:
+      where: '{"objectId":"object_id"}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_food_get_success.json
+-
+  request:
+    url: /2013-09-01/classes/food
+    method: GET
+    query:
+      limit: 1
+  response:
+    status: 200
+    file: 2013-09-01_classes_food_get_success.json
+-
+  request:
+    url: /2013-09-01/classes/food/object_id
+    method: PUT
+    body:
+      "key": "value_new"
+  response:
+    status: 200
+    file: 2013-09-01_classes_TestClass_put_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/food/object_id
+    method: DELETE
+  response:
+    status: 200
+    file: 2013-09-01_classes_TestClass_delete_success.json
+
 # push
 -
   request:
@@ -87,6 +187,13 @@
   response:
     status: 201
     body: '{"createDate":"2015-04-15T04:57:36.432Z","objectId":"pNiIhMIWZ3NYs5Zi"}'
+-
+  request:
+    url: /2013-09-01/classes/TestClass
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_TestClass_get_success.json
 
 # users/:user
 -
@@ -104,3 +211,28 @@
   response:
     status: 404
     file: non_exists_user.json
+
+# files
+-
+  request:
+    url: /2013-09-01/files/del_file.text
+    method: DELETE
+  response:
+    status: 200
+    body: '{}'
+
+-
+  request:
+    url: /2013-09-01/users/object_id
+    method: DELETE
+  response:
+    status: 200
+    body: '{}'
+
+-
+  request:
+    url: /2013-09-01/files/fetch_file.text
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_file_fetch_success.json

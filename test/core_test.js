@@ -6,13 +6,12 @@ var expect   = require("chai").expect;
 var NCMB = require("../lib/ncmb");
 
 describe("NCMB core", function(){
-  var ncmb = null;
+  var ncmb = new NCMB();
 
   before(function(done){done();});
   after(function(done){done();});
   describe("signature 作成", function(){
     it("[公式ドキュメント](http://bit.ly/1GsvAKL) の通りに成功する", function(){
-      ncmb = new NCMB();
       ncmb
         .set("apikey", "6145f91061916580c742f806bab67649d10f45920246ff459404c46f00ff3e56")
         .set("clientkey", "1343d198b510a0315db1c03f3aa0e32418b7a743f8e4b47cbff670601345cf75");
@@ -87,7 +86,7 @@ describe("NCMB core", function(){
         done(err);
       });
     });
-    
+
     it("callback によりデータを更新できる (PUT)", function(done){
       ncmb.request({
         method: "PUT",
@@ -113,7 +112,7 @@ describe("NCMB core", function(){
         done(err);
       });
     });
-    
+
     it("callback によりデータを削除できる (DELETE)", function(done){
       ncmb.request({
         method: "DEL",

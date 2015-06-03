@@ -43,6 +43,7 @@ describe("NCMB DataStore", function(){
               });
         });
       });
+
       context("クラス定義が存在しなければ、登録に失敗し", function(){
         var NonExist = null;
         var food = null;
@@ -67,21 +68,208 @@ describe("NCMB DataStore", function(){
               });
         });
       });
+      context("Dateタイプを指定し、オブジェクト保存に成功し", function(){
+        var Food = null;
+        var aSimpleDate = null;
+        var food = null;
+        before(function(){
+          Food = ncmb.DataStore("food");
+          aSimpleDate = new Date(1999, 11, 31, 23, 59, 59, 999);
+          food = new Food({harvestDate:  aSimpleDate});
+        })
+        it("callback で取得できる", function(done){
+          food.save(function(err, obj){
+            if(err) {
+              done(err);
+            } else {
+              expect(obj).to.have.property("harvestDate");
+              expect(obj.harvestDate).to.have.property("__type", "Date");
+              expect(obj.harvestDate).to.have.property("iso");
+              expect(obj.save).to.be.a("function");
+
+              done();
+            }
+          });
+        });
+        it("promise で取得できる", function(done){
+          food.save()
+              .then(function(obj){
+                expect(obj).to.have.property("harvestDate");
+                expect(obj.harvestDate).to.have.property("__type", "Date");
+                expect(obj.harvestDate).to.have.property("iso");
+                expect(obj.save).to.be.a("function");
+
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+      });
     });
   });
+
   describe("オブジェクト取得", function(){
-    describe("fetch", function(){
-      it("fetch");
-      it("fetchById");
+    describe("クラスからオブジェクト１個取得", function(){
+      context("fetch", function(){
+        var Food = null;
+        before(function(){
+          Food = ncmb.DataStore("food");
+        });
+
+        it("callback で取得できる", function(done){
+          Food.fetch(function(err, obj){
+            done(err ? err : null);
+          });
+        });
+
+        it("promise で取得できる", function(done){
+          Food.fetch()
+              .then(function(obj){
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+      });
     });
-    describe("fetchById", function(){
-      it("fetch");
-      it("fetchById");
+
+    describe("ObjectIdでオブジェクト取得", function(){
+      context("fetchById", function(){
+        var Food = null;
+        before(function(){
+          Food = ncmb.DataStore("food");
+        });
+
+        it("callback で取得できる", function(done){
+          Food.fetchById("object_id", function(err, obj){
+            done(err ? err : null);
+          });
+        });
+
+        it("promise で取得できる", function(done){
+          Food.fetchById("object_id")
+              .then(function(newFood){
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+      });
     });
   });
+
   describe("オブジェクト更新", function(){
+    context("update成功", function(){
+      var Food = null;
+      var food = null;
+      before(function(){
+        Food = ncmb.DataStore("food");
+        food = new Food({objectId: "object_id", key: "value_new"});
+      });
+
+      it("callback で取得できる", function(done){
+        food.update(function(err, obj){
+          done(err ? err : null);
+        });
+      });
+
+      it("promise で取得できる", function(done){
+        food.update()
+            .then(function(newFood){
+              done();
+            })
+            .catch(function(err){
+              done(err);
+            });
+      });
+    });
+
+    context("update失敗", function(){
+      context("objectIdがない理由で", function(){
+        var Food = null;
+        var food = null;
+        before(function(){
+          Food = ncmb.DataStore("food");
+          food = new Food({key: "value_new"});
+        });
+
+        it("callback で取得できる", function(done){
+          food.update(function(err, obj){
+            expect(err).to.be.an.instanceof(Error);
+            done();
+          });
+        });
+
+        it("promise で取得できる", function(done){
+          food.update()
+              .then(function(newFood){
+                done(new Error("Must throw error"));
+              })
+              .catch(function(err){
+                done();
+              });
+        });
+      });
+    });
   });
+
   describe("オブジェクト削除", function(){
+    context("成功した場合", function(){
+      var Food = null;
+      var food = null;
+      before(function(){
+        Food = ncmb.DataStore("food");
+        food = new Food({objectId: "object_id"});
+      });
+
+      it("callback で削除結果を取得できる", function(done){
+        food.delete(function(err){
+          done(err ? err : null);
+        });
+      });
+
+      it("promise で削除結果を取得できる", function(done){
+        food.delete()
+            .then(function(){
+              done();
+            })
+            .catch(function(err){
+              done(err);
+            });
+      });
+    });
+
+    context("失敗した理由が", function(){
+      context("ObjectId がないときに", function(){
+        var Food = null;
+        var food = null;
+        before(function(){
+          Food = ncmb.DataStore("food");
+          food = new Food({});
+        });
+
+        it("callback で削除結果を取得できる", function(done){
+          food.delete(function(err){
+            expect(err).to.be.an.instanceof(Error);
+            done();
+          });
+        });
+
+        it("promise で削除結果を取得できる", function(done){
+          food.delete()
+              .then(function(){
+                done(new Error("失敗すべき"));
+              })
+              .catch(function(err){
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+        });
+      });
+    });
   });
 
   describe("オブジェクト複数操作", function(){
@@ -203,10 +391,12 @@ describe("NCMB DataStore", function(){
               });
         });
       });
+
       context("クラス定義が存在し、データがなければ、空のリストが返り", function(){
         it("callback で取得できる");
         it("promise で取得できる");
       });
+
       context("クラス定義が存在し、データがあれば、リストが返り", function(){
         it("callback で取得できる");
         it("promise で取得できる");

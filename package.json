@@ -7,7 +7,7 @@
     "example": "example"
   },
   "scripts": {
-    "test": "NODE_ENV=test mocha -R spec test/**_test.js",
+    "test": "nohup npm run stub:start & sleep 5 && NODE_ENV=test mocha -R spec test/**_test.js && kill `ps aux | grep stubc[e]ll | awk '{print $2}'`",
     "test-one": "NODE_ENV=test mocha -R spec ",
     "integral_test": "NODE_ENV=integral gulp test",
     "build": "browserify -t babelify lib/ncmb.js -o ncmb.js",
@@ -33,6 +33,7 @@
     "gulp-stubcell": "^0.7.0",
     "gulp-uglify": "^1.1.0",
     "gulp-util": "^3.0.4",
+    "lodash": "^3.9.3",
     "mocha": "^2.1.0",
     "qs": "^2.4.1",
     "request": "^2.53.0",

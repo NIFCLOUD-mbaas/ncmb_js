@@ -20,114 +20,51 @@ describe("NCMB Files", function(){
   });
 
   describe("ファイル取得", function(){
-    context("クラスメソッドで呼び出し", function(){
-      context("成功した場合", function(){
-        it("callback でレスポンスを取得できる", function(done){
-          ncmb.File.fetch("fetch_file.text", function(err, file){
-            done(err ? err : null);
-          });
-        });
-
-        it("promise でレスポンスを取得できる", function(done){
-          ncmb.File.fetch("fetch_file.text")
-          .then(function(file){
-            done();
-          })
-          .catch(function(err){
-            done(err);
-          });
+    context("成功した場合", function(){
+      it("callback でレスポンスを取得できる", function(done){
+        ncmb.File.fetch("fetch_file.text", function(err, file){
+          done(err ? err : null);
         });
       });
 
-      context("失敗した理由が", function(){
-        context("fileName がないときに", function(){
-
-          it("callback で取得時エラーを取得できる", function(done){
-
-            ncmb.File.fetch(null, function(err, file){
-              try{
-                expect(err).to.be.an.instanceof(Error);
-                done();
-              }catch(err){
-                done(err);
-              }
-            });
-          });
-
-          it("promise で取得時エラーを取得できる", function(done){
-            ncmb.File.fetch()
-            .then(function(file){
-              done(new Error("失敗すべき"));
-            })
-            .catch(function(err){
-              try{
-                expect(err).to.be.an.instanceof(Error);
-                done();
-              }catch(err){
-                done(err);
-              }
-            });
-          });
+      it("promise でレスポンスを取得できる", function(done){
+        ncmb.File.fetch("fetch_file.text")
+        .then(function(file){
+          done();
+        })
+        .catch(function(err){
+          done(err);
         });
       });
     });
 
-    context("インスタンスメソッドで呼び出し", function(){
-      var file = null;
-      before(function(){
-        file = new ncmb.File();   
-      });
+    context("失敗した理由が", function(){
+      context("fileName がないときに", function(){
 
-      context("成功した場合", function(){
-        beforeEach(function(){
-          file["fileName"] = "fetch_file.text";
-        });
-        it("callback でレスポンスを取得できる", function(done){
-          file.fetch(function(err, data){
-            done(err ? err : null);
+        it("callback で取得時エラーを取得できる", function(done){
+
+          ncmb.File.fetch(null, function(err, file){
+            try{
+              expect(err).to.be.an.instanceof(Error);
+              done();
+            }catch(err){
+              done(err);
+            }
           });
         });
 
-        it("promise でレスポンスを取得できる", function(done){
-          file.fetch()
-          .then(function(data){
-            done();
+        it("promise で取得時エラーを取得できる", function(done){
+          ncmb.File.fetch()
+          .then(function(file){
+            done(new Error("失敗すべき"));
           })
           .catch(function(err){
-            done(err);
-          });
-        });
-      });
-
-      context("失敗した理由が", function(){
-        beforeEach(function(){
-          file["fileName"] = null;
-        });
-        context("fileName がないときに", function(){
-          it("callback で取得時エラーを取得できる", function(done){
-            file.fetch(function(err, data){
-              try{
-                expect(err).to.be.an.instanceof(Error);
-                done();
-              }catch(err){
-                done(err);
-              }
-            });
-          });
-
-          it("promise で取得時エラーを取得できる", function(done){
-            file.fetch()
-            .then(function(data){
-              done(new Error("失敗すべき"));
-            })
-            .catch(function(err){
-              try{
-                expect(err).to.be.an.instanceof(Error);
-                done();
-              }catch(err){
-                done(err);
-              }
-            });
+            try{
+              expect(err).to.be.an.instanceof(Error);
+              done();
+            }catch(err){
+              done(err);
+            }
           });
         });
       });

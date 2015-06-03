@@ -15,7 +15,7 @@ describe("NCMB Files", function(){
       ncmb.set("protocol", config.apiserver.protocol || "http:")
           .set("fqdn", config.apiserver.fqdn)
           .set("port", config.apiserver.port)
-          .set("proxy", config.apiserver.port || "");
+          .set("proxy", config.apiserver.proxy || "");
     }
   });
 
@@ -43,14 +43,9 @@ describe("NCMB Files", function(){
         context("fileName がないときに", function(){
 
           it("callback で取得時エラーを取得できる", function(done){
-
             ncmb.File.fetch(null, function(err, file){
-              try{
-                expect(err).to.be.an.instanceof(Error);
-                done();
-              }catch(err){
-                done(err);
-              }
+              expect(err).to.be.an.instanceof(Error);
+              done();
             });
           });
 
@@ -60,12 +55,8 @@ describe("NCMB Files", function(){
               done(new Error("失敗すべき"));
             })
             .catch(function(err){
-              try{
-                expect(err).to.be.an.instanceof(Error);
-                done();
-              }catch(err){
-                done(err);
-              }
+              expect(err).to.be.an.instanceof(Error);
+              done();
             });
           });
         });
@@ -75,7 +66,7 @@ describe("NCMB Files", function(){
     context("インスタンスメソッドで呼び出し", function(){
       var file = null;
       before(function(){
-        file = new ncmb.File();   
+        file = new ncmb.File();
       });
 
       context("成功した場合", function(){
@@ -106,12 +97,8 @@ describe("NCMB Files", function(){
         context("fileName がないときに", function(){
           it("callback で取得時エラーを取得できる", function(done){
             file.fetch(function(err, data){
-              try{
-                expect(err).to.be.an.instanceof(Error);
-                done();
-              }catch(err){
-                done(err);
-              }
+              expect(err).to.be.an.instanceof(Error);
+              done();
             });
           });
 
@@ -121,12 +108,8 @@ describe("NCMB Files", function(){
               done(new Error("失敗すべき"));
             })
             .catch(function(err){
-              try{
-                expect(err).to.be.an.instanceof(Error);
-                done();
-              }catch(err){
-                done(err);
-              }
+              expect(err).to.be.an.instanceof(Error);
+              done();
             });
           });
         });
@@ -136,7 +119,7 @@ describe("NCMB Files", function(){
 
   describe("ファイル削除", function(){
     context("成功した場合", function(){
-        
+
       it("callback でレスポンスを取得できる", function(done){
         ncmb.File.delete("del_file.text", function(err){
           done(err ? err : null);
@@ -159,12 +142,8 @@ describe("NCMB Files", function(){
 
         it("callback で削除時エラーを取得できる", function(done){
           ncmb.File.delete(null, function(err){
-            try{
-              expect(err).to.be.an.instanceof(Error);
-              done();
-            }catch(err){
-              done(err);
-            }
+            expect(err).to.be.an.instanceof(Error);
+            done();
           });
         });
 
@@ -174,12 +153,8 @@ describe("NCMB Files", function(){
             done(new Error("失敗すべき"));
           })
           .catch(function(err){
-            try{
-              expect(err).to.be.an.instanceof(Error);
-              done();
-            }catch(err){
-              done(err);
-            }
+            expect(err).to.be.an.instanceof(Error);
+            done();
           });
         });
       });

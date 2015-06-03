@@ -10,7 +10,7 @@
   request:
     url: /2013-09-01/classes/TestClass
     method: POST
-    body: 
+    body:
       "key": "value"
   response:
     status: 201
@@ -19,7 +19,7 @@
   request:
     url: /2013-09-01/classes/TestClass/object_id
     method: PUT
-    body: 
+    body:
       "key": "value_new"
   response:
     status: 200
@@ -28,7 +28,7 @@
   request:
     url: /2013-09-01/classes/TestClass/object_id
     method: DELETE
-  response: 
+  response:
     status: 200
     file: 2013-09-01_classes_TestClass_delete_success.json
 
@@ -52,30 +52,30 @@
   response:
     status: 400
     file: 2013-09-01_classes_nonexist_post_failure.json
-- 
+-
   request:
     url: /2013-09-01/batch
     method: POST
-    data:
-      "requests": '[{"method":"POST", "path":"2013-09-01/classes/food", "body":{"key":"value1"}}, {"method":"POST", "path":"2013-09-01/classes/food", "body":{"key":"value2"}}]'
+    body:
+      requests: [{"method":"POST","path":"2013-09-01/classes/food","body":{"key":"value1"}},{"method":"POST","path":"2013-09-01/classes/food","body":{"key":"value2"}}]
   response:
     status: 201
     file: 2013-09-01_classes_TestClass_batch_success.json
-- 
+-
   request:
     url: /2013-09-01/batch
     method: POST
-    data:
-      "requests": " [  { method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} } ]"
+    body:
+      requests: [{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value0"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value1"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value2"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value3"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value4"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value5"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value6"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value7"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value8"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value9"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value10"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value11"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value12"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value13"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value14"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value15"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value16"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value17"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value18"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value19"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value20"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value21"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value22"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value23"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value24"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value25"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value26"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value27"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value28"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value29"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value30"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value31"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value32"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value33"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value34"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value35"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value36"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value37"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value38"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value39"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value40"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value41"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value42"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value43"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value44"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value45"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value46"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value47"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value48"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value49"}}]
   response:
     status: 201
     file: 2013-09-01_classes_TestClass_batch_50requests_success.json
-- 
+-
   request:
     url: /2013-09-01/batch
     method: POST
-    data:
-      "requests": " [  { method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} },{ method: 'POST',path: '2013-09-01/classes/food',body: {'key':'value1'} } ]"
+    body:
+      requests: [{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value50"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value51"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value52"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value53"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value54"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value55"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value56"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value57"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value58"}},{"method":"POST","path":"2013-09-01/classes/megafood","body":{"key":"value59"}}]
   response:
     status: 201
     file: 2013-09-01_classes_TestClass_batch_10requests_success.json

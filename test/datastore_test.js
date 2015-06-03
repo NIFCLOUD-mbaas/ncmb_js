@@ -84,6 +84,98 @@ describe("NCMB DataStore", function(){
   describe("オブジェクト削除", function(){
   });
 
+  describe("オブジェクト複数操作", function(){
+    describe("作成処理を", function(){
+      describe("2 つの Object (1 frame 内に収まる) を処理", function(){
+        context("成功した場合に", function(){
+          var Food = null;
+          var foods = [];
+          before(function(){
+            Food = ncmb.DataStore("food");
+            foods.push(new Food({key: "value1"}));
+            foods.push(new Food({key: "value2"}));
+          });
+
+          it("callbackで取得できる", function(done){
+            Food.batch(foods, function(err, list){
+              if(err) {
+                done(err);
+              } else {
+                expect(list[0].objectId).to.be.eql("food_id1");
+                expect(list[1].objectId).to.be.eql("food_id2");
+                done();
+              }
+            });
+          });
+
+          it("promise取得できる", function(done){
+            Food.batch(foods)
+                .then(function(list){
+                  expect(list[0].objectId).to.be.eql("food_id1");
+                  expect(list[1].objectId).to.be.eql("food_id2");
+                  done();
+                })
+                .catch(function(err){
+                  done(err);
+                });
+          });
+        });
+
+        context("失敗した場合に", function(){
+          var Food = null;
+          before(function(){
+            Food = ncmb.DataStore("food");
+          })
+          it("saveAll (callback取得できる)", function(done){
+            Food.batch([], function(err){
+              expect(err).to.be.an.instanceof(Error);
+              done();
+            });
+          });
+
+          it("saveAll (promise取得できる)", function(done){
+            Food.batch([])
+                .then(function(){
+                  done(new Error("失敗すべき"));
+                })
+                .catch(function(err){
+                  expect(err).to.be.an.instanceof(Error);
+                  done();
+                });
+          });
+        });
+      });
+
+      context("60 の Object (1 frame に収まらない) を処理", function(){
+        context("成功した場合に", function(){
+          var Food = null;
+          before(function(){
+            Food = ncmb.DataStore("megafood");
+          });
+          it("callback で取得できる", function(done){
+            var foods = [];
+            for(var i = 0; i < 60; i++) {
+              foods.push(new Food({key: "value" + i}));
+            }
+            Food.batch(foods, function(err, list){
+              if(err) {
+                done(err);
+              } else {
+                expect(list[0].objectId).to.be.eql("nsgVyp0UyXQYTjbU");
+                done();
+              }
+            });
+          });
+        });
+      });
+    });
+
+    describe("更新処理", function(){
+    });
+
+    describe("削除処理", function(){
+    });
+  });
 
   describe("オブジェクト検索", function(){
     describe("fetchAll", function(){

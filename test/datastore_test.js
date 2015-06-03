@@ -278,7 +278,7 @@ describe("NCMB DataStore", function(){
 
       context("クラス定義が存在し、データがあれば、リストが返り", function(){
         var NonExist = ncmb.DataStore("nonexist");
-        var food = new NonExist({name: "orange", type: "fruit", status: "failure"});
+        //var food = new NonExist({name: "orange", type: "fruit", status: "failure"});
         it("callback で取得できる");
         it("promise で取得できる");
       });

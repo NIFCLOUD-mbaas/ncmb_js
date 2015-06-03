@@ -107,6 +107,8 @@
   response:
     status: 200
     file: 2013-09-01_classes_food_get_acl_success.json
+-
+  request:
     url: /2013-09-01/classes/food/object_id
     method: GET
   response:

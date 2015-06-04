@@ -212,6 +212,15 @@
     status: 404
     file: non_exists_user.json
 
+-
+  request:
+    url: /2013-09-01/requestPasswordReset
+    method: POST
+    body: { "mailAddress": "test@example.com" }
+  response:
+    status: 201
+    file: 2013-09-01_users_send_reset_password_success.json
+
 # files
 -
   request:

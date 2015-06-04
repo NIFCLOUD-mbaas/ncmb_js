@@ -300,6 +300,76 @@ describe("NCMB Users", function(){
     });
   });
 
+  describe("ユーザー登録メール送信", function(){
+    context("成功した場合", function(){
+
+      it("callback でレスポンスを取得できる", function(done){
+        ncmb.User.sendSignupMail("test@example.com", function(err, data){
+          done(err ? err : null);
+        });
+      });
+
+      it("promise でレスポンスを取得できる", function(done){
+        ncmb.User.sendSignupMail("test@example.com")
+        .then(function(data){
+          done();
+        })
+        .catch(function(err){
+          done(err);
+        });
+      });
+    });
+
+    context("失敗した理由が", function(){
+      context("mailAddress がないときに", function(){
+
+        it("callback で送信時エラーを取得できる", function(done){
+          ncmb.User.sendSignupMail(null, function(err, data){
+            try{
+              expect(err).to.be.an.instanceof(Error);
+            }catch(err){
+              done(err);
+            } 
+            done();
+          });
+        });
+
+        it("promise で送信時エラーを取得できる", function(done){
+          ncmb.User.sendSignupMail()
+          .then(function(data){
+             done(new Error("失敗すべき"));
+          })
+          .catch(function(err){
+            expect(err).to.be.an.instanceof(Error);
+            done();
+          });
+        });
+      });
+
+    context("mailAddress が登録済みのときに", function(){
+
+      it("callback で送信時エラーを取得できる", function(done){
+        ncmb.User.sendSignupMail("usedaddress@example.com", function(err, data){
+          expect(err).to.be.an.instanceof(Error);
+          done();
+        });
+      });
+
+      it("promise で送信時エラーを取得できる", function(done){
+        ncmb.User.sendSignupMail("usedaddress@example.com")
+        .then(function(data){
+           done(new Error("失敗すべき"));
+        })
+        .catch(function(err){
+          expect(err).to.be.an.instanceof(Error);
+          done();
+        });
+      });
+    });
+    });
+  });
+
+
   describe("ユーザー削除", function(){
     var del_user = null;
     context("成功した場合", function(){

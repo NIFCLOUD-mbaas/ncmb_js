@@ -255,6 +255,26 @@
     status: 201
     file: 2013-09-01_users_update_success.json
 
+-
+  request:
+    url: /2013-09-01/requestMailAddressUserEntry
+    method: POST
+    body:
+      "mailAddress": "test@example.com"
+  response:
+    status: 201
+    file: 2013-09-01_users_send_signup_mail_success.json
+
+-
+  request:
+    url: /2013-09-01/requestMailAddressUserEntry
+    method: POST
+    body:
+      "mailAddress": "usedaddress@example.com"
+  response:
+    status: 409
+    file: 2013-09-01_users_send_signup_mail_failed.json
+
 # files
 -
   request:

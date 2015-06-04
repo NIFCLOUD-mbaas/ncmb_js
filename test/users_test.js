@@ -26,13 +26,13 @@ describe("NCMB Users", function(){
       });
 
       it("callback でレスポンスを取得できる", function(done){
-        name_user.save(function(err){
+        name_user.signUp(function(err){
           done(err ? err : null);
         });
       });
 
       it("promise でレスポンスを取得できる", function(done){
-        name_user.save()
+        name_user.signUp()
         .then(function(){
           done();
         })
@@ -49,13 +49,13 @@ describe("NCMB Users", function(){
       });
 
       it("callback でレスポンスを取得できる", function(done){
-        mail_user.save(function(err){
+        mail_user.signUp(function(err){
           done(err ? err : null);
         });
       });
 
       it("promise でレスポンスを取得できる", function(done){
-        mail_user.save()
+        mail_user.signUp()
         .then(function(){
           done();
         })
@@ -73,13 +73,13 @@ describe("NCMB Users", function(){
         });
         
         it("callback でレスポンスを取得できる", function(done){
-          fb_user.save(function(err){
+          fb_user.signUp(function(err){
             done(err ? err : null);
           });
         });
 
         it("promise でレスポンスを取得できる", function(done){
-          fb_user.save()
+          fb_user.signUp()
           .then(function(){
             done();
           })
@@ -96,13 +96,13 @@ describe("NCMB Users", function(){
         });
         
         it("callback でレスポンスを取得できる", function(done){
-          twi_user.save(function(err){
+          twi_user.signUp(function(err){
             done(err ? err : null);
           });
         });
 
         it("promise でレスポンスを取得できる", function(done){
-          twi_user.save()
+          twi_user.signUp()
           .then(function(){
             done();
           })
@@ -119,13 +119,13 @@ describe("NCMB Users", function(){
         });
        
         it("callback でレスポンスを取得できる", function(done){
-          ano_user.save(function(err){
+          ano_user.signUp(function(err){
             done(err ? err : null);
           });
         });
 
         it("promise でレスポンスを取得できる", function(done){
-          ano_user.save()
+          ano_user.signUp()
           .then(function(){
             done();
           })
@@ -140,7 +140,7 @@ describe("NCMB Users", function(){
           var non_auth_user = new ncmb.User({});
 
           it("callback で登録時エラーを取得できる", function(done){
-            non_auth_user.save(function(err){
+            non_auth_user.signUp(function(err){
               if(err === null) done(new Error("失敗すべき"));
               expect(err).to.be.an.instanceof(Error);
               done();
@@ -148,7 +148,7 @@ describe("NCMB Users", function(){
           });
 
           it("promise で登録時エラーを取得できる", function(done){
-            non_auth_user.save()
+            non_auth_user.signUp()
             .then(function(){
                done(new Error("失敗すべき"));
             })

@@ -304,13 +304,13 @@ describe("NCMB Users", function(){
     context("成功した場合", function(){
 
       it("callback でレスポンスを取得できる", function(done){
-        ncmb.User.sendSignupMail("test@example.com", function(err, data){
+        ncmb.User.requestSignUpByMailAddress("test@example.com", function(err, data){
           done(err ? err : null);
         });
       });
 
       it("promise でレスポンスを取得できる", function(done){
-        ncmb.User.sendSignupMail("test@example.com")
+        ncmb.User.requestSignUpByMailAddress("test@example.com")
         .then(function(data){
           done();
         })
@@ -324,18 +324,15 @@ describe("NCMB Users", function(){
       context("mailAddress がないときに", function(){
 
         it("callback で送信時エラーを取得できる", function(done){
-          ncmb.User.sendSignupMail(null, function(err, data){
-            try{
-              expect(err).to.be.an.instanceof(Error);
-            }catch(err){
-              done(err);
-            } 
+          ncmb.User.requestSignUpByMailAddress(null, function(err, data){
+            if(!err) done(new Error("失敗すべき"));
+            expect(err).to.be.an.instanceof(Error);
             done();
           });
         });
 
         it("promise で送信時エラーを取得できる", function(done){
-          ncmb.User.sendSignupMail()
+          ncmb.User.requestSignUpByMailAddress()
           .then(function(data){
              done(new Error("失敗すべき"));
           })
@@ -349,14 +346,15 @@ describe("NCMB Users", function(){
     context("mailAddress が登録済みのときに", function(){
 
       it("callback で送信時エラーを取得できる", function(done){
-        ncmb.User.sendSignupMail("usedaddress@example.com", function(err, data){
+        ncmb.User.requestSignUpByMailAddress("usedaddress@example.com", function(err, data){
+          if(!err) done(new Error("失敗すべき"));
           expect(err).to.be.an.instanceof(Error);
           done();
         });
       });
 
       it("promise で送信時エラーを取得できる", function(done){
-        ncmb.User.sendSignupMail("usedaddress@example.com")
+        ncmb.User.requestSignUpByMailAddress("usedaddress@example.com")
         .then(function(data){
            done(new Error("失敗すべき"));
         })

@@ -268,7 +268,7 @@ describe("NCMB DataStore", function(){
             if(err){
               done(err);
             }else{
-              expect(JSON.stringify(objs)).to.be.equal("[]");
+              expect(objs).to.be.eql([]);
               done();
             }
           });
@@ -276,8 +276,8 @@ describe("NCMB DataStore", function(){
         it("promise で取得できる", function(done){
           NonExist.fetchAll()
                   .then(function(objs){
-                    expect(JSON.stringify(objs)).to.be.equal("[]");
-                    done();    
+                    expect(objs).to.be.eql([]);
+                    done();
                   })
                   .catch(function(err){
                     done(err);

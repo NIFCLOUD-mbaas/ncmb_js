@@ -7,11 +7,15 @@
     "example": "example"
   },
   "scripts": {
-    "test": "nohup npm run stub:start & sleep 5 && NODE_ENV=test mocha -R spec test/**_test.js && kill `ps aux | grep stubc[e]ll | awk '{print $2}'`",
+    "test": "nohup npm run stub:start & sleep 5 && NODE_ENV=test mocha -R list test/**_test.js && npm run cov:80 && npm run stub:stop",
+    "coverage": "NODE_ENV=test istanbul cover _mocha -- -R spec test/**_test.js",
+    "coverage_": "nohup npm run stub:start & sleep 5 && NODE_ENV=test istanbul cover _mocha -- -R spec test/**_test.js && npm run stub:stop",
+    "cov:80": "npm run coverage 2>&1 | grep Lines | perl -nle 'my ($l, $c, $p, @d) = split(/[\\s%]+/); exit(($p > 80) == 0)'",
     "test-one": "NODE_ENV=test mocha -R spec ",
     "integral_test": "NODE_ENV=integral gulp test",
     "build": "browserify -t babelify lib/ncmb.js -o ncmb.js",
-    "stub:start": "stubcell -e test/mbaas.yml --basepath test/stub -p 18000"
+    "stub:start": "stubcell -e test/mbaas.yml --basepath test/stub -p 18000",
+    "stub:stop": "kill `ps aux | grep stubc[e]ll | awk '{print $2}'`"
   },
   "repository": "http://example.com",
   "readmefile": "README.md",
@@ -33,6 +37,7 @@
     "gulp-stubcell": "^0.7.0",
     "gulp-uglify": "^1.1.0",
     "gulp-util": "^3.0.4",
+    "istanbul": "^0.3.14",
     "lodash": "^3.9.3",
     "mocha": "^2.1.0",
     "qs": "^2.4.1",

@@ -393,8 +393,61 @@ describe("NCMB DataStore", function(){
       });
 
       context("クラス定義が存在し、データがなければ、空のリストが返り", function(){
-        it("callback で取得できる");
-        it("promise で取得できる");
+        var NonExist = null;
+        before(function(){
+          NonExist = ncmb.DataStore("nonexist");
+        });
+        it("callback で取得できる", function(done){
+          NonExist.fetchAll(function(err, objs){
+            if(err){
+              done(err);
+            }else{
+              expect(objs).to.be.eql([]);
+              done();
+            }
+          });
+        });
+        it("promise で取得できる", function(done){
+          NonExist.fetchAll()
+                  .then(function(objs){
+                    expect(objs).to.be.eql([]);
+                    done();
+                  })
+                  .catch(function(err){
+                    done(err);
+                  });
+        });
+      });
+
+      context("クラス定義が存在し、データがあれば、リストが返り", function(){
+        var FetchList = null;
+        before(function(){
+          FetchList = ncmb.DataStore("fetchlist");
+        });
+        it("callback で取得できる", function(done){
+          FetchList.fetchAll(function(err, objs){
+            if(err){
+              done(err);
+            }else{
+              expect(objs.length).to.be.equal(2);
+              expect(objs[0].objectId).to.be.equal("fetch_object_1");
+              expect(objs[1].objectId).to.be.equal("fetch_object_2");
+              done();
+            }
+          });
+        });
+        it("promise で取得できる", function(done){
+          FetchList.fetchAll()
+                  .then(function(objs){
+                    expect(objs.length).to.be.equal(2);
+                    expect(objs[0].objectId).to.be.equal("fetch_object_1");
+                    expect(objs[1].objectId).to.be.equal("fetch_object_2");
+                    done();
+                  })
+                  .catch(function(err){
+                    done(err);
+                  });
+        });
       });
 
       context("クラス定義が存在し、データがあれば、リストが返り", function(){

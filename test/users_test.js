@@ -45,7 +45,7 @@ describe("NCMB Users", function(){
         });
       });
     });
-    
+
     context("userName, password でログインした場合", function(){
       beforeEach(function(){
         userName  = "name";
@@ -76,7 +76,7 @@ describe("NCMB Users", function(){
         beforeEach(function(){
           user = new ncmb.User({userName:"name"});
         });
-       
+
         it("callback でログインエラーを取得できる", function(done){
           ncmb.User.login(user, function(err, data){
             if(!err) done(new Error("失敗すべき"));
@@ -100,7 +100,7 @@ describe("NCMB Users", function(){
         beforeEach(function(){
           user = new ncmb.User({password:"passwd"});
         });
-       
+
         it("callback でログインエラーを取得できる", function(done){
           ncmb.User.login(user, function(err, data){
             if(!err) done(new Error("失敗すべき"));
@@ -126,7 +126,7 @@ describe("NCMB Users", function(){
           userName  = null;
           password = "passwd";
         });
-       
+
         it("callback でログインエラーを取得できる", function(done){
           ncmb.User.login(userName, password, function(err, data){
             if(!err) done(new Error("失敗すべき"));
@@ -151,7 +151,7 @@ describe("NCMB Users", function(){
           userName  = "name";
           password = null;
         });
-       
+
         it("callback でログインエラーを取得できる", function(done){
           ncmb.User.login(userName, password, function(err, data){
             if(!err) done(new Error("失敗すべき"));
@@ -175,7 +175,7 @@ describe("NCMB Users", function(){
         beforeEach(function(){
           userName  = "name";
         });
-       
+
         it("callback でログインエラーを取得できる", function(done){
           ncmb.User.login(userName, function(err, data){
             if(!err) done(new Error("失敗すべき"));
@@ -421,4 +421,3 @@ describe("NCMB Users", function(){
     });
   });
 });
-

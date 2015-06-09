@@ -23,7 +23,7 @@ describe("NCMB Role", function(){
     describe("save", function(){
       context("存在しないロール名を指定し、登録に成功", function(done){
         var newRole = null;
-        before(function(){
+        beforeEach(function(){
           newRole = new ncmb.Role({roleName: "new_role_name"});
         });
         it("callback で取得できる", function(done){
@@ -42,7 +42,26 @@ describe("NCMB Role", function(){
         });         
       });
       context("存在したロール名を指定し、登録に失敗", function(){
-         
+        var newExistRole = null;
+        before(function(){
+          newExistRole = new ncmb.Role({roleName: "new_exist_role_name"});
+        });
+        it("callback で取得できる", function(done){
+          newExistRole.save(function(err, obj){
+            if(!err) return done(new Error("error が返されなければならない"));
+            expect(err.status).to.be.eql(409);
+            done();
+          });
+        });
+        it("promise で取得できる", function(done){
+          newExistRole.save()
+              .then(function(obj){
+                done(new Error("error が返されなければならない"));
+              })
+              .catch(function(err){
+                done();
+              });
+        });
       });
     });
   });

@@ -3,32 +3,38 @@
 var config = require("config");
 var expect = require("chai").expect;
 var NCMB = require("../lib/ncmb");
+var ncmb = null;
 
-describe("NCMB Users", function(){
-  var ncmb = new NCMB();
-  ncmb
-  .set("apikey", config.apikey)
-  .set("clientkey", config.clientkey);
-
-  if(config.apiserver){
+describe("NCMB User", function(){
+  before(function(){
+    ncmb = new NCMB();
     ncmb
-    .set("protocol", config.apiserver.protocol || "http:")
-    .set("fqdn", config.apiserver.fqdn)
-    .set("port", config.apiserver.port)
-    .set("proxy", config.apiserver.port || "");
-  }
+    .set("apikey", config.apikey)
+    .set("clientkey", config.clientkey);
 
+    if(config.apiserver){
+      ncmb
+      .set("protocol", config.apiserver.protocol || "http:")
+      .set("fqdn", config.apiserver.fqdn)
+      .set("port", config.apiserver.port)
+      .set("proxy", config.apiserver.port || "");
+    }
+  });
+  
   describe("パスワード再発行メール送信", function(){
+    var user = null;
     context("成功した場合", function(){
-
+      beforeEach(function(){
+        user = new ncmb.User({ mailAddress: "test@example.com" });
+      });
       it("callback でレスポンスを取得できる", function(done){
-        ncmb.User.requestPasswordReset("test@example.com", function(err, data){
+        user.requestPasswordReset(function(err, data){
           done(err ? err : null);
         });
       });
 
       it("promise でレスポンスを取得できる", function(done){
-        ncmb.User.requestPasswordReset("test@example.com")
+        user.requestPasswordReset()
         .then(function(data){
           done();
         })
@@ -40,9 +46,12 @@ describe("NCMB Users", function(){
 
     context("失敗した理由が", function(){
       context("mailAddress がないときに", function(){
+        beforeEach(function(){
+          user = new ncmb.User({});
+        });
 
         it("callback で送信時エラーを取得できる", function(done){
-          ncmb.User.requestPasswordReset(null, function(err, data){
+          user.requestPasswordReset(function(err, data){
             try{
               expect(err).to.be.an.instanceof(Error);
             }catch(err){
@@ -53,7 +62,7 @@ describe("NCMB Users", function(){
         });
 
         it("promise で送信時エラーを取得できる", function(done){
-          ncmb.User.requestPasswordReset()
+          user.requestPasswordReset()
           .then(function(data){
              done(new Error("失敗すべき"));
           })
@@ -71,8 +80,11 @@ describe("NCMB Users", function(){
   });
 
   describe("ユーザー削除", function(){
+    var del_user = null;
     context("成功した場合", function(){
-      var del_user = new ncmb.User({objectId: "object_id"});
+      beforeEach(function(){
+        del_user = new ncmb.User({objectId: "object_id"});
+      });
 
       it("callback でレスポンスを取得できる", function(done){
         del_user.delete(function(err){
@@ -93,7 +105,9 @@ describe("NCMB Users", function(){
 
     context("失敗した理由が", function(){
       context("ObjectId がないときに", function(){
-        var del_user = new ncmb.User({});
+        beforeEach(function(){
+          del_user = new ncmb.User({});
+        });
 
         it("callback で削除時エラーを取得できる", function(done){
           del_user.delete(function(err){

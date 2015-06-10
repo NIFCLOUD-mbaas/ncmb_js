@@ -15,7 +15,7 @@ describe("NCMB Files", function(){
       ncmb.set("protocol", config.apiserver.protocol || "http:")
           .set("fqdn", config.apiserver.fqdn)
           .set("port", config.apiserver.port)
-          .set("proxy", config.apiserver.port || "");
+          .set("proxy", config.apiserver.proxy || "");
     }
   });
 
@@ -43,14 +43,9 @@ describe("NCMB Files", function(){
         context("fileName がないときに", function(){
 
           it("callback で取得時エラーを取得できる", function(done){
-
             ncmb.File.fetch(null, function(err, file){
-              try{
-                expect(err).to.be.an.instanceof(Error);
-                done();
-              }catch(err){
-                done(err);
-              }
+              expect(err).to.be.an.instanceof(Error);
+              done();
             });
           });
 
@@ -60,12 +55,8 @@ describe("NCMB Files", function(){
               done(new Error("失敗すべき"));
             })
             .catch(function(err){
-              try{
-                expect(err).to.be.an.instanceof(Error);
-                done();
-              }catch(err){
-                done(err);
-              }
+              expect(err).to.be.an.instanceof(Error);
+              done();
             });
           });
         });
@@ -75,7 +66,7 @@ describe("NCMB Files", function(){
     context("インスタンスメソッドで呼び出し", function(){
       var file = null;
       before(function(){
-        file = new ncmb.File();   
+        file = new ncmb.File();
       });
 
       context("成功した場合", function(){
@@ -106,12 +97,8 @@ describe("NCMB Files", function(){
         context("fileName がないときに", function(){
           it("callback で取得時エラーを取得できる", function(done){
             file.fetch(function(err, data){
-              try{
-                expect(err).to.be.an.instanceof(Error);
-                done();
-              }catch(err){
-                done(err);
-              }
+              expect(err).to.be.an.instanceof(Error);
+              done();
             });
           });
 
@@ -121,12 +108,8 @@ describe("NCMB Files", function(){
               done(new Error("失敗すべき"));
             })
             .catch(function(err){
-              try{
-                expect(err).to.be.an.instanceof(Error);
-                done();
-              }catch(err){
-                done(err);
-              }
+              expect(err).to.be.an.instanceof(Error);
+              done();
             });
           });
         });
@@ -136,19 +119,15 @@ describe("NCMB Files", function(){
 
   describe("ファイル削除", function(){
     context("成功した場合", function(){
-      var del_file = null;
-      before(function(){
-        del_file = new ncmb.File({fileName: "del_file.text"});
-      });
 
       it("callback でレスポンスを取得できる", function(done){
-        del_file.delete(function(err){
+        ncmb.File.delete("del_file.text", function(err){
           done(err ? err : null);
         });
       });
 
       it("promise でレスポンスを取得できる", function(done){
-        del_file.delete()
+        ncmb.File.delete("del_file.text")
         .then(function(){
           done();
         })
@@ -160,27 +139,23 @@ describe("NCMB Files", function(){
 
     context("失敗した理由が", function(){
       context("fileName がないときに", function(){
-        var del_file = null;
-        before(function(){
-          del_file = new ncmb.File({});
-        });
 
         it("callback で削除時エラーを取得できる", function(done){
-          del_file.delete(function(err){
+          ncmb.File.delete(null, function(err){
             expect(err).to.be.an.instanceof(Error);
             done();
           });
         });
 
         it("promise で削除時エラーを取得できる", function(done){
-          del_file.delete()
-              .then(function(){
-                done(new Error("失敗すべき"));
-              })
-              .catch(function(err){
-                expect(err).to.be.an.instanceof(Error);
-                done();
-              });
+          ncmb.File.delete(null)
+          .then(function(){
+            done(new Error("失敗すべき"));
+          })
+          .catch(function(err){
+            expect(err).to.be.an.instanceof(Error);
+            done();
+          });
         });
       });
     });

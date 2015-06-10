@@ -117,6 +117,89 @@ describe("NCMB Files", function(){
     });
   });
 
+describe("ファイルACL更新", function(){
+    context("成功した場合", function(){
+      var fileName = null;
+      var acl = null;
+      beforeEach(function(){
+        fileName = "update_file.text";
+        acl = { acl: { abc: { write: true } } };
+      });
+
+      it("callback でレスポンスを取得できる", function(done){
+        ncmb.File.updateACL(fileName, acl, function(err){
+          done(err ? err : null);
+        });
+      });
+
+      it("promise でレスポンスを取得できる", function(done){
+        ncmb.File.updateACL(fileName, acl)
+        .then(function(){
+          done();
+        })
+        .catch(function(err){
+          done(err);
+        });
+      });
+    });
+
+    context("失敗した理由が", function(){
+      var fileName = null;
+      var acl = null;
+      context("fileName がないときに", function(){
+        beforeEach(function(){
+          fileName = null;
+          acl = { acl: { abc: { write: true } } };
+        });
+
+        it("callback で削除時エラーを取得できる", function(done){
+          ncmb.File.updateACL(fileName, acl, function(err){
+            if(!err) done(new Error("失敗すべき"));
+            expect(err).to.be.an.instanceof(Error);
+            done();
+          });
+        });
+
+        it("promise で削除時エラーを取得できる", function(done){
+          ncmb.File.updateACL(fileName, acl)
+          .then(function(){
+            done(new Error("失敗すべき"));
+          })
+          .catch(function(err){
+            expect(err).to.be.an.instanceof(Error);
+            done();
+          });
+        });
+      });
+
+      context("acl がないときに", function(){
+        beforeEach(function(){
+          fileName = "update_file.text";
+          acl = null;
+        });
+
+        it("callback で削除時エラーを取得できる", function(done){
+          ncmb.File.updateACL(fileName, acl, function(err){
+            if(!err) done(new Error("失敗すべき"));
+            expect(err).to.be.an.instanceof(Error);
+            done();
+          });
+        });
+
+        it("promise で削除時エラーを取得できる", function(done){
+          ncmb.File.updateACL(fileName, acl)
+          .then(function(){
+            done(new Error("失敗すべき"));
+          })
+          .catch(function(err){
+            expect(err).to.be.an.instanceof(Error);
+            done();
+          });
+        });
+      });
+    });
+  });
+
   describe("ファイル削除", function(){
     context("成功した場合", function(){
 

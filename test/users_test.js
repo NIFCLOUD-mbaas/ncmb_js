@@ -52,11 +52,8 @@ describe("NCMB User", function(){
 
         it("callback で送信時エラーを取得できる", function(done){
           user.requestPasswordReset(function(err, data){
-            try{
-              expect(err).to.be.an.instanceof(Error);
-            }catch(err){
-              done(err);
-            }
+            if(!err) done(new Error("失敗すべき"));
+            expect(err).to.be.an.instanceof(Error); 
             done();
           });
         });
@@ -67,11 +64,7 @@ describe("NCMB User", function(){
              done(new Error("失敗すべき"));
           })
           .catch(function(err){
-            try{
-              expect(err).to.be.an.instanceof(Error);
-            }catch(err){
-              done(err);
-            }
+            expect(err).to.be.an.instanceof(Error);
             done();
           });
         });
@@ -111,6 +104,7 @@ describe("NCMB User", function(){
 
         it("callback で削除時エラーを取得できる", function(done){
           del_user.delete(function(err){
+            if(!err) done(new Error("失敗すべき"));
             expect(err).to.be.an.instanceof(Error);
             done();
           });

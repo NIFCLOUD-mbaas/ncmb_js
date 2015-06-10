@@ -26,13 +26,13 @@ describe("NCMB Users", function(){
       });
 
       it("callback でレスポンスを取得できる", function(done){
-        name_user.signUp(function(err){
+        name_user.signUpByAccount(function(err){
           done(err ? err : null);
         });
       });
 
       it("promise でレスポンスを取得できる", function(done){
-        name_user.signUp()
+        name_user.signUpByAccount()
         .then(function(){
           done();
         })
@@ -42,125 +42,61 @@ describe("NCMB Users", function(){
       });
     });
 
-    context("mailAddress/password で登録した場合", function(){
-      var mail_user = null;
-      beforeEach(function(){
-        mail_user = new ncmb.User({mailAddress: "test@example.com", password:"password"});
-      });
-
-      it("callback でレスポンスを取得できる", function(done){
-        mail_user.signUp(function(err){
-          done(err ? err : null);
-        });
-      });
-
-      it("promise でレスポンスを取得できる", function(done){
-        mail_user.signUp()
-        .then(function(){
-          done();
-        })
-        .catch(function(err){
-          done(err);
-        });
-      });
-    });
-
-    context("authData認証を利用して", function(){
-      context("Facebook で登録した場合", function(){
-        var fb_user = null;
+    context("失敗した理由が", function(){
+      var noName_user = null;
+      context("userName がないときに", function(){
         beforeEach(function(){
-          fb_user = new ncmb.User({authData: {"facebook":{"id":"100002415159782","access_token":"CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD","expiration_date":{"__type":"Date","iso":"2013-08-31T07:41:11.906Z"}}}});
+          noName_user = new ncmb.User({password: "password"});
         });
-        
-        it("callback でレスポンスを取得できる", function(done){
-          fb_user.signUp(function(err){
-            done(err ? err : null);
+
+        it("callback で登録時エラーを取得できる", function(done){
+          noName_user.signUpByAccount(function(err){
+            if(!err) done(new Error("失敗すべき"));
+            expect(err).to.be.an.instanceof(Error);
+            done();
           });
         });
 
-        it("promise でレスポンスを取得できる", function(done){
-          fb_user.signUp()
+        it("promise で登録時エラーを取得できる", function(done){
+          noName_user.signUpByAccount()
           .then(function(){
-            done();
+             done(new Error("失敗すべき"));
           })
           .catch(function(err){
-            done(err);
+            expect(err).to.be.an.instanceof(Error);
+            done();
           });
         });
       });
 
-      context("twitter で登録した場合", function(){
-        var twi_user = null;
+      var noPass_user = null;
+      context("password がないときに", function(){
         beforeEach(function(){
-          twi_user = new ncmb.User({authData: { "twitter": { "id": "887423302", "screen_name": "mobileBackend", "oauth_consumer_key": "ZoL16IzyCEEik4nNTEN9RW", "consumer_secret": "ubFWbG0wL7bub7gnWSkAKAmXj6VZ97DpmK2ZSCc5Opk", "oauth_token": "887423106-VxW8foViKjNDOyCLcC0WhTIyxUo2r3eXLLeogUtB","oauth_token_secret": "gye4VHfEHHBCH34cEJGiAWlukGAEJ6DCixYNU6Mg"}}});
+          noPass_user = new ncmb.User({userName: "Tarou"});
         });
-        
-        it("callback でレスポンスを取得できる", function(done){
-          twi_user.signUp(function(err){
-            done(err ? err : null);
+
+        it("callback で登録時エラーを取得できる", function(done){
+          noPass_user.signUpByAccount(function(err){
+            if(!err) done(new Error("失敗すべき"));
+            expect(err).to.be.an.instanceof(Error);
+            done();
           });
         });
 
-        it("promise でレスポンスを取得できる", function(done){
-          twi_user.signUp()
+        it("promise で登録時エラーを取得できる", function(done){
+          noPass_user.signUpByAccount()
           .then(function(){
-            done();
+             done(new Error("失敗すべき"));
           })
           .catch(function(err){
-            done(err);
-          });
-        });
-      });
-
-      context("Anonymous で登録した場合", function(){
-        var ano_user = null;
-        beforeEach(function(){
-          ano_user = new ncmb.User({authData: {"anonymous":{"id":"3dc72085-911b-4798-9707-d69e879a6185"}}});
-        });
-       
-        it("callback でレスポンスを取得できる", function(done){
-          ano_user.signUp(function(err){
-            done(err ? err : null);
-          });
-        });
-
-        it("promise でレスポンスを取得できる", function(done){
-          ano_user.signUp()
-          .then(function(){
+            expect(err).to.be.an.instanceof(Error);
             done();
-          })
-          .catch(function(err){
-            done(err);
-          });
-        });
-      });
-
-      context("失敗した理由が", function(){
-        context("userName or mailAddress/PWと認証情報が両方ないときに", function(){
-          var non_auth_user = new ncmb.User({});
-
-          it("callback で登録時エラーを取得できる", function(done){
-            non_auth_user.signUp(function(err){
-              if(err === null) done(new Error("失敗すべき"));
-              expect(err).to.be.an.instanceof(Error);
-              done();
-            });
-          });
-
-          it("promise で登録時エラーを取得できる", function(done){
-            non_auth_user.signUp()
-            .then(function(){
-               done(new Error("失敗すべき"));
-            })
-            .catch(function(err){
-              expect(err).to.be.an.instanceof(Error);
-              done();
-            });
           });
         });
       });
     });
   });
+  
 
   
 

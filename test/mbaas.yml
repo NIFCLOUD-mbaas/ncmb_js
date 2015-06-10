@@ -100,6 +100,20 @@
     file: 2013-09-01_classes_nonexist_post_failure.json
 -
   request:
+    url: /2013-09-01/classes/nonexist
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_nonexist_get_success.json
+-
+  request:
+    url: /2013-09-01/classes/fetchlist
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_fetchlist_get_success.json
+-
+  request:
     url: /2013-09-01/batch
     method: POST
     body:

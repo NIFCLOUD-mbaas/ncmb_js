@@ -250,3 +250,19 @@
   response:
     status: 200
     file: 2013-09-01_file_fetch_success.json
+
+# roles
+-
+  request:
+    url: /2013-09-01/roles/delete_role_id
+    method: DELETE
+  response:
+    status: 200
+    body: '{}'
+-
+  request:
+    url: /2013-09-01/roles/no_exist_role_id
+    method: DELETE
+  response:
+    status: 404
+    body: '{"code":"E404001","error":"No data available."}'

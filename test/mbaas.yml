@@ -266,3 +266,22 @@
   response:
     status: 200
     file: 2013-09-01_file_fetch_success.json
+
+# roles
+
+-
+  request:
+    url: /2013-09-01/roles
+    method: POST
+    body: {"roleName": "new_role_name"}
+  response:
+    status: 201
+    file: 2013-09-01_role_post_success.json
+-
+  request:
+    url: /2013-09-01/roles
+    method: POST
+    body: {"roleName": "new_exist_role_name"}
+  response:
+    status: 409
+    file: 2013-09-01_classes_exist_role_failure.json

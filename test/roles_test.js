@@ -21,7 +21,25 @@ describe("NCMB Role", function(){
 
   describe("ロール登録", function(){
     describe("save", function(){
-      context("存在しないロール名を指定し、登録に成功", function(done){
+      it("ロール名を指定せず、登録に失敗", function(done){
+        expect(function(){
+          new ncmb.Role();
+        }).to.throw(Error);
+        expect(function(){
+          new ncmb.Role({});
+        }).to.throw(Error);
+        expect(function(){
+          new ncmb.Role({roleName: undefined});
+        }).to.throw(Error);
+        expect(function(){
+          new ncmb.Role({roleName: null});
+        }).to.throw(Error);
+        expect(function(){
+          new ncmb.Role({roleName: ""});
+        }).to.throw(Error);
+        done();
+      });
+      context("存在しないロール名を指定し、登録に成功", function(){
         var newRole = null;
         beforeEach(function(){
           newRole = new ncmb.Role({roleName: "new_role_name"});
@@ -39,7 +57,7 @@ describe("NCMB Role", function(){
               .catch(function(err){
                 done(err);
               });
-        });         
+        });
       });
       context("存在したロール名を指定し、登録に失敗", function(){
         var newExistRole = null;

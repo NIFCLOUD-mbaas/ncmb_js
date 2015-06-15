@@ -228,16 +228,22 @@
 
 -
   request:
-    url: '/2013-09-01/login?password=passwd&userName=name'
+    url: '/2013-09-01/login'
     method: GET
+    query:
+      userName: name
+      password: passwd
   response:
     status: 200
     file: 2013-09-01_user_login_namepw_success.json
 
 -
   request:
-    url: '/2013-09-01/login?password=passwd&mailAddress=test@example.com'
+    url: '/2013-09-01/login'
     method: GET
+    query:
+      mailAddress: test@example.com
+      password: passwd
   response:
     status: 200
     file: 2013-09-01_user_login_mailpw_success.json

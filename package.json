@@ -41,7 +41,6 @@
     "lodash": "^3.9.3",
     "mocha": "^2.1.0",
     "node-localstorage": "0.5.1",
-    "localStorage": "1.0.3",
     "qs": "^2.4.1",
     "request": "^2.53.0",
     "stubcell": "^0.8.0",

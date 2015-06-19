@@ -248,6 +248,14 @@
     status: 200
     file: 2013-09-01_user_login_mailpw_success.json
 
+-
+  request:
+    url: '/2013-09-01/logout'
+    method: GET
+  response:
+    status: 200
+    body: '{}'
+
 # files
 -
   request:

@@ -95,6 +95,82 @@ describe("NCMB Users", function(){
     });
   });
 
+  describe("ログアウト", function(){
+    var LocalStorage = null;
+    var localStorage = null;
+    before(function(){
+      LocalStorage = require("node-localstorage").LocalStorage;
+      localStorage = new LocalStorage('./scratch');
+    });
+
+    context("成功した場合", function(){
+      beforeEach(function(done){
+        localStorage.setItem("NCMB/" +  ncmb.apikey + "/currentUser", '{"userName":"tes","password":"aaa","objectId":"objectid"}');
+        localStorage.setItem("NCMB/" +  ncmb.apikey + "/sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+        ncmb.sessionToken = "ojUDAfEBgGadVsyQE3XO0yrtu";
+        setTimeout(function(){
+          done();
+        }, 1900);
+      });
+      afterEach(function(done){
+        localStorage.removeItem("NCMB/" +  ncmb.apikey + "/currentUser");
+        localStorage.removeItem("NCMB/" +  ncmb.apikey + "/sessionToken");
+        delete ncmb.sessionToken;
+        setTimeout(function(){
+          done();
+        }, 1900);
+      });
+
+      it("callback でレスポンスを取得できる", function(done){
+        ncmb.User.logout(function(err, data){
+          done(err ? err : null);
+        });
+      });
+
+      it("promise でレスポンスを取得できる", function(done){
+        ncmb.User.logout()
+        .then(function(data){
+          done();
+        })
+        .catch(function(err){
+          done(err);
+        });
+      });
+    });
+
+    context("失敗した理由が", function(){
+      context("ログインしていないとき", function(){
+        beforeEach(function(done){
+          localStorage.removeItem("NCMB/" +  ncmb.apikey + "/currentUser");
+          localStorage.removeItem("NCMB/" +  ncmb.apikey + "/sessionToken");
+          delete ncmb.sessionToken;
+          setTimeout(function(){
+          done();
+        }, 1900);
+        });
+
+        it("callback でログアウトエラーを取得できる", function(done){
+          ncmb.User.logout(function(err, data){
+            if(!err) done(new Error("失敗すべき"));
+            expect(err).to.be.an.instanceof(Error);
+            done();
+          });
+        });
+
+        it("promise でログアウトエラーを取得できる", function(done){
+          ncmb.User.logout()
+          .then(function(data){
+            done(new Error("失敗すべき"));
+          })
+          .catch(function(err){
+            expect(err).to.be.an.instanceof(Error);
+            done();
+          });
+        });
+      });
+    });
+  });
+
   describe("ユーザー削除", function(){
     var del_user = null;
     context("成功した場合", function(){

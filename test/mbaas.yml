@@ -226,6 +226,15 @@
     status: 404
     file: non_exists_user.json
 
+-
+  request:
+    url: /2013-09-01/requestPasswordReset
+    method: POST
+    body: { "mailAddress": "test@example.com" }
+  response:
+    status: 201
+    file: 2013-09-01_users_send_reset_password_success.json
+
 # files
 -
   request:
@@ -270,3 +279,34 @@
   response:
     status: 404
     file: 2013-09-01_no_exist_role_put_failed.json
+-
+  request:
+    url: /2013-09-01/roles/delete_role_id
+    method: DELETE
+  response:
+    status: 200
+    body: '{}'
+-
+  request:
+    url: /2013-09-01/roles/no_exist_role_id
+    method: DELETE
+  response:
+    status: 404
+    body: '{"code":"E404001","error":"No data available."}'
+
+-
+  request:
+    url: /2013-09-01/roles
+    method: POST
+    body: {"roleName": "new_role_name"}
+  response:
+    status: 201
+    file: 2013-09-01_role_post_success.json
+-
+  request:
+    url: /2013-09-01/roles
+    method: POST
+    body: {"roleName": "new_exist_role_name"}
+  response:
+    status: 409
+    file: 2013-09-01_classes_exist_role_failure.json

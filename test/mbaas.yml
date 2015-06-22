@@ -263,6 +263,24 @@
 # roles
 -
   request:
+    url: /2013-09-01/roles/update_role_id
+    method: PUT
+    body:
+      "roleName": "updated_role_name"
+  response:
+    status: 200
+    file: 2013-09-01_role_put_success.json
+-
+  request:
+    url: /2013-09-01/roles/no_exist_role_id
+    method: PUT
+    body:
+      "roleName": "updated_role_name"
+  response:
+    status: 404
+    file: 2013-09-01_no_exist_role_put_failed.json
+-
+  request:
     url: /2013-09-01/roles/delete_role_id
     method: DELETE
   response:

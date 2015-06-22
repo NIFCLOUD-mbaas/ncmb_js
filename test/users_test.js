@@ -113,8 +113,12 @@ describe("NCMB Users", function(){
         }, 1900);
       });
       afterEach(function(done){
-        localStorage.removeItem("NCMB/" +  ncmb.apikey + "/currentUser");
-        localStorage.removeItem("NCMB/" +  ncmb.apikey + "/sessionToken");
+        if(localStorage.getItem("NCMB/" +  ncmb.apikey + "/currentUser")){
+          localStorage.removeItem("NCMB/" +  ncmb.apikey + "/currentUser");
+        }
+        if(localStorage.getItem("NCMB/" +  ncmb.apikey + "/sessionToken")){
+          localStorage.removeItem("NCMB/" +  ncmb.apikey + "/sessionToken");
+        }
         delete ncmb.sessionToken;
         setTimeout(function(){
           done();
@@ -141,8 +145,12 @@ describe("NCMB Users", function(){
     context("失敗した理由が", function(){
       context("ログインしていないとき", function(){
         beforeEach(function(done){
-          localStorage.removeItem("NCMB/" +  ncmb.apikey + "/currentUser");
-          localStorage.removeItem("NCMB/" +  ncmb.apikey + "/sessionToken");
+          if(localStorage.getItem("NCMB/" +  ncmb.apikey + "/currentUser")){
+            localStorage.removeItem("NCMB/" +  ncmb.apikey + "/currentUser");
+          }
+          if(localStorage.getItem("NCMB/" +  ncmb.apikey + "/sessionToken")){
+            localStorage.removeItem("NCMB/" +  ncmb.apikey + "/sessionToken");
+          }
           delete ncmb.sessionToken;
           setTimeout(function(){
           done();

@@ -260,6 +260,14 @@
     status: 200
     file: 2013-09-01_file_fetch_success.json
 
+-
+  request:
+    url: /2013-09-01/files/update_file.text
+    method: PUT
+    body: { acl: { abc: { write: true } } }
+  response:
+    status: 200
+    file: 2013-09-01_file_update_acl_success.json
 # roles
 -
   request:

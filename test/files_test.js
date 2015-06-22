@@ -152,7 +152,7 @@ describe("ファイルACL更新", function(){
           acl = { acl: { abc: { write: true } } };
         });
 
-        it("callback で削除時エラーを取得できる", function(done){
+        it("callback で更新時エラーを取得できる", function(done){
           ncmb.File.updateACL(fileName, acl, function(err){
             if(!err) done(new Error("失敗すべき"));
             expect(err).to.be.an.instanceof(Error);
@@ -160,7 +160,7 @@ describe("ファイルACL更新", function(){
           });
         });
 
-        it("promise で削除時エラーを取得できる", function(done){
+        it("promise で更新時エラーを取得できる", function(done){
           ncmb.File.updateACL(fileName, acl)
           .then(function(){
             done(new Error("失敗すべき"));
@@ -178,7 +178,7 @@ describe("ファイルACL更新", function(){
           acl = null;
         });
 
-        it("callback で削除時エラーを取得できる", function(done){
+        it("callback で更新時エラーを取得できる", function(done){
           ncmb.File.updateACL(fileName, acl, function(err){
             if(!err) done(new Error("失敗すべき"));
             expect(err).to.be.an.instanceof(Error);
@@ -186,7 +186,7 @@ describe("ファイルACL更新", function(){
           });
         });
 
-        it("promise で削除時エラーを取得できる", function(done){
+        it("promise で更新時エラーを取得できる", function(done){
           ncmb.File.updateACL(fileName, acl)
           .then(function(){
             done(new Error("失敗すべき"));

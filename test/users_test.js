@@ -20,6 +20,96 @@ describe("NCMB User", function(){
       .set("proxy", config.apiserver.port || "");
     }
   });
+
+  describe("Oauthログイン", function(){
+    var user = null;
+    var providerData = null;
+    var provider = null;
+    context("facebookログインに成功した場合", function(){
+      beforeEach(function(){
+        user = new ncmb.User({});
+        providerData = {
+          id : "100002415159782",
+          access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD",
+          expiration_date: {"__type":"Date","iso":"2013-08-31T07:41:11.906Z"}
+        }
+        provider = "facebook";
+      });
+      it("callback でレスポンスを取得できる", function(done){
+        user.signUpByOauth(provider, providerData, function(err, data){
+          done(err ? err : null);
+        });
+      });
+
+      it("promise でレスポンスを取得できる", function(done){
+        user.signUpByOauth(provider, providerData)
+        .then(function(data){
+          done();
+        })
+        .catch(function(err){
+          done(err);
+        });
+      });
+    });
+
+    context("失敗した理由が", function(){
+      context("provider名がなかった場合", function(){
+        beforeEach(function(){
+          user = new ncmb.User({});
+          providerData = {
+            id : "100002415159782",
+            access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD",
+            expiration_date: {"__type":"Date","iso":"2013-08-31T07:41:11.906Z"}
+          }
+          provider = null;
+        });
+        it("callback で登録時エラーを取得できる", function(done){
+          user.signUpByOauth(provider, providerData, function(err, data){
+            if(!err) done(new Error("失敗すべき"));
+            expect(err).to.be.an.instanceof(Error); 
+            done();
+          });
+        });
+
+        it("promise で登録時エラーを取得できる", function(done){
+          user.signUpByOauth(provider, providerData)
+          .then(function(data){
+            done(new Error("失敗すべき"));
+          })
+          .catch(function(err){
+            expect(err).to.be.an.instanceof(Error);
+            done();
+          });
+        });
+      });
+
+      context("認証情報がなかった場合", function(){
+        beforeEach(function(){
+          user = new ncmb.User({});
+          providerData = null;
+          provider = "facebook";
+        });
+        it("callback で登録時エラーを取得できる", function(done){
+          user.signUpByOauth(provider, providerData, function(err, data){
+            if(!err) done(new Error("失敗すべき"));
+            expect(err).to.be.an.instanceof(Error); 
+            done();
+          });
+        });
+
+        it("promise で登録時エラーを取得できる", function(done){
+          user.signUpByOauth(provider, providerData)
+          .then(function(data){
+            done(new Error("失敗すべき"));
+          })
+          .catch(function(err){
+            expect(err).to.be.an.instanceof(Error);
+            done();
+          });
+        });
+      });
+    });
+  });
   
   describe("パスワード再発行メール送信", function(){
     var user = null;

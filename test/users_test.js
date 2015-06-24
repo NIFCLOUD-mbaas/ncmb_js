@@ -72,6 +72,26 @@ describe("NCMB User", function(){
     });
   });
 
+  describe("匿名ユーザでログイン", function(){
+    context("成功した場合", function(){
+      it("callback でレスポンスを取得できる", function(done){
+        ncmb.User.signUpByAnonymous(function(err, data){
+          done(err ? err : null);
+        });
+      });
+
+      it("promise でレスポンスを取得できる", function(done){
+        ncmb.User.signUpByAnonymous()
+        .then(function(data){
+          done();
+        })
+        .catch(function(err){
+          done(err);
+        });
+      });
+    });
+  });
+
   describe("ユーザー削除", function(){
     var del_user = null;
     context("成功した場合", function(){

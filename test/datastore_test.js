@@ -98,7 +98,6 @@ describe("NCMB DataStore", function(){
                 expect(obj.harvestDate).to.have.property("__type", "Date");
                 expect(obj.harvestDate).to.have.property("iso");
                 expect(obj.save).to.be.a("function");
-
                 done();
               })
               .catch(function(err){

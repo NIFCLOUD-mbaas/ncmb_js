@@ -83,6 +83,37 @@ describe("NCMB User", function(){
         });
       });
 
+      context("provider名が不正だった場合", function(){
+        beforeEach(function(){
+          user = new ncmb.User({});
+          providerData = {
+            id : "100002415159782",
+            access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD",
+            expiration_date: {"__type":"Date","iso":"2013-08-31T07:41:11.906Z"}
+          }
+          provider = "nifty";
+        });
+        it("callback で登録時エラーを取得できる", function(done){
+          user.signUpByOauth(provider, providerData, function(err, data){
+            if(!err) done(new Error("失敗すべき"));
+            expect(err).to.be.an.instanceof(Error); 
+            console.log("err:", err);
+            done();
+          });
+        });
+
+        it("promise で登録時エラーを取得できる", function(done){
+          user.signUpByOauth(provider, providerData)
+          .then(function(data){
+            done(new Error("失敗すべき"));
+          })
+          .catch(function(err){
+            expect(err).to.be.an.instanceof(Error);
+            done();
+          });
+        });
+      });
+
       context("認証情報がなかった場合", function(){
         beforeEach(function(){
           user = new ncmb.User({});

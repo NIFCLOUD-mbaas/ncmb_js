@@ -105,6 +105,39 @@ describe("NCMB DataStore", function(){
               });
         });
       });
+      context("Datastoreタイプを指定し、オブジェクト保存に成功し", function(){
+        var Post = ncmb.DataStore("post");
+        var Comment = ncmb.DataStore("comment");
+        var myPostParent = new Post({title: "I'm hungry by parent", content: "Where should we go for lunch?"});
+        var myPostSubParent = new Post({title: "I'm hungry by sub_parent", content: "Where should we go for lunch?"});
+        var myComment = new Comment({content: "Lets do Sushirrito", parent: myPostParent, subparent: myPostSubParent});
+        it("callback で取得できる", function(done){
+          myComment.save(function(err, obj){
+            if(err) {
+              done(err);
+            } else {
+              Food.where({objectId: obj.objectId}).fetchAll()
+              .then(function(foods){
+                expect(foods[0].harvestDate).to.be.eql({ __type: 'Date', iso: '1999-12-31T14:59:59.999Z'});
+                done();
+              });
+            }
+          });
+        });
+        it("promise で取得できる", function(done){
+          food.save()
+              .then(function(newFood){
+                Food.where({objectId: newFood.objectId}).fetchAll()
+                .then(function(foods){
+                  expect(foods[0].harvestDate).to.be.eql({ __type: 'Date', iso: '1999-12-31T14:59:59.999Z'});
+                  done();
+                });
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+      });
     });
   });
 

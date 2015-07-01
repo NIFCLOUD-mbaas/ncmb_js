@@ -27,71 +27,105 @@ describe("NCMB ACL", function(){
 
     describe("権限の設定チェック", function() {
       var aclObj = null;
-      context("Public権限に対して", function(){
-        beforeEach(function(){
-          aclObj = new ncmb.Acl();
+      describe("Public権限に対して", function(){
+        context("正しく設定される場合", function(){
+          beforeEach(function(){
+            aclObj = new ncmb.Acl();
+          });
+          it("Readを指定し、取得できる", function() {
+            aclObj.setPublicReadAccess(true);
+            expect(aclObj.toJSON()).to.be.eql({"*":{read: true}});
+          });
+          it("Writeを指定し、取得できる", function() {
+            aclObj.setPublicWriteAccess(true);
+            expect(aclObj.toJSON()).to.be.eql({"*":{write: true}});
+          });
+          it("Write, Readを指定し、取得できる", function() {
+            aclObj.setPublicReadAccess(true);
+            aclObj.setPublicWriteAccess(true);
+            expect(aclObj.toJSON()).to.be.eql({"*":{read: true, write: true}});
+          });
+          it("Write true, Write falseを連続指定し、最後に指定したfalseを取得できる", function() {
+            aclObj.setPublicWriteAccess(true);
+            aclObj.setPublicWriteAccess(false);
+            expect(aclObj.toJSON()).to.be.eql({"*":{write: false}});
+          });
+          it("Read true, Read falseを連続指定し、最後に指定したfalseを取得できる", function() {
+            aclObj.setPublicReadAccess(true);
+            aclObj.setPublicReadAccess(false);
+            expect(aclObj.toJSON()).to.be.eql({"*":{read: false}});
+          });
+          it("Read , Writeをchain指定し、取得できる", function() {
+            aclObj.setPublicReadAccess(true).setPublicWriteAccess(false);
+            expect(aclObj.toJSON()).to.be.eql({"*":{read: true, write: false}});
+          });
         });
-        it("Readを指定し、取得できる", function() {
-          aclObj.setPublicReadAccess(true);
-          expect(aclObj.toJSON()).to.be.eql({"*":{read: true}});
-        });
-        it("Writeを指定し、取得できる", function() {
-          aclObj.setPublicWriteAccess(true);
-          expect(aclObj.toJSON()).to.be.eql({"*":{write: true}});
-        });
-        it("Write, Readを指定し、取得できる", function() {
-          aclObj.setPublicReadAccess(true);
-          aclObj.setPublicWriteAccess(true);
-          expect(aclObj.toJSON()).to.be.eql({"*":{read: true, write: true}});
-        });
-        it("Write true, Write falseを連続指定し、最後に指定したfalseを取得できる", function() {
-          aclObj.setPublicWriteAccess(true);
-          aclObj.setPublicWriteAccess(false);
-          expect(aclObj.toJSON()).to.be.eql({"*":{write: false}});
-        });
-        it("Read true, Read falseを連続指定し、最後に指定したfalseを取得できる", function() {
-          aclObj.setPublicReadAccess(true);
-          aclObj.setPublicReadAccess(false);
-          expect(aclObj.toJSON()).to.be.eql({"*":{read: false}});
-        });
-        it("Read , Writeをchain指定し、取得できる", function() {
-          aclObj.setPublicReadAccess(true).setPublicWriteAccess(false);
-          expect(aclObj.toJSON()).to.be.eql({"*":{read: true, write: false}});
+        context("設定に失敗した理由が", function(){
+          beforeEach(function(){
+            aclObj = new ncmb.Acl();
+          });
+
         });
       });
 
       var user = null;
-      context("User権限に対して", function(){
-        beforeEach(function(){
-          aclObj = new ncmb.Acl();
-          user = new ncmb.User({objectId: "object_id"});
+      describe("User権限に対して", function(){
+        context("正しく設定される場合", function(){
+          beforeEach(function(){
+            aclObj = new ncmb.Acl();
+            user = new ncmb.User({objectId: "object_id"});
+          });
+          it("Readを指定し、取得できる", function() {
+            aclObj.setUserReadAccess(user, true);
+            expect(aclObj.toJSON()).to.be.eql({"object_id":{read: true}});
+          });
+          it("Writeを指定し、取得できる", function() {
+            aclObj.setUserWriteAccess(user, true);
+            expect(aclObj.toJSON()).to.be.eql({"object_id":{write: true}});
+          });
+          it("Write, Readを指定し、取得できる", function() {
+            aclObj.setUserReadAccess(user, true);
+            aclObj.setUserWriteAccess(user, true);
+            expect(aclObj.toJSON()).to.be.eql({"object_id":{read: true, write: true}});
+          });
+          it("Write true, Write falseを連続指定し、最後に指定したfalseを取得できる", function() {
+            aclObj.setUserWriteAccess(user, true);
+            aclObj.setUserWriteAccess(user, false);
+            expect(aclObj.toJSON()).to.be.eql({"object_id":{write: false}});
+          });
+          it("Read true, Read falseを連続指定し、最後に指定したfalseを取得できる", function() {
+            aclObj.setUserReadAccess(user, true);
+            aclObj.setUserReadAccess(user, false);
+            expect(aclObj.toJSON()).to.be.eql({"object_id":{read: false}});
+          });
+          it("Read , Writeをchain指定し、取得できる", function() {
+            aclObj.setUserReadAccess(user, true).setUserWriteAccess(user, false);
+            expect(aclObj.toJSON()).to.be.eql({"object_id":{read: true, write: false}});
+          });
         });
-        it("Readを指定し、取得できる", function() {
-          aclObj.setUserReadAccess(user, true);
-          expect(aclObj.toJSON()).to.be.eql({"object_id":{read: true}});
-        });
-        it("Writeを指定し、取得できる", function() {
-          aclObj.setUserWriteAccess(user, true);
-          expect(aclObj.toJSON()).to.be.eql({"object_id":{write: true}});
-        });
-        it("Write, Readを指定し、取得できる", function() {
-          aclObj.setUserReadAccess(user, true);
-          aclObj.setUserWriteAccess(user, true);
-          expect(aclObj.toJSON()).to.be.eql({"object_id":{read: true, write: true}});
-        });
-        it("Write true, Write falseを連続指定し、最後に指定したfalseを取得できる", function() {
-          aclObj.setUserWriteAccess(user, true);
-          aclObj.setUserWriteAccess(user, false);
-          expect(aclObj.toJSON()).to.be.eql({"object_id":{write: false}});
-        });
-        it("Read true, Read falseを連続指定し、最後に指定したfalseを取得できる", function() {
-          aclObj.setUserReadAccess(user, true);
-          aclObj.setUserReadAccess(user, false);
-          expect(aclObj.toJSON()).to.be.eql({"object_id":{read: false}});
-        });
-        it("Read , Writeをchain指定し、取得できる", function() {
-          aclObj.setUserReadAccess(user, true).setUserWriteAccess(user, false);
-          expect(aclObj.toJSON()).to.be.eql({"object_id":{read: true, write: false}});
+        context("権限の設定に失敗した理由が", function(){
+          context("ユーザのobjectIdがない時", function(){
+            beforeEach(function(){
+              aclObj = new ncmb.Acl();
+              user = new ncmb.User();
+            });
+            it("Read権限の設定時にエラーを取得できる", function(done) {
+              try{
+                aclObj.setUserReadAccess(user, true);
+                done(new Error("失敗すべき"));
+              }catch(err){
+                done();
+              }
+            });
+            it("Write権限の設定時にエラーを取得できる", function(done) {
+              try{
+                aclObj.setUserWriteAccess(user, true);
+                done(new Error("失敗すべき"));
+              }catch(err){
+                done();
+              }
+            });
+          });
         });
       });
     });

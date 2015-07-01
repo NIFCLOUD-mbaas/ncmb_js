@@ -54,7 +54,7 @@ describe("NCMB ACL", function(){
           aclObj.setPublicReadAccess(false);
           expect(aclObj.toJSON()).to.be.eql({"*":{read: false}});
         });
-        it("Read true, Read falseをchain指定し、最後に指定したfalseを取得できる", function() {
+        it("Read , Writeをchain指定し、取得できる", function() {
           aclObj.setPublicReadAccess(true).setPublicWriteAccess(false);
           expect(aclObj.toJSON()).to.be.eql({"*":{read: true, write: false}});
         });
@@ -89,7 +89,7 @@ describe("NCMB ACL", function(){
           aclObj.setUserReadAccess(user, false);
           expect(aclObj.toJSON()).to.be.eql({"object_id":{read: false}});
         });
-        it("Read true, Read falseをchain指定し、最後に指定したfalseを取得できる", function() {
+        it("Read , Writeをchain指定し、取得できる", function() {
           aclObj.setUserReadAccess(user, true).setUserWriteAccess(user, false);
           expect(aclObj.toJSON()).to.be.eql({"object_id":{read: true, write: false}});
         });

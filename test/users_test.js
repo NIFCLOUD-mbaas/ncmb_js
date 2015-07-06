@@ -87,6 +87,7 @@ describe("NCMB User", function(){
       it("promise でレスポンスを取得できる", function(done){
         user.update()
         .then(function(data){
+          expect(data).to.have.property("updateDate", "2013-08-28T12:21:17.087Z");
           done();
         })
         .catch(function(err){

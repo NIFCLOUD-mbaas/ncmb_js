@@ -75,14 +75,15 @@ describe("NCMB User", function(){
   describe("匿名ユーザでログイン", function(){
     context("成功した場合", function(){
       it("callback でレスポンスを取得できる", function(done){
-        ncmb.User.signUpByAnonymous(function(err, data){
+        ncmb.User.signUpByAnonymous( "3dc72085-911b-4798-9707-d69e879a6185", function(err, data){
           done(err ? err : null);
         });
       });
 
       it("promise でレスポンスを取得できる", function(done){
-        ncmb.User.signUpByAnonymous()
+        ncmb.User.signUpByAnonymous("3dc72085-911b-4798-9707-d69e879a6185")
         .then(function(data){
+          expect(data).to.have.property("updateDate", "2013-08-16T11:49:45.108Z");
           done();
         })
         .catch(function(err){

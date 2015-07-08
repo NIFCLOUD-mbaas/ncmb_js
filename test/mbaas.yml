@@ -244,6 +244,14 @@
     status: 200
     file: 2013-09-01_users_sign_up_by_oauth_facebook_success.json
 
+-
+  request:
+    url: /2013-09-01/users/objectid
+    method: PUT
+    body: {"updatefield": "updated"}
+  response:
+    status: 201
+    file: 2013-09-01_users_update_success.json
 
 # files
 -

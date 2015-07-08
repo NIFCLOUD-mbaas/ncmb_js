@@ -72,6 +72,58 @@ describe("NCMB User", function(){
     });
   });
 
+  describe("ユーザ情報更新", function(){
+    var user = null;
+    context("成功した場合", function(){
+      beforeEach(function(){
+        user = new ncmb.User({ objectId:"objectid", updatefield: "updated"});
+      });
+      it("callback でレスポンスを取得できる", function(done){
+        user.update(function(err, data){
+          done(err ? err : null);
+        });
+      });
+
+      it("promise でレスポンスを取得できる", function(done){
+        user.update()
+        .then(function(data){
+          expect(data).to.have.property("updateDate", "2013-08-28T12:21:17.087Z");
+          done();
+        })
+        .catch(function(err){
+          done(err);
+        });
+      });
+    });
+
+    context("失敗した理由が", function(){
+      context("objectId がないときに", function(){
+        beforeEach(function(){
+          user = new ncmb.User({updatefield: "updated"});
+        });
+
+        it("callback で更新時エラーを取得できる", function(done){
+          user.update(function(err, data){
+            if(!err) done(new Error("失敗すべき"));
+            expect(err).to.be.an.instanceof(Error); 
+            done();
+          });
+        });
+
+        it("promise で更新時エラーを取得できる", function(done){
+          user.update()
+          .then(function(data){
+             done(new Error("失敗すべき"));
+          })
+          .catch(function(err){
+            expect(err).to.be.an.instanceof(Error);
+            done();
+          });
+        });
+      });
+    });
+  });
+
   describe("ユーザー削除", function(){
     var del_user = null;
     context("成功した場合", function(){

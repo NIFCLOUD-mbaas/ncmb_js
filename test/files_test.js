@@ -117,7 +117,85 @@ describe("NCMB Files", function(){
     });
   });
 
-describe("ファイルACL更新", function(){
+  describe("ファイル検索", function(){
+    context("成功した場合", function(){
+      it("callback でレスポンスを取得できる", function(done){
+        ncmb.File.find("fileName", "find_file.text", function(err, data){
+          done(err ? err : null);
+        });
+      });
+
+      it("promise でレスポンスを取得できる", function(done){
+        ncmb.File.find("fileName", "find_file.text")
+        .then(function(data){
+          done();
+        })
+        .catch(function(err){
+          done(err);
+        });
+      });
+    });
+
+    context("失敗した場合", function(){
+      context("key がないときに", function(){
+        it("callback で検索時エラーを取得できる", function(done){
+          ncmb.File.find(null, "find_file.text", function(err, data){
+            try{
+              expect(err).to.be.an.instanceof(Error);
+              done();
+            }catch(err){
+              done(err);
+            }
+          });
+        });
+
+        it("promise で検索時エラーを取得できる", function(done){
+          ncmb.File.find(null, "find_file.text")
+          .then(function(data){
+            done(new Error("失敗すべき"));
+          })
+          .catch(function(err){
+            try{
+              expect(err).to.be.an.instanceof(Error);
+              done();
+            }catch(err){
+              done(err);
+            }
+          });
+        });
+      });
+
+      context("value がないときに", function(){
+        it("callback で検索時エラーを取得できる", function(done){
+          ncmb.File.find("fileName", null, function(err, data){
+            try{
+              expect(err).to.be.an.instanceof(Error);
+              done();
+            }catch(err){
+              done(err);
+            }
+          });
+        });
+
+        it("promise で検索時エラーを取得できる", function(done){
+          ncmb.File.find("fileName", null)
+          .then(function(data){
+            done(new Error("失敗すべき"));
+          })
+          .catch(function(err){
+            try{
+              expect(err).to.be.an.instanceof(Error);
+              done();
+            }catch(err){
+              done(err);
+            }
+          });
+        });
+      });
+    });
+  });
+
+  describe("ファイルACL更新", function(){
     context("成功した場合", function(){
       var fileName = null;
       var acl = null;

@@ -98,7 +98,7 @@ describe("NCMB ACL", function(){
             aclObj.setUserReadAccess(user, false);
             expect(aclObj.toJSON()).to.be.eql({"object_id":{read: false}});
           });
-          it("Read , Writeをchain指定し、取得できる", function() {
+          it("Read, Writeをchain指定し、取得できる", function() {
             aclObj.setUserReadAccess(user, true).setUserWriteAccess(user, false);
             expect(aclObj.toJSON()).to.be.eql({"object_id":{read: true, write: false}});
           });
@@ -158,7 +158,7 @@ describe("NCMB ACL", function(){
             aclObj.setRoleReadAccess(role, false);
             expect(aclObj.toJSON()).to.be.eql({"role:roleName":{read: false}});
           });
-          it("Read , Writeをchain指定し、取得できる", function() {
+          it("Read, Writeをchain指定し、取得できる", function() {
             aclObj.setRoleReadAccess(role, true).setRoleWriteAccess(role, false);
             expect(aclObj.toJSON()).to.be.eql({"role:roleName":{read: true, write: false}});
           });
@@ -191,7 +191,7 @@ describe("NCMB ACL", function(){
             aclObj.setRoleReadAccess(role, false);
             expect(aclObj.toJSON()).to.be.eql({"role:roleName":{read: false}});
           });
-          it("Read , Writeをchain指定し、取得できる", function() {
+          it("Read, Writeをchain指定し、取得できる", function() {
             aclObj.setRoleReadAccess(role, true).setRoleWriteAccess(role, false);
             expect(aclObj.toJSON()).to.be.eql({"role:roleName":{read: true, write: false}});
           });

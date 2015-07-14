@@ -32,17 +32,73 @@ describe("NCMB User", function(){
           id : "100002415159782",
           access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD",
           expiration_date: {"__type":"Date","iso":"2013-08-31T07:41:11.906Z"}
-        }
+        };
         provider = "facebook";
       });
       it("callback でレスポンスを取得できる", function(done){
-        user.signUpByOauth(provider, providerData, function(err, data){
+        user.signUpWith(provider, providerData, function(err, data){
           done(err ? err : null);
         });
       });
 
       it("promise でレスポンスを取得できる", function(done){
-        user.signUpByOauth(provider, providerData)
+        user.signUpWith(provider, providerData)
+        .then(function(data){
+          done();
+        })
+        .catch(function(err){
+          done(err);
+        });
+      });
+    });
+
+    context("twitterログインに成功した場合", function(){
+      beforeEach(function(){
+        user = new ncmb.User({});
+        providerData = { 
+          "id": "887423302", 
+          "screen_name": "mobileBackend", 
+          "oauth_consumer_key": "ZoL16IzyCEEik4nNTEN9RW", 
+          "consumer_secret": "ubFWbG0wL7bub7gnWSkAKAmXj6VZ97DpmK2ZSCc5Opk", 
+          "oauth_token": "887423106-VxW8foViKjNDOyCLcC0WhTIyxUo2r3eXLLeogUtB",
+          "oauth_token_secret": "gye4VHfEHHBCH34cEJGiAWlukGAEJ6DCixYNU6Mg"
+        };
+        provider = "twitter";
+      });
+      it("callback でレスポンスを取得できる", function(done){
+        user.signUpWith(provider, providerData, function(err, data){
+          done(err ? err : null);
+        });
+      });
+
+      it("promise でレスポンスを取得できる", function(done){
+        user.signUpWith(provider, providerData)
+        .then(function(data){
+          done();
+        })
+        .catch(function(err){
+          done(err);
+        });
+      });
+    });
+
+    context("googleログインに成功した場合", function(){
+      beforeEach(function(){
+        user = new ncmb.User({});
+        providerData = { 
+          "id":"342304547393343184783", 
+          "access_token":"ya29.bAoBfwXmAnEqIVVICriUsrV1BDC1BHJJj1G0-CaasIYvKs-_zFBRvnVYQ4n3NC6bFkNIYbw6vf1eXM" 
+        };
+        provider = "google";
+      });
+      it("callback でレスポンスを取得できる", function(done){
+        user.signUpWith(provider, providerData, function(err, data){
+          done(err ? err : null);
+        });
+      });
+
+      it("promise でレスポンスを取得できる", function(done){
+        user.signUpWith(provider, providerData)
         .then(function(data){
           done();
         })
@@ -64,7 +120,7 @@ describe("NCMB User", function(){
           provider = null;
         });
         it("callback で登録時エラーを取得できる", function(done){
-          user.signUpByOauth(provider, providerData, function(err, data){
+          user.signUpWith(provider, providerData, function(err, data){
             if(!err) done(new Error("失敗すべき"));
             expect(err).to.be.an.instanceof(Error); 
             done();
@@ -72,7 +128,7 @@ describe("NCMB User", function(){
         });
 
         it("promise で登録時エラーを取得できる", function(done){
-          user.signUpByOauth(provider, providerData)
+          user.signUpWith(provider, providerData)
           .then(function(data){
             done(new Error("失敗すべき"));
           })
@@ -94,7 +150,7 @@ describe("NCMB User", function(){
           provider = "nifty";
         });
         it("callback で登録時エラーを取得できる", function(done){
-          user.signUpByOauth(provider, providerData, function(err, data){
+          user.signUpWith(provider, providerData, function(err, data){
             if(!err) done(new Error("失敗すべき"));
             expect(err).to.be.an.instanceof(Error); 
             console.log("err:", err);
@@ -103,7 +159,7 @@ describe("NCMB User", function(){
         });
 
         it("promise で登録時エラーを取得できる", function(done){
-          user.signUpByOauth(provider, providerData)
+          user.signUpWith(provider, providerData)
           .then(function(data){
             done(new Error("失敗すべき"));
           })
@@ -121,7 +177,7 @@ describe("NCMB User", function(){
           provider = "facebook";
         });
         it("callback で登録時エラーを取得できる", function(done){
-          user.signUpByOauth(provider, providerData, function(err, data){
+          user.signUpWith(provider, providerData, function(err, data){
             if(!err) done(new Error("失敗すべき"));
             expect(err).to.be.an.instanceof(Error); 
             done();
@@ -129,7 +185,35 @@ describe("NCMB User", function(){
         });
 
         it("promise で登録時エラーを取得できる", function(done){
-          user.signUpByOauth(provider, providerData)
+          user.signUpWith(provider, providerData)
+          .then(function(data){
+            done(new Error("失敗すべき"));
+          })
+          .catch(function(err){
+            expect(err).to.be.an.instanceof(Error);
+            done();
+          });
+        });
+      });
+      context("認証情報が不足していた場合", function(){
+        beforeEach(function(){
+          user = new ncmb.User({});
+          providerData = {
+            access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD",
+            expiration_date: {"__type":"Date","iso":"2013-08-31T07:41:11.906Z"}
+          };
+          provider = "facebook";
+        });
+        it("callback で登録時エラーを取得できる", function(done){
+          user.signUpWith(provider, providerData, function(err, data){
+            if(!err) done(new Error("失敗すべき"));
+            expect(err).to.be.an.instanceof(Error); 
+            done();
+          });
+        });
+
+        it("promise で登録時エラーを取得できる", function(done){
+          user.signUpWith(provider, providerData)
           .then(function(data){
             done(new Error("失敗すべき"));
           })

@@ -72,6 +72,103 @@ describe("NCMB User", function(){
     });
   });
 
+  describe("匿名ユーザでログイン", function(){
+    var uuid = null;
+    context("成功した場合", function(){
+      beforeEach(function(){
+        uuid = "3dc72085-911b-4798-9707-d69e879a6185";
+      });
+      it("callback でレスポンスを取得できる", function(done){
+        ncmb.User.loginAsAnonymous( uuid, function(err, data){
+          done(err ? err : null);
+        });
+      });
+
+      it("promise でレスポンスを取得できる", function(done){
+        ncmb.User.loginAsAnonymous(uuid)
+        .then(function(data){
+          expect(data).to.have.property("updateDate", "2013-08-16T11:49:45.108Z");
+          done();
+        })
+        .catch(function(err){
+          done(err);
+        });
+      });
+    });
+
+    context("uuidについて", function(){
+      context("フォーマットが不正な場合", function(){
+        beforeEach(function(){
+          uuid = "3dc72085-911b-4798-9707";
+        });
+        it("callback でログイン時エラーを取得できる", function(done){
+          ncmb.User.loginAsAnonymous( uuid, function(err, data){
+            if(!err) done(new Error("失敗すべき"));
+              expect(err).to.be.an.instanceof(Error);
+              done();
+          });
+        });
+
+        it("promise でログイン時エラーを取得できる", function(done){
+          ncmb.User.loginAsAnonymous(uuid)
+          .then(function(data){
+            done(new Error("失敗すべき"));
+          })
+          .catch(function(err){
+            expect(err).to.be.an.instanceof(Error);
+            done();
+          });
+        });
+      });
+      context("大文字のアルファベットが含まれる場合", function(){
+        beforeEach(function(){
+          uuid = "3dc72085-911b-4798-9707-d69e879A6185";
+        });
+        it("callback でログイン時エラーを取得できる", function(done){
+          ncmb.User.loginAsAnonymous( uuid, function(err, data){
+            if(!err) done(new Error("失敗すべき"));
+              expect(err).to.be.an.instanceof(Error);
+              done();
+          });
+        });
+
+        it("promise でログイン時エラーを取得できる", function(done){
+          ncmb.User.loginAsAnonymous(uuid)
+          .then(function(data){
+            done(new Error("失敗すべき"));
+          })
+          .catch(function(err){
+            expect(err).to.be.an.instanceof(Error);
+            done();
+          });
+        });
+      });
+      context("区切り以外の記号が含まれる場合", function(){
+        beforeEach(function(){
+          uuid = "3dc72085-911b-4798-9707-d69e879a61.5";
+        });
+        it("callback でログイン時エラーを取得できる", function(done){
+          ncmb.User.loginAsAnonymous( uuid, function(err, data){
+            if(!err) done(new Error("失敗すべき"));
+              expect(err).to.be.an.instanceof(Error);
+              done();
+          });
+        });
+
+        it("promise でログイン時エラーを取得できる", function(done){
+          ncmb.User.loginAsAnonymous(uuid)
+          .then(function(data){
+            done(new Error("失敗すべき"));
+          })
+          .catch(function(err){
+            expect(err).to.be.an.instanceof(Error);
+            done();
+          });
+        });
+      });
+    });
+  });
+
   describe("ユーザ情報更新", function(){
     var user = null;
     context("成功した場合", function(){

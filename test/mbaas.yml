@@ -239,17 +239,6 @@
 
 -
   request:
-    url: /2013-09-01/users
-    method: POST
-    body: 
-      "mailAddress": "test@example.com"
-      "password": "password"
-  response:
-    status: 201
-    file: 2013-09-01_classes_users_post_mailpw_success.json
-
--
-  request:
     url: /2013-09-01/requestPasswordReset
     method: POST
     body: { "mailAddress": "test@example.com" }

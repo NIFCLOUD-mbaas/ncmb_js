@@ -189,7 +189,7 @@ describe("NCMB Users", function(){
         });
 
         it("promise でログインエラーを取得できる", function(done){
-          ncmb.User.login(userName, password)
+          ncmb.User.login(userName)
           .then(function(data){
             done(new Error("失敗すべき"));
           })
@@ -233,7 +233,7 @@ describe("NCMB Users", function(){
         it("callback で送信時エラーを取得できる", function(done){
           user.requestPasswordReset(function(err, data){
             if(!err) done(new Error("失敗すべき"));
-            expect(err).to.be.an.instanceof(Error); 
+            expect(err).to.be.an.instanceof(Error);
             done();
           });
         });
@@ -285,7 +285,7 @@ describe("NCMB Users", function(){
         it("callback で更新時エラーを取得できる", function(done){
           user.update(function(err, data){
             if(!err) done(new Error("失敗すべき"));
-            expect(err).to.be.an.instanceof(Error); 
+            expect(err).to.be.an.instanceof(Error);
             done();
           });
         });

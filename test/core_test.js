@@ -11,6 +11,41 @@ describe("NCMB core", function(){
     ncmb = new NCMB({apikey: config.apikey, clientkey: config.clientkey });
   });
 
+  describe("インスタンス生成", function(){
+    it("apikey, clientkeyが設定されるとき、生成に成功する", function(done){
+      try{
+        var new_ncmb = new NCMB({apikey: "apikey", clientkey: "clientkey"});
+        done();
+      }catch(err){
+        done(err);
+      }
+    });
+    it("apikey もしくは clientkeyがないとき、生成に失敗", function(done){
+      expect(function(){
+          new NCMB();
+        }).to.throw(Error);
+        expect(function(){
+          new NCMB({});
+        }).to.throw(Error);
+        expect(function(){
+          new NCMB({apikey: undefined, clientkey: undefined});
+        }).to.throw(Error);
+        expect(function(){
+          new NCMB({apikey: null, clientkey: null});
+        }).to.throw(Error);
+        expect(function(){
+          new NCMB({apikey: "", clientkey: ""});
+        }).to.throw(Error);
+        expect(function(){
+          new NCMB({apikey: undefined, clientkey: config.clientkey});
+        }).to.throw(Error);
+        expect(function(){
+          new NCMB({apikey: config.apikey, clientkey: undefined});
+        }).to.throw(Error);
+        done();
+    });
+  });
+
   describe("signature 作成", function(){
     it("[公式ドキュメント](http://bit.ly/1GsvAKL) の通りに成功する", function(){
       ncmb

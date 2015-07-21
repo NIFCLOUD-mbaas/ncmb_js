@@ -8,7 +8,7 @@ var NCMB = require("../lib/ncmb");
 describe("NCMB core", function(){
   var ncmb = null;
   before(function(){
-    ncmb = new NCMB();
+    ncmb = new NCMB({apikey: config.apikey, clientkey: config.clientkey });
   });
 
   describe("signature 作成", function(){

@@ -8,13 +8,13 @@ var NCMB = require("../lib/ncmb");
 describe("NCMB core", function(){
   var ncmb = null;
   before(function(){
-    ncmb = new NCMB({apikey: config.apikey, clientkey: config.clientkey });
+    ncmb = new NCMB(config.apikey, config.clientkey );
   });
 
   describe("インスタンス生成", function(){
     it("apikey, clientkeyが設定されるとき、生成に成功する", function(done){
       try{
-        var new_ncmb = new NCMB({apikey: "apikey", clientkey: "clientkey"});
+        var new_ncmb = new NCMB("apikey", "clientkey");
         done();
       }catch(err){
         done(err);
@@ -28,19 +28,19 @@ describe("NCMB core", function(){
           new NCMB({});
         }).to.throw(Error);
         expect(function(){
-          new NCMB({apikey: undefined, clientkey: undefined});
+          new NCMB(undefined, undefined);
         }).to.throw(Error);
         expect(function(){
-          new NCMB({apikey: null, clientkey: null});
+          new NCMB(null, null);
         }).to.throw(Error);
         expect(function(){
-          new NCMB({apikey: "", clientkey: ""});
+          new NCMB("", "");
         }).to.throw(Error);
         expect(function(){
-          new NCMB({apikey: undefined, clientkey: config.clientkey});
+          new NCMB(undefined, config.clientkey);
         }).to.throw(Error);
         expect(function(){
-          new NCMB({apikey: config.apikey, clientkey: undefined});
+          new NCMB(config.apikey, undefined);
         }).to.throw(Error);
         done();
     });

@@ -6,7 +6,7 @@ var expect   = require("chai").expect;
 var NCMB = require("../lib/ncmb");
 
 describe("NCMB ACL", function(){
-    var ncmb = new NCMB({apikey: config.apikey, clientkey: config.clientkey });
+    var ncmb = new NCMB(config.apikey, config.clientkey );
     if(config.apiserver){
       ncmb
         .set("protocol", config.apiserver.protocol || "http:")

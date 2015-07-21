@@ -8,7 +8,7 @@ var ncmb = null;
 describe("NCMB Users", function(){
   var ncmb = null;
   before(function(){
-    ncmb = new NCMB({apikey: config.apikey, clientkey: config.clientkey });
+    ncmb = new NCMB(config.apikey, config.clientkey );
     if(config.apiserver){
       ncmb
       .set("protocol", config.apiserver.protocol || "http:")

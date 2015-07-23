@@ -92,7 +92,6 @@ describe("NCMB Geolocation", function(){
         Food = ncmb.DataStore("food");
         geo = new ncmb.Geolocation(12,133);
         food = new Food({geoLocation: geo});
-        console.log("food:",food);
       });
 
       it("callback で取得できる", function(done){

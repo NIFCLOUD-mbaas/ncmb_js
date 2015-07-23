@@ -86,21 +86,24 @@ describe("NCMB Geolocation", function(){
   describe("Geolocation データを保存し", function(){
     context("成功した場合に", function(){
       var Food = null;
+      var food = null;
       var geo  = null;
-      before(function(){
+      beforeEach(function(){
         Food = ncmb.DataStore("food");
         geo = new ncmb.Geolocation(12,133);
+        food = new Food({geoLocation: geo});
+        console.log("food:",food);
       });
 
       it("callback で取得できる", function(done){
-        new Food({geoLocation: geo}).save(function(err, food){
+        food.save(function(err, food){
           if(err) return done(err);
           expect(food).to.be.an.instanceof(Food);
           done();
         });
       });
       it("promise で取得できる", function(done){
-        new Food({geoLocation: geo}).save().then(function(food){
+        food.save().then(function(food){
           expect(food).to.be.an.instanceof(Food);
           done();
         }).catch(done);

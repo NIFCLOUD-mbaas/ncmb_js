@@ -11,7 +11,7 @@
     url: /2013-09-01/classes/TestClass
     method: POST
     body:
-      "key": "value"
+      key: "value"
   response:
     status: 201
     file: 2013-09-01_classes_TestClass_post_success.json
@@ -20,7 +20,7 @@
     url: /2013-09-01/classes/TestClass/object_id
     method: PUT
     body:
-      "key": "value_new"
+      key: "value_new"
   response:
     status: 200
     file: 2013-09-01_classes_TestClass_put_success.json
@@ -33,17 +33,27 @@
     file: 2013-09-01_classes_TestClass_delete_success.json
 
 # datastore
-
 -
   request:
     url: /2013-09-01/classes/food
     method: POST
-    data:
+    body:
       name: "orange"
       acl: {'*':{read: true}}
   response:
     status: 201
     file: 2013-09-01_classes_food_post_acl_success.json
+-
+  request:
+    url: /2013-09-01/classes/food
+    method: POST
+    body:
+      name: "orange"
+      type: "fruit"
+      status: "success"
+  response:
+    status: 201
+    file: 2013-09-01_classes_food_post_success.json
 -
   request:
     url: /2013-09-01/classes/food
@@ -57,7 +67,7 @@
   request:
     url: /2013-09-01/classes/food
     method: POST
-    data:
+    body:
       harvestDate: {"__type":"Date","iso":"1999-12-31T14:59:59.999Z"}
   response:
     status: 201
@@ -66,20 +76,30 @@
   request:
     url: /2013-09-01/classes/food
     method: POST
-    data:
-      geoLocation: { latitude: 12, longitude: 133, __type: 'GeoPoint' }
+    body:
+      geoLocation: { __type: 'GeoPoint', latitude: 12, longitude: 133}
   response:
     status: 201
     file: 2013-09-01_classes_food_post_geolocation_success.json
-# -
-#   request:
-#     url: /2013-09-01/classes/food
-#     method: POST
-#     data:
-#       status: success
-#   response:
-#     status: 201
-#     file: 2013-09-01_classes_food_post_success.json
+-
+  request:
+    url: /2013-09-01/classes/Component
+    method: POST
+    body:
+      calorie: "50"
+  response:
+    status: 201
+    file: 2013-09-01_classes_component_post_success.json
+-
+  request:
+    url: /2013-09-01/classes/food
+    method: POST
+    body:
+      name: "orange"
+      component: { __type: 'Pointer', className: 'Component', objectId: 'component_id' }
+  response:
+    status: 201
+    file: 2013-09-01_classes_food_post_pointer_success.json
 -
   request:
     url: /2013-09-01/classes/food
@@ -93,7 +113,7 @@
   request:
     url: /2013-09-01/classes/nonexist
     method: POST
-    data:
+    body:
       status: failure
   response:
     status: 400
@@ -180,7 +200,7 @@
     url: /2013-09-01/classes/food/object_id
     method: PUT
     body:
-      "key": "value_new"
+      key: "value_new"
   response:
     status: 200
     file: 2013-09-01_classes_TestClass_put_success.json
@@ -387,7 +407,7 @@
     url: /2013-09-01/roles/update_role_id
     method: PUT
     body:
-      "roleName": "updated_role_name"
+      roleName: "updated_role_name"
   response:
     status: 200
     file: 2013-09-01_role_put_success.json
@@ -396,7 +416,7 @@
     url: /2013-09-01/roles/no_exist_role_id
     method: PUT
     body:
-      "roleName": "updated_role_name"
+      roleName: "updated_role_name"
   response:
     status: 404
     file: 2013-09-01_no_exist_role_put_failed.json

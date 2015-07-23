@@ -63,38 +63,29 @@ describe("NCMB DataStore", function(){
         });
       });
 
-      context("クラス定義が存在しなければ、登録に失敗し", function(){
-        var NonExist = null;
-        var food = null;
-        before(function(){
-          NonExist = ncmb.DataStore("nonexist");
-          food = new NonExist({name: "orange", type: "fruit", status: "failure"});
-        });
-        it("callback で取得できる", function(done){
-          food.save(function(err, obj){
-            if(!err) return done(new Error("error が返されなければならない"));
-            expect(err.status).to.be.eql(400);
-            done();
-          });
-        });
-        it("promise で取得できる", function(done){
-          food.save()
-              .then(function(obj){
-                done(new Error("error が返されなければならない"));
-              })
-              .catch(function(err){
-                done();
-              });
+      context("クラス名がなければ、クラス生成に失敗する", function(){
+        it("ロール名を指定せず、登録に失敗", function(done){
+          expect(function(){
+            ncmb.DataStore();
+          }).to.throw(Error);
+          expect(function(){
+            ncmb.DataStore(null);
+          }).to.throw(Error);
+          expect(function(){
+            ncmb.DataStore(undefined);
+          }).to.throw(Error);
+          done();
         });
       });
+      
       context("Dateタイプを指定し、オブジェクト保存に成功し", function(){
         var Food = null;
         var aSimpleDate = null;
         var food = null;
-        before(function(){
+        beforeEach(function(){
           Food = ncmb.DataStore("food");
           aSimpleDate = new Date(1999, 11, 31, 23, 59, 59, 999);
-          food = new Food({harvestDate:  aSimpleDate});
+          food = new Food({harvestDate: aSimpleDate});
         })
         it("callback で取得できる", function(done){
           food.save(function(err, obj){
@@ -105,7 +96,6 @@ describe("NCMB DataStore", function(){
               expect(obj.harvestDate).to.have.property("__type", "Date");
               expect(obj.harvestDate).to.have.property("iso");
               expect(obj.save).to.be.a("function");
-
               done();
             }
           });
@@ -117,6 +107,35 @@ describe("NCMB DataStore", function(){
                 expect(obj.harvestDate).to.have.property("__type", "Date");
                 expect(obj.harvestDate).to.have.property("iso");
                 expect(obj.save).to.be.a("function");
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+      });
+
+      context("Dataタイプを指定し、オブジェクト保存に成功し", function(){
+        var Food = null;
+        var Component = null;
+        var food = null;
+        var component = null;
+        beforeEach(function(){
+          Food = ncmb.DataStore("food");
+          food = new Food({name: "orange"});
+          Component = ncmb.DataStore("Component");
+          component = new Component({calorie: "50"});
+          food.set("component", component);
+        })
+        it("callback で取得できる", function(done){
+          food.save(function(err, obj){
+            done(err ? err : null);
+          });
+        });
+        it("promise で取得できる", function(done){
+          food.save()
+              .then(function(data){
+                expect(data).to.have.property("objectId", "object_id");
                 done();
               })
               .catch(function(err){

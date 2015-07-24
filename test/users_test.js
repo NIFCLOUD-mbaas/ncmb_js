@@ -18,180 +18,414 @@ describe("NCMB Users", function(){
     }
   });
 
-  describe("ログイン", function(){
-    var user = null;
-    var userName = null;
-    var password = null;
-    context("ncmb.Userのインスタンスでログインした場合", function(){
-      beforeEach(function(){
-        user = new ncmb.User({userName:"name", password:"passwd"});
-      });
-
-      it("callback でレスポンスを取得できる", function(done){
-        ncmb.User.login(user, function(err, data){
-          expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
-          done(err ? err : null);
-        });
-      });
-
-      it("promise でレスポンスを取得できる", function(done){
-        ncmb.User.login(user)
-        .then(function(data){
-          expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
-          done();
-        })
-        .catch(function(err){
-          done(err);
-        });
-      });
-    });
-    
-    context("userName, password でログインした場合", function(){
-      beforeEach(function(){
-        userName  = "name";
-        password = "passwd";
-      });
-
-      it("callback でレスポンスを取得できる", function(done){
-        ncmb.User.login(userName, password, function(err, data){
-          expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
-          done(err ? err : null);
-        });
-      });
-
-      it("promise でレスポンスを取得できる", function(done){
-        ncmb.User.login(userName, password)
-        .then(function(data){
-          expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
-          done();
-        })
-        .catch(function(err){
-          done(err);
-        });
-      });
-    });
-
-    context("失敗した理由が", function(){
-      context("username プロパティがない場合", function(){
+  describe("ID/PWユーザでログイン", function(){
+    describe("login", function(){
+      var user = null;
+      var userName = null;
+      var password = null;
+      var sessionToken = null;
+      context("プロパティにuserName, passwordがあればログインに成功して", function(){
         beforeEach(function(){
-          user = new ncmb.User({userName:"name"});
-        });
-       
-        it("callback でログインエラーを取得できる", function(done){
-          ncmb.User.login(user, function(err, data){
-            if(!err) done(new Error("失敗すべき"));
-            expect(err).to.be.an.instanceof(Error);
-            done();
-          });
-        });
-
-        it("promise でログインエラーを取得できる", function(done){
-          ncmb.User.login(user)
-          .then(function(data){
-            done(new Error("失敗すべき"));
-          })
-          .catch(function(err){
-            expect(err).to.be.an.instanceof(Error);
-            done();
-          });
-        });
-      });
-      context("password プロパティがない場合", function(){
-        beforeEach(function(){
-          user = new ncmb.User({password:"passwd"});
-        });
-       
-        it("callback でログインエラーを取得できる", function(done){
-          ncmb.User.login(user, function(err, data){
-            if(!err) done(new Error("失敗すべき"));
-            expect(err).to.be.an.instanceof(Error);
-            done();
-          });
-        });
-
-        it("promise でログインエラーを取得できる", function(done){
-          ncmb.User.login(user)
-          .then(function(data){
-            done(new Error("失敗すべき"));
-          })
-          .catch(function(err){
-            expect(err).to.be.an.instanceof(Error);
-            done();
-          });
-        });
-      });
-
-      context("usernameの値がない場合", function(){
-        beforeEach(function(){
-          userName  = null;
+          userName = "name";
           password = "passwd";
+          user = new ncmb.User({userName: userName, password: password});
         });
-       
-        it("callback でログインエラーを取得できる", function(done){
-          ncmb.User.login(userName, password, function(err, data){
-            if(!err) done(new Error("失敗すべき"));
-            expect(err).to.be.an.instanceof(Error);
-            done();
+        it("callback でレスポンスを取得できる", function(done){
+          user.login(function(err, data){
+            expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+            done(err ? err : null);
           });
         });
-
-        it("promise でログインエラーを取得できる", function(done){
-          ncmb.User.login(userName, password)
+        it("promise でレスポンスを取得できる", function(done){
+          user.login()
           .then(function(data){
-            done(new Error("失敗すべき"));
+            expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+            done();
           })
           .catch(function(err){
-            expect(err).to.be.an.instanceof(Error);
-            done();
+            done(err);
           });
         });
       });
-      context("passwordの値がない場合", function(){
+      context("プロパティにsessionTokenがあれば自分自身を返却して", function(){
         beforeEach(function(){
-          userName  = "name";
-          password = null;
+          sessionToken = "ojUDAfEBgGadVsyQE3XO0yrtu";
+          user = new ncmb.User({sessionToken: sessionToken});
         });
-       
-        it("callback でログインエラーを取得できる", function(done){
-          ncmb.User.login(userName, password, function(err, data){
-            if(!err) done(new Error("失敗すべき"));
-            expect(err).to.be.an.instanceof(Error);
-            done();
+        it("callback で取得できる", function(done){
+          user.login(function(err, data){
+            expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+            done(err ? err : null);
           });
         });
-
-        it("promise でログインエラーを取得できる", function(done){
-          ncmb.User.login(userName, password)
+        it("promise で取得できる", function(done){
+          user.login()
           .then(function(data){
-            done(new Error("失敗すべき"));
+            expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+            done();
           })
           .catch(function(err){
-            expect(err).to.be.an.instanceof(Error);
-            done();
+            done(err);
           });
         });
       });
-      context("userName/passwordログインで引数が足りない場合", function(){
-        beforeEach(function(){
-          userName  = "name";
-        });
-       
-        it("callback でログインエラーを取得できる", function(done){
-          ncmb.User.login(userName, function(err, data){
-            if(!err) done(new Error("失敗すべき"));
-            expect(err).to.be.an.instanceof(Error);
-            done();
+      context("失敗した理由が", function(){
+        context("username プロパティがない場合", function(){
+          beforeEach(function(){
+            password = "passwd";
+            user = new ncmb.User({password: password});
+          });
+         
+          it("callback でログインエラーを取得できる", function(done){
+            user.login(function(err, data){
+              if(!err) done(new Error("失敗すべき"));
+              expect(err).to.be.an.instanceof(Error);
+              done();
+            });
+          });
+
+          it("promise でログインエラーを取得できる", function(done){
+            user.login()
+            .then(function(data){
+              done(new Error("失敗すべき"));
+            })
+            .catch(function(err){
+              expect(err).to.be.an.instanceof(Error);
+              done();
+            });
           });
         });
+        context("password プロパティがない場合", function(){
+          beforeEach(function(){
+            userName = "name"
+            user = new ncmb.User({userName: userName});
+          });
+         
+          it("callback でログインエラーを取得できる", function(done){
+            user.login(function(err, data){
+              if(!err) done(new Error("失敗すべき"));
+              expect(err).to.be.an.instanceof(Error);
+              done();
+            });
+          });
 
-        it("promise でログインエラーを取得できる", function(done){
-          ncmb.User.login(userName)
-          .then(function(data){
-            done(new Error("失敗すべき"));
-          })
-          .catch(function(err){
-            expect(err).to.be.an.instanceof(Error);
-            done();
+          it("promise でログインエラーを取得できる", function(done){
+            user.login()
+            .then(function(data){
+              done(new Error("失敗すべき"));
+            })
+            .catch(function(err){
+              expect(err).to.be.an.instanceof(Error);
+              done();
+            });
+          });
+        });
+        context("username プロパティの値がない場合", function(){
+          beforeEach(function(){
+            userName  = null;
+            password = "passwd";
+            user = new ncmb.User({userName: userName, password: password}); 
+          });
+         
+          it("callback でログインエラーを取得できる", function(done){
+            user.login(function(err, data){
+              if(!err) done(new Error("失敗すべき"));
+              expect(err).to.be.an.instanceof(Error);
+              done();
+            });
+          });
+
+          it("promise でログインエラーを取得できる", function(done){
+            user.login()
+            .then(function(data){
+              done(new Error("失敗すべき"));
+            })
+            .catch(function(err){
+              expect(err).to.be.an.instanceof(Error);
+              done();
+            });
+          });
+        });
+        context("password プロパティの値がない場合", function(){
+          beforeEach(function(){
+            userName  = "name";
+            password = null;
+            user = new ncmb.User({userName: userName, password: password}); 
+          });
+         
+          it("callback でログインエラーを取得できる", function(done){
+            user.login(function(err, data){
+              if(!err) done(new Error("失敗すべき"));
+              expect(err).to.be.an.instanceof(Error);
+              done();
+            });
+          });
+
+          it("promise でログインエラーを取得できる", function(done){
+            user.login()
+            .then(function(data){
+              done(new Error("失敗すべき"));
+            })
+            .catch(function(err){
+              expect(err).to.be.an.instanceof(Error);
+              done();
+            });
+          });
+        });
+      });
+    });
+    describe("User.login", function(){
+      var user = null;
+      var userName = null;
+      var password = null;
+      var sessionToken = null;
+      context("ncmb.Userのインスタンスでログインした場合", function(){
+        context("プロパティにuserName, passwordがあればログインに成功して", function(){
+          beforeEach(function(){
+            userName = "name";
+            password = "passwd";
+            user = new ncmb.User({userName: userName, password: password});
+          });
+          it("callback でレスポンスを取得できる", function(done){
+            ncmb.User.login(user, function(err, data){
+              expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+              done(err ? err : null);
+            });
+          });
+          it("promise でレスポンスを取得できる", function(done){
+            ncmb.User.login(user)
+            .then(function(data){
+              expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+              done();
+            })
+            .catch(function(err){
+              done(err);
+            });
+          });
+        });
+        context("プロパティにsessionTokenがあれば自分自身を返却して", function(){
+          beforeEach(function(){
+            userName = "name";
+            password = "passwd";
+            sessionToken = "ojUDAfEBgGadVsyQE3XO0yrtu";
+            user = new ncmb.User({userName: userName, password: password, sessionToken: sessionToken});
+          });
+          it("callback で取得できる", function(done){
+            ncmb.User.login(user, function(err, data){
+              expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+              done(err ? err : null);
+            });
+          });
+          it("promise で取得できる", function(done){
+            ncmb.User.login(user)
+            .then(function(data){
+              expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+              done();
+            })
+            .catch(function(err){
+              done(err);
+            });
+          });
+        });
+        context("失敗した理由が", function(){
+          context("username プロパティがない場合", function(){
+            beforeEach(function(){
+              password = "passwd";
+              user = new ncmb.User({password: password});
+            });
+           
+            it("callback でログインエラーを取得できる", function(done){
+              ncmb.User.login(user, function(err, data){
+                if(!err) done(new Error("失敗すべき"));
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+
+            it("promise でログインエラーを取得できる", function(done){
+              ncmb.User.login(user)
+              .then(function(data){
+                done(new Error("失敗すべき"));
+              })
+              .catch(function(err){
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+          });
+          context("password プロパティがない場合", function(){
+            beforeEach(function(){
+              userName = "name"
+              user = new ncmb.User({userName: userName});
+            });
+           
+            it("callback でログインエラーを取得できる", function(done){
+              ncmb.User.login(user, function(err, data){
+                if(!err) done(new Error("失敗すべき"));
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+
+            it("promise でログインエラーを取得できる", function(done){
+              ncmb.User.login(user)
+              .then(function(data){
+                done(new Error("失敗すべき"));
+              })
+              .catch(function(err){
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+          });
+          context("username プロパティの値がない場合", function(){
+            beforeEach(function(){
+              userName  = null;
+              password = "passwd";
+              user = new ncmb.User({userName: userName, password: password}); 
+            });
+           
+            it("callback でログインエラーを取得できる", function(done){
+              ncmb.User.login(user, function(err, data){
+                if(!err) done(new Error("失敗すべき"));
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+
+            it("promise でログインエラーを取得できる", function(done){
+              ncmb.User.login(user)
+              .then(function(data){
+                done(new Error("失敗すべき"));
+              })
+              .catch(function(err){
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+          });
+          context("password プロパティの値がない場合", function(){
+            beforeEach(function(){
+              userName  = "name";
+              password = null;
+              user = new ncmb.User({userName: userName, password: password}); 
+            });
+           
+            it("callback でログインエラーを取得できる", function(done){
+              ncmb.User.login(user, function(err, data){
+                if(!err) done(new Error("失敗すべき"));
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+
+            it("promise でログインエラーを取得できる", function(done){
+              ncmb.User.login(user)
+              .then(function(data){
+                done(new Error("失敗すべき"));
+              })
+              .catch(function(err){
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+          });
+        });
+      });
+      
+      context("userName, password でログインした場合", function(){
+        context("userName, passwordが存在すればログインに成功して", function(){
+          beforeEach(function(){
+            userName  = "name";
+            password = "passwd";
+          });
+
+          it("callback でレスポンスを取得できる", function(done){
+            ncmb.User.login(userName, password, function(err, data){
+              expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+              done(err ? err : null);
+            });
+          });
+
+          it("promise でレスポンスを取得できる", function(done){
+            ncmb.User.login(userName, password)
+            .then(function(data){
+              expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+              done();
+            })
+            .catch(function(err){
+              done(err);
+            });
+          });
+        });
+        context("失敗した理由が", function(){
+          context("usernameの値がない場合", function(){
+            beforeEach(function(){
+              userName  = null;
+              password = "passwd";
+            });
+            it("callback でログインエラーを取得できる", function(done){
+              ncmb.User.login(userName, password, function(err, data){
+                if(!err) done(new Error("失敗すべき"));
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+            it("promise でログインエラーを取得できる", function(done){
+              ncmb.User.login(userName, password)
+              .then(function(data){
+                done(new Error("失敗すべき"));
+              })
+              .catch(function(err){
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+          });
+          context("passwordの値がない場合", function(){
+            beforeEach(function(){
+              userName  = "name";
+              password = null;
+            });
+            it("callback でログインエラーを取得できる", function(done){
+              ncmb.User.login(userName, password, function(err, data){
+                if(!err) done(new Error("失敗すべき"));
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+            it("promise でログインエラーを取得できる", function(done){
+              ncmb.User.login(userName, password)
+              .then(function(data){
+                done(new Error("失敗すべき"));
+              })
+              .catch(function(err){
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+          });
+          context("引数が足りない場合", function(){
+            beforeEach(function(){
+              userName  = "name";
+            });
+            it("callback でログインエラーを取得できる", function(done){
+              ncmb.User.login(userName, function(err, data){
+                if(!err) done(new Error("失敗すべき"));
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+            it("promise でログインエラーを取得できる", function(done){
+              ncmb.User.login(userName)
+              .then(function(data){
+                done(new Error("失敗すべき"));
+              })
+              .catch(function(err){
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
           });
         });
       });

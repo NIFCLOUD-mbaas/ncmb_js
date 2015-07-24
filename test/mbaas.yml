@@ -255,6 +255,30 @@
     status: 201
     file: 2013-09-01_users_update_success.json
 
+-
+  request:
+    url: /2013-09-01/users
+    method: POST
+    body: 
+      authData:
+        anonymous: 
+          id: "3dc72085-911b-4798-9707-d69e879a6185"
+  response:
+    status: 200
+    file: 2013-09-01_users_login_as_anonymous_success.json
+-
+  request:
+    url: /2013-09-01/users
+    method: POST
+    body: 
+      uuid: "3dc72085-911b-4798-9707-d69e879a6185"
+      authData:
+        anonymous: 
+          id: "3dc72085-911b-4798-9707-d69e879a6185"
+  response:
+    status: 200
+    file: 2013-09-01_users_login_as_anonymous_uuid_success.json
+
 # files
 -
   request:

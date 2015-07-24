@@ -251,7 +251,7 @@ describe("NCMB Users", function(){
   describe("匿名ユーザでログイン", function(){
     var uuid = null;
     context("成功した場合", function(){
-      beforeEach(function(){
+      before(function(){
         uuid = "3dc72085-911b-4798-9707-d69e879a6185";
       });
       it("callback でレスポンスを取得できる", function(done){
@@ -274,7 +274,7 @@ describe("NCMB Users", function(){
 
     context("uuidについて", function(){
       context("フォーマットが不正な場合", function(){
-        beforeEach(function(){
+        before(function(){
           uuid = "3dc72085-911b-4798-9707";
         });
         it("callback でログイン時エラーを取得できる", function(done){
@@ -297,7 +297,7 @@ describe("NCMB Users", function(){
         });
       });
       context("大文字のアルファベットが含まれる場合", function(){
-        beforeEach(function(){
+        before(function(){
           uuid = "3dc72085-911b-4798-9707-d69e879A6185";
         });
         it("callback でログイン時エラーを取得できる", function(done){

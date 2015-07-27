@@ -228,6 +228,17 @@
 
 -
   request:
+    url: /2013-09-01/users
+    method: POST
+    body:
+      "userName": "Yamada Tarou"
+      "password": "password"
+  response:
+    status: 201
+    file: 2013-09-01_classes_users_post_idpw_success.json
+
+-
+  request:
     url: '/2013-09-01/login'
     method: GET
     query:

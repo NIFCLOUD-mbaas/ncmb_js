@@ -232,4 +232,3 @@ describe("NCMB ACL", function(){
       });
     });
 });
-

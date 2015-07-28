@@ -16,15 +16,28 @@ describe("NCMB ACL", function(){
         .set("proxy", config.apiserver.port || "");
     }
 
-    describe("権限をconstructorで指定し、取得できる", function() {
-      it("permisionnのJSON指定", function() {
-        var aclObj = new ncmb.Acl({"*":{read: true}});
+    var aclObj = null;
+    it("権限をconstructorで指定し、取得できる", function() {
+      aclObj = new ncmb.Acl({"*":{read: true}});
+      expect(aclObj.toJSON()).to.be.eql({"*":{read: true}});
+    });
+
+    describe("権限をプロパティで指定し、取得できる", function() {
+      beforeEach(function(){
+        aclObj = new ncmb.Acl();
+      });
+      it("permisionをオブジェクトで指定", function() {
+        aclObj["*"] = {read: true};
+        expect(aclObj.toJSON()).to.be.eql({"*":{read: true}});
+      });
+      it("permisionをパラメータで指定", function() {
+        aclObj["*"] = {};
+        aclObj["*"].read = true;
         expect(aclObj.toJSON()).to.be.eql({"*":{read: true}});
       });
     });
 
     describe("権限の設定チェック", function() {
-      var aclObj = null;
       describe("Public権限に対して", function(){
         context("正しく設定される場合", function(){
           beforeEach(function(){

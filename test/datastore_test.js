@@ -123,7 +123,7 @@ describe("NCMB DataStore", function(){
           food = new Food({name: "orange"});
           Component = ncmb.DataStore("Component");
           component = new Component({calorie: "50"});
-          food.set("component", component);
+          food.component = component;
         })
         it("callback で取得できる", function(done){
           food.save(function(err, obj){

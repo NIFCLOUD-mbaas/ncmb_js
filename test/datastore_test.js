@@ -62,20 +62,18 @@ describe("NCMB DataStore", function(){
               });
         });
       });
-
-      context("クラス名がなければ、クラス生成に失敗する", function(){
-        it("ロール名を指定せず、登録に失敗", function(done){
-          expect(function(){
-            ncmb.DataStore();
-          }).to.throw(Error);
-          expect(function(){
-            ncmb.DataStore(null);
-          }).to.throw(Error);
-          expect(function(){
-            ncmb.DataStore(undefined);
-          }).to.throw(Error);
-          done();
-        });
+      
+      it("クラス名がなければ、クラス生成に失敗する", function(done){
+        expect(function(){
+          ncmb.DataStore();
+        }).to.throw(Error);
+        expect(function(){
+          ncmb.DataStore(null);
+        }).to.throw(Error);
+        expect(function(){
+          ncmb.DataStore(undefined);
+        }).to.throw(Error);
+        done();
       });
       
       context("Dateタイプを指定し、オブジェクト保存に成功し", function(){

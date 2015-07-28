@@ -71,7 +71,16 @@
       harvestDate: { __type: 'Date', iso: '1999-12-31T14:59:59.999Z'}
   response:
     status: 201
-    file: 2013-09-01_classes_food_post_date_success.json
+    file: 2013-09-01_classes_food_post_date_jst_success.json
+-
+  request:
+    url: /2013-09-01/classes/food
+    method: POST
+    body:
+      harvestDate: { __type: 'Date', iso: '1999-12-31T23:59:59.999Z'}
+  response:
+    status: 201
+    file: 2013-09-01_classes_food_post_date_utc_success.json
 -
   request:
     url: /2013-09-01/classes/food

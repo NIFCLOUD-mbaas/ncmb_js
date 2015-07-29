@@ -3,13 +3,11 @@
 var config   = require("config");
 var expect   = require("chai").expect;
 
-var NCMB = require("../lib/ncmb");
+var NCMB   = require("../lib/ncmb");
+var errors = require("../lib/errors");
 
 describe("NCMB ACL", function(){
-    var ncmb = new NCMB();
-    ncmb
-      .set("apikey", config.apikey)
-      .set("clientkey", config.clientkey);
+    var ncmb = new NCMB(config.apikey, config.clientkey );
     if(config.apiserver){
       ncmb
         .set("protocol", config.apiserver.protocol || "http:")
@@ -98,7 +96,7 @@ describe("NCMB ACL", function(){
             aclObj.setUserReadAccess(user, false);
             expect(aclObj.toJSON()).to.be.eql({"object_id":{read: false}});
           });
-          it("Read , Writeをchain指定し、取得できる", function() {
+          it("Read, Writeをchain指定し、取得できる", function() {
             aclObj.setUserReadAccess(user, true).setUserWriteAccess(user, false);
             expect(aclObj.toJSON()).to.be.eql({"object_id":{read: true, write: false}});
           });
@@ -125,6 +123,109 @@ describe("NCMB ACL", function(){
                 done();
               }
             });
+          });
+        });
+      });
+      var role = null;
+      describe("Role権限に対して", function(){
+        context("第一引数にrole名が設定される場合", function(){
+          beforeEach(function(){
+            aclObj = new ncmb.Acl();
+            role = "roleName"
+          });
+          it("Readを指定し、取得できる", function() {
+            aclObj.setRoleReadAccess(role, true);
+            expect(aclObj.toJSON()).to.be.eql({"role:roleName":{read: true}});
+          });
+          it("Writeを指定し、取得できる", function() {
+            aclObj.setRoleWriteAccess(role, true);
+            expect(aclObj.toJSON()).to.be.eql({"role:roleName":{write: true}});
+          });
+          it("Write, Readを指定し、取得できる", function() {
+            aclObj.setRoleReadAccess(role, true);
+            aclObj.setRoleWriteAccess(role, true);
+            expect(aclObj.toJSON()).to.be.eql({"role:roleName":{read: true, write: true}});
+          });
+          it("Write true, Write falseを連続指定し、最後に指定したfalseを取得できる", function() {
+            aclObj.setRoleWriteAccess(role, true);
+            aclObj.setRoleWriteAccess(role, false);
+            expect(aclObj.toJSON()).to.be.eql({"role:roleName":{write: false}});
+          });
+          it("Read true, Read falseを連続指定し、最後に指定したfalseを取得できる", function() {
+            aclObj.setRoleReadAccess(role, true);
+            aclObj.setRoleReadAccess(role, false);
+            expect(aclObj.toJSON()).to.be.eql({"role:roleName":{read: false}});
+          });
+          it("Read, Writeをchain指定し、取得できる", function() {
+            aclObj.setRoleReadAccess(role, true).setRoleWriteAccess(role, false);
+            expect(aclObj.toJSON()).to.be.eql({"role:roleName":{read: true, write: false}});
+          });
+        });
+        context("第一引数のrole名が不正な場合", function(){
+          beforeEach(function(){
+            aclObj = new ncmb.Acl();
+            role = new ncmb.Role({roleName:"roleName"});
+          });
+          it("role名にnullを指定した場合、エラーを返す", function() {
+            expect(function(){ aclObj.setRoleReadAccess(null, true); }).to.throw(errors.NoRoleNameError);
+          });
+          it("role名にundefinedを指定した場合、エラーを返す", function() {
+            expect(function(){ aclObj.setRoleReadAccess(undefined, true); }).to.throw(errors.NoRoleNameError);
+          });
+          it("role名に空文字を指定した場合、エラーを返す", function() {
+            expect(function(){ aclObj.setRoleReadAccess("", true); }).to.throw(errors.NoRoleNameError);
+          });
+          it("role名にroleNameがないオブジェクトを指定した場合、エラーを返す", function() {
+            expect(function(){ aclObj.setRoleReadAccess({}, true); }).to.throw(errors.NoRoleNameError);
+          });
+          it("role名にroleNameがnullのroleオブジェクトを指定した場合、エラーを返す", function() {
+            role.roleName = null;
+            expect(function(){ aclObj.setRoleReadAccess(role, true); }).to.throw(errors.NoRoleNameError);
+          });
+          it("role名にroleNameがundefinedのroleオブジェクトを指定した場合、エラーを返す", function() {
+            role.roleName = undefined;
+            expect(function(){ aclObj.setRoleReadAccess(role, true); }).to.throw(errors.NoRoleNameError);
+          });
+          it("role名にroleNameがないroleオブジェクトを指定した場合、エラーを返す", function() {
+            delete role.roleName;
+            expect(function(){ aclObj.setRoleReadAccess(role, true); }).to.throw(errors.NoRoleNameError);
+          });
+          it("role名にroleNameが空文字のroleオブジェクトを指定した場合、エラーを返す", function() {
+            role.roleName = "";
+            expect(function(){ aclObj.setRoleReadAccess(role, true); }).to.throw(errors.NoRoleNameError);
+          });
+        });
+        context("第一引数にroleインスタンスが設定される場合", function(){
+          beforeEach(function(){
+            aclObj = new ncmb.Acl();
+            role = new ncmb.Role({roleName:"roleName"});
+          });
+          it("Readを指定し、取得できる", function() {
+            aclObj.setRoleReadAccess(role, true);
+            expect(aclObj.toJSON()).to.be.eql({"role:roleName":{read: true}});
+          });
+          it("Writeを指定し、取得できる", function() {
+            aclObj.setRoleWriteAccess(role, true);
+            expect(aclObj.toJSON()).to.be.eql({"role:roleName":{write: true}});
+          });
+          it("Write, Readを指定し、取得できる", function() {
+            aclObj.setRoleReadAccess(role, true);
+            aclObj.setRoleWriteAccess(role, true);
+            expect(aclObj.toJSON()).to.be.eql({"role:roleName":{read: true, write: true}});
+          });
+          it("Write true, Write falseを連続指定し、最後に指定したfalseを取得できる", function() {
+            aclObj.setRoleWriteAccess(role, true);
+            aclObj.setRoleWriteAccess(role, false);
+            expect(aclObj.toJSON()).to.be.eql({"role:roleName":{write: false}});
+          });
+          it("Read true, Read falseを連続指定し、最後に指定したfalseを取得できる", function() {
+            aclObj.setRoleReadAccess(role, true);
+            aclObj.setRoleReadAccess(role, false);
+            expect(aclObj.toJSON()).to.be.eql({"role:roleName":{read: false}});
+          });
+          it("Read, Writeをchain指定し、取得できる", function() {
+            aclObj.setRoleReadAccess(role, true).setRoleWriteAccess(role, false);
+            expect(aclObj.toJSON()).to.be.eql({"role:roleName":{read: true, write: false}});
           });
         });
       });
@@ -163,4 +264,3 @@ describe("NCMB ACL", function(){
       });
     });
 });
-

@@ -228,6 +228,28 @@
 
 -
   request:
+    url: /2013-09-01/users
+    method: POST
+    body:
+      "userName": "Yamada Tarou"
+      "password": "password"
+  response:
+    status: 201
+    file: 2013-09-01_classes_users_post_idpw_success.json
+
+-
+  request:
+    url: '/2013-09-01/login'
+    method: GET
+    query:
+      userName: name
+      password: passwd
+  response:
+    status: 200
+    file: 2013-09-01_user_login_namepw_success.json
+
+-
+  request:
     url: /2013-09-01/requestPasswordReset
     method: POST
     body: { "mailAddress": "test@example.com" }
@@ -270,6 +292,50 @@
   response:
     status: 201
     file: 2013-09-01_users_update_success.json
+
+-
+  request:
+    url: /2013-09-01/users
+    method: POST
+    body:
+      authData:
+        anonymous:
+          id: "3dc72085-911b-4798-9707-d69e879a6185"
+  response:
+    status: 200
+    file: 2013-09-01_users_login_as_anonymous_success.json
+-
+  request:
+    url: /2013-09-01/users
+    method: POST
+    body:
+      uuid: "3dc72085-911b-4798-9707-d69e879a6185"
+      authData:
+        anonymous:
+          id: "3dc72085-911b-4798-9707-d69e879a6185"
+  response:
+    status: 200
+    file: 2013-09-01_users_login_as_anonymous_uuid_success.json
+
+-
+  request:
+    url: /2013-09-01/requestMailAddressUserEntry
+    method: POST
+    body:
+      "mailAddress": "test@example.com"
+  response:
+    status: 201
+    file: 2013-09-01_users_send_signup_mail_success.json
+
+-
+  request:
+    url: /2013-09-01/requestMailAddressUserEntry
+    method: POST
+    body:
+      "mailAddress": "usedaddress@example.com"
+  response:
+    status: 409
+    file: 2013-09-01_users_send_signup_mail_failed.json
 
 # files
 -

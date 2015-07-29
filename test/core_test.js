@@ -8,7 +8,42 @@ var NCMB = require("../lib/ncmb");
 describe("NCMB core", function(){
   var ncmb = null;
   before(function(){
-    ncmb = new NCMB();
+    ncmb = new NCMB(config.apikey, config.clientkey );
+  });
+
+  describe("インスタンス生成", function(){
+    it("apikey, clientkeyが設定されるとき、生成に成功する", function(done){
+      try{
+        var new_ncmb = new NCMB("apikey", "clientkey");
+        done();
+      }catch(err){
+        done(err);
+      }
+    });
+    it("apikey もしくは clientkeyがないとき、生成に失敗", function(done){
+      expect(function(){
+          new NCMB();
+        }).to.throw(Error);
+        expect(function(){
+          new NCMB({});
+        }).to.throw(Error);
+        expect(function(){
+          new NCMB(undefined, undefined);
+        }).to.throw(Error);
+        expect(function(){
+          new NCMB(null, null);
+        }).to.throw(Error);
+        expect(function(){
+          new NCMB("", "");
+        }).to.throw(Error);
+        expect(function(){
+          new NCMB(undefined, config.clientkey);
+        }).to.throw(Error);
+        expect(function(){
+          new NCMB(config.apikey, undefined);
+        }).to.throw(Error);
+        done();
+    });
   });
 
   describe("signature 作成", function(){

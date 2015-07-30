@@ -1909,7 +1909,623 @@ describe("NCMB Users", function(){
     });
 
     describe("User.loginWith", function(){
+      context("Userのインスタンスでログインした場合", function(){
 
+        context("authDataプロパティにfacebookの認証情報があればログインに成功して", function(){
+          beforeEach(function(){
+            provider = "facebook";
+            providerData = {
+              id: "100002415159782",
+              access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD",
+              expiration_date: {"__type":"Date","iso":"2013-08-31T07:41:11.906Z"}
+            };
+            user = new ncmb.User();
+            user.authData = {};
+            user.authData[provider] = providerData;
+          });
+          it("callback でレスポンスを取得できる", function(done){
+            ncmb.User.loginWith(user, function(err, data){
+              expect(data).to.have.property("sessionToken", "h6dx5pQIwc0jEDt1oTtPjemPe");
+              done(err ? err : null);
+            });
+          });
+          it("promise でレスポンスを取得できる", function(done){
+            ncmb.User.loginWith(user)
+            .then(function(data){
+              expect(data).to.have.property("sessionToken", "h6dx5pQIwc0jEDt1oTtPjemPe");
+              done();
+            })
+            .catch(function(err){
+              done(err);
+            });
+          });
+        });
+
+        context("authDataプロパティにtwitterの認証情報があればログインに成功して", function(){
+          beforeEach(function(){
+            provider = "twitter";
+            providerData = {
+              id: "887423302", 
+              screen_name: "mobileBackend", 
+              oauth_consumer_key: "ZoL16IzyCEEik4nNTEN9RW", 
+              consumer_secret: "ubFWbG0wL7bub7gnWSkAKAmXj6VZ97DpmK2ZSCc5Opk", 
+              oauth_token: "887423106-VxW8foViKjNDOyCLcC0WhTIyxUo2r3eXLLeogUtB",
+              oauth_token_secret: "gye4VHfEHHBCH34cEJGiAWlukGAEJ6DCixYNU6Mg"
+            };
+            user = new ncmb.User();
+            user.authData = {};
+            user.authData[provider] = providerData;
+          });
+          it("callback でレスポンスを取得できる", function(done){
+            ncmb.User.loginWith(user, function(err, data){
+              expect(data).to.have.property("sessionToken", "bfHuZvZ9vXZaCfMZ7fBrRnvru");
+              done(err ? err : null);
+            });
+          });
+          it("promise でレスポンスを取得できる", function(done){
+            ncmb.User.loginWith(user)
+            .then(function(data){
+              expect(data).to.have.property("sessionToken", "bfHuZvZ9vXZaCfMZ7fBrRnvru");
+              done();
+            })
+            .catch(function(err){
+              done(err);
+            });
+          });
+        });
+
+        context("authDataプロパティにgoogleの認証情報があればログインに成功して", function(){
+          beforeEach(function(){
+            provider = "google";
+            providerData = {
+              id:"342304547393343184783", 
+              access_token:"ya29.bAoBfwXmAnEqIVVICriUsrV1BDC1BHJJj1G0-CaasIYvKs-_zFBRvnVYQ4n3NC6bFkNIYbw6vf1eXM" 
+            };
+            user = new ncmb.User();
+            user.authData = {};
+            user.authData[provider] = providerData;
+          });
+          it("callback でレスポンスを取得できる", function(done){
+            ncmb.User.loginWith(user, function(err, data){
+              expect(data).to.have.property("sessionToken", "bfHuZvZ9vXZaCfMZ7fBrRnvru");
+              done(err ? err : null);
+            });
+          });
+          it("promise でレスポンスを取得できる", function(done){
+            ncmb.User.loginWith(user)
+            .then(function(data){
+              expect(data).to.have.property("sessionToken", "bfHuZvZ9vXZaCfMZ7fBrRnvru");
+              done();
+            })
+            .catch(function(err){
+              done(err);
+            });
+          });
+        });
+
+        context("authDataプロパティに複数の認証情報があれば、指定したproviderでログインに成功して", function(){
+          var secondProvider = null;
+          var secondProviderData = null;
+          beforeEach(function(){
+            provider = "facebook";
+            providerData = {
+              id: "100002415159782",
+              access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD",
+              expiration_date: {"__type":"Date","iso":"2013-08-31T07:41:11.906Z"}
+            };
+            secondProvider = "google";
+            secondProviderData = {
+              id:"342304547393343184783", 
+              access_token:"ya29.bAoBfwXmAnEqIVVICriUsrV1BDC1BHJJj1G0-CaasIYvKs-_zFBRvnVYQ4n3NC6bFkNIYbw6vf1eXM" 
+            };
+            user = new ncmb.User();
+            user.authData = {};
+            user.authData[provider] = providerData;
+            user.authData[secondProvider] = secondProviderData;
+          });
+          it("callback でレスポンスを取得できる", function(done){
+            ncmb.User.loginWith(user, secondProvider ,function(err, data){
+              expect(data).to.have.property("sessionToken", "bfHuZvZ9vXZaCfMZ7fBrRnvru");
+              done(err ? err : null);
+            });
+          });
+          it("promise でレスポンスを取得できる", function(done){
+            ncmb.User.loginWith(user, secondProvider)
+            .then(function(data){
+              expect(data).to.have.property("sessionToken", "bfHuZvZ9vXZaCfMZ7fBrRnvru");
+              done();
+            })
+            .catch(function(err){
+              done(err);
+            });
+          });
+        });
+
+        context("プロパティにsessionTokenがあれば自分自身を返却して", function(){
+          beforeEach(function(){
+            sessionToken = "ojUDAfEBgGadVsyQE3XO0yrtu";
+            provider = "facebook";
+            providerData = {
+              id: "100002415159782",
+              access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD",
+              expiration_date: {"__type":"Date","iso":"2013-08-31T07:41:11.906Z"}
+            };
+            user = new ncmb.User({sessionToken: sessionToken});
+            user.authData = {};
+            user.authData[provider] = providerData;
+          });
+          it("callback で取得できる", function(done){
+            ncmb.User.loginWith(user, function(err, data){
+              expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+              done(err ? err : null);
+            });
+          });
+          it("promise で取得できる", function(done){
+            ncmb.User.loginWith(user)
+            .then(function(data){
+              expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+              done();
+            })
+            .catch(function(err){
+              done(err);
+            });
+          });
+        });
+
+        context("失敗した理由が", function(){
+
+          context("authDataプロパティのproviderが不正だった場合", function(){
+            beforeEach(function(){
+              provider = "nifty";
+              providerData = {
+                id: "100002415159782",
+                access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD",
+                expiration_date: {"__type":"Date","iso":"2013-08-31T07:41:11.906Z"}
+              };
+              user = new ncmb.User();
+              user.authData = {};
+              user.authData[provider] = providerData;
+            });
+            it("callback でログインエラーを取得できる", function(done){
+              ncmb.User.loginWith(user, function(err, data){
+                if(!err) done(new Error("失敗すべき"));
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+            it("promise でログインエラーを取得できる", function(done){
+              ncmb.User.loginWith(user)
+              .then(function(data){
+                done(new Error("失敗すべき"));
+              })
+              .catch(function(err){
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+          });
+
+          context("facebookログインでauthDataプロパティのproviderDataが不正だった場合", function(){
+            beforeEach(function(){
+              provider = "facebook";
+              providerData = {
+                id: "100002415159782",
+                access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD"
+              };
+              user = new ncmb.User();
+              user.authData = {};
+              user.authData[provider] = providerData;
+            });
+            it("callback でログインエラーを取得できる", function(done){
+              ncmb.User.loginWith(user, function(err, data){
+                if(!err) done(new Error("失敗すべき"));
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+            it("promise でログインエラーを取得できる", function(done){
+              ncmb.User.loginWith(user)
+              .then(function(data){
+                done(new Error("失敗すべき"));
+              })
+              .catch(function(err){
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+          });
+
+          context("twitterログインでauthDataプロパティのproviderDataが不正だった場合", function(){
+            beforeEach(function(){
+              provider = "twitter";
+              providerData = {
+                id: "887423302", 
+                screen_name: "mobileBackend", 
+                oauth_consumer_key: "ZoL16IzyCEEik4nNTEN9RW", 
+                consumer_secret: "ubFWbG0wL7bub7gnWSkAKAmXj6VZ97DpmK2ZSCc5Opk", 
+                oauth_token: "887423106-VxW8foViKjNDOyCLcC0WhTIyxUo2r3eXLLeogUtB"
+              };
+              user = new ncmb.User();
+              user.authData = {};
+              user.authData[provider] = providerData;
+            });
+            it("callback でログインエラーを取得できる", function(done){
+              ncmb.User.loginWith(user, function(err, data){
+                if(!err) done(new Error("失敗すべき"));
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+            it("promise でログインエラーを取得できる", function(done){
+              ncmb.User.loginWith(user)
+              .then(function(data){
+                done(new Error("失敗すべき"));
+              })
+              .catch(function(err){
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+          });
+
+          context("googleログインでauthDataプロパティのproviderDataが不正だった場合", function(){
+            beforeEach(function(){
+              provider = "google";
+              providerData = {
+                access_token:"ya29.bAoBfwXmAnEqIVVICriUsrV1BDC1BHJJj1G0-CaasIYvKs-_zFBRvnVYQ4n3NC6bFkNIYbw6vf1eXM" 
+              };
+              user = new ncmb.User();
+              user.authData = {};
+              user.authData[provider] = providerData;
+            });
+            it("callback でログインエラーを取得できる", function(done){
+              ncmb.User.loginWith(user, function(err, data){
+                if(!err) done(new Error("失敗すべき"));
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+            it("promise でログインエラーを取得できる", function(done){
+              ncmb.User.loginWith(user)
+              .then(function(data){
+                done(new Error("失敗すべき"));
+              })
+              .catch(function(err){
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+          });
+
+          context("authDataプロパティに複数の認証情報があり、providerが指定されなかった場合", function(){
+            var secondProvider = null;
+            var secondProviderData = null;
+            beforeEach(function(){
+              provider = "facebook";
+              providerData = {
+                id: "100002415159782",
+                access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD",
+                expiration_date: {"__type":"Date","iso":"2013-08-31T07:41:11.906Z"}
+              };
+              secondProvider = "google";
+              secondProviderData = {
+                id:"342304547393343184783", 
+                access_token:"ya29.bAoBfwXmAnEqIVVICriUsrV1BDC1BHJJj1G0-CaasIYvKs-_zFBRvnVYQ4n3NC6bFkNIYbw6vf1eXM" 
+              };
+              user = new ncmb.User();
+              user.authData = {};
+              user.authData[provider] = providerData;
+              user.authData[secondProvider] = secondProviderData;
+            });
+            it("callback でログインエラーを取得できる", function(done){
+              ncmb.User.loginWith(user, function(err, data){
+                if(!err) done(new Error("失敗すべき"));
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+            it("promise でログインエラーを取得できる", function(done){
+              ncmb.User.loginWith(user)
+              .then(function(data){
+                done(new Error("失敗すべき"));
+              })
+              .catch(function(err){
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+          });
+        });
+      });
+      context("provider, providerDateでログインした場合", function(){
+
+        context("provider, providerDataを入力した場合facebookログインに成功して", function(){
+          beforeEach(function(){
+            provider = "facebook";
+            providerData = {
+              id: "100002415159782",
+              access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD",
+              expiration_date: {"__type":"Date","iso":"2013-08-31T07:41:11.906Z"}
+            };
+            user = new ncmb.User();
+          });
+          it("callback でレスポンスを取得できる", function(done){
+            ncmb.User.loginWith(provider, providerData, function(err, data){
+              expect(data).to.have.property("sessionToken", "h6dx5pQIwc0jEDt1oTtPjemPe");
+              done(err ? err : null);
+            });
+          });
+          it("promise でレスポンスを取得できる", function(done){
+            ncmb.User.loginWith(provider, providerData)
+            .then(function(data){
+              expect(data).to.have.property("sessionToken", "h6dx5pQIwc0jEDt1oTtPjemPe");
+              done();
+            })
+            .catch(function(err){
+              done(err);
+            });
+          });
+        });
+
+        context("provider, providerDataを入力した場合twitterログインに成功して", function(){
+          beforeEach(function(){
+            provider = "twitter";
+            providerData = {
+              id: "887423302", 
+              screen_name: "mobileBackend", 
+              oauth_consumer_key: "ZoL16IzyCEEik4nNTEN9RW", 
+              consumer_secret: "ubFWbG0wL7bub7gnWSkAKAmXj6VZ97DpmK2ZSCc5Opk", 
+              oauth_token: "887423106-VxW8foViKjNDOyCLcC0WhTIyxUo2r3eXLLeogUtB",
+              oauth_token_secret: "gye4VHfEHHBCH34cEJGiAWlukGAEJ6DCixYNU6Mg"
+            };
+            user = new ncmb.User();
+          });
+          it("callback でレスポンスを取得できる", function(done){
+            ncmb.User.loginWith(provider, providerData, function(err, data){
+              expect(data).to.have.property("sessionToken", "bfHuZvZ9vXZaCfMZ7fBrRnvru");
+              done(err ? err : null);
+            });
+          });
+          it("promise でレスポンスを取得できる", function(done){
+            ncmb.User.loginWith(provider, providerData)
+            .then(function(data){
+              expect(data).to.have.property("sessionToken", "bfHuZvZ9vXZaCfMZ7fBrRnvru");
+              done();
+            })
+            .catch(function(err){
+              done(err);
+            });
+          });
+        });
+
+        context("provider, providerDataを入力した場合googleログインに成功して", function(){
+          beforeEach(function(){
+            provider = "google";
+            providerData = {
+              id:"342304547393343184783", 
+              access_token:"ya29.bAoBfwXmAnEqIVVICriUsrV1BDC1BHJJj1G0-CaasIYvKs-_zFBRvnVYQ4n3NC6bFkNIYbw6vf1eXM" 
+            };
+            user = new ncmb.User();
+          });
+          it("callback でレスポンスを取得できる", function(done){
+            ncmb.User.loginWith(provider, providerData, function(err, data){
+              expect(data).to.have.property("sessionToken", "bfHuZvZ9vXZaCfMZ7fBrRnvru");
+              done(err ? err : null);
+            });
+          });
+          it("promise でレスポンスを取得できる", function(done){
+            ncmb.User.loginWith(provider, providerData)
+            .then(function(data){
+              expect(data).to.have.property("sessionToken", "bfHuZvZ9vXZaCfMZ7fBrRnvru");
+              done();
+            })
+            .catch(function(err){
+              done(err);
+            });
+          });
+        });
+
+        context("失敗した理由が", function(){
+
+          context("providerがnullだった場合", function(){
+            beforeEach(function(){
+              provider = null;
+              providerData = {
+                id: "100002415159782",
+                access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD",
+                expiration_date: {"__type":"Date","iso":"2013-08-31T07:41:11.906Z"}
+              };
+              user = new ncmb.User();
+            });
+            it("callback でログインエラーを取得できる", function(done){
+              ncmb.User.loginWith(provider, providerData, function(err, data){
+                if(!err) done(new Error("失敗すべき"));
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+            it("promise でログインエラーを取得できる", function(done){
+              ncmb.User.loginWith(provider, providerData)
+              .then(function(data){
+                done(new Error("失敗すべき"));
+              })
+              .catch(function(err){
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+          });
+
+          context("providerDataがnullだった場合", function(){
+            beforeEach(function(){
+              provider = "facebook";
+              providerData = null;
+              user = new ncmb.User();
+            });
+            it("callback でログインエラーを取得できる", function(done){
+              ncmb.User.loginWith(provider, providerData, function(err, data){
+                if(!err) done(new Error("失敗すべき"));
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+            it("promise でログインエラーを取得できる", function(done){
+              ncmb.User.loginWith(provider, providerData)
+              .then(function(data){
+                done(new Error("失敗すべき"));
+              })
+              .catch(function(err){
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+          });
+
+          context("providerが不正だった場合", function(){
+            beforeEach(function(){
+              provider = "nifty";
+              providerData = {
+                id: "100002415159782",
+                access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD",
+                expiration_date: {"__type":"Date","iso":"2013-08-31T07:41:11.906Z"}
+              };
+              user = new ncmb.User();
+            });
+            it("callback でログインエラーを取得できる", function(done){
+              ncmb.User.loginWith(provider, providerData, function(err, data){
+                if(!err) done(new Error("失敗すべき"));
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+            it("promise でログインエラーを取得できる", function(done){
+              ncmb.User.loginWith(provider, providerData)
+              .then(function(data){
+                done(new Error("失敗すべき"));
+              })
+              .catch(function(err){
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+          });
+
+          context("providerDataが不正だった場合", function(){
+            beforeEach(function(){
+              provider = "facebook";
+              providerData = {
+                id: "100002415159782",
+                access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD"
+              };
+              user = new ncmb.User();
+            });
+            it("callback でログインエラーを取得できる", function(done){
+              ncmb.User.loginWith(provider, providerData, function(err, data){
+                if(!err) done(new Error("失敗すべき"));
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+            it("promise でログインエラーを取得できる", function(done){
+              ncmb.User.loginWith(provider, providerData)
+              .then(function(data){
+                done(new Error("失敗すべき"));
+              })
+              .catch(function(err){
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+          });
+
+          context("facebookログインでproviderDataが不正だった場合", function(){
+            beforeEach(function(){
+              provider = "facebook";
+              providerData = {
+                id: "100002415159782",
+                access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD"
+              };
+              user = new ncmb.User();
+            });
+            it("callback でログインエラーを取得できる", function(done){
+              ncmb.User.loginWith(provider, providerData, function(err, data){
+                if(!err) done(new Error("失敗すべき"));
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+            it("promise でログインエラーを取得できる", function(done){
+              ncmb.User.loginWith(provider, providerData)
+              .then(function(data){
+                done(new Error("失敗すべき"));
+              })
+              .catch(function(err){
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+          });
+
+          context("twitterログインでproviderDataが不正だった場合", function(){
+            beforeEach(function(){
+              provider = "twitter";
+              providerData = {
+                id: "887423302", 
+                screen_name: "mobileBackend", 
+                oauth_consumer_key: "ZoL16IzyCEEik4nNTEN9RW", 
+                consumer_secret: "ubFWbG0wL7bub7gnWSkAKAmXj6VZ97DpmK2ZSCc5Opk", 
+                oauth_token: "887423106-VxW8foViKjNDOyCLcC0WhTIyxUo2r3eXLLeogUtB"
+              };
+              user = new ncmb.User();
+            });
+            it("callback でログインエラーを取得できる", function(done){
+              ncmb.User.loginWith(provider, providerData, function(err, data){
+                if(!err) done(new Error("失敗すべき"));
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+            it("promise でログインエラーを取得できる", function(done){
+              ncmb.User.loginWith(provider, providerData)
+              .then(function(data){
+                done(new Error("失敗すべき"));
+              })
+              .catch(function(err){
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+          });
+
+          context("googleログインでproviderDataが不正だった場合", function(){
+            beforeEach(function(){
+              provider = "google";
+              providerData = {
+                access_token:"ya29.bAoBfwXmAnEqIVVICriUsrV1BDC1BHJJj1G0-CaasIYvKs-_zFBRvnVYQ4n3NC6bFkNIYbw6vf1eXM" 
+              };
+              user = new ncmb.User();
+            });
+            it("callback でログインエラーを取得できる", function(done){
+              ncmb.User.loginWith(provider, providerData, function(err, data){
+                if(!err) done(new Error("失敗すべき"));
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+            it("promise でログインエラーを取得できる", function(done){
+              ncmb.User.loginWith(provider, providerData)
+              .then(function(data){
+                done(new Error("失敗すべき"));
+              })
+              .catch(function(err){
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+          });
+
+        });
+      });
     });
   });
 

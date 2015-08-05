@@ -4,7 +4,8 @@ var config   = require("config");
 var expect   = require("chai").expect;
 var _        = require("lodash");
 
-var NCMB = require("../lib/ncmb");
+var NCMB     = require("../lib/ncmb");
+var errors   = require("../lib/errors");
 
 describe("NCMB GeoPoint", function(){
   var ncmb = null;

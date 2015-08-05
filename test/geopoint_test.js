@@ -29,14 +29,17 @@ describe("NCMB GeoPoint", function(){
         return [lat, lng];
       });
     }));
-    var failuerCases = _.flatten([
-      ["latitude", -100, null, 100].map(function(lat){
-        return lngs.map(function(lng){ return [lat, lng]; });
-      }),
-      lats.map(function(lat){
-        return ["longitude", -200, null, 200].map(function(lng){ return [lat, lng]; });
-      }),
-    ]);
+    var failuerCases = [];
+    ["latitude", -100, null, 100].map(function(lat){
+      return lngs.map(function(lng){
+        failuerCases.push([lat, lng]);
+      });
+    });
+    lats.map(function(lat){
+      return ["longitude", -200, null, 200].map(function(lng){
+        failuerCases.push([lat, lng]);
+      });
+    });
 
     context("引数無しの場合", function(){
       it("{latitude: 0, longitude: 0} のオブジェクトが取得できる", function(){
@@ -71,7 +74,7 @@ describe("NCMB GeoPoint", function(){
           it("エラーを捕捉できる", function(){
             failuerCases.forEach(function(pos){
               try{
-                new ncmb.GeoPoint(pos[0], pos[1]);
+                var geo = argCase.create(pos);
                 throw new Error("エラーが出ない");
               }catch(err){
                 expect(err).to.be.an.instanceof(Error);

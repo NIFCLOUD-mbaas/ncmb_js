@@ -6,7 +6,7 @@ var _        = require("lodash");
 
 var NCMB = require("../lib/ncmb");
 
-describe("NCMB Geolocation", function(){
+describe("NCMB GeoPoint", function(){
   var ncmb = null;
 
   before(function(){
@@ -39,7 +39,7 @@ describe("NCMB Geolocation", function(){
 
     context("引数無しの場合", function(){
       it("{latitude: 0, longitude: 0} のオブジェクトが取得できる", function(){
-        var geo = new ncmb.Geolocation();
+        var geo = new ncmb.GeoPoint();
         expect(geo).to.have.property("latitude", 0);
         expect(geo).to.have.property("longitude", 0);
       });
@@ -47,11 +47,11 @@ describe("NCMB Geolocation", function(){
 
     [
       { name: "引数を 2 つ渡した場合",
-        create: function(dat){ return new ncmb.Geolocation(dat[0], dat[1]);}},
+        create: function(dat){ return new ncmb.GeoPoint(dat[0], dat[1]);}},
       { name: "引数を 2 要素配列で渡した場合",
-        create: function(dat){ return new ncmb.Geolocation(dat);}},
+        create: function(dat){ return new ncmb.GeoPoint(dat);}},
       { name: "引数をオブジェクトで渡した場合",
-        create: function(dat){ return new ncmb.Geolocation({
+        create: function(dat){ return new ncmb.GeoPoint({
           latitude: dat[0], longitude: dat[1]});}}
     ].forEach(function(argCase){
       describe("正常データを", function(){
@@ -70,7 +70,7 @@ describe("NCMB Geolocation", function(){
           it("エラーを捕捉できる", function(){
             failuerCases.forEach(function(pos){
               try{
-                new ncmb.Geolocation(pos[0], pos[1]);
+                new ncmb.GeoPoint(pos[0], pos[1]);
                 throw new Error("エラーが出ない");
               }catch(err){
                 expect(err).to.be.an.instanceof(Error);
@@ -83,14 +83,14 @@ describe("NCMB Geolocation", function(){
     });
   });
 
-  describe("Geolocation データを保存し", function(){
+  describe("GeoPoint データを保存し", function(){
     context("成功した場合に", function(){
       var Food = null;
       var food = null;
       var geo  = null;
       beforeEach(function(){
         Food = ncmb.DataStore("food");
-        geo = new ncmb.Geolocation(12,133);
+        geo = new ncmb.GeoPoint(12,133);
         food = new Food({geoLocation: geo});
       });
 

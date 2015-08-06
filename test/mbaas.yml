@@ -470,3 +470,61 @@
   response:
     status: 409
     file: 2013-09-01_classes_exist_role_failure.json
+
+# query
+-
+  request:
+    url: /2013-09-01/classes/QueryTest/fetchById_object_1
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_byid_success.json
+-
+  request:
+    url: /2013-09-01/classes/EmptyQueryTest/empty_id
+    method: GET
+  response:
+    status: 404
+    file: 2013-09-01_classes_querytest_get_byid_failure.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestWhere
+    method: GET
+    query:
+      where:
+        number: 1
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_where_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestFetch
+    method: GET
+    query:
+      limit: 1
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_fetch_success.json
+-
+  request:
+    url: /2013-09-01/classes/EmptyQueryTest
+    method: GET
+    query:
+      limit: 1
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_empty.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTest
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_fetchall_success.json
+-
+  request:
+    url: /2013-09-01/classes/EmptyQueryTest
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_empty.json

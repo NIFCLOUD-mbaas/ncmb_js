@@ -18,6 +18,23 @@ describe("NCMB Users", function(){
     }
   });
 
+  describe("インスタンス生成", function(){
+    it("プロパティをconstructorで指定し、取得できる", function(done){
+      var user = new ncmb.User({userName: "username"});
+      expect(user.userName).to.be.equal("username");
+      done();
+    })
+    it("変更許可のないキーを指定した場合、値を変更できない", function(done){
+      var user = new ncmb.User({save: "overwrite"});
+      try{
+        expect(user.save).to.be.equal("overwrite");
+        done(new Error("失敗すべき"));
+      }catch(err){
+        done();
+      }
+    });
+  });
+
   describe("ID/PWユーザでログイン", function(){
     var user = null;
     var userName = null;
@@ -1196,6 +1213,35 @@ describe("NCMB Users", function(){
             access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD",
             expiration_date: {"__type":"Date","iso":"2013-08-31T07:41:11.906Z"}
           };
+          provider = "facebook";
+        });
+        it("callback で登録時エラーを取得できる", function(done){
+          user.signUpWith(provider, providerData, function(err, data){
+            if(!err) done(new Error("失敗すべき"));
+            expect(err).to.be.an.instanceof(Error); 
+            done();
+          });
+        });
+
+        it("promise で登録時エラーを取得できる", function(done){
+          user.signUpWith(provider, providerData)
+          .then(function(data){
+            done(new Error("失敗すべき"));
+          })
+          .catch(function(err){
+            expect(err).to.be.an.instanceof(Error);
+            done();
+          });
+        });
+      });
+      context("ID/PWログインと競合した場合", function(){
+        beforeEach(function(){
+          user = new ncmb.User({userName:"username"});
+          providerData = {
+            id : "100002415159782",
+            access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD",
+            expiration_date: {"__type":"Date","iso":"2013-08-31T07:41:11.906Z"}
+          }
           provider = "facebook";
         });
         it("callback で登録時エラーを取得できる", function(done){

@@ -131,7 +131,7 @@ describe("NCMB Role", function(){
   describe("ロール削除", function(){
     describe("delete", function(){
       var roleName = "deleted_role_name";
-      context("存在したロール名を指定し、削除に成功", function(done){
+      context("存在したロール名を指定し、削除に成功して", function(done){
         var deleteRole = null;
         beforeEach(function(){
           deleteRole = new ncmb.Role({
@@ -152,7 +152,7 @@ describe("NCMB Role", function(){
               });
         });
       });
-      context("存在しないロール名を指定し、削除に失敗", function(){
+      context("存在しないロール名を指定し、削除に失敗して", function(){
         var noExistRole = null;
         before(function(){
           noExistRole = new ncmb.Role({
@@ -166,6 +166,28 @@ describe("NCMB Role", function(){
           });
         });
         it("promise で取得できる", function(done){
+          noExistRole.delete()
+              .then(function(obj){
+                done(new Error("error が返されなければならない"));
+              })
+              .catch(function(err){
+                done();
+              });
+        });
+      });
+      context("objectIdが設定されていないとき、削除に失敗して", function(){
+        var noExistRole = null;
+        before(function(){
+          noExistRole = new ncmb.Role({
+            objectId: null, roleName: roleName});
+        });
+        it("callback で削除エラーを取得できる", function(done){
+          noExistRole.delete(function(err, obj){
+            if(!err) return done(new Error("error が返されなければならない"));
+            done();
+          });
+        });
+        it("promise で削除エラーを取得できる", function(done){
           noExistRole.delete()
               .then(function(obj){
                 done(new Error("error が返されなければならない"));

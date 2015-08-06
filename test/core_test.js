@@ -45,6 +45,23 @@ describe("NCMB core", function(){
         done();
     });
   });
+  describe("パラメータ設定", function(){
+    it("設定可能なキーの場合は成功する", function(done){
+      ncmb.set("apikey", "6145f91061916580c742f806bab67649d10f45920246ff459404c46f00ff3e56");
+      done();
+    });
+    it("設定可能でないキーの場合は失敗する", function(done){
+      expect(function(){
+        ncmb.set("unmodifiablekey","value");
+      }).to.throw(Error);
+      done();
+    });
+    it("getメソッドでパラメータを参照できる", function(done){
+      ncmb.set("port",443);
+      expect(ncmb.get("port")).to.be.eql(443);
+      done();
+    });
+  });
 
   describe("signature 作成", function(){
     it("[公式ドキュメント](http://bit.ly/1GsvAKL) の通りに成功する", function(){

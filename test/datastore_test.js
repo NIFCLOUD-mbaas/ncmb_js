@@ -17,6 +17,27 @@ describe("NCMB DataStore", function(){
     }
   });
 
+  describe("インスタンス生成", function(){
+    var Food = null;
+    var food = null;
+    it("プロパティをconstructorで指定し、取得できる", function(done){
+      Food = ncmb.DataStore("food");
+      food = new ncmb.User({name: "orange"});
+      expect(food.name).to.be.equal("orange");
+      done();
+    })
+    it("変更許可のないキーを指定した場合、値を変更できない", function(done){
+      Food = ncmb.DataStore("food");
+      food = new ncmb.User({className: "drink"});
+      try{
+        expect(food.className).to.be.equal("drink");
+        done(new Error("失敗すべき"));
+      }catch(err){
+        done();
+      }
+    });
+  });
+
   describe("オブジェクト登録", function(){
     describe("save", function(){
       context("クラス定義が存在すれば、登録に成功し", function(){

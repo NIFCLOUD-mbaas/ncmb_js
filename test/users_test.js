@@ -830,28 +830,6 @@ describe("NCMB Users", function(){
               });
             });
           });
-          context("引数が足りない場合", function(){
-            beforeEach(function(){
-              mailAddress  = "mail@example.com";
-            });
-            it("callback でログインエラーを取得できる", function(done){
-              ncmb.User.loginWithMailAddress(mailAddress, function(err, data){
-                if(!err) done(new Error("失敗すべき"));
-                expect(err).to.be.an.instanceof(Error);
-                done();
-              });
-            });
-            it("promise でログインエラーを取得できる", function(done){
-              ncmb.User.loginWithMailAddress(mailAddress)
-              .then(function(data){
-                done(new Error("失敗すべき"));
-              })
-              .catch(function(err){
-                expect(err).to.be.an.instanceof(Error);
-                done();
-              });
-            });
-          });
         });
       });
     });

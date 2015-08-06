@@ -56,6 +56,11 @@ describe("NCMB core", function(){
       }).to.throw(Error);
       done();
     });
+    it("getメソッドでパラメータを参照できる", function(done){
+      ncmb.set("port",443);
+      expect(ncmb.get("port")).to.be.eql(443);
+      done();
+    });
   });
 
   describe("signature 作成", function(){

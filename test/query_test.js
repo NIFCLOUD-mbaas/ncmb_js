@@ -193,8 +193,6 @@ describe("NCMB Query", function(){
           QueryTest
           .where({number: 1})
           .fetchAll(function(err, objs){
-            console.log("err:",err);
-            console.log("objs:",objs);
             if(err){
               done(err);
             }else{

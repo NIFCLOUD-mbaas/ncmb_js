@@ -499,6 +499,96 @@
     file: 2013-09-01_classes_querytest_get_where_success.json
 -
   request:
+    url: /2013-09-01/classes/QueryTestEqualTo
+    method: GET
+    query:
+      where: '{"number":1}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_equalto_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestNotEqualTo
+    method: GET
+    query:
+      where: '{"number":{"$ne":2}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_notequalto_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestLessThan
+    method: GET
+    query:
+      where: '{"number":{"$lt":2}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_lessthan_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestLessThanOrEqualTo
+    method: GET
+    query:
+      where: '{"number":{"$lte":2}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_lessthanor_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestGreaterThan
+    method: GET
+    query:
+      where: '{"number":{"$gt":0}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_greaterthan_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestGreaterThanOrEqualTo
+    method: GET
+    query:
+      where: '{"number":{"$gte":1}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_greaterthanor_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestIn
+    method: GET
+    query:
+      where: '{"number":{"$in":[1,2,3]}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_in_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestNotIn
+    method: GET
+    query:
+      where: '{"number":{"$nin":[2,3,4]}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_notin_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestExists
+    method: GET
+    query:
+      where: '{"number":{"$exists":true}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_exists_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestExists
+    method: GET
+    query:
+      where: '{"name":{"$exists":false}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_exists_success.json
+-
+  request:
     url: /2013-09-01/classes/QueryTestFetch
     method: GET
     query:

@@ -186,7 +186,7 @@ describe("NCMB Query", function(){
     var QueryTest = null;
     describe("where", function(){
       context("検索条件を指定し、データがあれば、リストが返り", function(){
-        before(function(){
+        beforeEach(function(){
           QueryTest = ncmb.DataStore("QueryTestWhere");
         });
         it("callback で取得できる", function(done){
@@ -215,6 +215,379 @@ describe("NCMB Query", function(){
             done(err);
           });
         });
+      });
+      it("検索条件がオブジェクト以外で指定されたとき、エラーが返る", function(done){
+        QueryTest = ncmb.DataStore("QueryTestWhere");
+        try{
+          QueryTest.where("{number: 1}");
+          done(new Error("失敗するべき"));
+        }catch(err){
+          done();
+        }
+      });
+    });
+    describe("equalTo", function(){
+      context("検索条件を指定し、データがあれば、リストが返り", function(){
+        beforeEach(function(){
+          QueryTest = ncmb.DataStore("QueryTestEqualTo");
+        });
+        it("callback で取得できる", function(done){
+          QueryTest
+          .equalTo("number", 1)
+          .fetchAll(function(err, objs){
+            if(err){
+              done(err);
+            }else{
+              expect(objs.length).to.be.equal(1);
+              expect(objs[0].objectId).to.be.equal("equalTo_object_1");
+              done();
+            }
+          });
+        });
+        it("promise で取得できる", function(done){
+          QueryTest
+          .equalTo("number", 1)
+          .fetchAll()
+          .then(function(objs){
+            expect(objs.length).to.be.equal(1);
+            expect(objs[0].objectId).to.be.equal("equalTo_object_1");
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
+        });
+      });
+      it("検索キーが文字列で指定されたとき、エラーが返る", function(done){
+        QueryTest = ncmb.DataStore("QueryTestEqualTo");
+        try{
+          QueryTest.equalTo(["number"], 1);
+          done(new Error("失敗するべき"));
+        }catch(err){
+          done();
+        }
+      });
+    });
+    describe("notEqualTo", function(){
+      context("検索条件を指定し、データがあれば、リストが返り", function(){
+        beforeEach(function(){
+          QueryTest = ncmb.DataStore("QueryTestNotEqualTo");
+        });
+        it("callback で取得できる", function(done){
+          QueryTest
+          .notEqualTo("number", 2)
+          .fetchAll(function(err, objs){
+            if(err){
+              done(err);
+            }else{
+              expect(objs.length).to.be.equal(1);
+              expect(objs[0].objectId).to.be.equal("notEqualTo_object_1");
+              done();
+            }
+          });
+        });
+        it("promise で取得できる", function(done){
+          QueryTest
+          .notEqualTo("number", 2)
+          .fetchAll()
+          .then(function(objs){
+            expect(objs.length).to.be.equal(1);
+            expect(objs[0].objectId).to.be.equal("notEqualTo_object_1");
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
+        });
+      });
+    });
+    describe("lessThan", function(){
+      context("検索条件を指定し、データがあれば、リストが返り", function(){
+        beforeEach(function(){
+          QueryTest = ncmb.DataStore("QueryTestLessThan");
+        });
+        it("callback で取得できる", function(done){
+          QueryTest
+          .lessThan("number", 2)
+          .fetchAll(function(err, objs){
+            if(err){
+              done(err);
+            }else{
+              expect(objs.length).to.be.equal(1);
+              expect(objs[0].objectId).to.be.equal("lessThan_object_1");
+              done();
+            }
+          });
+        });
+        it("promise で取得できる", function(done){
+          QueryTest
+          .lessThan("number", 2)
+          .fetchAll()
+          .then(function(objs){
+            expect(objs.length).to.be.equal(1);
+            expect(objs[0].objectId).to.be.equal("lessThan_object_1");
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
+        });
+      });
+    });
+    describe("lessThanOrEqualTo", function(){
+      context("検索条件を指定し、データがあれば、リストが返り", function(){
+        beforeEach(function(){
+          QueryTest = ncmb.DataStore("QueryTestLessThanOrEqualTo");
+        });
+        it("callback で取得できる", function(done){
+          QueryTest
+          .lessThanOrEqualTo("number", 2)
+          .fetchAll(function(err, objs){
+            if(err){
+              done(err);
+            }else{
+              expect(objs.length).to.be.equal(1);
+              expect(objs[0].objectId).to.be.equal("lessThanOrEqualTo_object_1");
+              done();
+            }
+          });
+        });
+        it("promise で取得できる", function(done){
+          QueryTest
+          .lessThanOrEqualTo("number", 2)
+          .fetchAll()
+          .then(function(objs){
+            expect(objs.length).to.be.equal(1);
+            expect(objs[0].objectId).to.be.equal("lessThanOrEqualTo_object_1");
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
+        });
+      });
+    });
+    describe("greaterThan", function(){
+      context("検索条件を指定し、データがあれば、リストが返り", function(){
+        beforeEach(function(){
+          QueryTest = ncmb.DataStore("QueryTestGreaterThan");
+        });
+        it("callback で取得できる", function(done){
+          QueryTest
+          .greaterThan("number", 0)
+          .fetchAll(function(err, objs){
+            if(err){
+              done(err);
+            }else{
+              expect(objs.length).to.be.equal(1);
+              expect(objs[0].objectId).to.be.equal("greaterThan_object_1");
+              done();
+            }
+          });
+        });
+        it("promise で取得できる", function(done){
+          QueryTest
+          .greaterThan("number", 0)
+          .fetchAll()
+          .then(function(objs){
+            expect(objs.length).to.be.equal(1);
+            expect(objs[0].objectId).to.be.equal("greaterThan_object_1");
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
+        });
+      });
+    });
+    describe("greaterThanOrEqualTo", function(){
+      context("検索条件を指定し、データがあれば、リストが返り", function(){
+        beforeEach(function(){
+          QueryTest = ncmb.DataStore("QueryTestGreaterThanOrEqualTo");
+        });
+        it("callback で取得できる", function(done){
+          QueryTest
+          .greaterThanOrEqualTo("number", 1)
+          .fetchAll(function(err, objs){
+            if(err){
+              done(err);
+            }else{
+              expect(objs.length).to.be.equal(1);
+              expect(objs[0].objectId).to.be.equal("greaterThanOrEqualTo_object_1");
+              done();
+            }
+          });
+        });
+        it("promise で取得できる", function(done){
+          QueryTest
+          .greaterThanOrEqualTo("number", 1)
+          .fetchAll()
+          .then(function(objs){
+            expect(objs.length).to.be.equal(1);
+            expect(objs[0].objectId).to.be.equal("greaterThanOrEqualTo_object_1");
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
+        });
+      });
+    });
+    describe("in", function(){
+      context("検索条件を指定し、データがあれば、リストが返り", function(){
+        beforeEach(function(){
+          QueryTest = ncmb.DataStore("QueryTestIn");
+        });
+        it("callback で取得できる", function(done){
+          QueryTest
+          .in("number", [1,2,3])
+          .fetchAll(function(err, objs){
+            if(err){
+              done(err);
+            }else{
+              expect(objs.length).to.be.equal(1);
+              expect(objs[0].objectId).to.be.equal("in_object_1");
+              done();
+            }
+          });
+        });
+        it("promise で取得できる", function(done){
+          QueryTest
+          .in("number", [1,2,3])
+          .fetchAll()
+          .then(function(objs){
+            expect(objs.length).to.be.equal(1);
+            expect(objs[0].objectId).to.be.equal("in_object_1");
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
+        });
+      });
+      it("検索条件が配列以外で指定されたとき、エラーが返る", function(done){
+        QueryTest = ncmb.DataStore("QueryTestIn");
+        try{
+          QueryTest.in("number", 1);
+          done(new Error("失敗するべき"));
+        }catch(err){
+          done();
+        }
+      });
+    });
+    describe("notIn", function(){
+      context("検索条件を指定し、データがあれば、リストが返り", function(){
+        beforeEach(function(){
+          QueryTest = ncmb.DataStore("QueryTestNotIn");
+        });
+        it("callback で取得できる", function(done){
+          QueryTest
+          .notIn("number", [2,3,4])
+          .fetchAll(function(err, objs){
+            if(err){
+              done(err);
+            }else{
+              expect(objs.length).to.be.equal(1);
+              expect(objs[0].objectId).to.be.equal("notIn_object_1");
+              done();
+            }
+          });
+        });
+        it("promise で取得できる", function(done){
+          QueryTest
+          .notIn("number", [2,3,4])
+          .fetchAll()
+          .then(function(objs){
+            expect(objs.length).to.be.equal(1);
+            expect(objs[0].objectId).to.be.equal("notIn_object_1");
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
+        });
+      });
+      it("検索条件が配列以外で指定されたとき、エラーが返る", function(done){
+        QueryTest = ncmb.DataStore("QueryTestNotIn");
+        try{
+          QueryTest.notIn("number", 1);
+          done(new Error("失敗するべき"));
+        }catch(err){
+          done();
+        }
+      });
+    });
+    describe("exists", function(){
+      context("検索条件を指定し、データがあれば、リストが返り", function(){
+        beforeEach(function(){
+          QueryTest = ncmb.DataStore("QueryTestExists");
+        });
+        it("callback で取得できる", function(done){
+          QueryTest
+          .exists("number", true)
+          .fetchAll(function(err, objs){
+            if(err){
+              done(err);
+            }else{
+              expect(objs.length).to.be.equal(1);
+              expect(objs[0].objectId).to.be.equal("exists_object_1");
+              done();
+            }
+          });
+        });
+        it("promise で取得できる", function(done){
+          QueryTest
+          .exists("number", true)
+          .fetchAll()
+          .then(function(objs){
+            expect(objs.length).to.be.equal(1);
+            expect(objs[0].objectId).to.be.equal("exists_object_1");
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
+        });
+      });
+      context("検索条件を指定し、データがあれば、リストが返り", function(){
+        beforeEach(function(){
+          QueryTest = ncmb.DataStore("QueryTestExists");
+        });
+        it("callback で取得できる", function(done){
+          QueryTest
+          .exists("name", false)
+          .fetchAll(function(err, objs){
+            if(err){
+              done(err);
+            }else{
+              expect(objs.length).to.be.equal(1);
+              expect(objs[0].objectId).to.be.equal("exists_object_1");
+              done();
+            }
+          });
+        });
+        it("promise で取得できる", function(done){
+          QueryTest
+          .exists("name", false)
+          .fetchAll()
+          .then(function(objs){
+            expect(objs.length).to.be.equal(1);
+            expect(objs[0].objectId).to.be.equal("exists_object_1");
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
+        });
+      });
+      it("検索条件が配列以外で指定されたとき、エラーが返る", function(done){
+        QueryTest = ncmb.DataStore("QueryTestExists");
+        try{
+          QueryTest.exists("number", 1);
+          done(new Error("失敗するべき"));
+        }catch(err){
+          done();
+        }
       });
     });
   });

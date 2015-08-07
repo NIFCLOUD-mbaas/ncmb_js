@@ -112,6 +112,16 @@
 -
   request:
     url: /2013-09-01/classes/food
+    method: POST
+    body:
+      name: "orange"
+      member: { __type: 'Pointer', className: 'user', objectId: 'epaKcaYZqsREdSMY' }
+  response:
+    status: 201
+    file: 2013-09-01_classes_food_post_pointer_user_success.json
+-
+  request:
+    url: /2013-09-01/classes/food
     method: GET
     query:
       where: '{"objectId":"geolocation_object_id"}'

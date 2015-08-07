@@ -589,6 +589,87 @@
     file: 2013-09-01_classes_querytest_get_exists_success.json
 -
   request:
+    url: /2013-09-01/classes/QueryTestRegularExpressionTo
+    method: GET
+    query:
+      where: '{"name":{"$regex":"obj"}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_regex_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestRegularExpressionTo
+    method: GET
+    query:
+      where: '{"name":{"$regex":"^obj"}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_regex_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestRegularExpressionTo
+    method: GET
+    query:
+      where: '{"name":{"$regex":"Name$"}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_regex_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestInArray
+    method: GET
+    query:
+      where: '{"array":{"$inArray":[1,4,5]}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_inarray_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestInArray
+    method: GET
+    query:
+      where: '{"array":{"$inArray":[1]}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_inarray_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestNotInArray
+    method: GET
+    query:
+      where: '{"array":{"$ninArray":[4,5,6]}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_notinarray_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestNotInArray
+    method: GET
+    query:
+      where: '{"array":{"$ninArray":[4]}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_notinarray_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestAllInArray
+    method: GET
+    query:
+      where: '{"array":{"$all":[1,2,3]}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_allinarray_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestAllInArray
+    method: GET
+    query:
+      where: '{"array":{"$all":[1]}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_allinarray_success.json
+-
+  request:
     url: /2013-09-01/classes/QueryTestFetch
     method: GET
     query:

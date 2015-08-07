@@ -446,6 +446,395 @@ describe("NCMB Users", function(){
     });
   });
 
+  describe("MAIL/PWユーザでログイン", function(){
+    var user = null;
+    var mailAddress = null;
+    var password = null;
+    var sessionToken = null;
+    describe("loginWithMailAddress", function(){
+      context("プロパティにmailAddress, passwordがあればログインに成功して", function(){
+        beforeEach(function(){
+          mailAddress = "mail@example.com";
+          password = "passwd";
+          user = new ncmb.User({mailAddress: mailAddress, password: password});
+        });
+        it("callback でレスポンスを取得できる", function(done){
+          user.loginWithMailAddress(function(err, data){
+            expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+            done(err ? err : null);
+          });
+        });
+        it("promise でレスポンスを取得できる", function(done){
+          user.loginWithMailAddress()
+          .then(function(data){
+            expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
+        });
+      });
+      context("プロパティにsessionTokenがあれば自分自身を返却して", function(){
+        beforeEach(function(){
+          sessionToken = "ojUDAfEBgGadVsyQE3XO0yrtu";
+          user = new ncmb.User({sessionToken: sessionToken});
+        });
+        it("callback で取得できる", function(done){
+          user.loginWithMailAddress(function(err, data){
+            expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+            done(err ? err : null);
+          });
+        });
+        it("promise で取得できる", function(done){
+          user.loginWithMailAddress()
+          .then(function(data){
+            expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
+        });
+      });
+      context("失敗した理由が", function(){
+        context("mailAddress プロパティがない場合", function(){
+          beforeEach(function(){
+            password = "passwd";
+            user = new ncmb.User({password: password});
+          });
+         
+          it("callback でログインエラーを取得できる", function(done){
+            user.loginWithMailAddress(function(err, data){
+              if(!err) done(new Error("失敗すべき"));
+              expect(err).to.be.an.instanceof(Error);
+              done();
+            });
+          });
+
+          it("promise でログインエラーを取得できる", function(done){
+            user.loginWithMailAddress()
+            .then(function(data){
+              done(new Error("失敗すべき"));
+            })
+            .catch(function(err){
+              expect(err).to.be.an.instanceof(Error);
+              done();
+            });
+          });
+        });
+        context("password プロパティがない場合", function(){
+          beforeEach(function(){
+            mailAddress = "mail@example.com"
+            user = new ncmb.User({mailAddress: mailAddress});
+          });
+         
+          it("callback でログインエラーを取得できる", function(done){
+            user.loginWithMailAddress(function(err, data){
+              if(!err) done(new Error("失敗すべき"));
+              expect(err).to.be.an.instanceof(Error);
+              done();
+            });
+          });
+
+          it("promise でログインエラーを取得できる", function(done){
+            user.loginWithMailAddress()
+            .then(function(data){
+              done(new Error("失敗すべき"));
+            })
+            .catch(function(err){
+              expect(err).to.be.an.instanceof(Error);
+              done();
+            });
+          });
+        });
+        context("mailAddress プロパティの値がない場合", function(){
+          beforeEach(function(){
+            mailAddress  = null;
+            password = "passwd";
+            user = new ncmb.User({mailAddress: mailAddress, password: password}); 
+          });
+         
+          it("callback でログインエラーを取得できる", function(done){
+            user.loginWithMailAddress(function(err, data){
+              if(!err) done(new Error("失敗すべき"));
+              expect(err).to.be.an.instanceof(Error);
+              done();
+            });
+          });
+
+          it("promise でログインエラーを取得できる", function(done){
+            user.loginWithMailAddress()
+            .then(function(data){
+              done(new Error("失敗すべき"));
+            })
+            .catch(function(err){
+              expect(err).to.be.an.instanceof(Error);
+              done();
+            });
+          });
+        });
+        context("password プロパティの値がない場合", function(){
+          beforeEach(function(){
+            mailAddress  = "mail@example.com";
+            password = null;
+            user = new ncmb.User({mailAddress: mailAddress, password: password}); 
+          });
+         
+          it("callback でログインエラーを取得できる", function(done){
+            user.loginWithMailAddress(function(err, data){
+              if(!err) done(new Error("失敗すべき"));
+              expect(err).to.be.an.instanceof(Error);
+              done();
+            });
+          });
+
+          it("promise でログインエラーを取得できる", function(done){
+            user.loginWithMailAddress()
+            .then(function(data){
+              done(new Error("失敗すべき"));
+            })
+            .catch(function(err){
+              expect(err).to.be.an.instanceof(Error);
+              done();
+            });
+          });
+        });
+      });
+    });
+
+    describe("User.loginWithMailAddress", function(){
+      context("ncmb.Userのインスタンスでログインした場合", function(){
+        context("プロパティにmailAddress, passwordがあればログインに成功して", function(){
+          beforeEach(function(){
+            mailAddress = "mail@example.com";
+            password = "passwd";
+            user = new ncmb.User({mailAddress: mailAddress, password: password});
+          });
+          it("callback でレスポンスを取得できる", function(done){
+            ncmb.User.loginWithMailAddress(user, function(err, data){
+              expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+              done(err ? err : null);
+            });
+          });
+          it("promise でレスポンスを取得できる", function(done){
+            ncmb.User.loginWithMailAddress(user)
+            .then(function(data){
+              expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+              done();
+            })
+            .catch(function(err){
+              done(err);
+            });
+          });
+        });
+        context("プロパティにsessionTokenがあれば自分自身を返却して", function(){
+          beforeEach(function(){
+            mailAddress = "mail@example.com";
+            password = "passwd";
+            sessionToken = "ojUDAfEBgGadVsyQE3XO0yrtu";
+            user = new ncmb.User({mailAddress: mailAddress, password: password, sessionToken: sessionToken});
+          });
+          it("callback で取得できる", function(done){
+            ncmb.User.loginWithMailAddress(user, function(err, data){
+              expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+              done(err ? err : null);
+            });
+          });
+          it("promise で取得できる", function(done){
+            ncmb.User.loginWithMailAddress(user)
+            .then(function(data){
+              expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+              done();
+            })
+            .catch(function(err){
+              done(err);
+            });
+          });
+        });
+        context("失敗した理由が", function(){
+          context("mailAddress プロパティがない場合", function(){
+            beforeEach(function(){
+              password = "passwd";
+              user = new ncmb.User({password: password});
+            });
+           
+            it("callback でログインエラーを取得できる", function(done){
+              ncmb.User.loginWithMailAddress(user, function(err, data){
+                if(!err) done(new Error("失敗すべき"));
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+
+            it("promise でログインエラーを取得できる", function(done){
+              ncmb.User.loginWithMailAddress(user)
+              .then(function(data){
+                done(new Error("失敗すべき"));
+              })
+              .catch(function(err){
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+          });
+          context("password プロパティがない場合", function(){
+            beforeEach(function(){
+              mailAddress = "mail@example.com"
+              user = new ncmb.User({mailAddress: mailAddress});
+            });
+           
+            it("callback でログインエラーを取得できる", function(done){
+              ncmb.User.loginWithMailAddress(user, function(err, data){
+                if(!err) done(new Error("失敗すべき"));
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+
+            it("promise でログインエラーを取得できる", function(done){
+              ncmb.User.loginWithMailAddress(user)
+              .then(function(data){
+                done(new Error("失敗すべき"));
+              })
+              .catch(function(err){
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+          });
+          context("mailAddress プロパティの値がない場合", function(){
+            beforeEach(function(){
+              mailAddress  = null;
+              password = "passwd";
+              user = new ncmb.User({mailAddress: mailAddress, password: password}); 
+            });
+           
+            it("callback でログインエラーを取得できる", function(done){
+              ncmb.User.loginWithMailAddress(user, function(err, data){
+                if(!err) done(new Error("失敗すべき"));
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+
+            it("promise でログインエラーを取得できる", function(done){
+              ncmb.User.loginWithMailAddress(user)
+              .then(function(data){
+                done(new Error("失敗すべき"));
+              })
+              .catch(function(err){
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+          });
+          context("password プロパティの値がない場合", function(){
+            beforeEach(function(){
+              mailAddress  = "mail@example.com";
+              password = null;
+              user = new ncmb.User({mailAddress: mailAddress, password: password}); 
+            });
+           
+            it("callback でログインエラーを取得できる", function(done){
+              ncmb.User.loginWithMailAddress(user, function(err, data){
+                if(!err) done(new Error("失敗すべき"));
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+
+            it("promise でログインエラーを取得できる", function(done){
+              ncmb.User.loginWithMailAddress(user)
+              .then(function(data){
+                done(new Error("失敗すべき"));
+              })
+              .catch(function(err){
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+          });
+        });
+      });
+      
+      context("mailAddress, password でログインした場合", function(){
+        context("mailAddress, passwordが存在すればログインに成功して", function(){
+          beforeEach(function(){
+            mailAddress  = "mail@example.com";
+            password = "passwd";
+          });
+
+          it("callback でレスポンスを取得できる", function(done){
+            ncmb.User.loginWithMailAddress(mailAddress, password, function(err, data){
+              expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+              done(err ? err : null);
+            });
+          });
+
+          it("promise でレスポンスを取得できる", function(done){
+            ncmb.User.loginWithMailAddress(mailAddress, password)
+            .then(function(data){
+              expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+              done();
+            })
+            .catch(function(err){
+              done(err);
+            });
+          });
+        });
+        context("失敗した理由が", function(){
+          context("mailAddressの値がない場合", function(){
+            beforeEach(function(){
+              mailAddress  = null;
+              password = "passwd";
+            });
+            it("callback でログインエラーを取得できる", function(done){
+              ncmb.User.loginWithMailAddress(mailAddress, password, function(err, data){
+                if(!err) done(new Error("失敗すべき"));
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+            it("promise でログインエラーを取得できる", function(done){
+              ncmb.User.loginWithMailAddress(mailAddress, password)
+              .then(function(data){
+                done(new Error("失敗すべき"));
+              })
+              .catch(function(err){
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+          });
+          context("passwordの値がない場合", function(){
+            beforeEach(function(){
+              mailAddress  = "mail@example.com";
+              password = null;
+            });
+            it("callback でログインエラーを取得できる", function(done){
+              ncmb.User.loginWithMailAddress(mailAddress, password, function(err, data){
+                if(!err) done(new Error("失敗すべき"));
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+            it("promise でログインエラーを取得できる", function(done){
+              ncmb.User.loginWithMailAddress(mailAddress, password)
+              .then(function(data){
+                done(new Error("失敗すべき"));
+              })
+              .catch(function(err){
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+          });
+        });
+      });
+    });
+  });
+
   describe("匿名ユーザでログイン", function(){
     var uuid = null;
     var user = null;
@@ -619,14 +1008,14 @@ describe("NCMB Users", function(){
             user = new ncmb.User({userName: userName});
           });
           it("callback でログインエラーを取得できる", function(done){
-            user.login(function(err, data){
+            user.loginAsAnonymous(function(err, data){
               if(!err) done(new Error("失敗すべき"));
               expect(err).to.be.an.instanceof(Error);
               done();
             });
           });
           it("promise でログインエラーを取得できる", function(done){
-            user.login()
+            user.loginAsAnonymous()
             .then(function(data){
               done(new Error("失敗すべき"));
             })
@@ -642,14 +1031,14 @@ describe("NCMB Users", function(){
             user = new ncmb.User({authData: authData});
           });
           it("callback でログインエラーを取得できる", function(done){
-            user.login(function(err, data){
+            user.loginAsAnonymous(function(err, data){
               if(!err) done(new Error("失敗すべき"));
               expect(err).to.be.an.instanceof(Error);
               done();
             });
           });
           it("promise でログインエラーを取得できる", function(done){
-            user.login()
+            user.loginAsAnonymous()
             .then(function(data){
               done(new Error("失敗すべき"));
             })
@@ -827,14 +1216,14 @@ describe("NCMB Users", function(){
             user = new ncmb.User({userName: userName});
           });
           it("callback でログインエラーを取得できる", function(done){
-            ncmb.User.login(user, function(err, data){
+            ncmb.User.loginAsAnonymous(user, function(err, data){
               if(!err) done(new Error("失敗すべき"));
               expect(err).to.be.an.instanceof(Error);
               done();
             });
           });
           it("promise でログインエラーを取得できる", function(done){
-            ncmb.User.login(user)
+            ncmb.User.loginAsAnonymous(user)
             .then(function(data){
               done(new Error("失敗すべき"));
             })
@@ -850,14 +1239,14 @@ describe("NCMB Users", function(){
             user = new ncmb.User({authData: authData});
           });
           it("callback でログインエラーを取得できる", function(done){
-            ncmb.User.login(user, function(err, data){
+            ncmb.User.loginAsAnonymous(user, function(err, data){
               if(!err) done(new Error("失敗すべき"));
               expect(err).to.be.an.instanceof(Error);
               done();
             });
           });
           it("promise でログインエラーを取得できる", function(done){
-            ncmb.User.login(user)
+            ncmb.User.loginAsAnonymous(user)
             .then(function(data){
               done(new Error("失敗すべき"));
             })

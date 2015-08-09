@@ -1108,5 +1108,120 @@ describe("NCMB Query", function(){
     //     }
     //   });
     // });
+    describe("order", function(){
+      context("指定したkeyの昇順でリストが返り", function(){
+        beforeEach(function(){
+          QueryTest = ncmb.DataStore("QueryTestOrder");
+        });
+        it("callback で取得できる", function(done){
+          QueryTest
+          .order("number")
+          .fetchAll(function(err, objs){
+            if(err){
+              done(err);
+            }else{
+              expect(objs.length).to.be.equal(2);
+              expect(objs[0].objectId).to.be.equal("order_object_1");
+              done();
+            }
+          });
+        });
+        it("promise で取得できる", function(done){
+          QueryTest
+          .order("number")
+          .fetchAll()
+          .then(function(objs){
+            expect(objs.length).to.be.equal(2);
+            expect(objs[0].objectId).to.be.equal("order_object_1");
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
+        });
+      });
+      context("descendingフラグをtrueにすると降順でリストが返り", function(){
+        beforeEach(function(){
+          QueryTest = ncmb.DataStore("QueryTestOrder");
+        });
+        it("callback で取得できる", function(done){
+          QueryTest
+          .order("number", true)
+          .fetchAll(function(err, objs){
+            if(err){
+              done(err);
+            }else{
+              expect(objs.length).to.be.equal(2);
+              expect(objs[0].objectId).to.be.equal("order_object_2");
+              done();
+            }
+          });
+        });
+        it("promise で取得できる", function(done){
+          QueryTest
+          .order("number", true)
+          .fetchAll()
+          .then(function(objs){
+            expect(objs.length).to.be.equal(2);
+            expect(objs[0].objectId).to.be.equal("order_object_2");
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
+        });
+      });
+      context("複数の条件を指定して検索するとリストが返り", function(){
+        beforeEach(function(){
+          QueryTest = ncmb.DataStore("QueryTestOrder");
+        });
+        it("callback で取得できる", function(done){
+          QueryTest
+          .order("number")
+          .order("createDate")
+          .fetchAll(function(err, objs){
+            if(err){
+              done(err);
+            }else{
+              expect(objs.length).to.be.equal(3);
+              expect(objs[0].objectId).to.be.equal("order_object_1");
+              done();
+            }
+          });
+        });
+        it("promise で取得できる", function(done){
+          QueryTest
+          .order("number")
+          .order("createDate")
+          .fetchAll()
+          .then(function(objs){
+            expect(objs.length).to.be.equal(3);
+            expect(objs[0].objectId).to.be.equal("order_object_1");
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
+        });
+      });
+      it("descendingフラグが真偽値以外で指定されたとき、エラーが返る", function(done){
+        QueryTest = ncmb.DataStore("QueryTestOrder");
+        try{
+          QueryTest.order("number", "true");
+          done(new Error("失敗するべき"));
+        }catch(err){
+          done();
+        }
+      });
+      it("keyが文字列以外で指定されたとき、エラーが返る", function(done){
+        QueryTest = ncmb.DataStore("QueryTestOrder");
+        try{
+          QueryTest.order(["number"]);
+          done(new Error("失敗するべき"));
+        }catch(err){
+          done();
+        }
+      });
+    });
   });
 });

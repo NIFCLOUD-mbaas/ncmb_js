@@ -704,6 +704,15 @@
 #   response:
 #     status: 200
 #     file: 2013-09-01_classes_querytest_get_withinrad_success.json
+# -
+#   request:
+#     url: /2013-09-01/classes/QueryTestWithinSquare
+#     method: GET
+#     query:
+#       where: '{"location":{"$within":{"$box":[{ "__type":"GeoPoint","longitude":0,"latitude":0}, { "__type":"GeoPoint","longitude":100,"latitude":100}]}}}'
+#   response:
+#     status: 200
+#     file: 2013-09-01_classes_querytest_get_withinsquare_success.json
 -
   request:
     url: /2013-09-01/classes/QueryTestFetch

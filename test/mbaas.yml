@@ -668,6 +668,42 @@
   response:
     status: 200
     file: 2013-09-01_classes_querytest_get_allinarray_success.json
+# -
+#   request:
+#     url: /2013-09-01/classes/QueryTestNear
+#     method: GET
+#     query:
+#       where: '{"location":{"$near":{ "__type":"GeoPoint","longitude":0,"latitude":0}}}'
+#   response:
+#     status: 200
+#     file: 2013-09-01_classes_querytest_get_near_success.json
+# -
+#   request:
+#     url: /2013-09-01/classes/QueryTestWithinKm
+#     method: GET
+#     query:
+#       where: '{"location":{"$near":{ "__type":"GeoPoint","longitude":0,"latitude":0},"$maxDistanceInKilometers":1000}}'
+#   response:
+#     status: 200
+#     file: 2013-09-01_classes_querytest_get_withinkm_success.json
+# -
+#   request:
+#     url: /2013-09-01/classes/QueryTestWithinMile
+#     method: GET
+#     query:
+#       where: '{"location":{"$near":{ "__type":"GeoPoint","longitude":0,"latitude":0},"$maxDistanceInMiles":1000}}'
+#   response:
+#     status: 200
+#     file: 2013-09-01_classes_querytest_get_withinmile_success.json
+# -
+#   request:
+#     url: /2013-09-01/classes/QueryTestWithinRad
+#     method: GET
+#     query:
+#       where: '{"location":{"$near":{ "__type":"GeoPoint","longitude":0,"latitude":0},"$maxDistanceInRadians":0.5}}'
+#   response:
+#     status: 200
+#     file: 2013-09-01_classes_querytest_get_withinrad_success.json
 -
   request:
     url: /2013-09-01/classes/QueryTestFetch

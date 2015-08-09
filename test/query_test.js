@@ -886,5 +886,182 @@ describe("NCMB Query", function(){
         });
       });
     });
+    // describe("near", function(){
+    //   context("検索条件をncmb.GeoPointで指定し、データがあれば、リストが返り", function(){
+    //     var geoPoint = null;
+    //     beforeEach(function(){
+    //       QueryTest = ncmb.DataStore("QueryTestNear");
+    //       geoPoint = new ncmb.GeoPoint(0,0);
+    //     });
+    //     it("callback で取得できる", function(done){
+    //       QueryTest
+    //       .near("location", geoPoint)
+    //       .fetchAll(function(err, objs){
+    //         if(err){
+    //           done(err);
+    //         }else{
+    //           expect(objs.length).to.be.equal(1);
+    //           expect(objs[0].objectId).to.be.equal("near_object_1");
+    //           done();
+    //         }
+    //       });
+    //     });
+    //     it("promise で取得できる", function(done){
+    //       QueryTest
+    //       .near("location", geoPoint)
+    //       .fetchAll()
+    //       .then(function(objs){
+    //         expect(objs.length).to.be.equal(1);
+    //         expect(objs[0].objectId).to.be.equal("near_object_1");
+    //         done();
+    //       })
+    //       .catch(function(err){
+    //         done(err);
+    //       });
+    //     });
+    //   });
+    //   it("検索条件がncmb.GeoPoint以外で指定されたとき、エラーが返る", function(done){
+    //     QueryTest = ncmb.DataStore("QueryTestNear");
+    //     try{
+    //       QueryTest.near("location", [0, 0]);
+    //       done(new Error("失敗するべき"));
+    //     }catch(err){
+    //       done();
+    //     }
+    //   });
+    // });
+    // describe("withinKilometers", function(){
+    //   context("検索条件をncmb.GeoPointで指定し、データがあれば、リストが返り", function(){
+    //     var geoPoint = null;
+    //     beforeEach(function(){
+    //       QueryTest = ncmb.DataStore("QueryTestWithinKm");
+    //       geoPoint = new ncmb.GeoPoint(0,0);
+    //     });
+    //     it("callback で取得できる", function(done){
+    //       QueryTest
+    //       .withinKilometers("location", geoPoint, 1000)
+    //       .fetchAll(function(err, objs){
+    //         if(err){
+    //           done(err);
+    //         }else{
+    //           expect(objs.length).to.be.equal(1);
+    //           expect(objs[0].objectId).to.be.equal("withinKm_object_1");
+    //           done();
+    //         }
+    //       });
+    //     });
+    //     it("promise で取得できる", function(done){
+    //       QueryTest
+    //       .withinKilometers("location", geoPoint, 1000)
+    //       .fetchAll()
+    //       .then(function(objs){
+    //         expect(objs.length).to.be.equal(1);
+    //         expect(objs[0].objectId).to.be.equal("withinKm_object_1");
+    //         done();
+    //       })
+    //       .catch(function(err){
+    //         done(err);
+    //       });
+    //     });
+    //   });
+    //   it("検索条件がncmb.GeoPoint以外で指定されたとき、エラーが返る", function(done){
+    //     QueryTest = ncmb.DataStore("QueryTestWithinKm");
+    //     try{
+    //       QueryTest.withinKilometers("location", [0, 0], 1000);
+    //       done(new Error("失敗するべき"));
+    //     }catch(err){
+    //       done();
+    //     }
+    //   });
+    // });
+    // describe("withinMiles", function(){
+    //   context("検索条件をncmb.GeoPointで指定し、データがあれば、リストが返り", function(){
+    //     var geoPoint = null;
+    //     beforeEach(function(){
+    //       QueryTest = ncmb.DataStore("QueryTestWithinMile");
+    //       geoPoint = new ncmb.GeoPoint(0,0);
+    //     });
+    //     it("callback で取得できる", function(done){
+    //       QueryTest
+    //       .withinMiles("location", geoPoint, 1000)
+    //       .fetchAll(function(err, objs){
+    //         if(err){
+    //           done(err);
+    //         }else{
+    //           expect(objs.length).to.be.equal(1);
+    //           expect(objs[0].objectId).to.be.equal("withinMile_object_1");
+    //           done();
+    //         }
+    //       });
+    //     });
+    //     it("promise で取得できる", function(done){
+    //       QueryTest
+    //       .withinMiles("location", geoPoint, 1000)
+    //       .fetchAll()
+    //       .then(function(objs){
+    //         expect(objs.length).to.be.equal(1);
+    //         expect(objs[0].objectId).to.be.equal("withinMile_object_1");
+    //         done();
+    //       })
+    //       .catch(function(err){
+    //         done(err);
+    //       });
+    //     });
+    //   });
+    //   it("検索条件がncmb.GeoPoint以外で指定されたとき、エラーが返る", function(done){
+    //     QueryTest = ncmb.DataStore("QueryTestWithinMile");
+    //     try{
+    //       QueryTest.withinMiles("location", [0, 0], 1000);
+    //       done(new Error("失敗するべき"));
+    //     }catch(err){
+    //       done();
+    //     }
+    //   });
+    // });
+    // describe("withinRadians", function(){
+    //   context("検索条件をncmb.GeoPointで指定し、データがあれば、リストが返り", function(){
+    //     var geoPoint = null;
+    //     beforeEach(function(){
+    //       QueryTest = ncmb.DataStore("QueryTestWithinRad");
+    //       geoPoint = new ncmb.GeoPoint(0,0);
+    //     });
+    //     it("callback で取得できる", function(done){
+    //       QueryTest
+    //       .withinRadians("location", geoPoint, 0.5)
+    //       .fetchAll(function(err, objs){
+    //         if(err){
+    //           done(err);
+    //         }else{
+    //           expect(objs.length).to.be.equal(1);
+    //           expect(objs[0].objectId).to.be.equal("withinRad_object_1");
+    //           done();
+    //         }
+    //       });
+    //     });
+    //     it("promise で取得できる", function(done){
+    //       QueryTest
+    //       .withinRadians("location", geoPoint, 0.5)
+    //       .fetchAll()
+    //       .then(function(objs){
+    //         expect(objs.length).to.be.equal(1);
+    //         expect(objs[0].objectId).to.be.equal("withinRad_object_1");
+    //         done();
+    //       })
+    //       .catch(function(err){
+    //         done(err);
+    //       });
+    //     });
+    //   });
+    //   it("検索条件がncmb.GeoPoint以外で指定されたとき、エラーが返る", function(done){
+    //     QueryTest = ncmb.DataStore("QueryTestWithinRad");
+    //     try{
+    //       QueryTest.withinRadians("location", [0, 0], 0.5);
+    //       done(new Error("失敗するべき"));
+    //     }catch(err){
+    //       done();
+    //     }
+    //   });
+    // });
+
   });
 });

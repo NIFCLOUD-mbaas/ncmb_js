@@ -1108,6 +1108,114 @@ describe("NCMB Query", function(){
     //     }
     //   });
     // });
+    describe("include", function(){
+      context("指定したkeyのポインタの中身を含めたオブジェクトが返り", function(){
+        beforeEach(function(){
+          QueryTest = ncmb.DataStore("QueryTestInclude");
+        });
+        it("callback で取得できる", function(done){
+          QueryTest
+          .include("pointer")
+          .fetchAll(function(err, objs){
+            if(err){
+              done(err);
+            }else{
+              expect(objs.length).to.be.equal(1);
+              expect(objs[0].pointer.objectId).to.be.equal("pointer_object_1");
+              done();
+            }
+          });
+        });
+        it("promise で取得できる", function(done){
+          QueryTest
+          .include("pointer")
+          .fetchAll()
+          .then(function(objs){
+            expect(objs.length).to.be.equal(1);
+            expect(objs[0].pointer.objectId).to.be.equal("pointer_object_1");
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
+        });
+      });
+      context("複数のkeyを指定して検索することができ、", function(){
+        beforeEach(function(){
+          QueryTest = ncmb.DataStore("QueryTestInclude");
+        });
+        it("callback で取得できる", function(done){
+          QueryTest
+          .include("pointer")
+          .include("object")
+          .fetchAll(function(err, objs){
+            if(err){
+              done(err);
+            }else{
+              expect(objs.length).to.be.equal(1);
+              expect(objs[0].pointer.objectId).to.be.equal("pointer_object_1");
+              done();
+            }
+          });
+        });
+        it("promise で取得できる", function(done){
+          QueryTest
+          .include("pointer")
+          .include("object")
+          .fetchAll()
+          .then(function(objs){
+            expect(objs.length).to.be.equal(1);
+            expect(objs[0].pointer.objectId).to.be.equal("pointer_object_1");
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
+        });
+      });
+      it("keyが文字列以外で指定されたとき、エラーが返る", function(done){
+        QueryTest = ncmb.DataStore("QueryTestInclude");
+        try{
+          QueryTest.include(["number"]);
+          done(new Error("失敗するべき"));
+        }catch(err){
+          done();
+        }
+      });
+    });
+    describe("count", function(){
+      context("設定するとリスト共に件数が返り", function(){
+        beforeEach(function(){
+          QueryTest = ncmb.DataStore("QueryTestCount");
+        });
+        it("callback で取得できる", function(done){
+          QueryTest
+          .count()
+          .fetchAll(function(err, objs){
+            if(err){
+              done(err);
+            }else{
+              expect(objs.length).to.be.equal(1);
+              expect(objs.count).to.be.equal(1);
+              done();
+            }
+          });
+        });
+        it("promise で取得できる", function(done){
+          QueryTest
+          .count()
+          .fetchAll()
+          .then(function(objs){
+            expect(objs.length).to.be.equal(1);
+            expect(objs.count).to.be.equal(1);
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
+        });
+      });
+    });
     describe("order", function(){
       context("指定したkeyの昇順でリストが返り", function(){
         beforeEach(function(){
@@ -1217,6 +1325,183 @@ describe("NCMB Query", function(){
         QueryTest = ncmb.DataStore("QueryTestOrder");
         try{
           QueryTest.order(["number"]);
+          done(new Error("失敗するべき"));
+        }catch(err){
+          done();
+        }
+      });
+    });
+    describe("limit", function(){
+      context("指定した件数だけリストが返り", function(){
+        beforeEach(function(){
+          QueryTest = ncmb.DataStore("QueryTestLimit");
+        });
+        it("callback で取得できる", function(done){
+          QueryTest
+          .limit(1)
+          .fetchAll(function(err, objs){
+            if(err){
+              done(err);
+            }else{
+              expect(objs.length).to.be.equal(1);
+              expect(objs[0].objectId).to.be.equal("limit_object_1");
+              done();
+            }
+          });
+        });
+        it("promise で取得できる", function(done){
+          QueryTest
+          .limit(1)
+          .fetchAll()
+          .then(function(objs){
+            expect(objs.length).to.be.equal(1);
+            expect(objs[0].objectId).to.be.equal("limit_object_1");
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
+        });
+      });
+      context("複数回実行すると最後に設定した件数でリストが返り", function(){
+        beforeEach(function(){
+          QueryTest = ncmb.DataStore("QueryTestLimit");
+        });
+        it("callback で取得できる", function(done){
+          QueryTest
+          .limit(50)
+          .limit(1)
+          .fetchAll(function(err, objs){
+            if(err){
+              done(err);
+            }else{
+              expect(objs.length).to.be.equal(1);
+              expect(objs[0].objectId).to.be.equal("limit_object_1");
+              done();
+            }
+          });
+        });
+        it("promise で取得できる", function(done){
+          QueryTest
+          .limit(50)
+          .limit(1)
+          .fetchAll()
+          .then(function(objs){
+            expect(objs.length).to.be.equal(1);
+            expect(objs[0].objectId).to.be.equal("limit_object_1");
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
+        });
+      });
+      it("件数が数字以外で指定されたとき、エラーが返る", function(done){
+        QueryTest = ncmb.DataStore("QueryTestLimit");
+        try{
+          QueryTest.limit("1");
+          done(new Error("失敗するべき"));
+        }catch(err){
+          done();
+        }
+      });
+      it("件数が設定可能範囲より大きく指定されたとき、エラーが返る", function(done){
+        QueryTest = ncmb.DataStore("QueryTestLimit");
+        try{
+          QueryTest.limit(1001);
+          done(new Error("失敗するべき"));
+        }catch(err){
+          done();
+        }
+      });
+      it("件数が設定可能範囲より小さく指定されたとき、エラーが返る", function(done){
+        QueryTest = ncmb.DataStore("QueryTestLimit");
+        try{
+          QueryTest.limit(0);
+          done(new Error("失敗するべき"));
+        }catch(err){
+          done();
+        }
+      });
+    });
+    describe("skip", function(){
+      context("指定した件数だけ取得開始位置を後ろにしたリストが返り", function(){
+        beforeEach(function(){
+          QueryTest = ncmb.DataStore("QueryTestSkip");
+        });
+        it("callback で取得できる", function(done){
+          QueryTest
+          .skip(1)
+          .fetchAll(function(err, objs){
+            if(err){
+              done(err);
+            }else{
+              expect(objs.length).to.be.equal(1);
+              expect(objs[0].objectId).to.be.equal("skip_object_2");
+              done();
+            }
+          });
+        });
+        it("promise で取得できる", function(done){
+          QueryTest
+          .skip(1)
+          .fetchAll()
+          .then(function(objs){
+            expect(objs.length).to.be.equal(1);
+            expect(objs[0].objectId).to.be.equal("skip_object_2");
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
+        });
+      });
+      context("複数回実行すると最後に設定した条件でリストが返り", function(){
+        beforeEach(function(){
+          QueryTest = ncmb.DataStore("QueryTestSkip");
+        });
+        it("callback で取得できる", function(done){
+          QueryTest
+          .skip(50)
+          .skip(1)
+          .fetchAll(function(err, objs){
+            if(err){
+              done(err);
+            }else{
+              expect(objs.length).to.be.equal(1);
+              expect(objs[0].objectId).to.be.equal("skip_object_2");
+              done();
+            }
+          });
+        });
+        it("promise で取得できる", function(done){
+          QueryTest
+          .skip(50)
+          .skip(1)
+          .fetchAll()
+          .then(function(objs){
+            expect(objs.length).to.be.equal(1);
+            expect(objs[0].objectId).to.be.equal("skip_object_2");
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
+        });
+      });
+      it("引数が負の値で指定されたとき、エラーが返る", function(done){
+        QueryTest = ncmb.DataStore("QueryTestSkip");
+        try{
+          QueryTest.skip(-1);
+          done(new Error("失敗するべき"));
+        }catch(err){
+          done();
+        }
+      });
+      it("引数が数値以外で指定されたとき、エラーが返る", function(done){
+        QueryTest = ncmb.DataStore("QueryTestSkip");
+        try{
+          QueryTest.skip("1");
           done(new Error("失敗するべき"));
         }catch(err){
           done();

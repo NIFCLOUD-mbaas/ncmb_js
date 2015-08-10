@@ -715,10 +715,37 @@
 #     file: 2013-09-01_classes_querytest_get_withinsquare_success.json
 -
   request:
+    url: /2013-09-01/classes/QueryTestInclude
+    method: GET
+    query:
+      include: "pointer"
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_include_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestInclude
+    method: GET
+    query:
+      include: "pointer,object"
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_include_double_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestCount
+    method: GET
+    query:
+      count: 1
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_count_success.json
+-
+  request:
     url: /2013-09-01/classes/QueryTestOrder
     method: GET
     query:
-      order: number
+      order: "number"
   response:
     status: 200
     file: 2013-09-01_classes_querytest_get_order_success.json
@@ -727,7 +754,7 @@
     url: /2013-09-01/classes/QueryTestOrder
     method: GET
     query:
-      order: -number
+      order: "-number"
   response:
     status: 200
     file: 2013-09-01_classes_querytest_get_desorder_success.json
@@ -740,6 +767,24 @@
   response:
     status: 200
     file: 2013-09-01_classes_querytest_get_order_double_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestLimit
+    method: GET
+    query:
+      limit: 1
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_limit_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestSkip
+    method: GET
+    query:
+      skip: 1
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_skip_success.json
 -
   request:
     url: /2013-09-01/classes/QueryTestFetch

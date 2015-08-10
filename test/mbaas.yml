@@ -473,6 +473,7 @@
     status: 409
     file: 2013-09-01_classes_exist_role_failure.json
 
+
 # query
 -
   request:
@@ -854,3 +855,15 @@
   response:
     status: 200
     file: 2013-09-01_classes_querytest_get_empty.json
+
+# relation
+
+-
+  request:
+    url: /2013-09-01/roles
+    method: POST
+    body: {"roleName": "role_name"}
+  response:
+    status: 201
+    file: 2013-09-01_role_post_success.json
+

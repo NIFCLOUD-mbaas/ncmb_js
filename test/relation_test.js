@@ -16,10 +16,11 @@ describe("NCMB Relation", function(){
           .set("proxy", config.apiserver.proxy || "");
     }
   });
-  var relation = null;
-  var MainObj  = null;
-  var mainobj  = null;
+
   describe("リレーションの追加", function(){
+    var relation = null;
+    var MainObj  = null;
+    var mainobj  = null;
     describe("add", function(){
       context("Data型のオブジェクトをリレーションに追加して保存し、レスポンスを", function(){
         var Food = null;
@@ -35,6 +36,7 @@ describe("NCMB Relation", function(){
           relation.add(food);
           mainobj.relation = relation;
           mainobj.save(function(err, obj){
+            expect(obj.objectId).to.be.eql("relation_id");
             done(err ? err : null);
           });
         });
@@ -42,7 +44,8 @@ describe("NCMB Relation", function(){
           relation.add(food);
           mainobj.relation = relation;
           mainobj.save()
-                 .then(function(newFood){
+                 .then(function(obj){
+                  expect(obj.objectId).to.be.eql("relation_id");
                    done();
                  })
                  .catch(function(err){
@@ -56,12 +59,13 @@ describe("NCMB Relation", function(){
           relation = new ncmb.Relation();
           MainObj = ncmb.DataStore("MainObj");
           mainobj = new MainObj();
-          subuser = new ncmb.User({userName:"name", password:"passwd"});
+          subuser = new ncmb.User({userName:"Yamada Tarou", password:"password"});
         });
         it("callback で取得できる", function(done){
           relation.add(subuser);
           mainobj.relation = relation;
           mainobj.save(function(err, obj){
+            expect(obj.objectId).to.be.eql("relation_user_id");
             done(err ? err : null);
           });
         });
@@ -69,7 +73,8 @@ describe("NCMB Relation", function(){
           relation.add(subuser);
           mainobj.relation = relation;
           mainobj.save()
-                 .then(function(newFood){
+                 .then(function(obj){
+                  expect(obj.objectId).to.be.eql("relation_user_id");
                    done();
                  })
                  .catch(function(err){
@@ -89,6 +94,7 @@ describe("NCMB Relation", function(){
           relation.add(subrole);
           mainobj.relation = relation;
           mainobj.save(function(err, obj){
+            expect(obj.objectId).to.be.eql("relation_role_id");
             done(err ? err : null);
           });
         });
@@ -96,7 +102,8 @@ describe("NCMB Relation", function(){
           relation.add(subrole);
           mainobj.relation = relation;
           mainobj.save()
-                 .then(function(newFood){
+                 .then(function(obj){
+                  expect(obj.objectId).to.be.eql("relation_role_id");
                    done();
                  })
                  .catch(function(err){
@@ -124,6 +131,7 @@ describe("NCMB Relation", function(){
           relation.add(array);
           mainobj.relation = relation;
           mainobj.save(function(err, obj){
+            expect(obj.objectId).to.be.eql("relation_multi_id");
             done(err ? err : null);
           });
         });
@@ -131,7 +139,8 @@ describe("NCMB Relation", function(){
           relation.add(array);
           mainobj.relation = relation;
           mainobj.save()
-                 .then(function(newFood){
+                 .then(function(obj){
+                   expect(obj.objectId).to.be.eql("relation_multi_id");
                    done();
                  })
                  .catch(function(err){
@@ -211,6 +220,9 @@ describe("NCMB Relation", function(){
     });
   });
   describe("リレーションの削除", function(){
+    var relation = null;
+    var MainObj  = null;
+    var mainobj  = null;
     describe("remove", function(){
       context("Data型のオブジェクトをリレーションから削除して保存し、レスポンスを", function(){
         var Food = null;
@@ -219,21 +231,24 @@ describe("NCMB Relation", function(){
           relation = new ncmb.Relation();
           MainObj = ncmb.DataStore("MainObj");
           mainobj = new MainObj();
+          mainobj.objectId = "remove_id";
           Food = ncmb.DataStore("food");
           food = new Food({name: "orange", type: "fruit", status: "success"});
         });
         it("callback で取得できる", function(done){
           relation.remove(food);
           mainobj.relation = relation;
-          mainobj.save(function(err, obj){
+          mainobj.update(function(err, obj){
+            expect(obj.objectId).to.be.eql("remove_id");
             done(err ? err : null);
           });
         });
         it("promise で取得できる", function(done){
           relation.remove(food);
           mainobj.relation = relation;
-          mainobj.save()
-                 .then(function(newFood){
+          mainobj.update()
+                 .then(function(obj){
+                  expect(obj.objectId).to.be.eql("remove_id");
                    done();
                  })
                  .catch(function(err){
@@ -247,20 +262,23 @@ describe("NCMB Relation", function(){
           relation = new ncmb.Relation();
           MainObj = ncmb.DataStore("MainObj");
           mainobj = new MainObj();
-          subuser = new ncmb.User({userName:"name", password:"passwd"});
+          mainobj.objectId = "remove_user_id";
+          subuser = new ncmb.User({userName:"Yamada Tarou", password:"password"});
         });
         it("callback で取得できる", function(done){
           relation.remove(subuser);
           mainobj.relation = relation;
-          mainobj.save(function(err, obj){
+          mainobj.update(function(err, obj){
+            expect(obj.objectId).to.be.eql("remove_user_id");
             done(err ? err : null);
           });
         });
         it("promise で取得できる", function(done){
           relation.remove(subuser);
           mainobj.relation = relation;
-          mainobj.save()
-                 .then(function(newFood){
+          mainobj.update()
+                 .then(function(obj){
+                  expect(obj.objectId).to.be.eql("remove_user_id");
                    done();
                  })
                  .catch(function(err){
@@ -274,20 +292,23 @@ describe("NCMB Relation", function(){
           relation = new ncmb.Relation();
           MainObj = ncmb.DataStore("MainObj");
           mainobj = new MainObj();
+          mainobj.objectId = "remove_role_id";
           subrole = new ncmb.Role("role_name");
         });
         it("callback で取得できる", function(done){
           relation.remove(subrole);
           mainobj.relation = relation;
-          mainobj.save(function(err, obj){
+          mainobj.update(function(err, obj){
+            expect(obj.objectId).to.be.eql("remove_role_id");
             done(err ? err : null);
           });
         });
         it("promise で取得できる", function(done){
           relation.remove(subrole);
           mainobj.relation = relation;
-          mainobj.save()
-                 .then(function(newFood){
+          mainobj.update()
+                 .then(function(obj){
+                  expect(obj.objectId).to.be.eql("remove_role_id");
                    done();
                  })
                  .catch(function(err){
@@ -305,6 +326,7 @@ describe("NCMB Relation", function(){
           relation = new ncmb.Relation();
           MainObj = ncmb.DataStore("MainObj");
           mainobj = new MainObj();
+          mainobj.objectId = "remove_multi_id";
           Food = ncmb.DataStore("food");
           food1 = new Food({name: "orange", type: "fruit", status: "success"});
           food2 = new Food({name: "apple", type: "fruit", status: "success"});
@@ -314,15 +336,17 @@ describe("NCMB Relation", function(){
         it("callback で取得できる", function(done){
           relation.remove(array);
           mainobj.relation = relation;
-          mainobj.save(function(err, obj){
+          mainobj.update(function(err, obj){
+            expect(obj.objectId).to.be.eql("remove_multi_id");
             done(err ? err : null);
           });
         });
         it("promise で取得できる", function(done){
           relation.remove(array);
           mainobj.relation = relation;
-          mainobj.save()
-                 .then(function(newFood){
+          mainobj.update()
+                 .then(function(obj){
+                  expect(obj.objectId).to.be.eql("remove_multi_id");
                    done();
                  })
                  .catch(function(err){

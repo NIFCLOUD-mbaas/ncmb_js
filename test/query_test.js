@@ -1219,6 +1219,51 @@ describe("NCMB Query", function(){
         }
       });
     });
+    describe("select", function(){
+      var SubQuery = null;
+      context("サブクエリの検索結果がsubkeyに持つ値のいずれかと、keyの値が一致するオブジェクトを検索した結果が返り", function(){
+        beforeEach(function(){
+          SubQuery = ncmb.DataStore("SubQuery");
+          QueryTest = ncmb.DataStore("QueryTestSelect");
+        });
+        it("callback で取得できる", function(done){
+          QueryTest
+          .select("city", "cityName", SubQuery.greaterThan("population",10000000))
+          .fetchAll(function(err, objs){
+            if(err){
+              done(err);
+            }else{
+              expect(objs.length).to.be.equal(1);
+              expect(objs[0].objectId).to.be.equal("select_object_1");
+              done();
+            }
+          });
+        });
+        it("promise で取得できる", function(done){
+          QueryTest
+          .select("city", "cityName", SubQuery.greaterThan("population",10000000))
+          .fetchAll()
+          .then(function(objs){
+            expect(objs.length).to.be.equal(1);
+            expect(objs[0].objectId).to.be.equal("select_object_1");
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
+        });
+      });
+      it("検索条件がクエリ以外で指定されたとき、エラーが返る", function(done){
+        QueryTest = ncmb.DataStore("QueryTestSelect");
+        try{
+          QueryTest.select("city", "cityName", {population:10000000});
+          done(new Error("失敗するべき"));
+        }catch(err){
+          done();
+        }
+      });
+    });
+
 
     describe("include", function(){
       context("指定したkeyのポインタの中身を含めたオブジェクトが返り", function(){

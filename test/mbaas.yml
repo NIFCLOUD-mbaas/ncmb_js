@@ -722,6 +722,18 @@
   response:
     status: 200
     file: 2013-09-01_classes_querytest_get_or_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/QueryTestSelect
+    method: GET
+    query:
+      where: '{"city":{"$select":{"query":{"className":"SubQuery","where":{"population":{"$gt":10000000}}},"key":"cityName"}}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_select_success.json
+
+
 -
   request:
     url: /2013-09-01/classes/QueryTestInclude

@@ -1108,6 +1108,118 @@ describe("NCMB Query", function(){
     //     }
     //   });
     // });
+
+    describe("or", function(){
+      context("複数の検索条件を配列で指定したとき、検索結果が返り", function(){
+        beforeEach(function(){
+          QueryTest = ncmb.DataStore("QueryTestOr");
+        });
+        it("callback で取得できる", function(done){
+          QueryTest
+          .or([QueryTest.greaterThan("number",0),
+               QueryTest.lessThan("number",10)])
+          .fetchAll(function(err, objs){
+            if(err){
+              done(err);
+            }else{
+              expect(objs.length).to.be.equal(1);
+              expect(objs[0].objectId).to.be.equal("or_object_1");
+              done();
+            }
+          });
+        });
+        it("promise で取得できる", function(done){
+          QueryTest
+          .or([QueryTest.greaterThan("number",0),
+               QueryTest.lessThan("number",10)])
+          .fetchAll()
+          .then(function(objs){
+            expect(objs.length).to.be.equal(1);
+            expect(objs[0].objectId).to.be.equal("or_object_1");
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
+        });
+      });
+      context("複数回条件を指定したとき、すべての条件に合致する検索結果が返り", function(){
+        beforeEach(function(){
+          QueryTest = ncmb.DataStore("QueryTestOr");
+        });
+        it("callback で取得できる", function(done){
+          QueryTest
+          .or([QueryTest.greaterThan("number",0)])
+          .or([QueryTest.lessThan("number",10)])
+          .fetchAll(function(err, objs){
+            if(err){
+              done(err);
+            }else{
+              expect(objs.length).to.be.equal(1);
+              expect(objs[0].objectId).to.be.equal("or_object_1");
+              done();
+            }
+          });
+        });
+        it("promise で取得できる", function(done){
+          QueryTest
+          .or([QueryTest.greaterThan("number",0)])
+          .or([QueryTest.lessThan("number",10)])
+          .fetchAll()
+          .then(function(objs){
+            expect(objs.length).to.be.equal(1);
+            expect(objs[0].objectId).to.be.equal("or_object_1");
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
+        });
+      });
+      context("単一条件を配列に入れずに直接追加することができ、条件に合う検索結果が返り", function(){
+        beforeEach(function(){
+          QueryTest = ncmb.DataStore("QueryTestOr");
+        });
+        it("callback で取得できる", function(done){
+          QueryTest
+          .or([QueryTest.greaterThan("number",0)])
+          .or(QueryTest.lessThan("number",10))
+          .fetchAll(function(err, objs){
+            if(err){
+              done(err);
+            }else{
+              expect(objs.length).to.be.equal(1);
+              expect(objs[0].objectId).to.be.equal("or_object_1");
+              done();
+            }
+          });
+        });
+        it("promise で取得できる", function(done){
+          QueryTest
+          .or([QueryTest.greaterThan("number",0)])
+          .or(QueryTest.lessThan("number",10))
+          .fetchAll()
+          .then(function(objs){
+            expect(objs.length).to.be.equal(1);
+            expect(objs[0].objectId).to.be.equal("or_object_1");
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
+        });
+      });
+      it("検索条件がクエリ以外で指定されたとき、エラーが返る", function(done){
+        QueryTest = ncmb.DataStore("QueryTestOr");
+        try{
+          QueryTest.or({number:1});
+          done(new Error("失敗するべき"));
+        }catch(err){
+          done();
+        }
+      });
+    });
+
     describe("include", function(){
       context("指定したkeyのポインタの中身を含めたオブジェクトが返り", function(){
         beforeEach(function(){

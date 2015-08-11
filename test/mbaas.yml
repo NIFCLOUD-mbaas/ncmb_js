@@ -715,6 +715,15 @@
 #     file: 2013-09-01_classes_querytest_get_withinsquare_success.json
 -
   request:
+    url: /2013-09-01/classes/QueryTestOr
+    method: GET
+    query:
+      where: '{"$or":[{"number":{"$gt":0}},{"number":{"$lt":10}}]}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_or_success.json
+-
+  request:
     url: /2013-09-01/classes/QueryTestInclude
     method: GET
     query:

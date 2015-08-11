@@ -43,18 +43,20 @@ describe("NCMB DataStore", function(){
       context("クラス定義が存在すれば、登録に成功し", function(){
         var Food = null;
         var food = null;
-        before(function(){
+        beforeEach(function(){
           Food = ncmb.DataStore("food");
           food = new Food({name: "orange", type: "fruit", status: "success"});
         });
         it("callback で取得できる", function(done){
           food.save(function(err, obj){
+            expect(obj.objectId).to.be.eql("object_id");
             done(err ? err : null);
           });
         });
         it("promise で取得できる", function(done){
           food.save()
               .then(function(newFood){
+                expect(newFood.objectId).to.be.eql("object_id");
                 done();
               })
               .catch(function(err){

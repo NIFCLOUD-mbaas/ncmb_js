@@ -867,3 +867,25 @@
     status: 201
     file: 2013-09-01_role_post_success.json
 
+-
+  request:
+    url: /2013-09-01/classes/food
+    method: POST
+    body:
+      name: "apple"
+      type: "fruit"
+      status: "success"
+  response:
+    status: 201
+    file: 2013-09-01_classes_food_apple_post_success.json
+-
+  request:
+    url: /2013-09-01/classes/food
+    method: POST
+    body:
+      name: "grape"
+      type: "fruit"
+      status: "success"
+  response:
+    status: 201
+    file: 2013-09-01_classes_food_grape_post_success.json

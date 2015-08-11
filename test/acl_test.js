@@ -271,6 +271,9 @@ describe("NCMB ACL", function(){
           .then(function(foods){
             expect(foods[0].acl).to.be.eql({'*':{read: true}});
             done();
+          })
+          .catch(function(err){
+            done(err);
           });
         }
       });
@@ -278,11 +281,11 @@ describe("NCMB ACL", function(){
     it("promise で取得できる", function(done){
       food.save()
         .then(function(newFood){
-          Food.where({objectId: newFood.objectId}).fetchAll()
-          .then(function(foods){
-            expect(foods[0].acl).to.be.eql({'*':{read: true}});
-            done();
-          });
+          return Food.where({objectId: newFood.objectId}).fetchAll()
+        })
+        .then(function(foods){
+          expect(foods[0].acl).to.be.eql({'*':{read: true}});
+          done();
         })
         .catch(function(err){
           done(err);

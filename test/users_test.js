@@ -1959,6 +1959,13 @@ describe("NCMB Users", function(){
         }).to.throw(Error);
         done();
       });
+      it("重複する値が入力されたとき、エラーが返る", function(done){
+        expect(function(){
+          user.addUnique("key",[1,2,3])
+              .addUnique("key",1);
+        }).to.throw(Error);
+        done();
+      });
     });
     context("remove", function(){
       var arr =  null;

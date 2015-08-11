@@ -83,7 +83,7 @@ describe("NCMB Relation", function(){
           relation = new ncmb.Relation();
           MainObj = ncmb.DataStore("MainObj");
           mainobj = new MainObj();
-          subrole = new ncmb.Role({"role_name"});
+          subrole = new ncmb.Role("role_name");
         });
         it("callback で取得できる", function(done){
           relation.add(subrole);
@@ -143,7 +143,7 @@ describe("NCMB Relation", function(){
         var Food = ncmb.DataStore("food");
         var Drink = ncmb.DataStore("drink");
         var food = new Food({name: "orange", status: "success"});
-        var drink = new Food({name: "milk", status: "success"});
+        var drink = new Drink({name: "milk", status: "success"});
         var relation = new ncmb.Relation();
         var array = [food, drink];
         try{
@@ -161,7 +161,7 @@ describe("NCMB Relation", function(){
         relation.add(food1)
                 .add(food2);
         try{
-          expect(relation.objects.length)to.be.qel(2);
+          expect(relation.objects.length).to.be.eql(2);
           done();
         }catch(err){
           done(err);
@@ -171,7 +171,7 @@ describe("NCMB Relation", function(){
         var Food = ncmb.DataStore("food");
         var Drink = ncmb.DataStore("drink");
         var food = new Food({name: "orange", status: "success"});
-        var drink = new Food({name: "milk", status: "success"});
+        var drink = new Drink({name: "milk", status: "success"});
         var relation = new ncmb.Relation();
         relation.add(food);
         try{
@@ -188,9 +188,9 @@ describe("NCMB Relation", function(){
         beforeEach(function(){
           Food = ncmb.DataStore("food");
           food = new Food({name: "orange", type: "fruit", status: "success"});
-          relation = new ncmb.Relation("food");
         });
         it("指定したクラスのインスタンスを追加できる", function(done){
+          relation = new ncmb.Relation("food");
           try{
             relation.add(food);
             done();
@@ -199,6 +199,7 @@ describe("NCMB Relation", function(){
           }
         });
         it("指定したクラス以外のインスタンスを追加するとエラーが返る", function(done){
+          relation = new ncmb.Relation("drink");
           try{
             relation.add(food);
             done(new Error("失敗すべき"));
@@ -208,6 +209,8 @@ describe("NCMB Relation", function(){
         });
       });
     });
+  });
+  describe("リレーションの削除", function(){
     describe("remove", function(){
       context("Data型のオブジェクトをリレーションから削除して保存し、レスポンスを", function(){
         var Food = null;
@@ -271,7 +274,7 @@ describe("NCMB Relation", function(){
           relation = new ncmb.Relation();
           MainObj = ncmb.DataStore("MainObj");
           mainobj = new MainObj();
-          subrole = new ncmb.Role({"role_name"});
+          subrole = new ncmb.Role("role_name");
         });
         it("callback で取得できる", function(done){
           relation.remove(subrole);
@@ -331,7 +334,7 @@ describe("NCMB Relation", function(){
         var Food = ncmb.DataStore("food");
         var Drink = ncmb.DataStore("drink");
         var food = new Food({name: "orange", status: "success"});
-        var drink = new Food({name: "milk", status: "success"});
+        var drink = new Drink({name: "milk", status: "success"});
         var relation = new ncmb.Relation();
         var array = [food, drink];
         try{
@@ -349,7 +352,7 @@ describe("NCMB Relation", function(){
         relation.remove(food1)
                 .remove(food2);
         try{
-          expect(relation.objects.length)to.be.qel(2);
+          expect(relation.objects.length).to.be.eql(2);
           done();
         }catch(err){
           done(err);
@@ -359,7 +362,7 @@ describe("NCMB Relation", function(){
         var Food = ncmb.DataStore("food");
         var Drink = ncmb.DataStore("drink");
         var food = new Food({name: "orange", status: "success"});
-        var drink = new Food({name: "milk", status: "success"});
+        var drink = new Drink({name: "milk", status: "success"});
         var relation = new ncmb.Relation();
         relation.remove(food);
         try{
@@ -376,9 +379,9 @@ describe("NCMB Relation", function(){
         beforeEach(function(){
           Food = ncmb.DataStore("food");
           food = new Food({name: "orange", type: "fruit", status: "success"});
-          relation = new ncmb.Relation("food");
         });
         it("指定したクラスのインスタンスを追加できる", function(done){
+          relation = new ncmb.Relation("food");
           try{
             relation.remove(food);
             done();
@@ -387,6 +390,7 @@ describe("NCMB Relation", function(){
           }
         });
         it("指定したクラス以外のインスタンスを追加するとエラーが返る", function(done){
+          relation = new ncmb.Relation("drink");
           try{
             relation.remove(food);
             done(new Error("失敗すべき"));
@@ -397,6 +401,4 @@ describe("NCMB Relation", function(){
       });
     });
   });
-
-
 });

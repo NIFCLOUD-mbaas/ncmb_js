@@ -62,39 +62,28 @@ describe("NCMB DataStore", function(){
               });
         });
       });
-
-      context("クラス定義が存在しなければ、登録に失敗し", function(){
-        var NonExist = null;
-        var food = null;
-        before(function(){
-          NonExist = ncmb.DataStore("nonexist");
-          food = new NonExist({name: "orange", type: "fruit", status: "failure"});
-        });
-        it("callback で取得できる", function(done){
-          food.save(function(err, obj){
-            if(!err) return done(new Error("error が返されなければならない"));
-            expect(err.status).to.be.eql(400);
-            done();
-          });
-        });
-        it("promise で取得できる", function(done){
-          food.save()
-              .then(function(obj){
-                done(new Error("error が返されなければならない"));
-              })
-              .catch(function(err){
-                done();
-              });
-        });
+      
+      it("クラス名がなければ、クラス生成に失敗する", function(done){
+        expect(function(){
+          ncmb.DataStore();
+        }).to.throw(Error);
+        expect(function(){
+          ncmb.DataStore(null);
+        }).to.throw(Error);
+        expect(function(){
+          ncmb.DataStore(undefined);
+        }).to.throw(Error);
+        done();
       });
-      context("Dateタイプを指定し、オブジェクト保存に成功し", function(){
+      
+      context("Dateタイプをプロパティに設定したときオブジェクト保存に成功し", function(){
         var Food = null;
         var aSimpleDate = null;
         var food = null;
-        before(function(){
+        beforeEach(function(){
           Food = ncmb.DataStore("food");
           aSimpleDate = new Date(1999, 11, 31, 23, 59, 59, 999);
-          food = new Food({harvestDate:  aSimpleDate});
+          food = new Food({harvestDate: aSimpleDate});
         })
         it("callback で取得できる", function(done){
           food.save(function(err, obj){
@@ -105,7 +94,6 @@ describe("NCMB DataStore", function(){
               expect(obj.harvestDate).to.have.property("__type", "Date");
               expect(obj.harvestDate).to.have.property("iso");
               expect(obj.save).to.be.a("function");
-
               done();
             }
           });
@@ -121,6 +109,161 @@ describe("NCMB DataStore", function(){
               })
               .catch(function(err){
                 done(err);
+              });
+        });
+      });
+
+      context("未保存のncmb.Dataタイプをプロパティに設定したときオブジェクト保存に成功し", function(){
+        var Food = null;
+        var Component = null;
+        var food = null;
+        var component = null;
+        beforeEach(function(){
+          Food = ncmb.DataStore("food");
+          food = new Food({name: "orange"});
+          Component = ncmb.DataStore("Component");
+          component = new Component({calorie: "50"});
+          food.component = component;
+        })
+        it("callback で取得できる", function(done){
+          food.save(function(err, obj){
+            done(err ? err : null);
+          });
+        });
+        it("promise で取得できる", function(done){
+          food.save()
+              .then(function(data){
+                expect(data).to.have.property("objectId", "pointer_object_id");
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+      });
+      context("保存済みのncmb.Dataタイプをプロパティに設定したときオブジェクト保存に成功し", function(){
+        var Food = null;
+        var Component = null;
+        var food = null;
+        var component = null;
+        beforeEach(function(){
+          Food = ncmb.DataStore("food");
+          food = new Food({name: "orange"});
+          Component = ncmb.DataStore("Component");
+          component = new Component({calorie: "50"});
+        })
+        it("callback で取得できる", function(done){
+          component.save()
+                   .then(function(obj){
+                      food.component = obj;
+                      food.save(function(err, data){
+                        done(err ? err : null);
+                      });
+                   })
+                   .catch(function(err){
+                    done(err);
+                   });
+        });
+        it("promise で取得できる", function(done){
+          component.save()
+                   .then(function(obj){
+                      food.component = obj;
+                      return food.save();
+                   })
+                   .then(function(obj){
+                    expect(obj).to.have.property("objectId", "pointer_object_id");
+                    done();
+                   })
+                   .catch(function(err){
+                    done(err);
+                   });
+        });
+      });
+      context("未保存のncmb.Userタイプをプロパティに設定したときオブジェクト保存に成功し", function(){
+        var Food = null;
+        var food = null;
+        var user = null;
+        beforeEach(function(){
+          Food = ncmb.DataStore("food");
+          food = new Food({name: "orange"});
+          user = new ncmb.User({userName:"Yamada Tarou", password:"password"});
+          food.member = user;
+        })
+        it("callback で取得できる", function(done){
+          food.save(function(err, obj){
+            done(err ? err : null);
+          });
+        });
+        it("promise で取得できる", function(done){
+          food.save()
+              .then(function(data){
+                expect(data).to.have.property("objectId", "pointer_user_object_id");
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+      });
+      context("保存済みのncmb.Userタイプをプロパティに設定したときオブジェクト保存に成功し", function(){
+        var Food = null;
+        var food = null;
+        var user = null;
+        beforeEach(function(){
+          Food = ncmb.DataStore("food");
+          food = new Food({name: "orange"});
+          user = new ncmb.User({userName:"Yamada Tarou", password:"password"});
+        })
+        it("callback で取得できる", function(done){
+          user.signUpByAccount()
+                   .then(function(obj){
+                      food.member = obj;
+                      food.save(function(err, data){
+                        done(err ? err : null);
+                      });
+                   })
+                   .catch(function(err){
+                    done(err);
+                   });
+        });
+        it("promise で取得できる", function(done){
+          user.signUpByAccount()
+                   .then(function(obj){
+                      food.member = obj;
+                      return food.save();
+                   })
+                   .then(function(obj){
+                    expect(obj).to.have.property("objectId", "pointer_user_object_id");
+                    done();
+                   })
+                   .catch(function(err){
+                    done(err);
+                   });
+        });
+      });
+      context("未保存のncmb.Userタイプをプロパティに設定したとき、登録に必要なプロパティが足りなければオブジェクト保存に失敗し", function(){
+        var Food = null;
+        var food = null;
+        var user = null;
+        beforeEach(function(){
+          Food = ncmb.DataStore("food");
+          food = new Food({name: "orange"});
+          user = new ncmb.User({userName:"Yamada Tarou"});
+          food.member = user;
+        })
+        it("callback でエラーを取得できる", function(done){
+          food.save(function(err, obj){
+            expect(err).to.be.an.instanceof(Error);
+            done();
+          });
+        });
+        it("promise でエラーを取得できる", function(done){
+          food.save()
+              .then(function(data){
+                done(new Error("失敗すべき"));
+              })
+              .catch(function(err){
+                done();
               });
         });
       });

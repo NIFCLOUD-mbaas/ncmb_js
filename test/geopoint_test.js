@@ -4,9 +4,10 @@ var config   = require("config");
 var expect   = require("chai").expect;
 var _        = require("lodash");
 
-var NCMB = require("../lib/ncmb");
+var NCMB     = require("../lib/ncmb");
+var errors   = require("../lib/errors");
 
-describe("NCMB Geolocation", function(){
+describe("NCMB GeoPoint", function(){
   var ncmb = null;
 
   before(function(){
@@ -28,18 +29,21 @@ describe("NCMB Geolocation", function(){
         return [lat, lng];
       });
     }));
-    var failuerCases = _.flatten([
-      ["latitude", -100, null, 100].map(function(lat){
-        return lngs.map(function(lng){ return [lat, lng]; });
-      }),
-      lats.map(function(lat){
-        return ["longitude", -200, null, 200].map(function(lng){ return [lat, lng]; });
-      }),
-    ]);
+    var failuerCases = [];
+    ["latitude", -100, null, 100].map(function(lat){
+      return lngs.map(function(lng){
+        failuerCases.push([lat, lng]);
+      });
+    });
+    lats.map(function(lat){
+      return ["longitude", -200, null, 200].map(function(lng){
+        failuerCases.push([lat, lng]);
+      });
+    });
 
     context("引数無しの場合", function(){
       it("{latitude: 0, longitude: 0} のオブジェクトが取得できる", function(){
-        var geo = new ncmb.Geolocation();
+        var geo = new ncmb.GeoPoint();
         expect(geo).to.have.property("latitude", 0);
         expect(geo).to.have.property("longitude", 0);
       });
@@ -47,11 +51,11 @@ describe("NCMB Geolocation", function(){
 
     [
       { name: "引数を 2 つ渡した場合",
-        create: function(dat){ return new ncmb.Geolocation(dat[0], dat[1]);}},
+        create: function(dat){ return new ncmb.GeoPoint(dat[0], dat[1]);}},
       { name: "引数を 2 要素配列で渡した場合",
-        create: function(dat){ return new ncmb.Geolocation(dat);}},
+        create: function(dat){ return new ncmb.GeoPoint(dat);}},
       { name: "引数をオブジェクトで渡した場合",
-        create: function(dat){ return new ncmb.Geolocation({
+        create: function(dat){ return new ncmb.GeoPoint({
           latitude: dat[0], longitude: dat[1]});}}
     ].forEach(function(argCase){
       describe("正常データを", function(){
@@ -70,7 +74,7 @@ describe("NCMB Geolocation", function(){
           it("エラーを捕捉できる", function(){
             failuerCases.forEach(function(pos){
               try{
-                new ncmb.Geolocation(pos[0], pos[1]);
+                var geo = argCase.create(pos);
                 throw new Error("エラーが出ない");
               }catch(err){
                 expect(err).to.be.an.instanceof(Error);
@@ -83,24 +87,26 @@ describe("NCMB Geolocation", function(){
     });
   });
 
-  describe("Geolocation データを保存し", function(){
+  describe("GeoPoint データを保存し", function(){
     context("成功した場合に", function(){
       var Food = null;
+      var food = null;
       var geo  = null;
-      before(function(){
+      beforeEach(function(){
         Food = ncmb.DataStore("food");
-        geo = new ncmb.Geolocation(12,133);
+        geo = new ncmb.GeoPoint(12,133);
+        food = new Food({geoLocation: geo});
       });
 
       it("callback で取得できる", function(done){
-        new Food({geoLocation: geo}).save(function(err, food){
+        food.save(function(err, food){
           if(err) return done(err);
           expect(food).to.be.an.instanceof(Food);
           done();
         });
       });
       it("promise で取得できる", function(done){
-        new Food({geoLocation: geo}).save().then(function(food){
+        food.save().then(function(food){
           expect(food).to.be.an.instanceof(Food);
           done();
         }).catch(done);

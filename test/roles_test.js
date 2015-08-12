@@ -27,20 +27,20 @@ describe("NCMB Role", function(){
           new ncmb.Role({});
         }).to.throw(Error);
         expect(function(){
-          new ncmb.Role({roleName: undefined});
+          new ncmb.Role(undefined);
         }).to.throw(Error);
         expect(function(){
-          new ncmb.Role({roleName: null});
+          new ncmb.Role(null);
         }).to.throw(Error);
         expect(function(){
-          new ncmb.Role({roleName: ""});
+          new ncmb.Role("");
         }).to.throw(Error);
         done();
       });
       context("存在しないロール名を指定し、登録に成功", function(){
         var newRole = null;
         beforeEach(function(){
-          newRole = new ncmb.Role({roleName: "new_role_name"});
+          newRole = new ncmb.Role("new_role_name");
         });
         it("callback で取得できる", function(done){
           newRole.save(function(err, obj){
@@ -60,7 +60,7 @@ describe("NCMB Role", function(){
       context("存在したロール名を指定し、登録に失敗", function(){
         var newExistRole = null;
         before(function(){
-          newExistRole = new ncmb.Role({roleName: "new_exist_role_name"});
+          newExistRole = new ncmb.Role("new_exist_role_name");
         });
         it("callback で取得できる", function(done){
           newExistRole.save(function(err, obj){
@@ -86,7 +86,7 @@ describe("NCMB Role", function(){
       context("存在するロールIDを指定し、登録に成功", function(done){
         var updateRole = null;
         beforeEach(function(){
-          updateRole = new ncmb.Role({objectId:"update_role_id", roleName:"updated_role_name"});
+          updateRole = new ncmb.Role("updated_role_name",{objectId:"update_role_id"});
         });
         it("callback で取得できる", function(done){
           updateRole.update(function(err, obj){
@@ -106,7 +106,7 @@ describe("NCMB Role", function(){
       context("存在しないロールIDを指定し、登録に失敗", function(){
         var noExistRole = null;
         before(function(){
-          noExistRole = new ncmb.Role({objectId:"no_exist_role_id", roleName:"updated_role_name"});
+          noExistRole = new ncmb.Role("updated_role_name", {objectId:"no_exist_role_id"});
         });
         it("callback で取得できる", function(done){
           noExistRole.update(function(err, obj){
@@ -134,8 +134,7 @@ describe("NCMB Role", function(){
       context("存在したロール名を指定し、削除に成功して", function(done){
         var deleteRole = null;
         beforeEach(function(){
-          deleteRole = new ncmb.Role({
-            objectId: "delete_role_id", roleName: roleName});
+          deleteRole = new ncmb.Role(roleName,{objectId: "delete_role_id"});
         });
         it("callback で取得できる", function(done){
           deleteRole.delete(function(err, obj){
@@ -155,8 +154,7 @@ describe("NCMB Role", function(){
       context("存在しないロール名を指定し、削除に失敗して", function(){
         var noExistRole = null;
         before(function(){
-          noExistRole = new ncmb.Role({
-            objectId: "no_exist_role_id", roleName: roleName});
+          noExistRole = new ncmb.Role(roleName, {objectId: "no_exist_role_id"});
         });
         it("callback で取得できる", function(done){
           noExistRole.delete(function(err, obj){
@@ -178,8 +176,7 @@ describe("NCMB Role", function(){
       context("objectIdが設定されていないとき、削除に失敗して", function(){
         var noExistRole = null;
         before(function(){
-          noExistRole = new ncmb.Role({
-            objectId: null, roleName: roleName});
+          noExistRole = new ncmb.Role(roleName, {objectId: null});
         });
         it("callback で削除エラーを取得できる", function(done){
           noExistRole.delete(function(err, obj){

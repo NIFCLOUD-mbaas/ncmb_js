@@ -1352,8 +1352,7 @@ describe("NCMB Query", function(){
       });
       it("ncmb.Roleの関連オブジェクトを検索できる", function(done){
         QueryTest = ncmb.DataStore("QueryTestRelatedTo");
-        //var role = new ncmb.Role("related_role");
-        var role = new ncmb.Role({roleName:"related_role"});
+        var role = new ncmb.Role("related_role");
         role.objectId = "role_id";
         try{
           QueryTest

@@ -177,7 +177,7 @@ describe("NCMB ACL", function(){
       context("第一引数のrole名が不正な場合", function(){
         beforeEach(function(){
           aclObj = new ncmb.Acl();
-          role = new ncmb.Role({roleName:"roleName"});
+          role = new ncmb.Role("roleName");
         });
         it("role名にnullを指定した場合、エラーを返す", function() {
           expect(function(){ aclObj.setRoleReadAccess(null, true); }).to.throw(errors.NoRoleNameError);
@@ -219,7 +219,7 @@ describe("NCMB ACL", function(){
       context("第一引数にroleインスタンスが設定される場合", function(){
         beforeEach(function(){
           aclObj = new ncmb.Acl();
-          role = new ncmb.Role({roleName:"roleName"});
+          role = new ncmb.Role("roleName");
         });
         it("Readを指定し、取得できる", function() {
           aclObj.setRoleReadAccess(role, true);
@@ -271,6 +271,9 @@ describe("NCMB ACL", function(){
           .then(function(foods){
             expect(foods[0].acl).to.be.eql({'*':{read: true}});
             done();
+          })
+          .catch(function(err){
+            done(err);
           });
         }
       });
@@ -278,11 +281,11 @@ describe("NCMB ACL", function(){
     it("promise で取得できる", function(done){
       food.save()
         .then(function(newFood){
-          Food.where({objectId: newFood.objectId}).fetchAll()
-          .then(function(foods){
-            expect(foods[0].acl).to.be.eql({'*':{read: true}});
-            done();
-          });
+          return Food.where({objectId: newFood.objectId}).fetchAll()
+        })
+        .then(function(foods){
+          expect(foods[0].acl).to.be.eql({'*':{read: true}});
+          done();
         })
         .catch(function(err){
           done(err);

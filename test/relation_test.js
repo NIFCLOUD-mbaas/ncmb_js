@@ -45,7 +45,7 @@ describe("NCMB Relation", function(){
           mainobj.relation = relation;
           mainobj.save()
                  .then(function(obj){
-                  expect(obj.objectId).to.be.eql("relation_id");
+                   expect(obj.objectId).to.be.eql("relation_id");
                    done();
                  })
                  .catch(function(err){

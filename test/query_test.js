@@ -20,7 +20,7 @@ describe("NCMB Query", function(){
   describe("オブジェクト検索", function(){
     var QueryTest = null;
     describe("fetchAll", function(){
-      context("データがあれば、リストが返り", function(){
+      context("検索条件に合致するデータがあれば、リストが返り", function(){
         before(function(){
           QueryTest = ncmb.DataStore("QueryTest");
         });
@@ -49,7 +49,7 @@ describe("NCMB Query", function(){
                   });
         });
       });
-      context("データがなければ、空のリストが返り", function(){
+      context("検索条件に合致するデータがなければ、空の配列が返り", function(){
         before(function(){
           QueryTest = ncmb.DataStore("EmptyQueryTest");
         });
@@ -78,7 +78,7 @@ describe("NCMB Query", function(){
       });
     });
     describe("fetch", function(){
-      context("データがあれば、オブジェクトが返り", function(){
+      context("検索条件に合致するデータがあれば、その中の一つがオブジェクトが返り", function(){
         before(function(){
           QueryTest = ncmb.DataStore("QueryTestFetch");
         });
@@ -103,7 +103,7 @@ describe("NCMB Query", function(){
                   });
         });
       });
-      context("データがなければ、空のオブジェクトが返り", function(){
+      context("検索条件に合致するデータがなければ、空のオブジェクトが返り", function(){
         before(function(){
           QueryTest = ncmb.DataStore("EmptyQueryTest");
         });
@@ -130,7 +130,7 @@ describe("NCMB Query", function(){
       });
     });
     describe("fetchById", function(){
-      context("データがあれば、オブジェクトが返り", function(){
+      context("指定したobjectIdのデータがあれば、オブジェクトが返り", function(){
         before(function(){
           QueryTest = ncmb.DataStore("QueryTest");
         });
@@ -155,7 +155,7 @@ describe("NCMB Query", function(){
                   });
         });
       });
-      context("データがなければ、404エラーが返り", function(){
+      context("指定したobjectIdのデータがなければ、404エラーが返り", function(){
         before(function(){
           QueryTest = ncmb.DataStore("EmptyQueryTest");
         });
@@ -227,7 +227,7 @@ describe("NCMB Query", function(){
       });
     });
     describe("equalTo", function(){
-      context("検索条件を指定し、データがあれば、リストが返り", function(){
+      context("keyの値がvalueと等しいデータを検索した結果のリストが返り", function(){
         beforeEach(function(){
           QueryTest = ncmb.DataStore("QueryTestEqualTo");
         });
@@ -269,7 +269,7 @@ describe("NCMB Query", function(){
       });
     });
     describe("notEqualTo", function(){
-      context("検索条件を指定し、データがあれば、リストが返り", function(){
+      context("keyの値がvalueと等しくないデータを検索した結果のリストが返り", function(){
         beforeEach(function(){
           QueryTest = ncmb.DataStore("QueryTestNotEqualTo");
         });
@@ -302,7 +302,7 @@ describe("NCMB Query", function(){
       });
     });
     describe("lessThan", function(){
-      context("検索条件を指定し、データがあれば、リストが返り", function(){
+      context("keyの値がvalueより小さいデータを検索した結果のリストが返り", function(){
         beforeEach(function(){
           QueryTest = ncmb.DataStore("QueryTestLessThan");
         });
@@ -335,7 +335,7 @@ describe("NCMB Query", function(){
       });
     });
     describe("lessThanOrEqualTo", function(){
-      context("検索条件を指定し、データがあれば、リストが返り", function(){
+      context("keyの値がvalue以下のデータを検索した結果のリストが返り", function(){
         beforeEach(function(){
           QueryTest = ncmb.DataStore("QueryTestLessThanOrEqualTo");
         });
@@ -368,7 +368,7 @@ describe("NCMB Query", function(){
       });
     });
     describe("greaterThan", function(){
-      context("検索条件を指定し、データがあれば、リストが返り", function(){
+      context("keyの値がvalueより大きいデータを検索した結果のリストが返り", function(){
         beforeEach(function(){
           QueryTest = ncmb.DataStore("QueryTestGreaterThan");
         });
@@ -401,7 +401,7 @@ describe("NCMB Query", function(){
       });
     });
     describe("greaterThanOrEqualTo", function(){
-      context("検索条件を指定し、データがあれば、リストが返り", function(){
+      context("keyの値がvalue以上のデータを検索した結果のリストが返り", function(){
         beforeEach(function(){
           QueryTest = ncmb.DataStore("QueryTestGreaterThanOrEqualTo");
         });
@@ -434,7 +434,7 @@ describe("NCMB Query", function(){
       });
     });
     describe("in", function(){
-      context("検索条件を指定し、データがあれば、リストが返り", function(){
+      context("keyの値がvalue配列のいずれかと等しいデータを検索した結果のリストが返り", function(){
         beforeEach(function(){
           QueryTest = ncmb.DataStore("QueryTestIn");
         });
@@ -476,7 +476,7 @@ describe("NCMB Query", function(){
       });
     });
     describe("notIn", function(){
-      context("検索条件を指定し、データがあれば、リストが返り", function(){
+      context("keyの値がvalue配列のいずれとも等しくないデータを検索した結果のリストが返り", function(){
         beforeEach(function(){
           QueryTest = ncmb.DataStore("QueryTestNotIn");
         });
@@ -518,7 +518,7 @@ describe("NCMB Query", function(){
       });
     });
     describe("exists", function(){
-      context("検索条件を指定し、データがあれば、リストが返り", function(){
+      context("valueがtrueのとき、keyに値が存在するデータを検索した結果のリストが返り", function(){
         beforeEach(function(){
           QueryTest = ncmb.DataStore("QueryTestExists");
         });
@@ -549,7 +549,7 @@ describe("NCMB Query", function(){
           });
         });
       });
-      context("検索条件を指定し、データがあれば、リストが返り", function(){
+      context("valueがfalseのとき、keyに値が存在しないデータを検索した結果のリストが返り", function(){
         beforeEach(function(){
           QueryTest = ncmb.DataStore("QueryTestExists");
         });
@@ -591,7 +591,7 @@ describe("NCMB Query", function(){
       });
     });
     describe("regularExpressionTo", function(){
-      context("検索条件を指定し、データがあれば、リストが返り", function(){
+      context("keyの値がvalueの正規表現を含むデータを検索した結果のリストが返り", function(){
         beforeEach(function(){
           QueryTest = ncmb.DataStore("QueryTestRegularExpressionTo");
         });
@@ -622,7 +622,7 @@ describe("NCMB Query", function(){
           });
         });
       });
-      context("前方一致を指定し、データがあれば、リストが返り", function(){
+      context("前方一致を指定し、データを検索した結果のリストが返り", function(){
         beforeEach(function(){
           QueryTest = ncmb.DataStore("QueryTestRegularExpressionTo");
         });
@@ -653,7 +653,7 @@ describe("NCMB Query", function(){
           });
         });
       });
-      context("後方一致を指定し、データがあれば、リストが返り", function(){
+      context("後方一致を指定し、データを検索した結果のリストが返り", function(){
         beforeEach(function(){
           QueryTest = ncmb.DataStore("QueryTestRegularExpressionTo");
         });
@@ -695,7 +695,7 @@ describe("NCMB Query", function(){
       });
     });
     describe("inArray", function(){
-      context("検索条件を配列で指定し、データがあれば、リストが返り", function(){
+      context("keyの値がvalue配列のいずれかを含む配列のデータを検索した結果のリストが返り", function(){
         beforeEach(function(){
           QueryTest = ncmb.DataStore("QueryTestInArray");
         });
@@ -726,7 +726,7 @@ describe("NCMB Query", function(){
           });
         });
       });
-      context("検索条件を配列以外で指定し、データがあれば、リストが返り", function(){
+      context("検索条件を配列以外で指定でき、条件に合うデータを検索した結果のリストが返り", function(){
         beforeEach(function(){
           QueryTest = ncmb.DataStore("QueryTestInArray");
         });
@@ -759,7 +759,7 @@ describe("NCMB Query", function(){
       });
     });
     describe("notInArray", function(){
-      context("検索条件を配列で指定し、データがあれば、リストが返り", function(){
+      context("keyの値がvalue配列のいずれも含まない配列のデータを検索した結果のリストが返り", function(){
         beforeEach(function(){
           QueryTest = ncmb.DataStore("QueryTestNotInArray");
         });
@@ -790,7 +790,7 @@ describe("NCMB Query", function(){
           });
         });
       });
-      context("検索条件を配列以外で指定し、データがあれば、リストが返り", function(){
+      context("検索条件を配列以外で指定でき、条件に合うデータを検索した結果のリストが返り", function(){
         beforeEach(function(){
           QueryTest = ncmb.DataStore("QueryTestNotInArray");
         });
@@ -823,7 +823,7 @@ describe("NCMB Query", function(){
       });
     });
     describe("allInArray", function(){
-      context("検索条件を配列で指定し、データがあれば、リストが返り", function(){
+      context("keyの値がvalue配列のすべてを含む配列のデータを検索した結果のリストが返り", function(){
         beforeEach(function(){
           QueryTest = ncmb.DataStore("QueryTestAllInArray");
         });
@@ -854,7 +854,7 @@ describe("NCMB Query", function(){
           });
         });
       });
-      context("検索条件を配列以外で指定し、データがあれば、リストが返り", function(){
+      context("検索条件を配列以外で指定でき、条件に合致するデータを検索した結果のリストが返り", function(){
         beforeEach(function(){
           QueryTest = ncmb.DataStore("QueryTestAllInArray");
         });
@@ -887,7 +887,7 @@ describe("NCMB Query", function(){
       });
     });
     describe("near", function(){
-      context("検索条件をncmb.GeoPointで指定し、データがあれば、リストが返り", function(){
+      context("keyの値が位置情報のデータがあれば、valueの位置から近い順のリストが返り", function(){
         var geoPoint = null;
         beforeEach(function(){
           QueryTest = ncmb.DataStore("QueryTestNear");
@@ -931,7 +931,7 @@ describe("NCMB Query", function(){
       });
     });
     describe("withinKilometers", function(){
-      context("検索条件をncmb.GeoPointで指定し、データがあれば、リストが返り", function(){
+      context("keyの値が位置情報のデータがあれば、指定したKmの範囲内でvalueの位置から近い順のリストが返り", function(){
         var geoPoint = null;
         beforeEach(function(){
           QueryTest = ncmb.DataStore("QueryTestWithinKm");
@@ -975,7 +975,7 @@ describe("NCMB Query", function(){
       });
     });
     describe("withinMiles", function(){
-      context("検索条件をncmb.GeoPointで指定し、データがあれば、リストが返り", function(){
+      context("keyの値が位置情報のデータがあれば、指定したマイルの範囲内でvalueの位置から近い順のリストが返り", function(){
         var geoPoint = null;
         beforeEach(function(){
           QueryTest = ncmb.DataStore("QueryTestWithinMile");
@@ -1019,7 +1019,7 @@ describe("NCMB Query", function(){
       });
     });
     describe("withinRadians", function(){
-      context("検索条件をncmb.GeoPointで指定し、データがあれば、リストが返り", function(){
+      context("keyの値が位置情報のデータがあれば、指定したラジアンの範囲内でvalueの位置から近い順のリストが返り", function(){
         var geoPoint = null;
         beforeEach(function(){
           QueryTest = ncmb.DataStore("QueryTestWithinRad");
@@ -1063,7 +1063,7 @@ describe("NCMB Query", function(){
       });
     });
     describe("withinSquare", function(){
-      context("検索条件をncmb.GeoPointで指定し、データがあれば、リストが返り", function(){
+      context("keyの値が指定した矩形内の位置情報のデータを検索した結果のリストが返り", function(){
         var swPoint = null;
         var nePoint = null;
         beforeEach(function(){
@@ -1110,7 +1110,7 @@ describe("NCMB Query", function(){
     });
 
     describe("or", function(){
-      context("複数の検索条件を配列で指定したとき、検索結果が返り", function(){
+      context("複数の検索条件を配列で指定し、いずれかに合致するデータの検索結果が返り", function(){
         beforeEach(function(){
           QueryTest = ncmb.DataStore("QueryTestOr");
         });
@@ -1221,7 +1221,7 @@ describe("NCMB Query", function(){
     });
     describe("select", function(){
       var SubQuery = null;
-      context("サブクエリの検索結果がsubkeyに持つ値のいずれかと、keyの値が一致するオブジェクトを検索した結果が返り", function(){
+      context("keyの値が、サブクエリの検索結果がsubkeyに持つ値のいずれかと一致するオブジェクトを検索した結果が返り", function(){
         beforeEach(function(){
           SubQuery = ncmb.DataStore("SubQuery");
           QueryTest = ncmb.DataStore("QueryTestSelect");

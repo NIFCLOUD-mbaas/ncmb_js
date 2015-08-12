@@ -38,6 +38,7 @@
     "gulp-uglify": "^1.1.0",
     "gulp-util": "^3.0.4",
     "istanbul": "^0.3.14",
+    "licensify": "^1.4.0",
     "localforage": "^1.2.3",
     "lodash": "^3.9.3",
     "mocha": "^2.1.0",
@@ -48,6 +49,7 @@
     "stubcell": "^0.8.0",
     "superagent": "^0.21.0",
     "superagent-proxy": "^0.3.1",
+    "uglifyify": "^3.0.1",
     "url": "^0.10.3"
   },
   "dependencies": {

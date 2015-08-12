@@ -80,11 +80,11 @@ var users = ncmb.User.fetchAll()
 ## Use in Browser
 
 ```
-$ browserify -r ./lib/ncmb.js:ncmb >ncmb_latest.min.js
+$ browserify -r -p licensify -t [ uglifyify -x .js ] -o ncmb.min.js lib/ncmb.js
 ```
 
 ```javascript
-<script src="js/ncmb_latest.min.js"></script>
+<script src="js/ncmb.min.js"></script>
 <script>
   var NCMB = require("ncmb");
   var ncmb = new NCMB("your_apikey", "your_clientkey");

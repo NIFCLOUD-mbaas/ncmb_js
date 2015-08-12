@@ -439,6 +439,7 @@
   response:
     status: 404
     file: 2013-09-01_no_exist_role_put_failed.json
+
 -
   request:
     url: /2013-09-01/roles/delete_role_id
@@ -446,6 +447,7 @@
   response:
     status: 200
     body: '{}'
+
 -
   request:
     url: /2013-09-01/roles/no_exist_role_id
@@ -470,3 +472,385 @@
   response:
     status: 409
     file: 2013-09-01_classes_exist_role_failure.json
+
+# query
+-
+  request:
+    url: /2013-09-01/classes/QueryTest/fetchById_object_1
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_byid_success.json
+-
+  request:
+    url: /2013-09-01/classes/EmptyQueryTest/empty_id
+    method: GET
+  response:
+    status: 404
+    file: 2013-09-01_classes_querytest_get_byid_failure.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestWhere
+    method: GET
+    query:
+      where: '{"number":1}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_where_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestEqualTo
+    method: GET
+    query:
+      where: '{"number":1}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_equalto_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestNotEqualTo
+    method: GET
+    query:
+      where: '{"number":{"$ne":2}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_notequalto_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestLessThan
+    method: GET
+    query:
+      where: '{"number":{"$lt":2}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_lessthan_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestLessThanOrEqualTo
+    method: GET
+    query:
+      where: '{"number":{"$lte":2}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_lessthanor_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestGreaterThan
+    method: GET
+    query:
+      where: '{"number":{"$gt":0}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_greaterthan_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestGreaterThanOrEqualTo
+    method: GET
+    query:
+      where: '{"number":{"$gte":1}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_greaterthanor_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestIn
+    method: GET
+    query:
+      where: '{"number":{"$in":[1,2,3]}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_in_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestNotIn
+    method: GET
+    query:
+      where: '{"number":{"$nin":[2,3,4]}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_notin_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestExists
+    method: GET
+    query:
+      where: '{"number":{"$exists":true}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_exists_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestExists
+    method: GET
+    query:
+      where: '{"name":{"$exists":false}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_exists_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestRegularExpressionTo
+    method: GET
+    query:
+      where: '{"name":{"$regex":"obj"}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_regex_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestRegularExpressionTo
+    method: GET
+    query:
+      where: '{"name":{"$regex":"^obj"}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_regex_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestRegularExpressionTo
+    method: GET
+    query:
+      where: '{"name":{"$regex":"Name$"}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_regex_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestInArray
+    method: GET
+    query:
+      where: '{"array":{"$inArray":[1,4,5]}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_inarray_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestInArray
+    method: GET
+    query:
+      where: '{"array":{"$inArray":[1]}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_inarray_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestNotInArray
+    method: GET
+    query:
+      where: '{"array":{"$ninArray":[4,5,6]}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_notinarray_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestNotInArray
+    method: GET
+    query:
+      where: '{"array":{"$ninArray":[4]}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_notinarray_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestAllInArray
+    method: GET
+    query:
+      where: '{"array":{"$all":[1,2,3]}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_allinarray_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestAllInArray
+    method: GET
+    query:
+      where: '{"array":{"$all":[1]}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_allinarray_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestNear
+    method: GET
+    query:
+      where: '{"location":{"$nearSphere":{"__type":"GeoPoint","latitude":0,"longitude":0}}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_near_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestWithinKm
+    method: GET
+    query:
+      where: '{"location":{"$nearSphere":{"__type":"GeoPoint","latitude":0,"longitude":0},"$maxDistanceInKilometers":1000}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_withinkm_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestWithinMile
+    method: GET
+    query:
+      where: '{"location":{"$nearSphere":{"__type":"GeoPoint","latitude":0,"longitude":0},"$maxDistanceInMiles":1000}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_withinmile_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestWithinRad
+    method: GET
+    query:
+      where: '{"location":{"$nearSphere":{"__type":"GeoPoint","latitude":0,"longitude":0},"$maxDistanceInRadians":0.5}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_withinrad_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestWithinSquare
+    method: GET
+    query:
+      where: '{"location":{"$within":{"$box":[{"__type":"GeoPoint","latitude":0,"longitude":0},{"__type":"GeoPoint","latitude":80,"longitude":80}]}}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_withinsquare_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestOr
+    method: GET
+    query:
+      where: '{"$or":[{"number":{"$gt":0}},{"number":{"$lt":10}}]}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_or_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestSelect
+    method: GET
+    query:
+      where: '{"city":{"$select":{"query":{"className":"SubQuery","where":{"population":{"$gt":10000000}}},"key":"cityName"}}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_select_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestRelatedTo
+    method: GET
+    query:
+      where: '{"$relatedTo":{"object":{"__type":"Pointer","className":"BaseClass","objectId":"base_id"},"key":"belongs"}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_related_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestInQuery
+    method: GET
+    query:
+      where: '{"pointer":{"$inQuery":{"where":{"status":"pointed"},"className":"SubQuery"}}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_inquery_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/QueryTestInclude
+    method: GET
+    query:
+      include: "pointer"
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_include_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestInclude
+    method: GET
+    query:
+      include: "pointer,object"
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_include_double_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestCount
+    method: GET
+    query:
+      count: 1
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_count_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestOrder
+    method: GET
+    query:
+      order: "number"
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_order_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestOrder
+    method: GET
+    query:
+      order: "-number"
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_desorder_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestOrder
+    method: GET
+    query:
+      order: "number,createDate"
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_order_double_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestLimit
+    method: GET
+    query:
+      limit: 1
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_limit_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestSkip
+    method: GET
+    query:
+      skip: 1
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_skip_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestFetch
+    method: GET
+    query:
+      limit: 1
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_fetch_success.json
+-
+  request:
+    url: /2013-09-01/classes/EmptyQueryTest
+    method: GET
+    query:
+      limit: 1
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_empty.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTest
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_fetchall_success.json
+-
+  request:
+    url: /2013-09-01/classes/EmptyQueryTest
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_empty.json

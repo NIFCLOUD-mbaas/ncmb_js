@@ -17,9 +17,7 @@ $ npm install ncmb -S
 
 ```javascript
 var NCMB = NCMB || require("../lib/ncmb");
-var ncmb = new NCMB();
-ncmb.set("apikey", "<YOUR API KEY>")
-    .set("clientkey", "<YOUR CLIENT KEY>");
+var ncmb = new NCMB("your_apikey", "your_clientkey");
 // get data class
 var Food = ncmb.DataStore("Food");
 Food.where({name: "orange"}).limit(3).offset(1).fetchAll()
@@ -78,6 +76,20 @@ var users = ncmb.User.fetchAll()
   console.log(err);
 });
 ```
+
+## Use in Browser
+
+```
+$ browserify -r ./lib/ncmb.js:ncmb >ncmb_latest.min.js
+```
+
+```javascript
+<script src="js/ncmb_latest.min.js"></script>
+<script>
+  var NCMB = require("ncmb");
+  var ncmb = new NCMB("your_apikey", "your_clientkey");
+```
+
 
 ## For Developer
 

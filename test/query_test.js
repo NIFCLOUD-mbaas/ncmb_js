@@ -1262,6 +1262,26 @@ describe("NCMB Query", function(){
           done();
         }
       });
+      it("keyが文字列以外で指定されたとき、エラーが返る", function(done){
+        SubQuery = ncmb.DataStore("SubQuery");
+        QueryTest = ncmb.DataStore("QueryTestSelect");
+        try{
+          QueryTest.select(["city"], "cityName", SubQuery.greaterThan("population",10000000));
+          done(new Error("失敗するべき"));
+        }catch(err){
+          done();
+        }
+      });
+      it("subkeyが文字列以外で指定されたとき、エラーが返る", function(done){
+        SubQuery = ncmb.DataStore("SubQuery");
+        QueryTest = ncmb.DataStore("QueryTestSelect");
+        try{
+          QueryTest.select("city", ["cityName"], SubQuery.greaterThan("population",10000000));
+          done(new Error("失敗するべき"));
+        }catch(err){
+          done();
+        }
+      });
       it("Userクラスの検索条件を指定できる", function(done){
         QueryTest = ncmb.DataStore("QueryTestSelect");
         try{

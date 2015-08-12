@@ -1291,10 +1291,181 @@ describe("NCMB Query", function(){
           done(err);
         }
       });
-      it("Userクラスの検索条件を指定できる", function(done){
+      it("Roleクラスの検索条件を指定できる", function(done){
         QueryTest = ncmb.DataStore("QueryTestSelect");
         try{
           QueryTest.select("class", "classname", ncmb.Role.equalTo("course","upper"));
+          done();
+        }catch(err){
+          done(err);
+        }
+      });
+    });
+    describe("relatedTo", function(){
+      var BaseClass = null;
+      var baseObj = null;
+      context("設定したオブジェクトのkeyに関連づけられているオブジェクトを検索した結果が返り", function(){
+        beforeEach(function(){
+          QueryTest = ncmb.DataStore("QueryTestRelatedTo");
+          BaseClass = ncmb.DataStore("BaseClass");
+          baseObj = new BaseClass();
+          baseObj.objectId = "base_id";
+        });
+        it("callback で取得できる", function(done){
+          QueryTest
+          .relatedTo(baseObj, "belongs")
+          .fetchAll(function(err, objs){
+            if(err){
+              done(err);
+            }else{
+              expect(objs.length).to.be.equal(1);
+              expect(objs[0].objectId).to.be.equal("related_object_1");
+              done();
+            }
+          });
+        });
+        it("promise で取得できる", function(done){
+          QueryTest
+          .relatedTo(baseObj, "belongs")
+          .fetchAll()
+          .then(function(objs){
+            expect(objs.length).to.be.equal(1);
+            expect(objs[0].objectId).to.be.equal("related_object_1");
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
+        });
+      });
+      it("ncmb.Userの関連オブジェクトを検索できる", function(done){
+        QueryTest = ncmb.DataStore("QueryTestRelatedTo");
+        var user = new ncmb.User();
+        user.objectId = "user_id";
+        try{
+          QueryTest
+          .relatedTo(user, "belongs");
+          done();
+        }catch(err){
+          done(err);
+        }
+      });
+      it("ncmb.Roleの関連オブジェクトを検索できる", function(done){
+        QueryTest = ncmb.DataStore("QueryTestRelatedTo");
+        //var role = new ncmb.Role("related_role");
+        var role = new ncmb.Role({roleName:"related_role"});
+        role.objectId = "role_id";
+        try{
+          QueryTest
+          .relatedTo(role, "belongs");
+          done();
+        }catch(err){
+          done(err);
+        }
+      });
+
+      it("objectがobjectIdを持たないときエラーが返る", function(done){
+        QueryTest = ncmb.DataStore("QueryTestRelatedTo");
+        BaseClass = ncmb.DataStore("BaseClass");
+        baseObj = new BaseClass();
+        try{
+          QueryTest
+          .relatedTo(baseObj, "belongs");
+          done(new Error("失敗すべき"));
+        }catch(err){
+          done();
+        }
+      });
+      it("objectがncmbオブジェクトでないときエラーが返る", function(done){
+        QueryTest = ncmb.DataStore("QueryTestRelatedTo");
+        try{
+          QueryTest
+          .relatedTo({name:"name"}, "belongs");
+          done(new Error("失敗すべき"));
+        }catch(err){
+          done();
+        }
+      });
+      it("keyが文字列でないときエラーが返る", function(done){
+        QueryTest = ncmb.DataStore("QueryTestRelatedTo");
+        BaseClass = ncmb.DataStore("BaseClass");
+        baseObj = new BaseClass();
+        baseObj.objectId = "base_id";
+        try{
+          QueryTest
+          .relatedTo(baseObj, ["belongs"]);
+          done(new Error("失敗すべき"));
+        }catch(err){
+          done();
+        }
+      });
+    });
+    describe("inQuery", function(){
+      var SubQuery = null;
+      context("サブクエリの検索結果のいずれかのポインタをkeyに持つオブジェクトを検索した結果が返り", function(){
+        beforeEach(function(){
+          SubQuery = ncmb.DataStore("SubQuery");
+          QueryTest = ncmb.DataStore("QueryTestInQuery");
+        });
+        it("callback で取得できる", function(done){
+          QueryTest
+          .inQuery("pointer", SubQuery.equalTo("status","pointed"))
+          .fetchAll(function(err, objs){
+            if(err){
+              done(err);
+            }else{
+              expect(objs.length).to.be.equal(1);
+              expect(objs[0].objectId).to.be.equal("inquery_object_1");
+              done();
+            }
+          });
+        });
+        it("promise で取得できる", function(done){
+          QueryTest
+          .inQuery("pointer", SubQuery.equalTo("status","pointed"))
+          .fetchAll()
+          .then(function(objs){
+            expect(objs.length).to.be.equal(1);
+            expect(objs[0].objectId).to.be.equal("inquery_object_1");
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
+        });
+      });
+      it("検索条件がクエリ以外で指定されたとき、エラーが返る", function(done){
+        QueryTest = ncmb.DataStore("QueryTestInQuery");
+        try{
+          QueryTest.inQuery("pointer", {status:"pointed"});
+          done(new Error("失敗するべき"));
+        }catch(err){
+          done();
+        }
+      });
+      it("keyが文字列以外で指定されたとき、エラーが返る", function(done){
+        SubQuery = ncmb.DataStore("SubQuery");
+        QueryTest = ncmb.DataStore("QueryTestInQuery");
+        try{
+          QueryTest.inQuery(["pointer"], SubQuery.equalTo("status","pointed"));
+          done(new Error("失敗するべき"));
+        }catch(err){
+          done();
+        }
+      });
+      it("Userクラスの検索条件を指定できる", function(done){
+        QueryTest = ncmb.DataStore("QueryTestInQuery");
+        try{
+          QueryTest.inQuery("pointer", ncmb.User.equalTo("status","pointed"));
+          done();
+        }catch(err){
+          done(err);
+        }
+      });
+      it("Roleクラスの検索条件を指定できる", function(done){
+        QueryTest = ncmb.DataStore("QueryTestInQuery");
+        try{
+          QueryTest.inQuery("pointer", ncmb.Role.equalTo("status","pointed"));
           done();
         }catch(err){
           done(err);

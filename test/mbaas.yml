@@ -722,7 +722,6 @@
   response:
     status: 200
     file: 2013-09-01_classes_querytest_get_or_success.json
-
 -
   request:
     url: /2013-09-01/classes/QueryTestSelect
@@ -732,7 +731,24 @@
   response:
     status: 200
     file: 2013-09-01_classes_querytest_get_select_success.json
-
+-
+  request:
+    url: /2013-09-01/classes/QueryTestRelatedTo
+    method: GET
+    query:
+      where: '{"$relatedTo":{"object":{"__type":"Pointer","className":"BaseClass","objectId":"base_id"},"key":"belongs"}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_related_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestInQuery
+    method: GET
+    query:
+      where: '{"pointer":{"$inQuery":{"where":{"status":"pointed"},"className":"SubQuery"}}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_inquery_success.json
 
 -
   request:

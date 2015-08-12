@@ -1262,8 +1262,25 @@ describe("NCMB Query", function(){
           done();
         }
       });
+      it("Userクラスの検索条件を指定できる", function(done){
+        QueryTest = ncmb.DataStore("QueryTestSelect");
+        try{
+          QueryTest.select("Mayer", "name", ncmb.User.equalTo("post","Mayer"));
+          done();
+        }catch(err){
+          done(err);
+        }
+      });
+      it("Userクラスの検索条件を指定できる", function(done){
+        QueryTest = ncmb.DataStore("QueryTestSelect");
+        try{
+          QueryTest.select("class", "classname", ncmb.Role.equalTo("course","upper"));
+          done();
+        }catch(err){
+          done(err);
+        }
+      });
     });
-
 
     describe("include", function(){
       context("指定したkeyのポインタの中身を含めたオブジェクトが返り", function(){

@@ -189,6 +189,35 @@ describe("NCMB Relation", function(){
           done();
         }
       });
+      it("追加したオブジェクトがncmbのオブジェクトでない場合、登録に失敗する", function(done){
+        var relation = new ncmb.Relation();
+        try{
+          relation.add({name: "orange", status: "success"});
+          done(new Error("失敗すべき"));
+        }catch(err){
+          done();
+        }
+      });
+      it("ncmb.Userオブジェクトを追加できる", function(done){
+        var user = new ncmb.User({userName:"name", password:"passwd"});
+        var relation = new ncmb.Relation("user");
+        try{
+          relation.add(user);
+          done();
+        }catch(err){
+          done(err);
+        }
+      });
+      it("ncmb.Roleオブジェクトを追加できる", function(done){
+        var role = new ncmb.Role("rolename");
+        var relation = new ncmb.Relation("role");
+        try{
+          relation.add(role);
+          done();
+        }catch(err){
+          done(err);
+        }
+      });
       context("インスタンス生成時にリレーションを生成するクラス名を指定し、", function(){
         var Food = null;
         var food = null;

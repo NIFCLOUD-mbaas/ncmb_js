@@ -115,7 +115,6 @@ describe("NCMB Relation", function(){
         var Food = null;
         var food1 = null;
         var food2 = null;
-        var food3 = null;
         var array = null;
         beforeEach(function(){
           relation = new ncmb.Relation();
@@ -124,11 +123,11 @@ describe("NCMB Relation", function(){
           Food = ncmb.DataStore("food");
           food1 = new Food({name: "orange", type: "fruit", status: "success"});
           food2 = new Food({name: "apple", type: "fruit", status: "success"});
-          food3 = new Food({name: "grape", type: "fruit", status: "success"});
-          array = [food1, food2, food3];
+          array = [food1, food2];
         });
         it("callback で取得できる", function(done){
           relation.add(array);
+
           mainobj.relation = relation;
           mainobj.save(function(err, obj){
             expect(obj.objectId).to.be.eql("relation_multi_id");
@@ -196,7 +195,7 @@ describe("NCMB Relation", function(){
         var relation = null;
         beforeEach(function(){
           Food = ncmb.DataStore("food");
-          food = new Food({name: "orange", type: "fruit", status: "success"});
+          food = new Food([{name: "orange", type: "fruit", status: "success"}]);
         });
         it("指定したクラスのインスタンスを追加できる", function(done){
           relation = new ncmb.Relation("food");
@@ -320,7 +319,6 @@ describe("NCMB Relation", function(){
         var Food = null;
         var food1 = null;
         var food2 = null;
-        var food3 = null;
         var array = null;
         beforeEach(function(){
           relation = new ncmb.Relation();
@@ -330,8 +328,7 @@ describe("NCMB Relation", function(){
           Food = ncmb.DataStore("food");
           food1 = new Food({name: "orange", type: "fruit", status: "success"});
           food2 = new Food({name: "apple", type: "fruit", status: "success"});
-          food3 = new Food({name: "grape", type: "fruit", status: "success"});
-          array = [food1, food2, food3];
+          array = [food1, food2];
         });
         it("callback で取得できる", function(done){
           relation.remove(array);

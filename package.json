@@ -13,7 +13,7 @@
     "cov:80": "npm run coverage 2>&1 | grep Lines | perl -nle 'my ($l, $c, $p, @d) = split(/[\\s%]+/); exit(($p > 80) == 0)'",
     "test-one": "NODE_ENV=test mocha -R spec ",
     "integral_test": "NODE_ENV=integral gulp test",
-    "build": "browserify -t babelify lib/ncmb.js -o ncmb.js",
+    "build": "browserify -r -p licensify -t [ uglifyify -x .js ] -o ncmb.min.js lib/ncmb.js",
     "stub:start": "stubcell -e test/mbaas.yml --basepath test/stub -p 18000",
     "stub:stop": "kill `ps aux | grep stubc[e]ll | awk '{print $2}'`"
   },

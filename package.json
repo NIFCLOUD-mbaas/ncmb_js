@@ -13,7 +13,7 @@
     "cov:80": "npm run coverage 2>&1 | grep Lines | perl -nle 'my ($l, $c, $p, @d) = split(/[\\s%]+/); exit(($p > 80) == 0)'",
     "test-one": "NODE_ENV=test mocha -R spec ",
     "integral_test": "NODE_ENV=integral gulp test",
-    "build": "browserify -t babelify lib/ncmb.js -o ncmb.js",
+    "build": "browserify -r -p licensify -t [ uglifyify -x .js ] -o ncmb.min.js lib/ncmb.js",
     "stub:start": "stubcell -e test/mbaas.yml --basepath test/stub -p 18000",
     "stub:stop": "kill `ps aux | grep stubc[e]ll | awk '{print $2}'`"
   },
@@ -38,6 +38,7 @@
     "gulp-uglify": "^1.1.0",
     "gulp-util": "^3.0.4",
     "istanbul": "^0.3.14",
+    "licensify": "^1.4.0",
     "localforage": "^1.2.3",
     "lodash": "^3.9.3",
     "mocha": "^2.1.0",
@@ -48,6 +49,7 @@
     "stubcell": "^0.8.0",
     "superagent": "^0.21.0",
     "superagent-proxy": "^0.3.1",
+    "uglifyify": "^3.0.1",
     "url": "^0.10.3"
   },
   "dependencies": {

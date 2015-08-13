@@ -389,6 +389,35 @@
     status: 409
     file: 2013-09-01_users_send_signup_mail_failed.json
 
+-
+  request:
+    url: /2013-09-01/users
+    method: POST
+    body: {"authData":{"facebook":{"id":"100002415159782","access_token":"CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD","expiration_date":{"__type":"Date","iso":"2013-08-31T07:41:11.906Z"}}}}
+  response:
+    status: 200
+    file: 2013-09-01_classes_users_post_facebook_success.json
+
+-
+  request:
+    url: /2013-09-01/users
+    method: POST
+    body: {"authData":{"twitter":{ "id":"887423302", "screen_name": "mobileBackend", "oauth_consumer_key": "ZoL16IzyCEEik4nNTEN9RW", "consumer_secret": "ubFWbG0wL7bub7gnWSkAKAmXj6VZ97DpmK2ZSCc5Opk", "oauth_token": "887423106-VxW8foViKjNDOyCLcC0WhTIyxUo2r3eXLLeogUtB","oauth_token_secret": "gye4VHfEHHBCH34cEJGiAWlukGAEJ6DCixYNU6Mg"}}}
+  response:
+    status: 200
+    file: 2013-09-01_classes_users_post_twitter_success.json
+
+-
+  request:
+    url: /2013-09-01/users
+    method: POST
+    body: {"authData":{"google":{ "id":"342304547393343184783", "access_token":"ya29.bAoBfwXmAnEqIVVICriUsrV1BDC1BHJJj1G0-CaasIYvKs-_zFBRvnVYQ4n3NC6bFkNIYbw6vf1eXM" }}}
+  response:
+    status: 200
+    file: 2013-09-01_classes_users_post_google_success.json
+
+
+
 # files
 -
   request:

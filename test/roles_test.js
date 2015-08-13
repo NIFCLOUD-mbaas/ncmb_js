@@ -44,12 +44,18 @@ describe("NCMB Role", function(){
         });
         it("callback で取得できる", function(done){
           newRole.save(function(err, obj){
-            done(err ? err : null);
+            if(err){
+              done(err);
+            }else{
+              expect(obj.objectId).to.be.eql("role_objectId");
+              done();
+            }
           });
         });
         it("promise で取得できる", function(done){
           newRole.save()
-              .then(function(newRole){
+              .then(function(obj){
+                expect(obj.objectId).to.be.eql("role_objectId");
                 done();
               })
               .catch(function(err){
@@ -64,17 +70,21 @@ describe("NCMB Role", function(){
         });
         it("callback で取得できる", function(done){
           newExistRole.save(function(err, obj){
-            if(!err) return done(new Error("error が返されなければならない"));
-            expect(err.status).to.be.eql(409);
-            done();
+            if(err){
+              expect(err.text).to.be.eql('{"code":"E409001","error":"roleName is duplication."}');
+              done();
+            }else{
+              done(new Error("失敗すべき"));
+            }
           });
         });
         it("promise で取得できる", function(done){
           newExistRole.save()
               .then(function(obj){
-                done(new Error("error が返されなければならない"));
+                done(new Error("失敗すべき"));
               })
               .catch(function(err){
+                expect(err.text).to.be.eql('{"code":"E409001","error":"roleName is duplication."}');
                 done();
               });
         });

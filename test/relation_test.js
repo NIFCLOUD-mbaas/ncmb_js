@@ -36,8 +36,12 @@ describe("NCMB Relation", function(){
           relation.add(food);
           mainobj.relation = relation;
           mainobj.save(function(err, obj){
-            expect(obj.objectId).to.be.eql("relation_id");
-            done(err ? err : null);
+            if(err){
+              done(err);
+            }else{
+              expect(obj.objectId).to.be.eql("relation_id");
+              done();
+            }
           });
         });
         it("promise で取得できる", function(done){
@@ -65,8 +69,12 @@ describe("NCMB Relation", function(){
           relation.add(subuser);
           mainobj.relation = relation;
           mainobj.save(function(err, obj){
-            expect(obj.objectId).to.be.eql("relation_user_id");
-            done(err ? err : null);
+            if(err){
+              done(err);
+            }else{
+              expect(obj.objectId).to.be.eql("relation_user_id");
+              done();
+            }
           });
         });
         it("promise で取得できる", function(done){
@@ -94,8 +102,12 @@ describe("NCMB Relation", function(){
           relation.add(subrole);
           mainobj.relation = relation;
           mainobj.save(function(err, obj){
-            expect(obj.objectId).to.be.eql("relation_role_id");
-            done(err ? err : null);
+            if(err){
+              done(err);
+            }else{
+              expect(obj.objectId).to.be.eql("relation_role_id");
+              done();
+            }
           });
         });
         it("promise で取得できる", function(done){
@@ -130,8 +142,12 @@ describe("NCMB Relation", function(){
 
           mainobj.relation = relation;
           mainobj.save(function(err, obj){
-            expect(obj.objectId).to.be.eql("relation_multi_id");
-            done(err ? err : null);
+            if(err){
+              done(err);
+            }else{
+              expect(obj.objectId).to.be.eql("relation_multi_id");
+              done();
+            }
           });
         });
         it("promise で取得できる", function(done){
@@ -267,8 +283,12 @@ describe("NCMB Relation", function(){
           relation.remove(food);
           mainobj.relation = relation;
           mainobj.update(function(err, obj){
-            expect(obj.objectId).to.be.eql("remove_id");
-            done(err ? err : null);
+            if(err){
+              done(err);
+            }else{
+              expect(obj.objectId).to.be.eql("remove_id");
+              done();
+            }
           });
         });
         it("promise で取得できる", function(done){
@@ -297,8 +317,12 @@ describe("NCMB Relation", function(){
           relation.remove(subuser);
           mainobj.relation = relation;
           mainobj.update(function(err, obj){
-            expect(obj.objectId).to.be.eql("remove_user_id");
-            done(err ? err : null);
+            if(err){
+              done(err);
+            }else{
+              expect(obj.objectId).to.be.eql("remove_user_id");
+              done();
+            }
           });
         });
         it("promise で取得できる", function(done){
@@ -327,8 +351,12 @@ describe("NCMB Relation", function(){
           relation.remove(subrole);
           mainobj.relation = relation;
           mainobj.update(function(err, obj){
-            expect(obj.objectId).to.be.eql("remove_role_id");
-            done(err ? err : null);
+            if(err){
+              done(err);
+            }else{
+              expect(obj.objectId).to.be.eql("remove_role_id");
+              done();
+            }
           });
         });
         it("promise で取得できる", function(done){
@@ -363,8 +391,12 @@ describe("NCMB Relation", function(){
           relation.remove(array);
           mainobj.relation = relation;
           mainobj.update(function(err, obj){
-            expect(obj.objectId).to.be.eql("remove_multi_id");
-            done(err ? err : null);
+            if(err){
+              done(err);
+            }else{
+              expect(obj.objectId).to.be.eql("remove_multi_id");
+              done();
+            }
           });
         });
         it("promise で取得できる", function(done){

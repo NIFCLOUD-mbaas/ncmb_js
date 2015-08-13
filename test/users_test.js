@@ -1484,17 +1484,17 @@ describe("NCMB Users", function(){
         });
       });
 
-      context("authDataプロパティとprovider, providerData入力の両方あれば、プロパティの認証情報でログインに成功して", function(){
+      context("authDataプロパティと<provider, providerData>入力の両方があれば、入力の認証情報でログインに成功して", function(){
         var inputProvider = null;
         var inputProviderData = null;
         beforeEach(function(){
-          provider = "google";
-          providerData = {
-            id:"342304547393343184783", 
-            access_token:"ya29.bAoBfwXmAnEqIVVICriUsrV1BDC1BHJJj1G0-CaasIYvKs-_zFBRvnVYQ4n3NC6bFkNIYbw6vf1eXM" 
-          };
-          inputProvider = "facebook";
+          inputProvider = "google";
           inputProviderData = {
+            id:"342304547393343184783",
+            access_token:"ya29.bAoBfwXmAnEqIVVICriUsrV1BDC1BHJJj1G0-CaasIYvKs-_zFBRvnVYQ4n3NC6bFkNIYbw6vf1eXM"
+          };
+          provider = "facebook";
+          providerData = {
             id: "100002415159782",
             access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD",
             expiration_date: {"__type":"Date","iso":"2013-08-31T07:41:11.906Z"}
@@ -1502,6 +1502,7 @@ describe("NCMB Users", function(){
           user = new ncmb.User();
           user.authData = {};
           user.authData[provider] = providerData;
+          user.authData[inputProvider] = inputProviderData;
         });
         it("callback でレスポンスを取得できる", function(done){
           user.loginWith(inputProvider, inputProviderData, function(err, data){
@@ -1517,6 +1518,79 @@ describe("NCMB Users", function(){
           })
           .catch(function(err){
             done(err);
+          });
+        });
+      });
+
+      context("authDataプロパティと<provider, providerData>入力の両方があるが、authDataの中にない情報でログインすると失敗して", function(){
+        var inputProvider = null;
+        var inputProviderData = null;
+        beforeEach(function(){
+          provider = "google";
+          providerData = {
+            id:"342304547393343184783",
+            access_token:"ya29.bAoBfwXmAnEqIVVICriUsrV1BDC1BHJJj1G0-CaasIYvKs-_zFBRvnVYQ4n3NC6bFkNIYbw6vf1eXM"
+          };
+          inputProvider = "facebook";
+          inputProviderData = {
+            id: "100002415159782",
+            access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD",
+            expiration_date: {"__type":"Date","iso":"2013-08-31T07:41:11.906Z"}
+          };
+          user = new ncmb.User();
+          user.authData = {};
+          user.authData[provider] = providerData;
+        });
+        it("callback でエラーを取得できる", function(done){
+          user.loginWith(inputProvider, inputProviderData, function(err, data){
+            expect(err).to.be.an.instanceof(Error);
+            done();
+          });
+        });
+        it("promise でエラーを取得できる", function(done){
+          user.loginWith(inputProvider, inputProviderData)
+          .then(function(data){
+            done(new Error("エラーが帰って来るべき"));
+          })
+          .catch(function(err){
+            expect(err).to.be.an.instanceof(Error);
+            done();
+          });
+        });
+      });
+
+      context("authDataプロパティと<provider, providerData>入力の両方があるが、authDataの中に指摘した情報がない場合ログインすると失敗して", function(){
+        var inputProvider = null;
+        var inputProviderData = null;
+        beforeEach(function(){
+          provider = "google";
+          providerData = {
+            id:"342304547393343184783",
+            access_token:"ya29.bAoBfwXmAnEqIVVICriUsrV1BDC1BHJJj1G0-CaasIYvKs-_zFBRvnVYQ4n3NC6bFkNIYbw6vf1eXM"
+          };
+          inputProvider = "google";
+          inputProviderData = {
+            id:"342304547393343184781",
+            access_token:"ya29.bAoBfwXmAnEqIVVICriUsrV1BDC1BHJJj1G0-CaasIYvKs-_zFBRvnVYQ4n3NC6bFkNIYbw6vf1eXM"
+          };
+          user = new ncmb.User();
+          user.authData = {};
+          user.authData[provider] = providerData;
+        });
+        it("callback でエラーを取得できる", function(done){
+          user.loginWith(inputProvider, inputProviderData, function(err, data){
+            expect(err).to.be.an.instanceof(Error);
+            done();
+          });
+        });
+        it("promise でエラーを取得できる", function(done){
+          user.loginWith(inputProvider, inputProviderData)
+          .then(function(data){
+            done(new Error("エラーが帰って来るべき"));
+          })
+          .catch(function(err){
+            expect(err).to.be.an.instanceof(Error);
+            done();
           });
         });
       });

@@ -402,4 +402,200 @@ describe("NCMB Role", function(){
       });
     });
   });
+  describe("子会員の削除", function(){
+    var role = null;
+    describe("addUser", function(){
+      context("削除するユーザを指定して登録した結果を取得し、", function(){
+        var user = null;
+        beforeEach(function(){
+          role = new ncmb.Role("mainRole");
+          user = new ncmb.User({userName:"Yamada Tarou", password:"password"});
+        });
+        it("callback で取得できる", function(done){
+          role.addUser(user)
+              .save(function(err, data){
+                if(err){
+                  done(err);
+                }else{
+                  expect(data).to.have.property("createDate");
+                  done();
+                }
+              });
+        });
+        it("promise で取得できる", function(done){
+          role.addUser(user)
+              .save()
+              .then(function(data){
+                expect(data).to.have.property("createDate");
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+      });
+      context("削除するユーザを配列で指定して登録した結果を取得し、", function(){
+        var user = null;
+        var user2 = null;
+        beforeEach(function(){
+          role = new ncmb.Role("mainRole");
+          user = new ncmb.User({userName:"Yamada Tarou", password:"password"});
+          user2 = new ncmb.User({userName:"Yamada Hanako", password:"1234"});
+        });
+        it("callback で取得できる", function(done){
+          role.addUser([user,user2])
+              .save(function(err, data){
+                if(err){
+                  done(err);
+                }else{
+                  expect(data).to.have.property("createDate");
+                  done();
+                }
+              });
+        });
+        it("promise で取得できる", function(done){
+          role.addUser([user,user2])
+              .save()
+              .then(function(data){
+                expect(data).to.have.property("createDate");
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+      });
+      context("削除するユーザを連続で指定して登録した結果を取得し、", function(){
+        var user = null;
+        var user2 = null;
+        beforeEach(function(){
+          role = new ncmb.Role("mainRole");
+          user = new ncmb.User({userName:"Yamada Tarou", password:"password"});
+          user2 = new ncmb.User({userName:"Yamada Hanako", password:"1234"});
+        });
+        it("callback で取得できる", function(done){
+          role.addUser(user)
+              .addUser(user2)
+              .save(function(err, data){
+                if(err){
+                  done(err);
+                }else{
+                  expect(data).to.have.property("createDate");
+                  done();
+                }
+              });
+        });
+        it("promise で取得できる", function(done){
+          role.addUser(user)
+              .addUser(user2)
+              .save()
+              .then(function(data){
+                expect(data).to.have.property("createDate");
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+      });
+    });
+  });
+  describe("子ロールの削除", function(){
+    var role = null;
+    describe("addRole", function(){
+      context("削除するロールを指定して登録した結果を取得し、", function(){
+        var subrole = null;
+        beforeEach(function(){
+          role = new ncmb.Role("mainRole");
+          subrole = new ncmb.Role("subRole");
+        });
+        it("callback で取得できる", function(done){
+          role.addRole(subrole)
+              .save(function(err, data){
+                if(err){
+                  done(err);
+                }else{
+                  expect(data).to.have.property("createDate");
+                  done();
+                }
+              });
+        });
+        it("promise で取得できる", function(done){
+          role.addRole(subrole)
+              .save()
+              .then(function(data){
+                expect(data).to.have.property("createDate");
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+      });
+      context("削除するユーザを配列で指定して登録した結果を取得し、", function(){
+        var subrole = null;
+        var subrole2 = null;
+        beforeEach(function(){
+          role = new ncmb.Role("mainRole");
+          subrole = new ncmb.Role("subRole");
+          subrole2 = new ncmb.Role("subRole2");
+        });
+        it("callback で取得できる", function(done){
+          role.addRole([subrole,subrole2])
+              .save(function(err, data){
+                if(err){
+                  done(err);
+                }else{
+                  expect(data).to.have.property("createDate");
+                  done();
+                }
+              });
+        });
+        it("promise で取得できる", function(done){
+          role.addRole([subrole,subrole2])
+              .save()
+              .then(function(data){
+                expect(data).to.have.property("createDate");
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+      });
+      context("削除するユーザを連続で指定して登録した結果を取得し、", function(){
+        var subrole = null;
+        var subrole2 = null;
+        beforeEach(function(){
+          role = new ncmb.Role("mainRole");
+          subrole = new ncmb.Role("subRole");
+          subrole2 = new ncmb.Role("subRole2");
+        });
+        it("callback で取得できる", function(done){
+          role.addRole(subrole)
+              .addRole(subrole2)
+              .save(function(err, data){
+                if(err){
+                  done(err);
+                }else{
+                  expect(data).to.have.property("createDate");
+                  done();
+                }
+              });
+        });
+        it("promise で取得できる", function(done){
+          role.addRole(subrole)
+              .addRole(subrole2)
+              .save()
+              .then(function(data){
+                expect(data).to.have.property("createDate");
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+      });
+    });
+  });
 });

@@ -93,7 +93,7 @@ describe("NCMB Role", function(){
   });
   describe("ロール更新", function(){
     describe("update", function(){
-      context("存在するロールIDを指定し、登録に成功", function(done){
+      context("存在するロールIDを指定し、更新に成功", function(done){
         var updateRole = null;
         beforeEach(function(){
           updateRole = new ncmb.Role("updated_role_name",{objectId:"update_role_id"});
@@ -113,7 +113,7 @@ describe("NCMB Role", function(){
               });
         });
       });
-      context("存在しないロールIDを指定し、登録に失敗", function(){
+      context("存在しないロールIDを指定し、更新に失敗", function(){
         var noExistRole = null;
         before(function(){
           noExistRole = new ncmb.Role("updated_role_name", {objectId:"no_exist_role_id"});
@@ -122,6 +122,27 @@ describe("NCMB Role", function(){
           noExistRole.update(function(err, obj){
             if(!err) return done(new Error("error が返されなければならない"));
             expect(err.status).to.be.eql(404);
+            done();
+          });
+        });
+        it("promise で取得できる", function(done){
+          noExistRole.update()
+              .then(function(obj){
+                done(new Error("error が返されなければならない"));
+              })
+              .catch(function(err){
+                done();
+              });
+        });
+      });
+      context("objectIdがない場合、更新に失敗", function(){
+        var noExistRole = null;
+        before(function(){
+          noExistRole = new ncmb.Role("updated_role_name");
+        });
+        it("callback で取得できる", function(done){
+          noExistRole.update(function(err, obj){
+            if(!err) return done(new Error("error が返されなければならない"));
             done();
           });
         });

@@ -404,7 +404,7 @@ describe("NCMB Role", function(){
   });
   describe("子会員の削除", function(){
     var role = null;
-    describe("addUser", function(){
+    describe("removeUser", function(){
       context("削除するユーザを指定して登録した結果を取得し、", function(){
         var user = null;
         beforeEach(function(){
@@ -412,7 +412,7 @@ describe("NCMB Role", function(){
           user = new ncmb.User({userName:"Yamada Tarou", password:"password"});
         });
         it("callback で取得できる", function(done){
-          role.addUser(user)
+          role.removeUser(user)
               .save(function(err, data){
                 if(err){
                   done(err);
@@ -423,7 +423,7 @@ describe("NCMB Role", function(){
               });
         });
         it("promise で取得できる", function(done){
-          role.addUser(user)
+          role.removeUser(user)
               .save()
               .then(function(data){
                 expect(data).to.have.property("createDate");
@@ -443,7 +443,7 @@ describe("NCMB Role", function(){
           user2 = new ncmb.User({userName:"Yamada Hanako", password:"1234"});
         });
         it("callback で取得できる", function(done){
-          role.addUser([user,user2])
+          role.removeUser([user,user2])
               .save(function(err, data){
                 if(err){
                   done(err);
@@ -454,7 +454,7 @@ describe("NCMB Role", function(){
               });
         });
         it("promise で取得できる", function(done){
-          role.addUser([user,user2])
+          role.removeUser([user,user2])
               .save()
               .then(function(data){
                 expect(data).to.have.property("createDate");
@@ -474,8 +474,8 @@ describe("NCMB Role", function(){
           user2 = new ncmb.User({userName:"Yamada Hanako", password:"1234"});
         });
         it("callback で取得できる", function(done){
-          role.addUser(user)
-              .addUser(user2)
+          role.removeUser(user)
+              .removeUser(user2)
               .save(function(err, data){
                 if(err){
                   done(err);
@@ -486,8 +486,8 @@ describe("NCMB Role", function(){
               });
         });
         it("promise で取得できる", function(done){
-          role.addUser(user)
-              .addUser(user2)
+          role.removeUser(user)
+              .removeUser(user2)
               .save()
               .then(function(data){
                 expect(data).to.have.property("createDate");
@@ -502,7 +502,7 @@ describe("NCMB Role", function(){
   });
   describe("子ロールの削除", function(){
     var role = null;
-    describe("addRole", function(){
+    describe("removeRole", function(){
       context("削除するロールを指定して登録した結果を取得し、", function(){
         var subrole = null;
         beforeEach(function(){
@@ -510,7 +510,7 @@ describe("NCMB Role", function(){
           subrole = new ncmb.Role("subRole");
         });
         it("callback で取得できる", function(done){
-          role.addRole(subrole)
+          role.removeRole(subrole)
               .save(function(err, data){
                 if(err){
                   done(err);
@@ -521,7 +521,7 @@ describe("NCMB Role", function(){
               });
         });
         it("promise で取得できる", function(done){
-          role.addRole(subrole)
+          role.removeRole(subrole)
               .save()
               .then(function(data){
                 expect(data).to.have.property("createDate");
@@ -541,7 +541,7 @@ describe("NCMB Role", function(){
           subrole2 = new ncmb.Role("subRole2");
         });
         it("callback で取得できる", function(done){
-          role.addRole([subrole,subrole2])
+          role.removeRole([subrole,subrole2])
               .save(function(err, data){
                 if(err){
                   done(err);
@@ -552,7 +552,7 @@ describe("NCMB Role", function(){
               });
         });
         it("promise で取得できる", function(done){
-          role.addRole([subrole,subrole2])
+          role.removeRole([subrole,subrole2])
               .save()
               .then(function(data){
                 expect(data).to.have.property("createDate");
@@ -572,8 +572,8 @@ describe("NCMB Role", function(){
           subrole2 = new ncmb.Role("subRole2");
         });
         it("callback で取得できる", function(done){
-          role.addRole(subrole)
-              .addRole(subrole2)
+          role.removeRole(subrole)
+              .removeRole(subrole2)
               .save(function(err, data){
                 if(err){
                   done(err);
@@ -584,11 +584,73 @@ describe("NCMB Role", function(){
               });
         });
         it("promise で取得できる", function(done){
-          role.addRole(subrole)
-              .addRole(subrole2)
+          role.removeRole(subrole)
+              .removeRole(subrole2)
               .save()
               .then(function(data){
                 expect(data).to.have.property("createDate");
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+      });
+    });
+  });
+  describe("子会員の取得", function(){
+    context("fetchUser", function(){
+      context("ロールが持つ子会員を検索し、結果を", function(){
+        var role = null;
+        beforeEach(function(){
+          role = new ncmb.Role("mainRole");
+          role.objectId = "role_id";
+        });
+        it("callback で取得できる", function(done){
+          role.fetchUser(function(err, data){
+                if(err){
+                  done(err);
+                }else{
+                  expect(data.length).to.be.eql(1);
+                  done();
+                }
+              });
+        });
+        it("promise で取得できる", function(done){
+          role.fetchUser()
+              .then(function(data){
+                expect(data.length).to.be.eql(1);
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+      });
+    });
+  });
+  describe("子ロールの取得", function(){
+    context("fetchRole", function(){
+      context("ロールが持つ子ロールを検索し、結果を", function(){
+        var role = null;
+        beforeEach(function(){
+          role = new ncmb.Role("mainRole");
+          role.objectId = "role_id";
+        });
+        it("callback で取得できる", function(done){
+          role.fetchRole(function(err, data){
+                if(err){
+                  done(err);
+                }else{
+                  expect(data.length).to.be.eql(1);
+                  done();
+                }
+              });
+        });
+        it("promise で取得できる", function(done){
+          role.fetchRole()
+              .then(function(data){
+                expect(data.length).to.be.eql(1);
                 done();
               })
               .catch(function(err){

@@ -627,6 +627,24 @@
   response:
     status: 201
     file: 2013-09-01_role_addrole_post_success.json
+-
+  request:
+    url: /2013-09-01/users
+    method: GET
+    query:
+      where: '{"$relatedTo":{"object":{"__type":"Pointer","className":"role","objectId":"role_id"},"key":"belongUser"}}'
+  response:
+    status: 200
+    file: 2013-09-01_role_get_fetchuser_success.json
+-
+  request:
+    url: /2013-09-01/roles
+    method: GET
+    query:
+      where: '{"$relatedTo":{"object":{"__type":"Pointer","className":"role","objectId":"role_id"},"key":"belongRole"}}'
+  response:
+    status: 200
+    file: 2013-09-01_role_get_fetchrole_success.json
 
 # query
 -

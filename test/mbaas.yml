@@ -280,6 +280,17 @@
 
 -
   request:
+    url: /2013-09-01/users
+    method: POST
+    body:
+      "userName": "Yamada Hanako"
+      "password": "1234"
+  response:
+    status: 201
+    file: 2013-09-01_classes_users_post_idpw2_success.json
+
+-
+  request:
     url: '/2013-09-01/login'
     method: GET
     query:
@@ -497,11 +508,143 @@
   request:
     url: /2013-09-01/roles
     method: POST
+    body:
+      roleName: "subRole"
+  response:
+    status: 201
+    file: 2013-09-01_role_post_sub_success.json
+-
+  request:
+    url: /2013-09-01/roles
+    method: POST
+    body:
+      roleName: "subRole2"
+  response:
+    status: 201
+    file: 2013-09-01_role_post_sub2_success.json
+-
+  request:
+    url: /2013-09-01/roles
+    method: POST
     body: 
       roleName: "new_exist_role_name"
   response:
     status: 409
     file: 2013-09-01_classes_exist_role_failure.json
+-
+  request:
+    url: /2013-09-01/roles
+    method: POST
+    body:
+      roleName: "mainRole"
+      belongUser:
+        __op: "AddRelation"
+        objects: [{"__type":"Pointer","className":"user","objectId":"epaKcaYZqsREdSMY"}]
+  response:
+    status: 201
+    file: 2013-09-01_role_adduser_post_success.json
+-
+  request:
+    url: /2013-09-01/roles
+    method: POST
+    body:
+      roleName: "mainRole"
+      belongUser:
+        __op: "AddRelation"
+        objects: [{"__type":"Pointer","className":"user","objectId":"epaKcaYZqsREdSMY"},{"__type":"Pointer","className":"user","objectId":"ppaKcaYZqsREdSMY"}]
+  response:
+    status: 201
+    file: 2013-09-01_role_adduser_post_success.json
+-
+  request:
+    url: /2013-09-01/roles
+    method: POST
+    body:
+      roleName: "mainRole"
+      belongRole:
+        __op: "AddRelation"
+        objects: [{"__type":"Pointer","className":"role","objectId":"subrole_objectId"}]
+  response:
+    status: 201
+    file: 2013-09-01_role_addrole_post_success.json
+-
+  request:
+    url: /2013-09-01/roles
+    method: POST
+    body:
+      roleName: "mainRole"
+      belongRole:
+        __op: "AddRelation"
+        objects: [{"__type":"Pointer","className":"role","objectId":"subrole_objectId"},{"__type":"Pointer","className":"role","objectId":"subrole2_objectId"}]
+  response:
+    status: 201
+    file: 2013-09-01_role_addrole_post_success.json
+-
+  request:
+    url: /2013-09-01/roles
+    method: POST
+    body:
+      roleName: "mainRole"
+      belongUser:
+        __op: "RemoveRelation"
+        objects: [{"__type":"Pointer","className":"user","objectId":"epaKcaYZqsREdSMY"}]
+  response:
+    status: 201
+    file: 2013-09-01_role_adduser_post_success.json
+-
+  request:
+    url: /2013-09-01/roles
+    method: POST
+    body:
+      roleName: "mainRole"
+      belongUser:
+        __op: "RemoveRelation"
+        objects: [{"__type":"Pointer","className":"user","objectId":"epaKcaYZqsREdSMY"},{"__type":"Pointer","className":"user","objectId":"ppaKcaYZqsREdSMY"}]
+  response:
+    status: 201
+    file: 2013-09-01_role_adduser_post_success.json
+-
+  request:
+    url: /2013-09-01/roles
+    method: POST
+    body:
+      roleName: "mainRole"
+      belongRole:
+        __op: "RemoveRelation"
+        objects: [{"__type":"Pointer","className":"role","objectId":"subrole_objectId"}]
+  response:
+    status: 201
+    file: 2013-09-01_role_addrole_post_success.json
+-
+  request:
+    url: /2013-09-01/roles
+    method: POST
+    body:
+      roleName: "mainRole"
+      belongRole:
+        __op: "RemoveRelation"
+        objects: [{"__type":"Pointer","className":"role","objectId":"subrole_objectId"},{"__type":"Pointer","className":"role","objectId":"subrole2_objectId"}]
+  response:
+    status: 201
+    file: 2013-09-01_role_addrole_post_success.json
+-
+  request:
+    url: /2013-09-01/users
+    method: GET
+    query:
+      where: '{"$relatedTo":{"object":{"__type":"Pointer","className":"role","objectId":"role_id"},"key":"belongUser"}}'
+  response:
+    status: 200
+    file: 2013-09-01_role_get_fetchuser_success.json
+-
+  request:
+    url: /2013-09-01/roles
+    method: GET
+    query:
+      where: '{"$relatedTo":{"object":{"__type":"Pointer","className":"role","objectId":"role_id"},"key":"belongRole"}}'
+  response:
+    status: 200
+    file: 2013-09-01_role_get_fetchrole_success.json
 
 # query
 -

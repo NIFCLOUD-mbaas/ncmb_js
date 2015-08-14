@@ -23,7 +23,7 @@ describe("NCMB Users", function(){
       var user = new ncmb.User({userName: "username"});
       expect(user.userName).to.be.equal("username");
       done();
-    })
+    });
     it("変更許可のないキーを指定した場合、値を変更できない", function(done){
       var user = new ncmb.User({save: "overwrite"});
       try{
@@ -49,14 +49,14 @@ describe("NCMB Users", function(){
         });
         it("callback でレスポンスを取得できる", function(done){
           user.login(function(err, data){
-            expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+            expect(data).to.have.property("sessionToken");
             done(err ? err : null);
           });
         });
         it("promise でレスポンスを取得できる", function(done){
           user.login()
           .then(function(data){
-            expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+            expect(data).to.have.property("sessionToken");
             done();
           })
           .catch(function(err){
@@ -71,14 +71,14 @@ describe("NCMB Users", function(){
         });
         it("callback で取得できる", function(done){
           user.login(function(err, data){
-            expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+            expect(data).to.have.property("sessionToken");
             done(err ? err : null);
           });
         });
         it("promise で取得できる", function(done){
           user.login()
           .then(function(data){
-            expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+            expect(data).to.have.property("sessionToken");
             done();
           })
           .catch(function(err){
@@ -202,14 +202,14 @@ describe("NCMB Users", function(){
           });
           it("callback でレスポンスを取得できる", function(done){
             ncmb.User.login(user, function(err, data){
-              expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+              expect(data).to.have.property("sessionToken");
               done(err ? err : null);
             });
           });
           it("promise でレスポンスを取得できる", function(done){
             ncmb.User.login(user)
             .then(function(data){
-              expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+              expect(data).to.have.property("sessionToken");
               done();
             })
             .catch(function(err){
@@ -226,14 +226,14 @@ describe("NCMB Users", function(){
           });
           it("callback で取得できる", function(done){
             ncmb.User.login(user, function(err, data){
-              expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+              expect(data).to.have.property("sessionToken");
               done(err ? err : null);
             });
           });
           it("promise で取得できる", function(done){
             ncmb.User.login(user)
             .then(function(data){
-              expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+              expect(data).to.have.property("sessionToken");
               done();
             })
             .catch(function(err){
@@ -356,7 +356,7 @@ describe("NCMB Users", function(){
 
           it("callback でレスポンスを取得できる", function(done){
             ncmb.User.login(userName, password, function(err, data){
-              expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+              expect(data).to.have.property("sessionToken");
               done(err ? err : null);
             });
           });
@@ -364,7 +364,7 @@ describe("NCMB Users", function(){
           it("promise でレスポンスを取得できる", function(done){
             ncmb.User.login(userName, password)
             .then(function(data){
-              expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+              expect(data).to.have.property("sessionToken");
               done();
             })
             .catch(function(err){
@@ -460,14 +460,14 @@ describe("NCMB Users", function(){
         });
         it("callback でレスポンスを取得できる", function(done){
           user.loginWithMailAddress(function(err, data){
-            expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+            expect(data).to.have.property("sessionToken");
             done(err ? err : null);
           });
         });
         it("promise でレスポンスを取得できる", function(done){
           user.loginWithMailAddress()
           .then(function(data){
-            expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+            expect(data).to.have.property("sessionToken");
             done();
           })
           .catch(function(err){
@@ -482,14 +482,14 @@ describe("NCMB Users", function(){
         });
         it("callback で取得できる", function(done){
           user.loginWithMailAddress(function(err, data){
-            expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+            expect(data).to.have.property("sessionToken");
             done(err ? err : null);
           });
         });
         it("promise で取得できる", function(done){
           user.loginWithMailAddress()
           .then(function(data){
-            expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+            expect(data).to.have.property("sessionToken");
             done();
           })
           .catch(function(err){
@@ -613,14 +613,14 @@ describe("NCMB Users", function(){
           });
           it("callback でレスポンスを取得できる", function(done){
             ncmb.User.loginWithMailAddress(user, function(err, data){
-              expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+              expect(data).to.have.property("sessionToken");
               done(err ? err : null);
             });
           });
           it("promise でレスポンスを取得できる", function(done){
             ncmb.User.loginWithMailAddress(user)
             .then(function(data){
-              expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+              expect(data).to.have.property("sessionToken");
               done();
             })
             .catch(function(err){
@@ -637,14 +637,14 @@ describe("NCMB Users", function(){
           });
           it("callback で取得できる", function(done){
             ncmb.User.loginWithMailAddress(user, function(err, data){
-              expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+              expect(data).to.have.property("sessionToken");
               done(err ? err : null);
             });
           });
           it("promise で取得できる", function(done){
             ncmb.User.loginWithMailAddress(user)
             .then(function(data){
-              expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+              expect(data).to.have.property("sessionToken");
               done();
             })
             .catch(function(err){
@@ -767,7 +767,7 @@ describe("NCMB Users", function(){
 
           it("callback でレスポンスを取得できる", function(done){
             ncmb.User.loginWithMailAddress(mailAddress, password, function(err, data){
-              expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+              expect(data).to.have.property("sessionToken");
               done(err ? err : null);
             });
           });
@@ -775,7 +775,7 @@ describe("NCMB Users", function(){
           it("promise でレスポンスを取得できる", function(done){
             ncmb.User.loginWithMailAddress(mailAddress, password)
             .then(function(data){
-              expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+              expect(data).to.have.property("sessionToken");
               done();
             })
             .catch(function(err){
@@ -915,14 +915,14 @@ describe("NCMB Users", function(){
         });
         it("callback で取得できる", function(done){
           user.loginAsAnonymous(function(err, data){
-            expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+            expect(data).to.have.property("sessionToken");
             done(err ? err : null);
           });
         });
         it("promise で取得できる", function(done){
           user.loginAsAnonymous()
           .then(function(data){
-            expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+            expect(data).to.have.property("sessionToken");
             done();
           })
           .catch(function(err){
@@ -1124,14 +1124,14 @@ describe("NCMB Users", function(){
           });
           it("callback で取得できる", function(done){
             ncmb.User.loginAsAnonymous(user, function(err, data){
-              expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+              expect(data).to.have.property("sessionToken");
               done(err ? err : null);
             });
           });
           it("promise で取得できる", function(done){
             ncmb.User.loginAsAnonymous(user)
             .then(function(data){
-              expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+              expect(data).to.have.property("sessionToken");
               done();
             })
             .catch(function(err){
@@ -1602,14 +1602,14 @@ describe("NCMB Users", function(){
         });
         it("callback で取得できる", function(done){
           user.loginWith(function(err, data){
-            expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+            expect(data).to.have.property("sessionToken");
             done(err ? err : null);
           });
         });
         it("promise で取得できる", function(done){
           user.loginWith()
           .then(function(data){
-            expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+            expect(data).to.have.property("sessionToken");
             done();
           })
           .catch(function(err){
@@ -2129,14 +2129,14 @@ describe("NCMB Users", function(){
           });
           it("callback で取得できる", function(done){
             ncmb.User.loginWith(user, function(err, data){
-              expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+              expect(data).to.have.property("sessionToken");
               done(err ? err : null);
             });
           });
           it("promise で取得できる", function(done){
             ncmb.User.loginWith(user)
             .then(function(data){
-              expect(data).to.have.property("sessionToken", "ojUDAfEBgGadVsyQE3XO0yrtu");
+              expect(data).to.have.property("sessionToken");
               done();
             })
             .catch(function(err){
@@ -3092,27 +3092,27 @@ describe("NCMB Users", function(){
         });
       });
 
-    context("mailAddress が登録済みのときに", function(){
+      context("mailAddress が登録済みのときに", function(){
 
-      it("callback で送信時エラーを取得できる", function(done){
-        ncmb.User.requestSignUpEmail("usedaddress@example.com", function(err, data){
-          if(!err) done(new Error("失敗すべき"));
-          expect(err).to.be.an.instanceof(Error);
-          done();
+        it("callback で送信時エラーを取得できる", function(done){
+          ncmb.User.requestSignUpEmail("usedaddress@example.com", function(err, data){
+            if(!err) done(new Error("失敗すべき"));
+            expect(err).to.be.an.instanceof(Error);
+            done();
+          });
+        });
+
+        it("promise で送信時エラーを取得できる", function(done){
+          ncmb.User.requestSignUpEmail("usedaddress@example.com")
+          .then(function(data){
+             done(new Error("失敗すべき"));
+          })
+          .catch(function(err){
+            expect(err).to.be.an.instanceof(Error);
+            done();
+          });
         });
       });
-
-      it("promise で送信時エラーを取得できる", function(done){
-        ncmb.User.requestSignUpEmail("usedaddress@example.com")
-        .then(function(data){
-           done(new Error("失敗すべき"));
-        })
-        .catch(function(err){
-          expect(err).to.be.an.instanceof(Error);
-          done();
-        });
-      });
-    });
     });
   });
 
@@ -3131,7 +3131,7 @@ describe("NCMB Users", function(){
 
       it("promise でレスポンスを取得できる", function(done){
         del_user.delete()
-        .then(function(){
+        .then(function(data){
           done();
         })
         .catch(function(err){
@@ -3351,6 +3351,215 @@ describe("NCMB Users", function(){
           user.remove("key");
         }).to.throw(Error);
         done();
+      });
+    });
+  });
+
+  describe("ユーザーログアウト", function(){
+    context("ncmb.User.logout", function(){
+      context("成功した場合", function(){
+        var user = null;
+        beforeEach(function(){
+          user = new ncmb.User({userName:"name",password:"passwd"});
+        });
+        it("callback でレスポンスを取得できる", function(done){
+          ncmb.User.login(user)
+              .then(function(){
+                ncmb.User.logout(function(err, res){
+                  expect(ncmb.User.getCurrentUser()).to.be.eql(null);
+                  done(err ? err : null);
+                });
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+
+        it("promise でレスポンスを取得できる", function(done){
+          ncmb.User.login(user)
+              .then(function(){
+                return ncmb.User.logout();
+              })
+              .then(function(res){
+                expect(ncmb.User.getCurrentUser()).to.be.eql(null);
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+      });
+    });
+    context("logout", function(){
+      context("currentUserでログアウトした場合、currentUser情報ごとインスタンスのログイン情報の削除に成功し、", function(){
+        var user = null;
+        beforeEach(function(){
+          user = new ncmb.User({userName:"name",password:"passwd"});
+        });
+        it("callback でレスポンスを取得できる", function(done){
+          ncmb.User.login(user)
+              .then(function(){
+                user.logout(function(err, res){
+                  expect(ncmb.User.getCurrentUser()).to.be.eql(null);
+                  expect(user.sessionToken).to.be.eql(null);
+                  done(err ? err : null);
+                });
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+
+        it("promise でレスポンスを取得できる", function(done){
+          ncmb.User.login(user)
+              .then(function(){
+                return user.logout();
+              })
+              .then(function(res){
+                expect(ncmb.User.getCurrentUser()).to.be.eql(null);
+                expect(user.sessionToken).to.be.eql(null);
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+      });
+      context("currentUserでないログイン中のユーザでログアウトした場合、インスタンスのログイン情報のみ削除に成功し、", function(){
+        var user = null;
+        var currentuser = null;
+        beforeEach(function(){
+          user = new ncmb.User({userName:"name",password:"passwd"});
+          currentuser = new ncmb.User({mailAddress:"mail@example.com", password:"passwd"});
+        });
+        it("callback でレスポンスを取得できる", function(done){
+          user.login()
+              .then(function(){
+                return currentuser.loginWithMailAddress();
+              })
+              .then(function(){
+                return ncmb.User.login(currentuser);
+              })
+              .then(function(){
+                user.logout(function(err, res){
+                  if(err){
+                    done(err);
+                  }else{
+                    expect(ncmb.User.getCurrentUser()).to.not.eql(null);
+                    expect(user.sessionToken).to.be.eql(null);
+                    done();
+                  }
+                });
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+
+        it("promise でレスポンスを取得できる", function(done){
+          user.login()
+              .then(function(){
+                return currentuser.loginWithMailAddress();
+              })
+              .then(function(){
+                ncmb.User.login(currentuser);
+              })
+              .then(function(){
+                return user.logout();
+              })
+              .then(function(res){
+                expect(ncmb.User.getCurrentUser()).to.not.eql(null);
+                expect(user.sessionToken).to.be.eql(null);
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+      });
+      context("ログイン中でないユーザでログアウトした場合エラーが返り、", function(){
+        var user = null;
+        beforeEach(function(){
+          user = new ncmb.User({userName:"name",password:"passwd"});
+        });
+        it("callback でレスポンスを取得できる", function(done){
+          user.logout(function(err, res){
+            if(err){
+              expect(err).to.be.an.instanceof(Error);
+              done();
+            }else{
+              done(new Error("失敗すべき"));
+            }
+          });
+        });
+
+        it("promise でレスポンスを取得できる", function(done){
+          user.logout()
+              .then(function(data){
+                done(new Error("失敗すべき"));
+              })
+              .catch(function(err){
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+        });
+      });
+    });
+  });
+
+  describe("カレントユーザ確認",function(){
+    describe("getCurrentUser", function(){
+      context("ログイン中のユーザを取得し、", function(){
+        it("存在すれば取得に成功する", function(done){
+          var user = new ncmb.User({userName:"name",password:"passwd"});
+          ncmb.User.login(user, function(err, data){
+            try{
+              expect(ncmb.User.getCurrentUser().userName).to.be.eql("name");
+              done();
+            }catch(err){
+              done(err);
+            }
+          });
+        });
+        it("存在しなければ null が返る", function(done){
+          ncmb.User.logout(function(){
+            try{
+              expect(ncmb.User.getCurrentUser()).to.be.eql(null);
+              done();
+            }catch(err){
+              done(err);
+            }
+          });
+        });
+      });
+    });
+    describe("isCurrentUser", function(){
+      context("インスタンスがカレントユーザか確認し、", function(){
+        var user = null;
+        beforeEach(function(){
+          user = new ncmb.User({userName:"name",password:"passwd"});
+        });
+        it("カレントユーザなら true が返る", function(done){
+          var user = new ncmb.User({userName:"name",password:"passwd"});
+          ncmb.User.login(user, function(err, data){
+            try{
+              expect(user.isCurrentUser()).to.be.eql(true);
+              done();
+            }catch(err){
+              done(err);
+            }
+          });
+        });
+        it("カレントユーザでなければ false が返る", function(done){
+          ncmb.User.logout(function(){
+            try{
+              expect(user.isCurrentUser()).to.be.eql(false);
+              done();
+            }catch(err){
+              done(err);
+            }
+          });
+        });
       });
     });
   });

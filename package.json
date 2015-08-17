@@ -1,7 +1,7 @@
 {
   "name": "ncmb",
-  "version": "1.0.0",
-  "description": "JavaScript SDK for NiftyCloud Mobile Backend as a Service",
+  "version": "2.0.0-pre",
+  "description": "JavaScript SDK for NiftyCloud mobile backend",
   "main": "ncmb.js",
   "directories": {
     "example": "example"

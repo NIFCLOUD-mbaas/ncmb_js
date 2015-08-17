@@ -1,0 +1,11 @@
+language : "node_js"
+node_js:
+  - "0.12"
+  - "iojs"
+env:
+  - PATH=./node_modules/.bin:$PATH
+script:
+  - npm install
+  - npm test
+after_success:
+  - coveralls

@@ -1,7 +1,7 @@
 {
   "name": "ncmb",
-  "version": "1.0.0",
-  "description": "JavaScript SDK for NiftyCloud Mobile Backend as a Service",
+  "version": "2.0.0-pre",
+  "description": "JavaScript SDK for NiftyCloud mobile backend",
   "main": "ncmb.js",
   "directories": {
     "example": "example"
@@ -15,9 +15,10 @@
     "integral_test": "NODE_ENV=integral gulp test",
     "build": "browserify -r -p licensify -t [ uglifyify -x .js ] -o ncmb.min.js lib/ncmb.js",
     "stub:start": "stubcell -e test/mbaas.yml --basepath test/stub -p 18000",
-    "stub:stop": "kill `ps aux | grep stubc[e]ll | awk '{print $2}'`"
+    "stub:stop": "kill `ps aux | grep stubc[e]ll | awk '{print $2}'`",
+    "postinstall": "npm run build"
   },
-  "repository": "http://example.com",
+  "repository": "git://github.com/NIFTYCloud-mbaas/ncmb_js",
   "readmefile": "README.md",
   "author": "",
   "license": "ISC",
@@ -50,9 +51,7 @@
     "superagent": "^0.21.0",
     "superagent-proxy": "^0.3.1",
     "uglifyify": "^3.0.1",
-    "url": "^0.10.3"
-  },
-  "dependencies": {
-    "object-assign": "^3.0.0"
+    "url": "^0.10.3",
+    "coveralls": "^2.1.0"
   }
 }

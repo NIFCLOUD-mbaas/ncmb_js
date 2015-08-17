@@ -16,6 +16,66 @@ describe("NCMB Operation", function(){
           .set("proxy", config.apiserver.port || "");
     }
   });
+  describe("プロパティ設定", function(){
+    var user = null;
+    context("set", function(){
+      beforeEach(function(){
+        user = new ncmb.User();
+      });
+      it("指定したkeyのプロパティにvalueを設定できる", function(done){
+        user.set("key", "value");
+        expect(user.key).to.be.eql("value");
+        done();
+      });
+      it("指定したkeyが文字列でないとき、エラーが返る", function(done){
+        try{
+          user.set(["key"], "value");
+          done("失敗すべき");
+        }catch(err){
+          expect(err).to.be.an.instanceof(Error);
+          done();
+        }
+      });
+      it("指定したkeyが設定不可だったとき、エラーが返る", function(done){
+        try{
+          user.set("className", "value");
+          done("失敗すべき");
+        }catch(err){
+          expect(err).to.be.an.instanceof(Error);
+          done();
+        }
+      });
+    });
+  });
+
+  describe("プロパティ取得", function(){
+    var user = null;
+    context("get", function(){
+      beforeEach(function(){
+        user = new ncmb.User();
+      });
+      it("指定したkeyのプロパティの値を取得できる", function(done){
+        user.key = "value";
+        expect(user.get("key")).to.be.eql("value");
+        done();
+      });
+      it("undefinedとnullを判別して取得できる", function(done){
+        user.isNull = null;
+        expect(user.get("isNull")).to.be.eql(null);
+        expect(user.get("isUnset")).to.be.eql(undefined);
+        done();
+      });
+      it("指定したkeyが文字列でないとき、エラーが返る", function(done){
+        try{
+          var value = user.get(["key"]);
+          done("失敗すべき");
+        }catch(err){
+          expect(err).to.be.an.instanceof(Error);
+          done();
+        }
+      });
+    });
+  });
 
   describe("更新オペレーション設定", function(){
     var user = null;

@@ -15,7 +15,8 @@
     "integral_test": "NODE_ENV=integral gulp test",
     "build": "browserify -r -p licensify -t [ uglifyify -x .js ] -o ncmb.min.js lib/ncmb.js",
     "stub:start": "stubcell -e test/mbaas.yml --basepath test/stub -p 18000",
-    "stub:stop": "kill `ps aux | grep stubc[e]ll | awk '{print $2}'`"
+    "stub:stop": "kill `ps aux | grep stubc[e]ll | awk '{print $2}'`",
+    "postinstall": "npm run build"
   },
   "repository": "http://example.com",
   "readmefile": "README.md",

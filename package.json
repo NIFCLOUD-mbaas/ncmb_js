@@ -53,8 +53,5 @@
     "uglifyify": "^3.0.1",
     "url": "^0.10.3",
     "coveralls": "^2.1.0"
-  },
-  "dependencies": {
-    "object-assign": "^3.0.0"
   }
 }

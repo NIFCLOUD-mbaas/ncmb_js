@@ -269,7 +269,7 @@ describe("NCMB ACL", function(){
         } else {
           Food.where({objectId: obj.objectId}).fetchAll()
           .then(function(foods){
-            expect(foods[0].acl).to.be.eql({'*':{read: true}});
+            expect(foods[0].acl).to.be.eql(new ncmb.Acl({'*':{read: true}}));
             done();
           })
           .catch(function(err){
@@ -284,12 +284,72 @@ describe("NCMB ACL", function(){
           return Food.where({objectId: newFood.objectId}).fetchAll()
         })
         .then(function(foods){
-          expect(foods[0].acl).to.be.eql({'*':{read: true}});
+          expect(foods[0].acl).to.be.eql(new ncmb.Acl({'*':{read: true}}));
           done();
         })
         .catch(function(err){
           done(err);
         });
+    });
+  });
+  describe("acl情報取得", function(){
+    context("get", function(){
+      it("targetのtype権限についての設定状態を取得できる", function(done){
+        var aclObj = new ncmb.Acl();
+        aclObj.setPublicReadAccess(true);
+        aclObj.setPublicWriteAccess(false);
+        var publicRead  = aclObj.get("public", "read");
+        var publicWrite = aclObj.get("public", "write");
+        expect(publicRead).to.be.eql(true);
+        expect(publicWrite).to.be.eql(false);
+        done();
+      });
+      it("targetに文字列以外が設定されたとき、エラーが返る", function(done){
+        var aclObj = new ncmb.Acl();
+        aclObj.setPublicReadAccess(true);
+        try{
+          var publicRead = aclObj.get(["public"], "read");
+          done(new Error("失敗すべき"));
+        }catch(err){
+          expect(err).to.be.an.instanceof(Error);
+          done();
+        }
+      });
+      it("typeに文字列以外が設定されたとき、エラーが返る", function(done){
+        var aclObj = new ncmb.Acl();
+        aclObj.setRoleReadAccess("roleName",true);
+        try{
+          var publicRead = aclObj.get("roleName", ["read"]);
+          done(new Error("失敗すべき"));
+        }catch(err){
+          expect(err).to.be.an.instanceof(Error);
+          done();
+        }
+      });
+      it("typeにread/write以外が設定されたとき、エラーが返る", function(done){
+        var aclObj = new ncmb.Acl();
+        aclObj.setRoleReadAccess("roleName", true);
+        try{
+          var publicRead = aclObj.get("roleName", "public");
+          done(new Error("失敗すべき"));
+        }catch(err){
+          expect(err).to.be.an.instanceof(Error);
+          done();
+        }
+      });
+      it("targetにacl情報が設定されていないとき、nullが返る", function(done){
+        var aclObj = new ncmb.Acl();
+        var publicRead  = aclObj.get("public", "read");
+        expect(publicRead).to.be.eql(null);
+        done();
+      });
+      it("targetのtypeにacl情報が設定されていないとき、nullが返る", function(done){
+        var aclObj = new ncmb.Acl();
+        aclObj.setPublicWriteAccess(true);
+        var publicRead  = aclObj.get("public", "read");
+        expect(publicRead).to.be.eql(null);
+        done();
+      });
     });
   });
 });

@@ -18,7 +18,7 @@
     "stub:stop": "kill `ps aux | grep stubc[e]ll | awk '{print $2}'`",
     "postinstall": "npm run build"
   },
-  "repository": "http://example.com",
+  "repository": "git://github.com/NIFTYCloud-mbaas/ncmb_js",
   "readmefile": "README.md",
   "author": "",
   "license": "ISC",

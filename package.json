@@ -13,7 +13,15 @@
       "url": "http://mb.cloud.nifty.com/support.htm"
     }
   ],
-  "tags": ["mbaas", "parse", "development", "sdk", "smartphone", "tool", "pushnotification"],
+  "tags": [
+    "mbaas",
+    "parse",
+    "development",
+    "sdk",
+    "smartphone",
+    "tool",
+    "pushnotification"
+  ],
   "main": "lib/ncmb.js",
   "directories": {
     "example": "example"
@@ -43,14 +51,14 @@
   "devDependencies": {
     "beefy": "^2.1.5",
     "chai": "^2.1.0",
-    "coveralls": "^2.1.0",
+    "coveralls": "^2.11.4",
     "istanbul": "^0.3.14",
     "mocha": "^2.1.0",
     "stubcell": "^0.8.0"
   },
   "scripts": {
     "test": "nohup npm run stub:start & sleep 5 && NODE_ENV=test mocha -R list test/**_test.js && npm run cov:80 && npm run stub:stop",
-    "coverage": "NODE_ENV=test istanbul cover _mocha -- -R spec test/**_test.js",
+    "coverage": "NODE_ENV=test istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec test/**_test.js && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "coverage_": "nohup npm run stub:start & sleep 5 && NODE_ENV=test istanbul cover _mocha -- -R spec test/**_test.js && npm run stub:stop",
     "cov:80": "npm run coverage 2>&1 | grep Lines | perl -nle 'my ($l, $c, $p, @d) = split(/[\\s%]+/); exit(($p > 80) == 0)'",
     "test-one": "NODE_ENV=test mocha -R spec ",

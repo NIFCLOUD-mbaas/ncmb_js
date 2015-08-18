@@ -248,3 +248,6 @@ $ npm install
 $ npm run stub:start
 $ npm test
 ```
+## License
+
+Please read [LICENSE](git://github.com/NIFTYCloud-mbaas/ncmb_js/blob/master/LICENSE).

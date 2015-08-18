@@ -1,4 +1,4 @@
-JavaScript SDK for NiftyCloud mobile Backend as a Service
+JavaScript SDK for NiftyCloud mobile backend
 ------------------------------------------------------------
 [![Build Status](https://travis-ci.org/NIFTYCloud-mbaas/ncmb_js.png)](https://travis-ci.org/NIFTYCloud-mbaas/ncmb_js)
 [![Coverage Status](https://coveralls.io/repos/NIFTYCloud-mbaas/ncmb_js/badge.png?branch=master)](https://coveralls.io/r/NIFTYCloud-mbaas/ncmb_js?branch=master)

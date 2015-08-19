@@ -612,11 +612,6 @@ describe("NCMB DataStore", function(){
                   });
         });
       });
-
-      context("クラス定義が存在し、データがあれば、リストが返り", function(){
-        it("callback で取得できる");
-        it("promise で取得できる");
-      });
     });
   });
 });

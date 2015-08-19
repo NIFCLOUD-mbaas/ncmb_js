@@ -235,7 +235,6 @@ $ browserify -r -p licensify -t [ uglifyify -x .js ] -o ncmb.min.js lib/ncmb.js
 ```javascript
 <script src="js/ncmb.min.js"></script>
 <script>
-  var NCMB = require("ncmb");
   var ncmb = new NCMB("your_apikey", "your_clientkey");
 ```
 

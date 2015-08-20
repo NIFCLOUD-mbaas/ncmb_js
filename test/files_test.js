@@ -158,7 +158,8 @@ describe("NCMB Files", function(){
       var acl = null;
       beforeEach(function(){
         fileName = "update_file.text";
-        acl = { acl: { abc: { write: true } } };
+        acl = new ncmb.Acl();
+        acl.setWriteAccess("abc", true);
       });
 
       it("callback でレスポンスを取得できる", function(done){

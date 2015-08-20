@@ -476,11 +476,11 @@ describe("NCMB DataStore", function(){
           var foods = [];
           before(function(){
             Food = ncmb.DataStore("Batch");
-            foods.push(new Food({key: "value1"}));
-            foods.push(new Food({key: "value2"}));
           });
 
           it("callbackで取得できる", function(done){
+            foods.push(new Food({key: "callback_1"}));
+            foods.push(new Food({key: "callback_2"}));
             Food.batch(foods, function(err, list){
               if(err) {
                 done(err);
@@ -493,6 +493,8 @@ describe("NCMB DataStore", function(){
           });
 
           it("promise取得できる", function(done){
+            foods.push(new Food({key: "promise_1"}));
+            foods.push(new Food({key: "promise_2"}));
             Food.batch(foods)
                 .then(function(list){
                   expect(list[0]).to.have.property("objectId");

@@ -67,18 +67,24 @@ describe("ファイルACL更新", function(){
       });
 
       it("callback でレスポンスを取得できる", function(done){
-        acl.setRoleWriteAccess("relation_sub", false);
+        acl.setRoleWriteAccess("relation_sub", true);
         fileName = "update_callback.text";
         ncmb.File.updateACL(fileName, acl, function(err, data){
-          done(err ? err : null);
+          if(err){
+            done(err);
+          }else{
+            expect(data).to.have.property("updateDate");
+            done();
+          }
         });
       });
 
       it("promise でレスポンスを取得できる", function(done){
-        acl.setRoleReadAccess("relation_sub", false);
+        acl.setRoleReadAccess("relation_sub", true);
         fileName = "update_promise.text";
         ncmb.File.updateACL(fileName, acl)
-        .then(function(){
+        .then(function(data){
+          expect(data).to.have.property("updateDate");
           done();
         })
         .catch(function(err){

@@ -1,6 +1,7 @@
 "use strict";
 
 describe("NCMB DataStore", function(){
+  this.timeout(10000);
   var ncmb = null;
   before(function(){
     ncmb = new NCMB(config.apikey, config.clientkey );
@@ -407,7 +408,7 @@ describe("NCMB DataStore", function(){
     context("成功した場合", function(){
       var Food = null;
       var food = null;
-      before(function(){
+      beforeEach(function(){
         Food = ncmb.DataStore("food");
         food = new Food({deleted:"undeleted"});
       });
@@ -534,7 +535,6 @@ describe("NCMB DataStore", function(){
 
       context("60 の Object (1 frame に収まらない) を処理", function(){
         context("成功した場合に", function(){
-          this.timeout(10000);
           var Food = null;
           before(function(){
             Food = ncmb.DataStore("megafood");

@@ -114,7 +114,7 @@ describe("NCMB Users", function(){
         });
         context("password プロパティがない場合", function(){
           beforeEach(function(){
-            userName = "name"
+            userName = "name";
             user = new ncmb.User({userName: userName});
           });
          
@@ -269,7 +269,7 @@ describe("NCMB Users", function(){
           });
           context("password プロパティがない場合", function(){
             beforeEach(function(){
-              userName = "name"
+              userName = "name";
               user = new ncmb.User({userName: userName});
             });
            
@@ -525,7 +525,7 @@ describe("NCMB Users", function(){
         });
         context("password プロパティがない場合", function(){
           beforeEach(function(){
-            mailAddress = "mail@example.com"
+            mailAddress = "mail@example.com";
             user = new ncmb.User({mailAddress: mailAddress});
           });
          
@@ -680,7 +680,7 @@ describe("NCMB Users", function(){
           });
           context("password プロパティがない場合", function(){
             beforeEach(function(){
-              mailAddress = "mail@example.com"
+              mailAddress = "mail@example.com";
               user = new ncmb.User({mailAddress: mailAddress});
             });
            
@@ -1027,7 +1027,7 @@ describe("NCMB Users", function(){
         });
         context("anonymous以外のauthDataログインと競合した場合", function(){
           beforeEach(function(){
-            authData = {facebook: { id: "3dc72085-911b-4798-9707-d69e879a6185"}}
+            authData = {facebook: { id: "3dc72085-911b-4798-9707-d69e879a6185"}};
             user = new ncmb.User({authData: authData});
           });
           it("callback でログインエラーを取得できる", function(done){
@@ -1235,7 +1235,7 @@ describe("NCMB Users", function(){
         });
         context("anonymous以外のauthDataログインと競合した場合", function(){
           beforeEach(function(){
-            authData = {facebook: { id: "3dc72085-911b-4798-9707-d69e879a6185"}}
+            authData = {facebook: { id: "3dc72085-911b-4798-9707-d69e879a6185"}};
             user = new ncmb.User({authData: authData});
           });
           it("callback でログインエラーを取得できる", function(done){
@@ -2859,7 +2859,7 @@ describe("NCMB Users", function(){
             id : "100002415159782",
             access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD",
             expiration_date: {"__type":"Date","iso":"2013-08-31T07:41:11.906Z"}
-          }
+          };
           provider = null;
         });
         it("callback で登録時エラーを取得できる", function(done){
@@ -2889,7 +2889,7 @@ describe("NCMB Users", function(){
             id : "100002415159782",
             access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD",
             expiration_date: {"__type":"Date","iso":"2013-08-31T07:41:11.906Z"}
-          }
+          };
           provider = "nifty";
         });
         it("callback で登録時エラーを取得できる", function(done){
@@ -2972,7 +2972,7 @@ describe("NCMB Users", function(){
             id : "100002415159782",
             access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD",
             expiration_date: {"__type":"Date","iso":"2013-08-31T07:41:11.906Z"}
-          }
+          };
           provider = "facebook";
         });
         it("callback で登録時エラーを取得できる", function(done){
@@ -3354,7 +3354,6 @@ describe("NCMB Users", function(){
           user = new ncmb.User({userName:"name",password:"passwd"});
         });
         it("カレントユーザなら true が返る", function(done){
-          var user = new ncmb.User({userName:"name",password:"passwd"});
           ncmb.User.login(user, function(err, data){
             try{
               expect(user.isCurrentUser()).to.be.eql(true);

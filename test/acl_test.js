@@ -144,7 +144,7 @@ describe("NCMB ACL", function(){
       context("第一引数にrole名が設定される場合", function(){
         beforeEach(function(){
           aclObj = new ncmb.Acl();
-          role = "roleName"
+          role = "roleName";
         });
         it("Readを指定し、取得できる", function() {
           aclObj.setRoleReadAccess(role, true);

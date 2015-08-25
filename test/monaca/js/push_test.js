@@ -1,6 +1,7 @@
 "use strict";
 
 describe("NCMB Push", function(){
+  this.timeout(5000);
   var ncmb = null;
   before(function(){
     ncmb = new NCMB(config.apikey, config.clientkey );

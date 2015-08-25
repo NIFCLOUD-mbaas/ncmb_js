@@ -1,6 +1,7 @@
 "use strict";
 
 describe("NCMB Files", function(){
+  this.timeout(20000);
   var ncmb = null;
 
   before(function(){

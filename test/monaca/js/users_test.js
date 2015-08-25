@@ -1,7 +1,7 @@
 "use strict";
 
 describe("NCMB Users", function(){
-  this.timeout(5000);
+  this.timeout(10000);
   var ncmb = null;
   var mailAddress_signup_callback = "signup_callback@email.com";
   var mailAddress_signup_promise  = "signup_promiss@email.com";

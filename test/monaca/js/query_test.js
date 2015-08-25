@@ -1,6 +1,7 @@
 "use strict";
 
 describe("NCMB Query", function(){
+  this.timeout(10000);
   var ncmb = null;
   before(function(){
     ncmb = new NCMB(config.apikey, config.clientkey );

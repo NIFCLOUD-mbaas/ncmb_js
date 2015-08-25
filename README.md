@@ -1,7 +1,7 @@
 JavaScript SDK for NiftyCloud mobile backend
 ------------------------------------------------------------
 [![Build Status](https://travis-ci.org/NIFTYCloud-mbaas/ncmb_js.png)](https://travis-ci.org/NIFTYCloud-mbaas/ncmb_js)
-[![Coverage Status](https://coveralls.io/repos/NIFTYCloud-mbaas/ncmb_js/badge.png?branch=master)](https://coveralls.io/r/NIFTYCloud-mbaas/ncmb_js?branch=master)
+[![Coverage Status](https://coveralls.io/repos/NIFTYCloud-mbaas/ncmb_js/badge.svg?branch=apply_coveralls&service=github)](https://coveralls.io/github/NIFTYCloud-mbaas/ncmb_js?branch=apply_coveralls)
 [![Code Climate](https://codeclimate.com/github/NIFTYCloud-mbaas/ncmb_js/badges/gpa.svg)](https://codeclimate.com/github/NIFTYCloud-mbaas/ncmb_js)
 
 ## Install

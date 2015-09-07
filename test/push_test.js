@@ -32,6 +32,32 @@ describe("NCMB Push", function(){
       };
     });
   });
+
+  describe("プッシュ通知更新", function(){
+    describe("update", function(){
+      context("存在するプッシュ通知のIDを指定し、更新に成功", function(done){
+        var updatePush = null;
+        beforeEach(function(){
+          updatePush = new ncmb.Push({objectId:"update_push_id", message:"updated"});
+        });
+        it("callback で取得できる", function(done){
+          updatePush.update(function(err, obj){
+            done(err ? err : null);
+          });
+        });
+        it("promise で取得できる", function(done){
+          updatePush.update()
+              .then(function(updateRole){
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+      });
+    });
+  });
+
   describe("プッシュ送信", function(){
     context("プッシュ通知を送信したとき、送信に成功して", function(){
       beforeEach(function(){

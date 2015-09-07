@@ -253,6 +253,16 @@
 
 -
   request:
+    url: /2013-09-01/push/update_push_id
+    method: PUT
+    body:
+      message: "updated"
+  response:
+    status: 200
+    file: 2013-09-01_push_put_success.json
+
+-
+  request:
     url: /2013-09-01/classes/TestClass
     method: GET
   response:

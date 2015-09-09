@@ -80,7 +80,7 @@ ncmb.User.fetchAll()
 
 // signup and login
 var user = new ncmb.User({userName:"Tarou", password:"1234"});
-user.signUpAsAccount()
+user.signUpByAccount()
     .then(function(user){
       return ncmb.User.login(user);
     })

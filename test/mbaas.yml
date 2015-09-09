@@ -242,6 +242,15 @@
   response:
     status: 201
     file: 2013-09-01_push_post_success.json
+
+-
+  request:
+    url: /2013-09-01/push
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_push_get_success.json
+
 -
   request:
     url: /2013-09-01/classes/TestClass
@@ -249,6 +258,14 @@
   response:
     status: 200
     file: 2013-09-01_classes_TestClass_get_success.json
+
+-
+  request:
+    url: /2013-09-01/push/delete_push_id
+    method: DELETE
+  response:
+    status: 200
+    body: '{}'
 
 # users/:user
 -
@@ -438,12 +455,19 @@
 # files
 -
   request:
+    url: /2013-09-01/files/upload.text
+    method: POST
+    body:
+  response:
+    status: 201
+    file: 2013-09-01_file_upload_success.json
+-
+  request:
     url: /2013-09-01/files/del_file.text
     method: DELETE
   response:
     status: 200
     body: '{}'
-
 -
   request:
     url: /2013-09-01/users/object_id
@@ -451,15 +475,13 @@
   response:
     status: 200
     body: '{}'
-
 -
   request:
     url: /2013-09-01/files/fetch_file.text
     method: GET
   response:
     status: 200
-    file: 2013-09-01_file_fetch_success.json
-
+    file: 2013-09-01_file_download_success.json
 -
   request:
     url: /2013-09-01/files/update_file.text
@@ -468,6 +490,13 @@
   response:
     status: 200
     file: 2013-09-01_file_update_acl_success.json
+-
+  request:
+    url: /2013-09-01/files
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_file_fetchAll_success.json
 # roles
 -
   request:

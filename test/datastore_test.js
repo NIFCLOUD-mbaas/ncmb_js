@@ -472,26 +472,32 @@ describe("NCMB DataStore", function(){
           });
         });
 
-        context("失敗した場合に", function(){
+        context("空の配列を入力した場合に、空の配列が返り", function(){
           var Food = null;
           before(function(){
             Food = ncmb.DataStore("food");
           })
-          it("saveAll (callback取得できる)", function(done){
-            Food.batch([], function(err){
-              expect(err).to.be.an.instanceof(Error);
-              done();
+          it("callbackで取得できる", function(done){
+            Food.batch([], function(err,list){
+              if(err){
+                done(err);
+              }else{
+                expect(list).to.be.an.instanceof(Array);
+                expect(list.length).to.be.eql(0);
+                done();
+              }
             });
           });
 
-          it("saveAll (promise取得できる)", function(done){
+          it("promiseで取得できる", function(done){
             Food.batch([])
-                .then(function(){
-                  done(new Error("失敗すべき"));
+                .then(function(list){
+                  expect(list).to.be.an.instanceof(Array);
+                  expect(list.length).to.be.eql(0);
+                  done();
                 })
                 .catch(function(err){
-                  expect(err).to.be.an.instanceof(Error);
-                  done();
+                  done(err);
                 });
           });
         });

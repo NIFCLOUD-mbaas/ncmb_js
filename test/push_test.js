@@ -60,4 +60,31 @@ describe("NCMB Push", function(){
       });
     });
   });
+
+  describe("プッシュ検索", function(){
+    context("プッシュ通知を検索したとき、取得に成功して", function(){
+      it("callback で取得できる", function(done){
+        ncmb.Push.fetchAll(function(err, objs){
+          if(err){
+            done(err);
+          }else{
+            expect(objs.length).to.be.equal(1);
+            expect(objs[0].target[0]).to.be.equal("ios");
+            done();
+          }
+        });
+      });
+      it("promise で取得できる", function(done){
+        ncmb.Push.fetchAll()
+            .then(function(objs){
+              expect(objs.length).to.be.equal(1);
+              expect(objs[0].target[0]).to.be.equal("ios");
+              done();
+            })
+            .catch(function(err){
+              done(err);
+            });
+      });
+    });
+  });
 });

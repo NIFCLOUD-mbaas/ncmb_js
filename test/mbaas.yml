@@ -455,12 +455,19 @@
 # files
 -
   request:
+    url: /2013-09-01/files/upload.text
+    method: POST
+    body:
+  response:
+    status: 201
+    file: 2013-09-01_file_upload_success.json
+-
+  request:
     url: /2013-09-01/files/del_file.text
     method: DELETE
   response:
     status: 200
     body: '{}'
-
 -
   request:
     url: /2013-09-01/users/object_id
@@ -468,15 +475,13 @@
   response:
     status: 200
     body: '{}'
-
 -
   request:
     url: /2013-09-01/files/fetch_file.text
     method: GET
   response:
     status: 200
-    file: 2013-09-01_file_fetch_success.json
-
+    file: 2013-09-01_file_download_success.json
 -
   request:
     url: /2013-09-01/files/update_file.text
@@ -485,6 +490,13 @@
   response:
     status: 200
     file: 2013-09-01_file_update_acl_success.json
+-
+  request:
+    url: /2013-09-01/files
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_file_fetchAll_success.json
 # roles
 -
   request:

@@ -48,7 +48,7 @@ describe("NCMB Push", function(){
         });
       });
       it("promise で取得できる", function(done){
-        
+
         push.send()
             .then(function(obj){
               expect(obj.objectId).to.be.eql("push_id");
@@ -84,6 +84,52 @@ describe("NCMB Push", function(){
             .catch(function(err){
               done(err);
             });
+      });
+    });
+  });
+
+  describe("プッシュ削除", function(){
+    describe("delete", function(){
+      context("未送信のプッシュを指定し、削除に成功して", function(done){
+        var deletePush = null;
+        beforeEach(function(){
+          deletePush = new ncmb.Push({objectId: "delete_push_id"});
+        });
+        it("callback で取得できる", function(done){
+          deletePush.delete(function(err, obj){
+            done(err ? err : null);
+          });
+        });
+        it("promise で取得できる", function(done){
+          deletePush.delete()
+              .then(function(){
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+      });
+      context("objectIdが設定されていないとき、削除に失敗して", function(){
+        var noExistPush = null;
+        before(function(){
+          noExistPush = new ncmb.Push({objectId: null});
+        });
+        it("callback で削除エラーを取得できる", function(done){
+          noExistPush.delete(function(err, obj){
+            if(!err) return done(new Error("error が返されなければならない"));
+            done();
+          });
+        });
+        it("promise で削除エラーを取得できる", function(done){
+          noExistPush.delete()
+              .then(function(obj){
+                done(new Error("error が返されなければならない"));
+              })
+              .catch(function(err){
+                done();
+              });
+        });
       });
     });
   });

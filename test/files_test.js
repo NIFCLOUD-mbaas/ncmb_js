@@ -68,7 +68,8 @@ describe("ファイルACL更新", function(){
       var acl = null;
       beforeEach(function(){
         fileName = "update_file.text";
-        acl = { acl: { abc: { write: true } } };
+        acl = new ncmb.Acl();
+        acl.setWriteAccess("abc", true);
       });
 
       it("callback でレスポンスを取得できる", function(done){
@@ -94,7 +95,8 @@ describe("ファイルACL更新", function(){
       context("fileName がないときに", function(){
         beforeEach(function(){
           fileName = null;
-          acl = { acl: { abc: { write: true } } };
+          acl = new ncmb.Acl();
+          acl.setWriteAccess("abc", true);
         });
 
         it("callback で更新時エラーを取得できる", function(done){

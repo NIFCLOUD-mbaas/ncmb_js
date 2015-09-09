@@ -95,7 +95,7 @@ describe("NCMB Query", function(){
         it("promise で取得できる", function(done){
           QueryTest.fetch()
                   .then(function(obj){
-                    expect(obj.objectId).to.be.equal("fetch_object_1");;
+                    expect(obj.objectId).to.be.equal("fetch_object_1");
                     done();
                   })
                   .catch(function(err){
@@ -1504,14 +1504,14 @@ describe("NCMB Query", function(){
           });
         });
       });
-      context("複数のkeyを指定して検索することができ、", function(){
+      context("複数のkeyを指定したとき、最後に設定したキーを反映し、", function(){
         beforeEach(function(){
           QueryTest = ncmb.DataStore("QueryTestInclude");
         });
         it("callback で取得できる", function(done){
           QueryTest
-          .include("pointer")
           .include("object")
+          .include("pointer")
           .fetchAll(function(err, objs){
             if(err){
               done(err);
@@ -1524,8 +1524,8 @@ describe("NCMB Query", function(){
         });
         it("promise で取得できる", function(done){
           QueryTest
-          .include("pointer")
           .include("object")
+          .include("pointer")
           .fetchAll()
           .then(function(objs){
             expect(objs.length).to.be.equal(1);

@@ -3328,6 +3328,7 @@ describe("NCMB Users", function(){
           var user = new ncmb.User({userName:"name",password:"passwd"});
           ncmb.User.login(user, function(err, data){
             try{
+              expect(data).to.be.an.instanceof(ncmb.User);
               expect(ncmb.User.getCurrentUser().userName).to.be.eql("name");
               done();
             }catch(err){
@@ -3339,6 +3340,23 @@ describe("NCMB Users", function(){
           ncmb.User.logout(function(){
             try{
               expect(ncmb.User.getCurrentUser()).to.be.eql(null);
+              done();
+            }catch(err){
+              done(err);
+            }
+          });
+        });
+      });
+      context("非ログイン状態でローカルにcurrentUser情報が保存されているとき、", function(){
+        it("カレントユーザでログイン状態になる", function(done){
+          var user = new ncmb.User({userName:"name",password:"passwd"});
+          ncmb.User.login(user, function(err, data){
+            ncmb.sessionToken = null;
+            var currentUser = null;
+            try{
+              currentUser = ncmb.User.getCurrentUser();
+              expect(ncmb.sessionToken).to.not.eql(null);
+              expect(currentUser.userName).to.be.eql("name");
               done();
             }catch(err){
               done(err);

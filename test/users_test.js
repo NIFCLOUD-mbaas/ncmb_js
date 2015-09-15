@@ -3364,6 +3364,17 @@ describe("NCMB Users", function(){
           });
         });
       });
+      it("取得したカレントユーザが不正なJSONの場合エラーが返る", function(done){
+        var localStorage = new require("node-localstorage").LocalStorage("./scratch");
+        var path = "NCMB/" + ncmb.apikey + "/currentUser";
+        localStorage.setItem(path, '{"userName":aaa}');
+        try{
+          ncmb.User.getCurrentUser();
+          done(new Error("失敗すべき"));
+        }catch(err){
+          done();
+        }
+      });
     });
     describe("isCurrentUser", function(){
       context("インスタンスがカレントユーザか確認し、", function(){

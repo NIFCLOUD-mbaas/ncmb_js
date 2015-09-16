@@ -294,7 +294,7 @@ describe("NCMB ACL", function(){
   });
   describe("acl情報取得", function(){
     context("get", function(){
-      it("targetのtype権限についての設定状態を取得できる", function(done){
+      it("全員のtype権限についての設定状態を取得できる", function(done){
         var aclObj = new ncmb.Acl();
         aclObj.setPublicReadAccess(true);
         aclObj.setPublicWriteAccess(false);
@@ -304,16 +304,27 @@ describe("NCMB ACL", function(){
         expect(publicWrite).to.be.eql(false);
         done();
       });
-      it("targetに文字列以外が設定されたとき、エラーが返る", function(done){
+      it("ロールのインスタンスを入力したとき、ロールのtype権限についての設定状態を取得できる", function(done){
+        var role = new ncmb.Role("AclRole");
         var aclObj = new ncmb.Acl();
-        aclObj.setPublicReadAccess(true);
-        try{
-          var publicRead = aclObj.get(["public"], "read");
-          done(new Error("失敗すべき"));
-        }catch(err){
-          expect(err).to.be.an.instanceof(Error);
-          done();
-        }
+        aclObj.setRoleReadAccess(role, true);
+        aclObj.setRoleWriteAccess(role, false);
+        var roleRead  = aclObj.get(role, "read");
+        var roleWrite = aclObj.get(role, "write");
+        expect(roleRead).to.be.eql(true);
+        expect(roleWrite).to.be.eql(false);
+        done();
+      });
+      it("ユーザのインスタンスを入力したとき、ユーザのtype権限についての設定状態を取得できる", function(done){
+        var user = new ncmb.User({objectId:"userAcl"});
+        var aclObj = new ncmb.Acl();
+        aclObj.setUserReadAccess(user, true);
+        aclObj.setUserWriteAccess(user, false);
+        var userRead  = aclObj.get(user, "read");
+        var userWrite = aclObj.get(user, "write");
+        expect(userRead).to.be.eql(true);
+        expect(userWrite).to.be.eql(false);
+        done();
       });
       it("typeに文字列以外が設定されたとき、エラーが返る", function(done){
         var aclObj = new ncmb.Acl();

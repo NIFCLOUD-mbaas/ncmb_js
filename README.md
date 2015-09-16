@@ -110,14 +110,18 @@ ncmb.File.download()
       console.log(err);
     });
 
-// upload file
-ncmb.File.upload("upload.text", "/filepath/test.text")
-    .then(function(data){
-        console.log(data);
-      })
-    .catch(function(err){
-        console.log(err);
-      });
+// upload file (Case of Node.js)
+var fs = require('fs');
+fs.readFile("/filepath/test.text", function(err, data){
+  if(err) throw err;
+  ncmb.File.upload("upload.text", data)
+      .then(function(data){
+          console.log(data);
+        })
+      .catch(function(err){
+          console.log(err);
+        });
+});
 
 ```
 
@@ -236,6 +240,8 @@ $ browserify -r -p licensify -t [ uglifyify -x .js ] -o ncmb.min.js lib/ncmb.js
 <script src="js/ncmb.min.js"></script>
 <script>
   var ncmb = new NCMB("your_apikey", "your_clientkey");
+  ...
+</script>
 ```
 
 

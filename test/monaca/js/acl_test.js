@@ -1,11 +1,5 @@
 "use strict";
 
-var config   = require("config");
-var expect   = require("chai").expect;
-
-var NCMB   = require("../lib/ncmb");
-var Errors = require("../lib/errors");
-
 describe("NCMB ACL", function(){
   var ncmb = new NCMB(config.apikey, config.clientkey );
   if(config.apiserver){
@@ -144,7 +138,7 @@ describe("NCMB ACL", function(){
       context("第一引数にrole名が設定される場合", function(){
         beforeEach(function(){
           aclObj = new ncmb.Acl();
-          role = "roleName";
+          role = "roleName"
         });
         it("Readを指定し、取得できる", function() {
           aclObj.setRoleReadAccess(role, true);
@@ -180,40 +174,104 @@ describe("NCMB ACL", function(){
           role = new ncmb.Role("roleName");
         });
         it("role名にnullを指定した場合、エラーを返す", function() {
-          expect(function(){ aclObj.setRoleReadAccess(null, true); }).to.throw(Errors.NoRoleNameError);
-          expect(function(){ aclObj.setRoleWriteAccess(null, true); }).to.throw(Errors.NoRoleNameError);
+          try{
+            aclObj.setRoleReadAccess(null, true);
+            throw new Error("失敗すべき");
+          }catch(err){
+          }
+          try{
+            aclObj.setRoleWriteAccess(null, true);
+            throw new Error("失敗すべき");
+          }catch(err){
+          }
         });
         it("role名にundefinedを指定した場合、エラーを返す", function() {
-          expect(function(){ aclObj.setRoleReadAccess(undefined, true); }).to.throw(Errors.NoRoleNameError);
-          expect(function(){ aclObj.setRoleWriteAccess(undefined, true); }).to.throw(Errors.NoRoleNameError);
+          try{
+            aclObj.setRoleReadAccess(undefined, true);
+            throw new Error("失敗すべき");
+          }catch(err){
+          }
+          try{
+            aclObj.setRoleWriteAccess(undefined, true);
+            throw new Error("失敗すべき");
+          }catch(err){
+          }
         });
         it("role名に空文字を指定した場合、エラーを返す", function() {
-          expect(function(){ aclObj.setRoleReadAccess("", true); }).to.throw(Errors.NoRoleNameError);
-          expect(function(){ aclObj.setRoleWriteAccess("", true); }).to.throw(Errors.NoRoleNameError);
+          try{
+            aclObj.setRoleReadAccess("", true);
+            throw new Error("失敗すべき");
+          }catch(err){
+          }
+          try{
+            aclObj.setRoleWriteAccess("", true);
+            throw new Error("失敗すべき");
+          }catch(err){
+          }
         });
         it("role名にroleNameがないオブジェクトを指定した場合、エラーを返す", function() {
-          expect(function(){ aclObj.setRoleReadAccess({}, true); }).to.throw(Errors.NoRoleNameError);
-          expect(function(){ aclObj.setRoleWriteAccess({}, true); }).to.throw(Errors.NoRoleNameError);
+          try{
+            aclObj.setRoleReadAccess({}, true);
+            throw new Error("失敗すべき");
+          }catch(err){
+          }
+          try{
+            aclObj.setRoleWriteAccess({}, true);
+            throw new Error("失敗すべき");
+          }catch(err){
+          }
         });
         it("role名にroleNameがnullのroleオブジェクトを指定した場合、エラーを返す", function() {
           role.roleName = null;
-          expect(function(){ aclObj.setRoleReadAccess(role, true); }).to.throw(Errors.NoRoleNameError);
-          expect(function(){ aclObj.setRoleWriteAccess(role, true); }).to.throw(Errors.NoRoleNameError);
+          try{
+            aclObj.setRoleReadAccess(role, true);
+            throw new Error("失敗すべき");
+          }catch(err){
+          }
+          try{
+            aclObj.setRoleWriteAccess(role, true);
+            throw new Error("失敗すべき");
+          }catch(err){
+          }
         });
         it("role名にroleNameがundefinedのroleオブジェクトを指定した場合、エラーを返す", function() {
           role.roleName = undefined;
-          expect(function(){ aclObj.setRoleReadAccess(role, true); }).to.throw(Errors.NoRoleNameError);
-          expect(function(){ aclObj.setRoleWriteAccess(role, true); }).to.throw(Errors.NoRoleNameError);
+          try{
+            aclObj.setRoleReadAccess(role, true);
+            throw new Error("失敗すべき");
+          }catch(err){
+          }
+          try{
+            aclObj.setRoleWriteAccess(role, true);
+            throw new Error("失敗すべき");
+          }catch(err){
+          }
         });
         it("role名にroleNameがないroleオブジェクトを指定した場合、エラーを返す", function() {
           delete role.roleName;
-          expect(function(){ aclObj.setRoleReadAccess(role, true); }).to.throw(Errors.NoRoleNameError);
-          expect(function(){ aclObj.setRoleWriteAccess(role, true); }).to.throw(Errors.NoRoleNameError);
+          try{
+            aclObj.setRoleReadAccess(role, true);
+            throw new Error("失敗すべき");
+          }catch(err){
+          }
+          try{
+            aclObj.setRoleWriteAccess(role, true);
+            throw new Error("失敗すべき");
+          }catch(err){
+          }
         });
         it("role名にroleNameが空文字のroleオブジェクトを指定した場合、エラーを返す", function() {
           role.roleName = "";
-          expect(function(){ aclObj.setRoleReadAccess(role, true); }).to.throw(Errors.NoRoleNameError);
-          expect(function(){ aclObj.setRoleWriteAccess(role, true); }).to.throw(Errors.NoRoleNameError);
+          try{
+            aclObj.setRoleReadAccess(role, true);
+            throw new Error("失敗すべき");
+          }catch(err){
+          }
+          try{
+            aclObj.setRoleWriteAccess(role, true);
+            throw new Error("失敗すべき");
+          }catch(err){
+          }
         });
       });
       context("第一引数にroleインスタンスが設定される場合", function(){
@@ -260,9 +318,10 @@ describe("NCMB ACL", function(){
       Food = ncmb.DataStore("food");
       aclObj = new ncmb.Acl();
       aclObj.setPublicReadAccess(true);
-      food = new Food({name: "orange", acl: aclObj});
+      food = new Food({acl: aclObj});
     });
     it("callback で取得できる", function(done){
+      food.name = "acl_callback";
       food.save(function(err, obj){
         if(err) {
           done(err);
@@ -279,6 +338,7 @@ describe("NCMB ACL", function(){
       });
     });
     it("promise で取得できる", function(done){
+      food.name = "acl_promise";
       food.save()
         .then(function(newFood){
           return Food.where({objectId: newFood.objectId}).fetchAll()

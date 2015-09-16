@@ -3,3 +3,4 @@ dump.rdb
 ncmb.min.js
 nohup.out
 scratch/
+node_modules/

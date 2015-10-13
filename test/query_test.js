@@ -1872,5 +1872,73 @@ describe("NCMB Query", function(){
         }
       });
     });
+    describe("setOperand", function(){
+      context("オペランドなしの検索条件でvalueにDate型がセットされたとき、検索結果のリストが返り", function(){
+        var date = null;
+        beforeEach(function(){
+          QueryTest = ncmb.DataStore("QueryTestDate");
+          date = new Date(2015, 6, 29, 23, 59, 59, 999);
+        });
+        it("callback で取得できる", function(done){
+          QueryTest
+          .equalTo("createDate", date)
+          .fetchAll(function(err, objs){
+            if(err){
+              done(err);
+            }else{
+              expect(objs.length).to.be.equal(1);
+              expect(objs[0].createDate).to.be.equal("2015-07-29T23:59:59.999Z");
+              done();
+            }
+          });
+        });
+        it("promise で取得できる", function(done){
+          QueryTest
+          .equalTo("createDate", date)
+          .fetchAll()
+          .then(function(objs){
+            expect(objs.length).to.be.equal(1);
+            expect(objs[0].createDate).to.be.equal("2015-07-29T23:59:59.999Z");
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
+        });
+      });
+      context("オペランドありの検索条件でvalueにDate型がセットされたとき、検索結果のリストが返り", function(){
+        var date = null;
+        beforeEach(function(){
+          QueryTest = ncmb.DataStore("QueryTestDate");
+          date = new Date(2015, 6, 29, 23, 59, 59, 999);
+        });
+        it("callback で取得できる", function(done){
+          QueryTest
+          .notEqualTo("createDate", date)
+          .fetchAll(function(err, objs){
+            if(err){
+              done(err);
+            }else{
+              expect(objs.length).to.be.equal(1);
+              expect(objs[0].createDate).to.not.eql("2015-07-29T23:59:59.999Z");
+              done();
+            }
+          });
+        });
+        it("promise で取得できる", function(done){
+          QueryTest
+          .notEqualTo("createDate", date)
+          .fetchAll()
+          .then(function(objs){
+            expect(objs.length).to.be.equal(1);
+            expect(objs[0].objectId).to.not.eql("2015-07-29T23:59:59.999Z");
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
+        });
+      });
+    });
   });
 });

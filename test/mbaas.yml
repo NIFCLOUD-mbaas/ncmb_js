@@ -1085,6 +1085,42 @@
   response:
     status: 200
     file: 2013-09-01_classes_querytest_get_empty.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestDate
+    method: GET
+    query:
+      where: '{"createDate":{"__type":"Date","iso":"2015-07-29T14:59:59.999Z"}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_equalto_date_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestDate
+    method: GET
+    query:
+      where: '{"createDate":{"__type":"Date","iso":"2015-07-29T23:59:59.999Z"}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_equalto_date_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestDate
+    method: GET
+    query:
+      where: '{"createDate":{"$ne":{"__type":"Date","iso":"2015-07-29T14:59:59.999Z"}}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_notequalto_date_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestDate
+    method: GET
+    query:
+      where: '{"createDate":{"$ne":{"__type":"Date","iso":"2015-07-29T23:59:59.999Z"}}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_notequalto_date_success.json
 
 # relation
 

@@ -1579,6 +1579,39 @@ describe("NCMB Query", function(){
           });
         });
       });
+      context("検索結果が0件のとき件数が正しく返り", function(){
+        beforeEach(function(){
+          QueryTest = ncmb.DataStore("QueryTestCount");
+        });
+        it("callback で取得できる", function(done){
+          QueryTest
+          .count()
+          .equalTo("nullField", "exist")
+          .fetchAll(function(err, objs){
+            if(err){
+              done(err);
+            }else{
+              expect(objs.length).to.be.equal(0);
+              expect(objs.count).to.be.equal(0);
+              done();
+            }
+          });
+        });
+        it("promise で取得できる", function(done){
+          QueryTest
+          .count()
+          .equalTo("nullField", "exist")
+          .fetchAll()
+          .then(function(objs){
+            expect(objs.length).to.be.equal(0);
+            expect(objs.count).to.be.equal(0);
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
+        });
+      });
     });
     describe("order", function(){
       context("指定したkeyの昇順でリストが返り", function(){

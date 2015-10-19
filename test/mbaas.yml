@@ -1010,6 +1010,16 @@
     file: 2013-09-01_classes_querytest_get_count_success.json
 -
   request:
+    url: /2013-09-01/classes/QueryTestCount
+    method: GET
+    query:
+      count: 1
+      where: '{"nullField":"exist"}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_count_zero_success.json
+-
+  request:
     url: /2013-09-01/classes/QueryTestOrder
     method: GET
     query:

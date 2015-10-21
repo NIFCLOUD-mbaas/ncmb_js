@@ -1010,6 +1010,16 @@
     file: 2013-09-01_classes_querytest_get_count_success.json
 -
   request:
+    url: /2013-09-01/classes/QueryTestCount
+    method: GET
+    query:
+      count: 1
+      where: '{"nullField":"exist"}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_count_zero_success.json
+-
+  request:
     url: /2013-09-01/classes/QueryTestOrder
     method: GET
     query:
@@ -1085,6 +1095,42 @@
   response:
     status: 200
     file: 2013-09-01_classes_querytest_get_empty.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestDate
+    method: GET
+    query:
+      where: '{"createDate":{"__type":"Date","iso":"2015-07-29T14:59:59.999Z"}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_equalto_date_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestDate
+    method: GET
+    query:
+      where: '{"createDate":{"__type":"Date","iso":"2015-07-29T23:59:59.999Z"}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_equalto_date_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestDate
+    method: GET
+    query:
+      where: '{"createDate":{"$ne":{"__type":"Date","iso":"2015-07-29T14:59:59.999Z"}}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_notequalto_date_success.json
+-
+  request:
+    url: /2013-09-01/classes/QueryTestDate
+    method: GET
+    query:
+      where: '{"createDate":{"$ne":{"__type":"Date","iso":"2015-07-29T23:59:59.999Z"}}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_notequalto_date_success.json
 
 # relation
 
@@ -1200,3 +1246,30 @@
   response:
     status: 201
     file: 2013-09-01_classes_relation_put_multi_success.json
+
+# installation
+-
+  request:
+    url: /2013-09-01/installations
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_installation_get_success.json
+
+-
+  request:
+    url: /2013-09-01/installations/update_installation_id
+    method: PUT
+    body:
+      status: "updated"
+  response:
+    status: 200
+    file: 2013-09-01_installation_put_success.json
+
+-
+  request:
+    url: /2013-09-01/installations/delete_installation_id
+    method: DELETE
+  response:
+    status: 200
+    body: '{}'

@@ -19,6 +19,10 @@ describe("NCMB Files", function(){
   });
 
   describe("ファイル保存", function(){
+    var fileName = null;
+    before(function(){
+      fileName = "upload.text";
+    });
     context("upload", function(){
       context("成功した場合", function(){
         it("callback でレスポンスを取得できる", function(done){
@@ -26,8 +30,13 @@ describe("NCMB Files", function(){
             if(err){
               done(err);
             }else{
-              ncmb.File.upload("upload.text", data, function(err, file){
-                done(err ? err : null);
+              ncmb.File.upload(fileName, data, function(err, file){
+                if(err){
+                  done(err);
+                }else{
+                  expect(file.fileName).to.be.eql(fileName);
+                  done();
+                }
               });
             }
           });
@@ -38,8 +47,9 @@ describe("NCMB Files", function(){
             if(err){
               done(err);
             }else{
-              ncmb.File.upload("upload.text", data)
+              ncmb.File.upload(fileName, data)
               .then(function(file){
+                expect(file.fileName).to.be.eql(fileName);
                 done();
               })
               .catch(function(err){
@@ -60,8 +70,13 @@ describe("NCMB Files", function(){
             if(err){
               done(err);
             }else{
-              ncmb.File.upload("upload.text", data, acl, function(err, file){
-                done(err ? err : null);
+              ncmb.File.upload(fileName, data, acl, function(err, file){
+                if(err){
+                  done(err);
+                }else{
+                  expect(file.fileName).to.be.eql(fileName);
+                  done();
+                }
               });
             }
           });
@@ -71,8 +86,9 @@ describe("NCMB Files", function(){
             if(err){
               done(err);
             }else{
-              ncmb.File.upload("upload.text", data, acl)
+              ncmb.File.upload(fileName, data, acl)
               .then(function(file){
+                expect(file.fileName).to.be.eql(fileName);
                 done();
               })
               .catch(function(err){

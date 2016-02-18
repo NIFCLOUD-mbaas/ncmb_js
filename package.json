@@ -53,13 +53,17 @@
     "mocha": "^2.1.0",
     "licensify": "^1.4.0",
     "stubcell": "^0.8.0",
-    "uglifyify": "^3.0.1"
+    "uglifyify": "^3.0.1",
+    "lodash-cli": "^4.5.0"
   },
   "browser": {
     "superagent-proxy": false
   },
   "scripts": {
     "test": "nohup npm run stub:start & sleep 5 && NODE_ENV=test mocha -R list test/**_test.js && npm run cov:80 && npm run stub:stop",
+    "test:testfile:build": "cat test/**_test.js |sed -e '/require(.*)/d' -e '/use strict/d' > test/frontend/ncmb_test.js",
+    "test:modules:build": "lodash -o test/frontend/lodash.js && cat node_modules/mocha/mocha.js node_modules/chai/chai.js test/frontend/lodash.min.js > test/frontend/test_modules.js",
+    "test:build": "npm run test:testfile:build && cat test/frontend/test_modules.js test/frontend/module_setup.js test/frontend/ncmb_test.js test/frontend/test_run.js > test/frontend/ncmb_test.full.js",
     "coverage": "NODE_ENV=test istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec test/**_test.js && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "coverage_": "nohup npm run stub:start & sleep 5 && NODE_ENV=test istanbul cover _mocha -- -R spec test/**_test.js && npm run stub:stop",
     "cov:80": "npm run coverage 2>&1 | grep Lines | perl -nle 'my ($l, $c, $p, @d) = split(/[\\s%]+/); exit(($p > 80) == 0)'",

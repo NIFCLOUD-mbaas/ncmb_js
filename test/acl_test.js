@@ -4,7 +4,6 @@ var config   = require("config");
 var expect   = require("chai").expect;
 
 var NCMB   = require("../lib/ncmb");
-var Errors = require("../lib/errors");
 
 describe("NCMB ACL", function(){
   var ncmb = new NCMB(config.apikey, config.clientkey );
@@ -180,40 +179,40 @@ describe("NCMB ACL", function(){
           role = new ncmb.Role("roleName");
         });
         it("role名にnullを指定した場合、エラーを返す", function() {
-          expect(function(){ aclObj.setRoleReadAccess(null, true); }).to.throw(Errors.NoRoleNameError);
-          expect(function(){ aclObj.setRoleWriteAccess(null, true); }).to.throw(Errors.NoRoleNameError);
+          expect(function(){ aclObj.setRoleReadAccess(null, true); }).to.throw(ncmb.Errors.NoRoleNameError);
+          expect(function(){ aclObj.setRoleWriteAccess(null, true); }).to.throw(ncmb.Errors.NoRoleNameError);
         });
         it("role名にundefinedを指定した場合、エラーを返す", function() {
-          expect(function(){ aclObj.setRoleReadAccess(undefined, true); }).to.throw(Errors.NoRoleNameError);
-          expect(function(){ aclObj.setRoleWriteAccess(undefined, true); }).to.throw(Errors.NoRoleNameError);
+          expect(function(){ aclObj.setRoleReadAccess(undefined, true); }).to.throw(ncmb.Errors.NoRoleNameError);
+          expect(function(){ aclObj.setRoleWriteAccess(undefined, true); }).to.throw(ncmb.Errors.NoRoleNameError);
         });
         it("role名に空文字を指定した場合、エラーを返す", function() {
-          expect(function(){ aclObj.setRoleReadAccess("", true); }).to.throw(Errors.NoRoleNameError);
-          expect(function(){ aclObj.setRoleWriteAccess("", true); }).to.throw(Errors.NoRoleNameError);
+          expect(function(){ aclObj.setRoleReadAccess("", true); }).to.throw(ncmb.Errors.NoRoleNameError);
+          expect(function(){ aclObj.setRoleWriteAccess("", true); }).to.throw(ncmb.Errors.NoRoleNameError);
         });
         it("role名にroleNameがないオブジェクトを指定した場合、エラーを返す", function() {
-          expect(function(){ aclObj.setRoleReadAccess({}, true); }).to.throw(Errors.NoRoleNameError);
-          expect(function(){ aclObj.setRoleWriteAccess({}, true); }).to.throw(Errors.NoRoleNameError);
+          expect(function(){ aclObj.setRoleReadAccess({}, true); }).to.throw(ncmb.Errors.NoRoleNameError);
+          expect(function(){ aclObj.setRoleWriteAccess({}, true); }).to.throw(ncmb.Errors.NoRoleNameError);
         });
         it("role名にroleNameがnullのroleオブジェクトを指定した場合、エラーを返す", function() {
           role.roleName = null;
-          expect(function(){ aclObj.setRoleReadAccess(role, true); }).to.throw(Errors.NoRoleNameError);
-          expect(function(){ aclObj.setRoleWriteAccess(role, true); }).to.throw(Errors.NoRoleNameError);
+          expect(function(){ aclObj.setRoleReadAccess(role, true); }).to.throw(ncmb.Errors.NoRoleNameError);
+          expect(function(){ aclObj.setRoleWriteAccess(role, true); }).to.throw(ncmb.Errors.NoRoleNameError);
         });
         it("role名にroleNameがundefinedのroleオブジェクトを指定した場合、エラーを返す", function() {
           role.roleName = undefined;
-          expect(function(){ aclObj.setRoleReadAccess(role, true); }).to.throw(Errors.NoRoleNameError);
-          expect(function(){ aclObj.setRoleWriteAccess(role, true); }).to.throw(Errors.NoRoleNameError);
+          expect(function(){ aclObj.setRoleReadAccess(role, true); }).to.throw(ncmb.Errors.NoRoleNameError);
+          expect(function(){ aclObj.setRoleWriteAccess(role, true); }).to.throw(ncmb.Errors.NoRoleNameError);
         });
         it("role名にroleNameがないroleオブジェクトを指定した場合、エラーを返す", function() {
           delete role.roleName;
-          expect(function(){ aclObj.setRoleReadAccess(role, true); }).to.throw(Errors.NoRoleNameError);
-          expect(function(){ aclObj.setRoleWriteAccess(role, true); }).to.throw(Errors.NoRoleNameError);
+          expect(function(){ aclObj.setRoleReadAccess(role, true); }).to.throw(ncmb.Errors.NoRoleNameError);
+          expect(function(){ aclObj.setRoleWriteAccess(role, true); }).to.throw(ncmb.Errors.NoRoleNameError);
         });
         it("role名にroleNameが空文字のroleオブジェクトを指定した場合、エラーを返す", function() {
           role.roleName = "";
-          expect(function(){ aclObj.setRoleReadAccess(role, true); }).to.throw(Errors.NoRoleNameError);
-          expect(function(){ aclObj.setRoleWriteAccess(role, true); }).to.throw(Errors.NoRoleNameError);
+          expect(function(){ aclObj.setRoleReadAccess(role, true); }).to.throw(ncmb.Errors.NoRoleNameError);
+          expect(function(){ aclObj.setRoleWriteAccess(role, true); }).to.throw(ncmb.Errors.NoRoleNameError);
         });
       });
       context("第一引数にroleインスタンスが設定される場合", function(){

@@ -93,12 +93,12 @@ describe("NCMB core", function(){
       }
     });
 
-        context("http method が GET の時に", function(){
+    context("http method が GET の時に", function(){
       it("callback によりデータを取得できる", function(done){
         ncmb.request({
           path: "/"+ncmb.version+"/classes/TestClass",
           timestamp: "2015-02-25T08:01:08.908Z"
-        }, function(err, res){
+        }, function(err, body){
           if(err) return done(err);
           return done();
         });
@@ -115,6 +115,8 @@ describe("NCMB core", function(){
       });
     });
 
+    var callback_id = "object_id";
+    var promise_id  = "object_id";
     context("http method が POST の時に", function(){
       it("callback によりデータを登録できる", function(done){
         ncmb.request({
@@ -122,8 +124,9 @@ describe("NCMB core", function(){
           path: "/"+ ncmb.version +"/classes/TestClass",
           timestamp: "2015-02-25T08:01:08.908Z",
           data: {'key': 'value'}
-        }, function(err, res, body){
+        }, function(err, body){
           if(err) return done(err);
+          if (ncmb.fqdn !== "localhost") callback_id = JSON.parse(body).objectId;
           return done();
         });
       });
@@ -134,6 +137,7 @@ describe("NCMB core", function(){
           timestamp: "2015-02-25T08:01:08.908Z",
           data: {"key": "value"}
         }).then(function(body){
+          if (ncmb.fqdn !== "localhost") promise_id = JSON.parse(body).objectId;
           done();
         }).catch(function(err){
           done(err);
@@ -145,10 +149,10 @@ describe("NCMB core", function(){
       it("callback によりデータを更新できる", function(done){
         ncmb.request({
           method: "PUT",
-          path: "/"+ ncmb.version +"/classes/TestClass/object_id",
+          path: "/" + ncmb.version + "/classes/TestClass/" + callback_id,
           timestamp: "2015-02-25T08:01:08.908Z",
           data: {'key': 'value_new'}
-        }, function(err, res, body){
+        }, function(err, body){
           if(err) return done(err);
           return done();
         });
@@ -156,7 +160,7 @@ describe("NCMB core", function(){
       it("promise によりデータを更新できる", function(done){
         ncmb.request({
           method: "PUT",
-          path: "/"+ncmb.version+"/classes/TestClass/object_id",
+          path: "/" + ncmb.version + "/classes/TestClass/" + promise_id,
           timestamp: "2015-02-25T08:01:08.908Z",
           data: {"key": "value_new"}
         }).then(function(body){
@@ -171,9 +175,9 @@ describe("NCMB core", function(){
       it("callback によりデータを削除できる", function(done){
         ncmb.request({
           method: "DEL",
-          path: "/"+ ncmb.version +"/classes/TestClass/object_id",
+          path: "/" + ncmb.version + "/classes/TestClass/" + callback_id,
           timestamp: "2015-02-25T08:01:08.908Z"
-        }, function(err, res, body){
+        }, function(err, body){
           if(err) return done(err);
           return done();
         });
@@ -181,7 +185,7 @@ describe("NCMB core", function(){
       it("promise によりデータを削除できる", function(done){
         ncmb.request({
           method: "DEL",
-          path: "/"+ncmb.version+"/classes/TestClass/object_id",
+          path: "/" + ncmb.version + "/classes/TestClass/" + promise_id,
           timestamp: "2015-02-25T08:01:08.908Z"
         }).then(function(body){
           done();

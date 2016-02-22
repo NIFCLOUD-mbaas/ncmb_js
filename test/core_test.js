@@ -89,7 +89,8 @@ describe("NCMB core", function(){
         .set("protocol", config.apiserver.protocol || "http:")
         .set("fqdn", config.apiserver.fqdn)
         .set("port", config.apiserver.port)
-        .set("proxy", config.apiserver.proxy || "");
+        .set("proxy", config.apiserver.proxy || "")
+        .set("stub", config.apiserver.stub);
       }
     });
 
@@ -126,7 +127,7 @@ describe("NCMB core", function(){
           data: {'key': 'value'}
         }, function(err, body){
           if(err) return done(err);
-          if (ncmb.fqdn !== "localhost") callback_id = JSON.parse(body).objectId;
+          if (!ncmb.stub) callback_id = JSON.parse(body).objectId;
           return done();
         });
       });
@@ -137,7 +138,7 @@ describe("NCMB core", function(){
           timestamp: "2015-02-25T08:01:08.908Z",
           data: {"key": "value"}
         }).then(function(body){
-          if (ncmb.fqdn !== "localhost") promise_id = JSON.parse(body).objectId;
+          if (!ncmb.stub) promise_id = JSON.parse(body).objectId;
           done();
         }).catch(function(err){
           done(err);

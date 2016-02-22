@@ -2,7 +2,8 @@
     "apiserver": {
         "fqdn": "localhost",
         "scriptFqdn": "localhost",
-        "port": 18000
+        "port": 18000,
+        "stub": true
     },
     "apikey":    "apikey",
     "clientkey": "clientkey"

@@ -584,7 +584,7 @@
   request:
     url: /2013-09-01/roles
     method: POST
-    body: 
+    body:
       roleName: "new_exist_role_name"
   response:
     status: 409
@@ -1273,3 +1273,248 @@
   response:
     status: 200
     body: '{}'
+
+# script
+-
+  request:
+    url: /2015-09-01/script/execGetText.js
+    method: GET
+  response:
+    status: 200
+    body: text
+
+-
+  request:
+    url: /2015-09-01/script/execPostText.js
+    method: POST
+  response:
+    status: 200
+    body: text
+
+-
+  request:
+    url: /2015-09-01/script/execPutText.js
+    method: PUT
+  response:
+    status: 200
+    body: text
+
+-
+  request:
+    url: /2015-09-01/script/execDeleteText.js
+    method: DELETE
+  response:
+    status: 200
+    body: text
+
+-
+  request:
+    url: /2015-09-01/script/execGetJson.js
+    method: GET
+  response:
+    status: 200
+    file: 2015-09-01_script_response.json
+-
+  request:
+    url: /2015-09-01/script/execPostJson.js
+    method: POST
+  response:
+    status: 200
+    file: 2015-09-01_script_response.json
+
+-
+  request:
+    url: /2015-09-01/script/execPutJson.js
+    method: PUT
+  response:
+    status: 200
+    file: 2015-09-01_script_response.json
+
+-
+  request:
+    url: /2015-09-01/script/execDeleteJson.js
+    method: DELETE
+  response:
+    status: 200
+    file: 2015-09-01_script_response.json
+
+-
+  request:
+    url: /2015-09-01/script/execGetWithHeader.js
+    method: GET
+    header:
+      testHeader: testHeaderValue
+  response:
+    status: 200
+    body: success
+
+-
+  request:
+    url: /2015-09-01/script/execPostWithHeader.js
+    method: POST
+    header:
+      testHeader: testHeaderValue
+  response:
+    status: 200
+    body: success
+
+-
+  request:
+    url: /2015-09-01/script/execPutWithHeader.js
+    method: PUT
+    header:
+      testHeader: testHeaderValue
+  response:
+    status: 200
+    body: success
+
+-
+  request:
+    url: /2015-09-01/script/execDeleteWithHeader.js
+    method: DELETE
+    header:
+      testHeader: testHeaderValue
+  response:
+    status: 200
+    body: success
+
+-
+  request:
+    url: /2015-09-01/script/execPostWithData.js
+    method: POST
+    body:
+      testData: testDataValue
+  response:
+    status: 200
+    body: success
+
+-
+  request:
+    url: /2015-09-01/script/execPutWithData.js
+    method: PUT
+    body:
+      testData: testDataValue
+  response:
+    status: 200
+    body: success
+
+-
+  request:
+    url: /2015-09-01/script/execGetWithQuery.js
+    method: GET
+    query:
+      testQuery: testQueryValue
+  response:
+    status: 200
+    body: success
+
+-
+  request:
+    url: /2015-09-01/script/execPostWithQuery.js
+    method: POST
+    query:
+      testQuery: testQueryValue
+  response:
+    status: 200
+    body: success
+
+-
+  request:
+    url: /2015-09-01/script/execPutWithQuery.js
+    method: PUT
+    query:
+      testQuery: testQueryValue
+  response:
+    status: 200
+    body: success
+
+-
+  request:
+    url: /2015-09-01/script/execDeleteWithQuery.js
+    method: DELETE
+    query:
+      testQuery: testQueryValue
+  response:
+    status: 200
+    body: success
+
+-
+  request:
+    url: /2015-09-01/script/execMethodChain.js
+    method: POST
+    header:
+      testHeader_1: testHeaderValue_1
+      testHeader_2: testHeaderValue_2
+    body:
+      testData_1: testDataValue_1
+      testData_2: testDataValue_2
+    query:
+      testQuery_1: testQueryValue_1
+      testQuery_2: testQueryValue_2
+  response:
+    status: 200
+    body: success
+
+-
+  request:
+    url: /2015-09-01/script/execGetInternalError.js
+    method: GET
+  response:
+    status: 500
+    body: success
+
+-
+  request:
+    url: /2015-09-01/script/execPostInternalError.js
+    method: POST
+  response:
+    status: 500
+    body: success
+
+-
+  request:
+    url: /2015-09-01/script/execPutInternalError.js
+    method: PUT
+  response:
+    status: 500
+    body: success
+
+-
+  request:
+    url: /2015-09-01/script/execDeleteInternalError.js
+    method: DELETE
+  response:
+    status: 500
+    body: success
+
+-
+  request:
+    url: /2015-09-01/script/execGetNotFound.js
+    method: GET
+  response:
+    status: 404
+    body: success
+
+-
+  request:
+    url: /2015-09-01/script/execPostNotFound.js
+    method: POST
+  response:
+    status: 404
+    body: success
+
+-
+  request:
+    url: /2015-09-01/script/execPutNotFound.js
+    method: PUI
+  response:
+    status: 404
+    body: success
+
+-
+  request:
+    url: /2015-09-01/script/execDeleteNotFound.js
+    method: DELETE
+  response:
+    status: 404
+    body: success

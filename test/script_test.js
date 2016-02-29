@@ -26,7 +26,7 @@ describe("NCMB Script", function(){
               done(err);
             }else{
               expect(res.body).to.be.text;
-              expect(res.body).to.be.equal('text');
+              expect(res.body).to.be.equal('get_text');
               done();
             }
         });
@@ -36,7 +36,7 @@ describe("NCMB Script", function(){
           .exec('GET', 'execGetText.js')
           .then(function(res){
             expect(res.body).to.be.text;
-            expect(res.body).to.be.equal('text');
+            expect(res.body).to.be.equal('get_text');
             done();
           })
           .catch(function(err){
@@ -52,7 +52,7 @@ describe("NCMB Script", function(){
               done(err);
             }else{
               expect(res.body).to.be.text;
-              expect(res.body).to.be.equal('text');
+              expect(res.body).to.be.equal('post_text');
               done();
             }
         });
@@ -62,7 +62,7 @@ describe("NCMB Script", function(){
           .exec('POST', 'execPostText.js')
           .then(function(res){
             expect(res.body).to.be.text;
-            expect(res.body).to.be.equal('text');
+            expect(res.body).to.be.equal('post_text');
             done();
           })
           .catch(function(err){
@@ -78,7 +78,7 @@ describe("NCMB Script", function(){
               done(err);
             }else{
               expect(res.body).to.be.text;
-              expect(res.body).to.be.equal('text');
+              expect(res.body).to.be.equal('put_text');
               done();
             }
         });
@@ -88,7 +88,7 @@ describe("NCMB Script", function(){
           .exec('PUT', 'execPutText.js')
           .then(function(res){
             expect(res.body).to.be.text;
-            expect(res.body).to.be.equal('text');
+            expect(res.body).to.be.equal('put_text');
             done();
           })
           .catch(function(err){
@@ -104,7 +104,7 @@ describe("NCMB Script", function(){
               done(err);
             }else{
               expect(res.body).to.be.text;
-              expect(res.body).to.be.equal('text');
+              expect(res.body).to.be.equal('delete_text');
               done();
             }
         });
@@ -114,7 +114,7 @@ describe("NCMB Script", function(){
           .exec('DELETE', 'execDeleteText.js')
           .then(function(res){
             expect(res.body).to.be.text;
-            expect(res.body).to.be.equal('text');
+            expect(res.body).to.be.equal('delete_text');
             done();
           })
           .catch(function(err){
@@ -133,7 +133,7 @@ describe("NCMB Script", function(){
               done(err);
             }else{
               expect(res.body).to.be.json;
-              expect(JSON.parse(res.body).key).to.be.equal("value");
+              expect(JSON.parse(res.body).key).to.be.equal("get_json");
               done();
             }
         });
@@ -143,7 +143,7 @@ describe("NCMB Script", function(){
           .exec('GET', 'execGetJson.js')
           .then(function(res){
             expect(res.body).to.be.json;
-            expect(JSON.parse(res.body).key).to.be.equal("value");
+            expect(JSON.parse(res.body).key).to.be.equal("get_json");
             done();
           })
           .catch(function(err){
@@ -159,7 +159,7 @@ describe("NCMB Script", function(){
               done(err);
             }else{
               expect(res.body).to.be.json;
-              expect(JSON.parse(res.body).key).to.be.equal("value");
+              expect(JSON.parse(res.body).key).to.be.equal("post_json");
               done();
             }
         });
@@ -169,7 +169,7 @@ describe("NCMB Script", function(){
           .exec('POST', 'execPostJson.js')
           .then(function(res){
             expect(res.body).to.be.json;
-            expect(JSON.parse(res.body).key).to.be.equal("value");
+            expect(JSON.parse(res.body).key).to.be.equal("post_json");
             done();
           })
           .catch(function(err){
@@ -185,7 +185,7 @@ describe("NCMB Script", function(){
               done(err);
             }else{
               expect(res.body).to.be.json;
-              expect(JSON.parse(res.body).key).to.be.equal("value");
+              expect(JSON.parse(res.body).key).to.be.equal("put_json");
               done();
             }
         });
@@ -195,7 +195,7 @@ describe("NCMB Script", function(){
           .exec('PUT', 'execPutJson.js')
           .then(function(res){
             expect(res.body).to.be.json;
-            expect(JSON.parse(res.body).key).to.be.equal("value");
+            expect(JSON.parse(res.body).key).to.be.equal("put_json");
             done();
           })
           .catch(function(err){
@@ -211,7 +211,7 @@ describe("NCMB Script", function(){
               done(err);
             }else{
               expect(res.body).to.be.json;
-              expect(JSON.parse(res.body).key).to.be.equal("value");
+              expect(JSON.parse(res.body).key).to.be.equal("delete_json");
               done();
             }
         });
@@ -221,7 +221,7 @@ describe("NCMB Script", function(){
           .exec('DELETE', 'execDeleteJson.js')
           .then(function(res){
             expect(res.body).to.be.json;
-            expect(JSON.parse(res.body).key).to.be.equal("value");
+            expect(JSON.parse(res.body).key).to.be.equal("delete_json");
             done();
           })
           .catch(function(err){
@@ -240,7 +240,7 @@ describe("NCMB Script", function(){
             if(err){
               done(err);
             }else{
-              expect(res.body).to.be.equal("success");
+              expect(res.body).to.be.equal("get_with_header");
               done();
             }
         });
@@ -250,7 +250,7 @@ describe("NCMB Script", function(){
           .set({testHeader: "testHeaderValue"})
           .exec('GET', 'execGetWithHeader.js')
           .then(function(res){
-            expect(res.body).to.be.equal("success");
+            expect(res.body).to.be.equal("get_with_header");
             done();
           })
           .catch(function(err){
@@ -266,7 +266,7 @@ describe("NCMB Script", function(){
             if(err){
               done(err);
             }else{
-              expect(res.body).to.be.equal("success");
+              expect(res.body).to.be.equal("post_with_header");
               done();
             }
         });
@@ -276,7 +276,7 @@ describe("NCMB Script", function(){
           .set({testHeader: "testHeaderValue"})
           .exec('POST', 'execPostWithHeader.js')
           .then(function(res){
-            expect(res.body).to.be.equal("success");
+            expect(res.body).to.be.equal("post_with_header");
             done();
           })
           .catch(function(err){
@@ -292,7 +292,7 @@ describe("NCMB Script", function(){
             if(err){
               done(err);
             }else{
-              expect(res.body).to.be.equal("success");
+              expect(res.body).to.be.equal("put_with_header");
               done();
             }
         });
@@ -302,7 +302,7 @@ describe("NCMB Script", function(){
           .set({testHeader: "testHeaderValue"})
           .exec('PUT', 'execPutWithHeader.js')
           .then(function(res){
-            expect(res.body).to.be.equal("success");
+            expect(res.body).to.be.equal("put_with_header");
             done();
           })
           .catch(function(err){
@@ -318,7 +318,7 @@ describe("NCMB Script", function(){
             if(err){
               done(err);
             }else{
-              expect(res.body).to.be.equal("success");
+              expect(res.body).to.be.equal("delete_with_header");
               done();
             }
         });
@@ -328,7 +328,7 @@ describe("NCMB Script", function(){
           .set({testHeader: "testHeaderValue"})
           .exec('DELETE', 'execDeleteWithHeader.js')
           .then(function(res){
-            expect(res.body).to.be.equal("success");
+            expect(res.body).to.be.equal("delete_with_header");
             done();
           })
           .catch(function(err){
@@ -384,7 +384,7 @@ describe("NCMB Script", function(){
             if(err){
               done(err);
             }else{
-              expect(res.body).to.be.equal("success");
+              expect(res.body).to.be.equal("post_with_data");
               done();
             }
         });
@@ -394,7 +394,7 @@ describe("NCMB Script", function(){
           .data({testData: "testDataValue"})
           .exec('POST', 'execPostWithData.js')
           .then(function(res){
-            expect(res.body).to.be.equal("success");
+            expect(res.body).to.be.equal("post_with_data");
             done();
           })
           .catch(function(err){
@@ -410,7 +410,7 @@ describe("NCMB Script", function(){
             if(err){
               done(err);
             }else{
-              expect(res.body).to.be.equal("success");
+              expect(res.body).to.be.equal("put_with_data");
               done();
             }
         });
@@ -420,7 +420,7 @@ describe("NCMB Script", function(){
           .data({testData: "testDataValue"})
           .exec('PUT', 'execPutWithData.js')
           .then(function(res){
-            expect(res.body).to.be.equal("success");
+            expect(res.body).to.be.equal("put_with_data");
             done();
           })
           .catch(function(err){
@@ -476,7 +476,7 @@ describe("NCMB Script", function(){
             if(err){
               done(err);
             }else{
-              expect(res.body).to.be.equal("success");
+              expect(res.body).to.be.equal("get_with_query");
               done();
             }
         });
@@ -486,7 +486,7 @@ describe("NCMB Script", function(){
           .query({testQuery: "testQueryValue"})
           .exec('GET', 'execGetWithQuery.js')
           .then(function(res){
-            expect(res.body).to.be.equal("success");
+            expect(res.body).to.be.equal("get_with_query");
             done();
           })
           .catch(function(err){
@@ -502,7 +502,7 @@ describe("NCMB Script", function(){
             if(err){
               done(err);
             }else{
-              expect(res.body).to.be.equal("success");
+              expect(res.body).to.be.equal("post_with_query");
               done();
             }
         });
@@ -512,7 +512,7 @@ describe("NCMB Script", function(){
           .query({testQuery: "testQueryValue"})
           .exec('POST', 'execPostWithQuery.js')
           .then(function(res){
-            expect(res.body).to.be.equal("success");
+            expect(res.body).to.be.equal("post_with_query");
             done();
           })
           .catch(function(err){
@@ -528,7 +528,7 @@ describe("NCMB Script", function(){
             if(err){
               done(err);
             }else{
-              expect(res.body).to.be.equal("success");
+              expect(res.body).to.be.equal("put_with_query");
               done();
             }
         });
@@ -538,7 +538,7 @@ describe("NCMB Script", function(){
           .query({testQuery: "testQueryValue"})
           .exec('PUT', 'execPutWithQuery.js')
           .then(function(res){
-            expect(res.body).to.be.equal("success");
+            expect(res.body).to.be.equal("put_with_query");
             done();
           })
           .catch(function(err){
@@ -554,7 +554,7 @@ describe("NCMB Script", function(){
             if(err){
               done(err);
             }else{
-              expect(res.body).to.be.equal("success");
+              expect(res.body).to.be.equal("delete_with_query");
               done();
             }
         });
@@ -564,7 +564,7 @@ describe("NCMB Script", function(){
           .query({testQuery: "testQueryValue"})
           .exec('DELETE', 'execDeleteWithQuery.js')
           .then(function(res){
-            expect(res.body).to.be.equal("success");
+            expect(res.body).to.be.equal("delete_with_query");
             done();
           })
           .catch(function(err){
@@ -599,7 +599,7 @@ describe("NCMB Script", function(){
             if(err){
               done(err);
             }else{
-              expect(res.body).to.be.equal("success");
+              expect(res.body).to.be.equal("method_chain");
               done();
             }
         });
@@ -614,7 +614,7 @@ describe("NCMB Script", function(){
           .query({testQuery_2: "testQueryValue_2"})
           .exec('POST', 'execMethodChain.js')
           .then(function(res){
-            expect(res.body).to.be.equal("success");
+            expect(res.body).to.be.equal("method_chain");
             done();
           })
           .catch(function(err){
@@ -796,10 +796,10 @@ describe("NCMB Script", function(){
           });
       });
     });
-    context("POSTメソッドで実行し 404エラーが返され", function(done){
+    context("DELETEメソッドで実行し 404エラーが返され", function(done){
       it("callbackで取得できる", function(done){
         ncmb.Script
-          .exec('POST', 'execPostNotFound.js', function(err, res){
+          .exec('POST', 'execDeleteNotFound.js', function(err, res){
             if(err){
               expect(err.status).to.be.equal(404);
               done();
@@ -810,7 +810,7 @@ describe("NCMB Script", function(){
       });
       it("promiseで取得できる", function(done){
         ncmb.Script
-          .exec('POST', 'execPostNotFound.js')
+          .exec('POST', 'execDeleteNotFound.js')
           .then(function(res){
             done(new Error("error が返されなければならない"));
           })

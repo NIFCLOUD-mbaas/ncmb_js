@@ -1281,7 +1281,7 @@
     method: GET
   response:
     status: 200
-    body: text
+    body: get_text
 
 -
   request:
@@ -1289,7 +1289,7 @@
     method: POST
   response:
     status: 200
-    body: text
+    body: post_text
 
 -
   request:
@@ -1297,7 +1297,7 @@
     method: PUT
   response:
     status: 200
-    body: text
+    body: put_text
 
 -
   request:
@@ -1305,7 +1305,7 @@
     method: DELETE
   response:
     status: 200
-    body: text
+    body: delete_text
 
 -
   request:
@@ -1313,14 +1313,14 @@
     method: GET
   response:
     status: 200
-    file: 2015-09-01_script_response.json
+    file: 2015-09-01_script_get_json.json
 -
   request:
     url: /2015-09-01/script/execPostJson.js
     method: POST
   response:
     status: 200
-    file: 2015-09-01_script_response.json
+    file: 2015-09-01_script_post_json.json
 
 -
   request:
@@ -1328,7 +1328,7 @@
     method: PUT
   response:
     status: 200
-    file: 2015-09-01_script_response.json
+    file: 2015-09-01_script_put_json.json
 
 -
   request:
@@ -1336,7 +1336,7 @@
     method: DELETE
   response:
     status: 200
-    file: 2015-09-01_script_response.json
+    file: 2015-09-01_script_delete_json.json
 
 -
   request:
@@ -1346,7 +1346,7 @@
       testHeader: testHeaderValue
   response:
     status: 200
-    body: success
+    body: get_with_header
 
 -
   request:
@@ -1356,7 +1356,7 @@
       testHeader: testHeaderValue
   response:
     status: 200
-    body: success
+    body: post_with_header
 
 -
   request:
@@ -1366,7 +1366,7 @@
       testHeader: testHeaderValue
   response:
     status: 200
-    body: success
+    body: put_with_header
 
 -
   request:
@@ -1376,7 +1376,7 @@
       testHeader: testHeaderValue
   response:
     status: 200
-    body: success
+    body: delete_with_header
 
 -
   request:
@@ -1386,7 +1386,7 @@
       testData: testDataValue
   response:
     status: 200
-    body: success
+    body: post_with_data
 
 -
   request:
@@ -1396,7 +1396,7 @@
       testData: testDataValue
   response:
     status: 200
-    body: success
+    body: put_with_data
 
 -
   request:
@@ -1406,7 +1406,7 @@
       testQuery: testQueryValue
   response:
     status: 200
-    body: success
+    body: get_with_query
 
 -
   request:
@@ -1416,7 +1416,7 @@
       testQuery: testQueryValue
   response:
     status: 200
-    body: success
+    body: post_with_query
 
 -
   request:
@@ -1426,7 +1426,7 @@
       testQuery: testQueryValue
   response:
     status: 200
-    body: success
+    body: put_with_query
 
 -
   request:
@@ -1436,7 +1436,7 @@
       testQuery: testQueryValue
   response:
     status: 200
-    body: success
+    body: delete_with_query
 
 -
   request:
@@ -1453,7 +1453,7 @@
       testQuery_2: testQueryValue_2
   response:
     status: 200
-    body: success
+    body: method_chain
 
 -
   request:
@@ -1461,7 +1461,7 @@
     method: GET
   response:
     status: 500
-    body: success
+    body: unreachable_get_internal_error
 
 -
   request:
@@ -1469,7 +1469,7 @@
     method: POST
   response:
     status: 500
-    body: success
+    body: unreachable_post_internal_error
 
 -
   request:
@@ -1477,7 +1477,7 @@
     method: PUT
   response:
     status: 500
-    body: success
+    body: unreachable_put_internal_error
 
 -
   request:
@@ -1485,7 +1485,7 @@
     method: DELETE
   response:
     status: 500
-    body: success
+    body: unreachable_delete_internal_error
 
 -
   request:
@@ -1493,7 +1493,7 @@
     method: GET
   response:
     status: 404
-    body: success
+    body: unreachable_get_not_found
 
 -
   request:
@@ -1501,15 +1501,15 @@
     method: POST
   response:
     status: 404
-    body: success
+    body: unreachable_post_not_found
 
 -
   request:
     url: /2015-09-01/script/execPutNotFound.js
-    method: PUI
+    method: PUT
   response:
     status: 404
-    body: success
+    body: unreachable_put_not_found
 
 -
   request:
@@ -1517,4 +1517,4 @@
     method: DELETE
   response:
     status: 404
-    body: success
+    body: unreachable_delete_not_found

@@ -822,8 +822,8 @@ describe("NCMB Script", function(){
     });
   });
 
-  // 異常系
-  describe("誤った引数でScript.execを実行:", function(){
+  // バリデーション
+  describe("引数を渡してScript.execを実行:", function(){
     context("第一引数にHTTPメソッド以外の文字列型を渡し InvalidArgumentErrorが返され", function(done){
       it("callbackで取得できる", function(done){
         ncmb.Script
@@ -869,6 +869,30 @@ describe("NCMB Script", function(){
           .catch(function(err){
             expect(err.name).to.be.equal("InvalidArgumentError");
             done();
+          });
+      });
+    });
+    context("第一引数に小文字でHTTPメソッドを渡し 実行に成功し", function(done){
+      it("callbackで取得できる", function(done){
+        ncmb.Script
+          .exec('get', 'execGetWithLowerCase.js', function(err, res){
+            if(err){
+              done(err);
+            }else{
+              expect(res.body).to.be.equal('get_with_lower_case');
+              done();
+            }
+        });
+      });
+      it("promiseで取得できる", function(done){
+        ncmb.Script
+          .exec('get', 'execGetWithLowerCase.js')
+          .then(function(res){
+            expect(res.body).to.be.equal('get_with_lower_case');
+            done();
+          })
+          .catch(function(err){
+            done(err);
           });
       });
     });

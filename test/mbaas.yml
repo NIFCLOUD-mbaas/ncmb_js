@@ -1518,3 +1518,11 @@
   response:
     status: 404
     body: unreachable_delete_not_found
+
+-
+  request:
+    url: /2015-09-01/script/execGetWithLowerCase.js
+    method: GET
+  response:
+    status: 200
+    body: get_with_lower_case

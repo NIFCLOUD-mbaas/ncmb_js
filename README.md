@@ -249,11 +249,14 @@ $ browserify -r -p licensify -t [ uglifyify -x .js ] -o ncmb.min.js lib/ncmb.js
 
 ```shell
 $ git clone XXX
-$ cd javascript-sdk-mbaas
+$ cd ncmb_js
 $ npm install
-$ npm run stub:start
 $ npm test
 ```
+
+npm test is not working on default Windows OS environment.
+If you want to do that, please setup nohup command.
+
 ## License
 
 Please read [LICENSE](git://github.com/NIFTYCloud-mbaas/ncmb_js/blob/master/LICENSE).

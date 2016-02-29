@@ -340,7 +340,7 @@ describe("NCMB Script", function(){
       it("InvalidRequestHeaderErrorが返される", function(done){
         try{
           ncmb.Script.set('{testHeader: "testHeaderValue"}')
-          done("error が返されなければならない");
+          done(new Error("error が返されなければならない"));
         }catch(err){
           expect(err.name).to.be.equal("InvalidRequestHeaderError");
           done();
@@ -458,7 +458,7 @@ describe("NCMB Script", function(){
       it("InvalidRequestBodyErrorが返される", function(done){
         try{
           ncmb.Script.data('{testData: "testDataValue"}')
-          done("error が返されなければならない");
+          done(new Error("error が返されなければならない"));
         }catch(err){
           expect(err.name).to.be.equal("InvalidRequestBodyError");
           done();
@@ -576,7 +576,7 @@ describe("NCMB Script", function(){
       it("InvalidRequestQueryErrorが返される", function(done){
         try{
           ncmb.Script.query('{testQuery: "testQueryValue"}')
-          done("error が返されなければならない");
+          done(new Error("error が返されなければならない"));
         }catch(err){
           expect(err.name).to.be.equal("InvalidRequestQueryError");
           done();

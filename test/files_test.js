@@ -3,6 +3,7 @@
 var config = require("config");
 var expect = require("chai").expect;
 var NCMB = require("../lib/ncmb");
+var fs = require("fs");
 
 describe("NCMB Files", function(){
   var ncmb = null;
@@ -18,21 +19,43 @@ describe("NCMB Files", function(){
   });
 
   describe("ファイル保存", function(){
+    var fileName = null;
+    before(function(){
+      fileName = "upload.text";
+    });
     context("upload", function(){
       context("成功した場合", function(){
         it("callback でレスポンスを取得できる", function(done){
-          ncmb.File.upload("upload.text", "./test/files/test.text", function(err, file){
-            done(err ? err : null);
+          fs.readFile("./test/files/test.text", function(err, data){
+            if(err){
+              done(err);
+            }else{
+              ncmb.File.upload(fileName, data, function(err, file){
+                if(err){
+                  done(err);
+                }else{
+                  expect(file.fileName).to.be.eql(fileName);
+                  done();
+                }
+              });
+            }
           });
         });
 
         it("promise でレスポンスを取得できる", function(done){
-          ncmb.File.upload("upload.text", "./test/files/test.text")
-          .then(function(file){
-            done();
-          })
-          .catch(function(err){
-            done(err);
+          fs.readFile("./test/files/test.text", function(err, data){
+            if(err){
+              done(err);
+            }else{
+              ncmb.File.upload(fileName, data)
+              .then(function(file){
+                expect(file.fileName).to.be.eql(fileName);
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+            }
           });
         });
       });
@@ -43,17 +66,35 @@ describe("NCMB Files", function(){
           acl.setPublicReadAccess(true);
         });
         it("callback でレスポンスを取得できる", function(done){
-          ncmb.File.upload("upload.text", "./test/files/test.text", acl, function(err, file){
-            done(err ? err : null);
+          fs.readFile("./test/files/test.text", function(err, data){
+            if(err){
+              done(err);
+            }else{
+              ncmb.File.upload(fileName, data, acl, function(err, file){
+                if(err){
+                  done(err);
+                }else{
+                  expect(file.fileName).to.be.eql(fileName);
+                  done();
+                }
+              });
+            }
           });
         });
         it("promise でレスポンスを取得できる", function(done){
-          ncmb.File.upload("upload.text", "./test/files/test.text", acl)
-          .then(function(file){
-            done();
-          })
-          .catch(function(err){
-            done(err);
+          fs.readFile("./test/files/test.text", function(err, data){
+            if(err){
+              done(err);
+            }else{
+              ncmb.File.upload(fileName, data, acl)
+              .then(function(file){
+                expect(file.fileName).to.be.eql(fileName);
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+            }
           });
         });
       });

@@ -86,7 +86,7 @@ describe("NCMB core", function(){
       .set("clientkey", config.clientkey);
       if(config.apiserver){
         ncmb
-        .set("protocol", config.apiserver.protocol || "http:")
+        .set("protocol", config.apiserver.protocol)
         .set("fqdn", config.apiserver.fqdn)
         .set("port", config.apiserver.port)
         .set("proxy", config.apiserver.proxy || "")

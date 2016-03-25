@@ -639,8 +639,8 @@
     file: 2013-09-01_role_addrole_post_success.json
 -
   request:
-    url: /2013-09-01/roles
-    method: POST
+    url: /2013-09-01/roles/adduser_objectId
+    method: PUT
     body:
       roleName: "mainRole"
       belongUser:
@@ -648,11 +648,11 @@
         objects: [{"__type":"Pointer","className":"user","objectId":"epaKcaYZqsREdSMY"}]
   response:
     status: 201
-    file: 2013-09-01_role_adduser_post_success.json
+    file: 2013-09-01_role_put_success.json
 -
   request:
-    url: /2013-09-01/roles
-    method: POST
+    url: /2013-09-01/roles/adduser_objectId
+    method: PUT
     body:
       roleName: "mainRole"
       belongUser:
@@ -660,11 +660,11 @@
         objects: [{"__type":"Pointer","className":"user","objectId":"epaKcaYZqsREdSMY"},{"__type":"Pointer","className":"user","objectId":"ppaKcaYZqsREdSMY"}]
   response:
     status: 201
-    file: 2013-09-01_role_adduser_post_success.json
+    file: 2013-09-01_role_put_success.json
 -
   request:
-    url: /2013-09-01/roles
-    method: POST
+    url: /2013-09-01/roles/addrole_objectId
+    method: PUT
     body:
       roleName: "mainRole"
       belongRole:
@@ -672,11 +672,11 @@
         objects: [{"__type":"Pointer","className":"role","objectId":"subrole_objectId"}]
   response:
     status: 201
-    file: 2013-09-01_role_addrole_post_success.json
+    file: 2013-09-01_role_put_success.json
 -
   request:
-    url: /2013-09-01/roles
-    method: POST
+    url: /2013-09-01/roles/addrole_objectId
+    method: PUT
     body:
       roleName: "mainRole"
       belongRole:
@@ -684,7 +684,7 @@
         objects: [{"__type":"Pointer","className":"role","objectId":"subrole_objectId"},{"__type":"Pointer","className":"role","objectId":"subrole2_objectId"}]
   response:
     status: 201
-    file: 2013-09-01_role_addrole_post_success.json
+    file: 2013-09-01_role_put_success.json
 -
   request:
     url: /2013-09-01/users

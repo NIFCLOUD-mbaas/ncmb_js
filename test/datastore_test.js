@@ -6,14 +6,17 @@ var expect   = require("chai").expect;
 var NCMB = require("../lib/ncmb");
 
 describe("NCMB DataStore", function(){
+  this.timeout(10000);
   var ncmb = null;
+  var userName = "Yamada Tarou"
   before(function(){
     ncmb = new NCMB(config.apikey, config.clientkey );
     if(config.apiserver){
-      ncmb.set("protocol", config.apiserver.protocol || "http:")
+      ncmb.set("protocol", config.apiserver.protocol)
           .set("fqdn", config.apiserver.fqdn)
           .set("port", config.apiserver.port)
-          .set("proxy", config.apiserver.proxy || "");
+          .set("proxy", config.apiserver.proxy || "")
+          .set("stub", config.apiserver.stub);
     }
   });
 
@@ -37,7 +40,8 @@ describe("NCMB DataStore", function(){
       }
     });
   });
-
+  var data_callback_id = null;
+  var data_promise_id  = null;
   describe("オブジェクト登録", function(){
     describe("save", function(){
       context("クラス定義が存在すれば、登録に成功し", function(){
@@ -49,14 +53,20 @@ describe("NCMB DataStore", function(){
         });
         it("callback で取得できる", function(done){
           food.save(function(err, obj){
-            expect(obj.objectId).to.be.eql("object_id");
-            done(err ? err : null);
+            if(err){
+              done(err);
+            }else{
+              expect(obj.objectId).to.exist;
+              data_callback_id = obj.objectId;
+              done();
+            }
           });
         });
         it("promise で取得できる", function(done){
           food.save()
-              .then(function(newFood){
-                expect(newFood.objectId).to.be.eql("object_id");
+              .then(function(obj){
+                expect(obj.objectId).to.exist;
+                data_promise_id = obj.objectId;
                 done();
               })
               .catch(function(err){
@@ -92,7 +102,7 @@ describe("NCMB DataStore", function(){
             if(err) {
               done(err);
             } else {
-              expect(obj).to.have.property("harvestDate");
+              expect(obj.harvestDate).to.exist;
               expect(obj.harvestDate).to.have.property("__type", "Date");
               expect(obj.harvestDate).to.have.property("iso");
               expect(obj.save).to.be.a("function");
@@ -103,7 +113,7 @@ describe("NCMB DataStore", function(){
         it("promise で取得できる", function(done){
           food.save()
               .then(function(obj){
-                expect(obj).to.have.property("harvestDate");
+                expect(obj.harvestDate).to.exist;
                 expect(obj.harvestDate).to.have.property("__type", "Date");
                 expect(obj.harvestDate).to.have.property("iso");
                 expect(obj.save).to.be.a("function");
@@ -129,13 +139,18 @@ describe("NCMB DataStore", function(){
         })
         it("callback で取得できる", function(done){
           food.save(function(err, obj){
-            done(err ? err : null);
+            if(err){
+              done(err);
+            }else{
+              expect(obj.objectId).to.exist;
+              done();
+            }
           });
         });
         it("promise で取得できる", function(done){
           food.save()
-              .then(function(data){
-                expect(data).to.have.property("objectId", "pointer_object_id");
+              .then(function(obj){
+                expect(obj.objectId).to.exist;
                 done();
               })
               .catch(function(err){
@@ -159,7 +174,12 @@ describe("NCMB DataStore", function(){
                    .then(function(obj){
                       food.component = obj;
                       food.save(function(err, data){
-                        done(err ? err : null);
+                        if(err){
+                          done(err);
+                        }else{
+                          expect(obj.objectId).to.exist;
+                          done();
+                        }
                       });
                    })
                    .catch(function(err){
@@ -173,7 +193,7 @@ describe("NCMB DataStore", function(){
                       return food.save();
                    })
                    .then(function(obj){
-                    expect(obj).to.have.property("objectId", "pointer_object_id");
+                    expect(obj.objectId).to.exist;
                     done();
                    })
                    .catch(function(err){
@@ -188,18 +208,29 @@ describe("NCMB DataStore", function(){
         beforeEach(function(){
           Food = ncmb.DataStore("food");
           food = new Food({name: "orange"});
-          user = new ncmb.User({userName:"Yamada Tarou", password:"password"});
+          user = new ncmb.User({password:"password"});
           food.member = user;
         })
         it("callback で取得できる", function(done){
+          if(!ncmb.stub) userName = "pointer_callback";
+          user.set("userName", userName);
+
           food.save(function(err, obj){
-            done(err ? err : null);
+            if(err){
+              done(err);
+            }else{
+              expect(obj.objectId).to.exist;
+              done();
+            }
           });
         });
         it("promise で取得できる", function(done){
+          if(!ncmb.stub) userName = "pointer_promise";
+          user.set("userName", userName);
+
           food.save()
-              .then(function(data){
-                expect(data).to.have.property("objectId", "pointer_user_object_id");
+              .then(function(obj){
+                expect(obj.objectId).to.exist;
                 done();
               })
               .catch(function(err){
@@ -214,14 +245,22 @@ describe("NCMB DataStore", function(){
         beforeEach(function(){
           Food = ncmb.DataStore("food");
           food = new Food({name: "orange"});
-          user = new ncmb.User({userName:"Yamada Tarou", password:"password"});
+          user = new ncmb.User({password:"password"});
         })
         it("callback で取得できる", function(done){
+          if(!ncmb.stub) userName = "pointer_preset_callback";
+          user.set("userName", userName);
+
           user.signUpByAccount()
                    .then(function(obj){
                       food.member = obj;
                       food.save(function(err, data){
-                        done(err ? err : null);
+                        if(err){
+                          done(err);
+                        }else{
+                          expect(obj.objectId).to.exist;
+                          done();
+                        }
                       });
                    })
                    .catch(function(err){
@@ -229,13 +268,16 @@ describe("NCMB DataStore", function(){
                    });
         });
         it("promise で取得できる", function(done){
+          if(!ncmb.stub) userName = "pointer_preset_promise";
+          user.set("userName", userName);
+
           user.signUpByAccount()
                    .then(function(obj){
                       food.member = obj;
                       return food.save();
                    })
                    .then(function(obj){
-                    expect(obj).to.have.property("objectId", "pointer_user_object_id");
+                    expect(obj.objectId).to.exist;
                     done();
                    })
                    .catch(function(err){
@@ -282,13 +324,19 @@ describe("NCMB DataStore", function(){
 
         it("callback で取得できる", function(done){
           Food.fetch(function(err, obj){
-            done(err ? err : null);
+            if(err){
+              done(err);
+            }else{
+              expect(obj.objectId).to.exist;
+              done();
+            }
           });
         });
 
         it("promise で取得できる", function(done){
           Food.fetch()
               .then(function(obj){
+                expect(obj.objectId).to.exist;
                 done();
               })
               .catch(function(err){
@@ -306,14 +354,20 @@ describe("NCMB DataStore", function(){
         });
 
         it("callback で取得できる", function(done){
-          Food.fetchById("object_id", function(err, obj){
-            done(err ? err : null);
+          Food.fetchById(data_callback_id, function(err, obj){
+            if(err){
+              done(err);
+            }else{
+              expect(obj.objectId).to.exist;
+              done();
+            }
           });
         });
 
         it("promise で取得できる", function(done){
-          Food.fetchById("object_id")
-              .then(function(newFood){
+          Food.fetchById(data_promise_id)
+              .then(function(obj){
+                expect(obj.objectId).to.exist;
                 done();
               })
               .catch(function(err){
@@ -328,20 +382,28 @@ describe("NCMB DataStore", function(){
     context("update成功", function(){
       var Food = null;
       var food = null;
-      before(function(){
+      beforeEach(function(){
         Food = ncmb.DataStore("food");
-        food = new Food({objectId: "object_id", key: "value_new"});
+        food = new Food({key: "value_new"});
       });
 
       it("callback で取得できる", function(done){
+        food.objectId = data_callback_id;
         food.update(function(err, obj){
-          done(err ? err : null);
+          if(err){
+            done(err);
+          }else{
+            expect(obj.updateDate).to.exist;
+            done();
+          }
         });
       });
 
       it("promise で取得できる", function(done){
+        food.objectId = data_promise_id;
         food.update()
-            .then(function(newFood){
+            .then(function(obj){
+              expect(obj.updateDate).to.exist;
               done();
             })
             .catch(function(err){
@@ -354,7 +416,7 @@ describe("NCMB DataStore", function(){
       context("objectIdがない理由で", function(){
         var Food = null;
         var food = null;
-        before(function(){
+        beforeEach(function(){
           Food = ncmb.DataStore("food");
           food = new Food({key: "value_new"});
         });
@@ -383,18 +445,24 @@ describe("NCMB DataStore", function(){
     context("成功した場合", function(){
       var Food = null;
       var food = null;
-      before(function(){
+      beforeEach(function(){
         Food = ncmb.DataStore("food");
-        food = new Food({objectId: "object_id"});
+        food = new Food();
       });
 
       it("callback で削除結果を取得できる", function(done){
+        food.objectId = data_callback_id;
         food.delete(function(err){
-          done(err ? err : null);
+          if(err){
+            done(err);
+          }else{
+            done();
+          }
         });
       });
 
       it("promise で削除結果を取得できる", function(done){
+        food.objectId = data_promise_id;
         food.delete()
             .then(function(){
               done();
@@ -409,7 +477,7 @@ describe("NCMB DataStore", function(){
       context("ObjectId がないときに", function(){
         var Food = null;
         var food = null;
-        before(function(){
+        beforeEach(function(){
           Food = ncmb.DataStore("food");
           food = new Food({});
         });
@@ -452,8 +520,8 @@ describe("NCMB DataStore", function(){
               if(err) {
                 done(err);
               } else {
-                expect(list[0].objectId).to.be.eql("food_id1");
-                expect(list[1].objectId).to.be.eql("food_id2");
+                expect(list[0].objectId).to.exist;
+                expect(list[1].objectId).to.exist;
                 done();
               }
             });
@@ -462,8 +530,8 @@ describe("NCMB DataStore", function(){
           it("promise取得できる", function(done){
             Food.batch(foods)
                 .then(function(list){
-                  expect(list[0].objectId).to.be.eql("food_id1");
-                  expect(list[1].objectId).to.be.eql("food_id2");
+                  expect(list[0].objectId).to.exist;
+                  expect(list[1].objectId).to.exist;
                   done();
                 })
                 .catch(function(err){
@@ -518,50 +586,34 @@ describe("NCMB DataStore", function(){
               if(err) {
                 done(err);
               } else {
-                expect(list[0].objectId).to.be.eql("nsgVyp0UyXQYTjbU");
+                expect(list[0].objectId).to.exist;
                 done();
               }
             });
           });
+          it("promise で取得できる", function(done){
+            var foods = [];
+            for(var i = 0; i < 60; i++) {
+              foods.push(new Food({key: "value" + i}));
+            }
+            Food.batch(foods)
+                .then(function(list){
+                  expect(list[0].objectId).to.exist;
+                  done();
+                })
+                .catch(function(err){
+                  done(err);
+                });
+          });
         });
       });
     });
 
-    describe("更新処理", function(){
-    });
-
-    describe("削除処理", function(){
-    });
   });
 
   describe("オブジェクト検索", function(){
     describe("fetchAll", function(){
-      context("クラス定義が存在しなければ、取得に失敗しエラーが返り", function(){
-        var Food = null;
-        before(function(){
-          Food = ncmb.DataStore("bizarrefruit");
-        });
-        it("callback で補足できる", function(done){
-          Food.fetchAll(function(err, objs){
-            if(err){
-              return done();
-            }else{
-              return done(new Error("エラーが返ってきていない"));
-            }
-          });
-        });
-        it("promise で補足できる", function(done){
-          Food.fetchAll()
-              .then(function(foods){
-                done(new Error("エラーが返ってきていない"));
-              })
-              .catch(function(err){
-                return done();
-              });
-        });
-      });
-
-      context("クラス定義が存在し、データがなければ、空のリストが返り", function(){
+      context("データがなければ、空のリストが返り", function(){
         var NonExist = null;
         before(function(){
           NonExist = ncmb.DataStore("nonexist");
@@ -588,10 +640,26 @@ describe("NCMB DataStore", function(){
         });
       });
 
-      context("クラス定義が存在し、データがあれば、リストが返り", function(){
+      context("データがあれば、リストが返り", function(){
         var FetchList = null;
-        before(function(){
+        before(function(done){
           FetchList = ncmb.DataStore("fetchlist");
+          if(!ncmb.stub){
+            fetchdata = new FetchList();
+            fetchdata2 = new FetchList();
+            fetchdata.save()
+                     .then(function(){
+                       return fetchdata2.save();
+                     })
+                     .then(function(){
+                       done();
+                     })
+                     .catch(function(){
+                       done(new Error("前処理に失敗しました。"));
+                     });
+          }else{
+            done();
+          }
         });
         it("callback で取得できる", function(done){
           FetchList.fetchAll(function(err, objs){
@@ -599,8 +667,8 @@ describe("NCMB DataStore", function(){
               done(err);
             }else{
               expect(objs.length).to.be.equal(2);
-              expect(objs[0].objectId).to.be.equal("fetch_object_1");
-              expect(objs[1].objectId).to.be.equal("fetch_object_2");
+              expect(objs[0].objectId).to.exist;
+              expect(objs[1].objectId).to.exist;
               done();
             }
           });
@@ -609,8 +677,8 @@ describe("NCMB DataStore", function(){
           FetchList.fetchAll()
                   .then(function(objs){
                     expect(objs.length).to.be.equal(2);
-                    expect(objs[0].objectId).to.be.equal("fetch_object_1");
-                    expect(objs[1].objectId).to.be.equal("fetch_object_2");
+                    expect(objs[0].objectId).to.exist;
+                    expect(objs[1].objectId).to.exist;
                     done();
                   })
                   .catch(function(err){

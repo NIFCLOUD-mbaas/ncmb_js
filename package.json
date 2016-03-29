@@ -54,6 +54,9 @@
     "superagent-proxy": "^0.3.1",
     "uglifyify": "^3.0.1"
   },
+  "browser": {
+    "superagent-proxy": false
+  },
   "scripts": {
     "test": "nohup npm run stub:start & sleep 5 && NODE_ENV=test mocha -R list test/**_test.js && npm run cov:80 && npm run stub:stop",
     "coverage": "NODE_ENV=test istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec test/**_test.js && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",

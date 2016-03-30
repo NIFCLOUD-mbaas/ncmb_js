@@ -13,7 +13,7 @@ describe("NCMB Script", function(){
       ncmb.set("protocol", config.apiserver.protocol || "http:")
           .set("scriptFqdn", config.apiserver.scriptFqdn)
           .set("port", config.apiserver.port)
-          .set("proxy", config.apiserver.port || "");
+          .set("proxy", config.apiserver.proxy || "");
      }
   });
 

@@ -33,11 +33,13 @@
     "babel": "^5.1.8",
     "create-error": "^0.3.1",
     "localforage": "^1.2.3",
+    "lodash.flatten": "^4.1.1",
     "lodash.merge": "^4.3.2",
     "node-localstorage": "^0.5.1",
     "object-assign": "^3.0.0",
     "qs": "^2.4.1",
     "superagent": "^1.8.2",
+    "superagent-proxy": "^0.3.1",
     "url": "^0.10.3"
   },
   "devDependencies": {
@@ -51,7 +53,6 @@
     "mocha": "^2.1.0",
     "licensify": "^1.4.0",
     "stubcell": "^0.8.0",
-    "superagent-proxy": "^0.3.1",
     "uglifyify": "^3.0.1"
   },
   "browser": {

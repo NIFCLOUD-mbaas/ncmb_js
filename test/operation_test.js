@@ -13,7 +13,7 @@ describe("NCMB Operation", function(){
       ncmb.set("protocol", config.apiserver.protocol || "http:")
           .set("fqdn", config.apiserver.fqdn)
           .set("port", config.apiserver.port)
-          .set("proxy", config.apiserver.port || "");
+          .set("proxy", config.apiserver.proxy || "");
     }
   });
   describe("プロパティ設定", function(){

@@ -1,7 +1,7 @@
 {
   "name": "ncmb",
   "description": "JavaScript SDK for NiftyCloud mobile backend",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "homepage": "http://mb.cloud.nifty.com/",
   "repository": {
     "type": "git",
@@ -33,11 +33,13 @@
     "babel": "^5.1.8",
     "create-error": "^0.3.1",
     "localforage": "^1.2.3",
-    "lodash": "^3.9.3",
+    "lodash.flatten": "^4.1.1",
+    "lodash.merge": "^4.3.2",
     "node-localstorage": "^0.5.1",
     "object-assign": "^3.0.0",
     "qs": "^2.4.1",
-    "superagent": "^0.21.0",
+    "superagent": "^1.8.2",
+    "superagent-proxy": "^0.3.1",
     "url": "^0.10.3"
   },
   "devDependencies": {
@@ -51,8 +53,10 @@
     "mocha": "^2.1.0",
     "licensify": "^1.4.0",
     "stubcell": "^0.8.0",
-    "superagent-proxy": "^0.3.1",
     "uglifyify": "^3.0.1"
+  },
+  "browser": {
+    "superagent-proxy": false
   },
   "scripts": {
     "test": "nohup npm run stub:start & sleep 5 && NODE_ENV=test mocha -R list test/**_test.js && npm run cov:80 && npm run stub:stop",

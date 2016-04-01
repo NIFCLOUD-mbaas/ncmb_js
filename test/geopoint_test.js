@@ -2,7 +2,7 @@
 
 var config   = require("config");
 var expect   = require("chai").expect;
-var _        = require("lodash");
+var flatten  = require("lodash.flatten");
 
 var NCMB     = require("../lib/ncmb");
 var errors   = require("../lib/errors");
@@ -17,14 +17,14 @@ describe("NCMB GeoPoint", function(){
       .set("protocol", config.apiserver.protocol || "http:")
       .set("fqdn",     config.apiserver.fqdn)
       .set("port",     config.apiserver.port)
-      .set("proxy",    config.apiserver.port || "");
+      .set("proxy",    config.apiserver.proxy || "");
     }
   });
 
   describe("コンストラクタ", function(){
     var lats = [-90, -45.5, 0, 45, 45.5, 90],
         lngs = [-180, -90.0, -90, 0, 90, 90.0, 180];
-    var successCases = _.flatten(lats.map(function(lat){
+    var successCases = flatten(lats.map(function(lat){
       return lngs.map(function(lng){
         return [lat, lng];
       });

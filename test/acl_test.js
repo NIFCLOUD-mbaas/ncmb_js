@@ -6,15 +6,18 @@ var expect   = require("chai").expect;
 var NCMB   = require("../lib/ncmb");
 
 describe("NCMB ACL", function(){
-  var ncmb = new NCMB(config.apikey, config.clientkey );
-  if(config.apiserver){
-    ncmb
-      .set("protocol", config.apiserver.protocol || "http:")
-      .set("fqdn", config.apiserver.fqdn)
-      .set("port", config.apiserver.port)
-      .set("proxy", config.apiserver.proxy || "")
-      .set("stub", config.apiserver.stub);
-  }
+  var ncmb = null;
+  before(function(){
+    ncmb = new NCMB(config.apikey, config.clientkey );
+    if(config.apiserver){
+      ncmb
+        .set("protocol", config.apiserver.protocol)
+        .set("fqdn", config.apiserver.fqdn)
+        .set("port", config.apiserver.port)
+        .set("proxy", config.apiserver.proxy || "")
+        .set("stub", config.apiserver.stub);
+    }
+  });
 
   var aclObj = null;
   it("権限をconstructorで指定し、取得できる", function() {
@@ -267,14 +270,15 @@ describe("NCMB ACL", function(){
         if(err) {
           done(err);
         } else {
-          Food.where({objectId: obj.objectId}).fetchAll()
-          .then(function(foods){
-            expect(foods[0].acl).to.be.eql(new ncmb.Acl({'*':{read: true}}));
-            done();
-          })
-          .catch(function(err){
-            done(err);
-          });
+          Food.where({objectId: obj.objectId})
+              .fetchAll()
+              .then(function(foods){
+                expect(foods[0].acl).to.be.eql(new ncmb.Acl({'*':{read: true}}));
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
         }
       });
     });

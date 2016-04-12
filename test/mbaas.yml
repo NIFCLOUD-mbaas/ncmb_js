@@ -345,6 +345,17 @@
     url: '/2013-09-01/login'
     method: GET
     query:
+      "userName": "Yamada Tarou"
+      "password": "password"
+  response:
+    status: 200
+    file: 2013-09-01_user_login_namepw_current_success.json
+
+-
+  request:
+    url: '/2013-09-01/login'
+    method: GET
+    query:
       mailAddress: mail@example.com
       password: passwd
   response:

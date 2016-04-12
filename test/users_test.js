@@ -3409,6 +3409,197 @@ describe("NCMB Users", function(){
     });
   });
 
+  describe("ユーザーログアウト", function(){
+    context("ncmb.User.logout", function(){
+      context("成功した場合", function(){
+        var user = null;
+        beforeEach(function(){
+          user = new ncmb.User({userName:"name",password:"passwd"});
+        });
+        it("callback でレスポンスを取得できる", function(done){
+          if(!ncmb.stub){
+            user.userName = callback_name;
+            user.password = callback_password;
+          }
+          ncmb.User.login(user)
+              .then(function(){
+                ncmb.User.logout(function(err, res){
+                  if(err){
+                    done(err);
+                  }else{
+                    expect(ncmb.User.getCurrentUser()).to.be.eql(null);
+                    done();
+                  }
+                });
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+
+        it("promise でレスポンスを取得できる", function(done){
+          if(!ncmb.stub){
+            user.userName = promise_name;
+            user.password = promise_password;
+          }
+          ncmb.User.login(user)
+              .then(function(){
+                return ncmb.User.logout();
+              })
+              .then(function(res){
+                expect(ncmb.User.getCurrentUser()).to.be.eql(null);
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+      });
+    });
+    context("logout", function(){
+      context("currentUserでログアウトした場合、currentUser情報ごとインスタンスのログイン情報の削除に成功し、", function(){
+        var user = null;
+        beforeEach(function(){
+          user = new ncmb.User({userName:"name",password:"passwd"});
+        });
+        it("callback でレスポンスを取得できる", function(done){
+          if(!ncmb.stub){
+            user.userName = callback_name;
+            user.password = callback_password;
+          }
+          ncmb.User.login(user)
+              .then(function(){
+                user.logout(function(err, res){
+                  if(err){
+                    done(err);
+                  }else{
+                    expect(ncmb.User.getCurrentUser()).to.be.eql(null);
+                    expect(user.sessionToken).to.be.eql(null);
+                    done();
+                  }
+                });
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+
+        it("promise でレスポンスを取得できる", function(done){
+          if(!ncmb.stub){
+            user.userName = promise_name;
+            user.password = promise_password;
+          }
+          ncmb.User.login(user)
+              .then(function(){
+                return user.logout();
+              })
+              .then(function(res){
+                expect(ncmb.User.getCurrentUser()).to.be.eql(null);
+                expect(user.sessionToken).to.be.eql(null);
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+      });
+      context("currentUserでないログイン中のユーザでログアウトした場合、インスタンスのログイン情報のみ削除に成功し、", function(){
+        var user            = null;
+        var currentuser     = null;
+        var subUserName     = null;
+        var subUserPassword = null;
+        var currentName     = null;
+        var currentPassword = null;
+        beforeEach(function(){
+          if(ncmb.stub){
+            subUserName     = "name";
+            subUserPassword = "passwd";
+            currentName     = "Yamada Tarou";
+            currentPassword = "password";
+          }else{
+            subUserName     = callback_name;
+            subUserPassword = callback_password;
+            currentName     = promise_name;
+            currentPassword = promise_password;
+          }
+          user = new ncmb.User({userName:subUserName,password:subUserPassword});
+          currentuser = new ncmb.User({userName:currentName, password:currentPassword});
+        });
+        it("callback でレスポンスを取得できる", function(done){
+          user.login()
+              .then(function(){
+                return currentuser.login();
+              })
+              .then(function(){
+                return ncmb.User.login(currentuser);
+              })
+              .then(function(){
+                user.logout(function(err, res){
+                  if(err){
+                    done(err);
+                  }else{
+                    expect(ncmb.User.getCurrentUser()).to.not.eql(null);
+                    expect(user.sessionToken).to.be.eql(null);
+                    done();
+                  }
+                });
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+
+        it("promise でレスポンスを取得できる", function(done){
+          user.login()
+              .then(function(){
+                return currentuser.login();
+              })
+              .then(function(){
+                ncmb.User.login(currentuser);
+              })
+              .then(function(){
+                return user.logout();
+              })
+              .then(function(res){
+                expect(ncmb.User.getCurrentUser()).to.not.eql(null);
+                expect(user.sessionToken).to.be.eql(null);
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+      });
+      context("ログイン中でないユーザでログアウトした場合エラーが返り、", function(){
+        var user = null;
+        beforeEach(function(){
+          user = new ncmb.User({userName:"name",password:"passwd"});
+        });
+        it("callback でレスポンスを取得できる", function(done){
+          user.logout(function(err, res){
+            if(err){
+              expect(err).to.be.an.instanceof(Error);
+              done();
+            }else{
+              done(new Error("失敗すべき"));
+            }
+          });
+        });
+
+        it("promise でレスポンスを取得できる", function(done){
+          user.logout()
+              .then(function(data){
+                done(new Error("失敗すべき"));
+              })
+              .catch(function(err){
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+        });
+      });
+    });
+  });
+
   describe("ユーザー削除", function(){
     var del_user = null;
     context("成功した場合", function(){
@@ -3491,158 +3682,6 @@ describe("NCMB Users", function(){
             expect(err).to.be.an.instanceof(Error);
             done();
           });
-        });
-      });
-    });
-  });
-
-  describe("ユーザーログアウト", function(){
-    context("ncmb.User.logout", function(){
-      context("成功した場合", function(){
-        var user = null;
-        beforeEach(function(){
-          user = new ncmb.User({userName:"name",password:"passwd"});
-        });
-        it("callback でレスポンスを取得できる", function(done){
-          ncmb.User.login(user)
-              .then(function(){
-                ncmb.User.logout(function(err, res){
-                  expect(ncmb.User.getCurrentUser()).to.be.eql(null);
-                  done(err ? err : null);
-                });
-              })
-              .catch(function(err){
-                done(err);
-              });
-        });
-
-        it("promise でレスポンスを取得できる", function(done){
-          ncmb.User.login(user)
-              .then(function(){
-                return ncmb.User.logout();
-              })
-              .then(function(res){
-                expect(ncmb.User.getCurrentUser()).to.be.eql(null);
-                done();
-              })
-              .catch(function(err){
-                done(err);
-              });
-        });
-      });
-    });
-    context("logout", function(){
-      context("currentUserでログアウトした場合、currentUser情報ごとインスタンスのログイン情報の削除に成功し、", function(){
-        var user = null;
-        beforeEach(function(){
-          user = new ncmb.User({userName:"name",password:"passwd"});
-        });
-        it("callback でレスポンスを取得できる", function(done){
-          ncmb.User.login(user)
-              .then(function(){
-                user.logout(function(err, res){
-                  expect(ncmb.User.getCurrentUser()).to.be.eql(null);
-                  expect(user.sessionToken).to.be.eql(null);
-                  done(err ? err : null);
-                });
-              })
-              .catch(function(err){
-                done(err);
-              });
-        });
-
-        it("promise でレスポンスを取得できる", function(done){
-          ncmb.User.login(user)
-              .then(function(){
-                return user.logout();
-              })
-              .then(function(res){
-                expect(ncmb.User.getCurrentUser()).to.be.eql(null);
-                expect(user.sessionToken).to.be.eql(null);
-                done();
-              })
-              .catch(function(err){
-                done(err);
-              });
-        });
-      });
-      context("currentUserでないログイン中のユーザでログアウトした場合、インスタンスのログイン情報のみ削除に成功し、", function(){
-        var user = null;
-        var currentuser = null;
-        beforeEach(function(){
-          user = new ncmb.User({userName:"name",password:"passwd"});
-          currentuser = new ncmb.User({mailAddress:"mail@example.com", password:"passwd"});
-        });
-        it("callback でレスポンスを取得できる", function(done){
-          user.login()
-              .then(function(){
-                return currentuser.loginWithMailAddress();
-              })
-              .then(function(){
-                return ncmb.User.login(currentuser);
-              })
-              .then(function(){
-                user.logout(function(err, res){
-                  if(err){
-                    done(err);
-                  }else{
-                    expect(ncmb.User.getCurrentUser()).to.not.eql(null);
-                    expect(user.sessionToken).to.be.eql(null);
-                    done();
-                  }
-                });
-              })
-              .catch(function(err){
-                done(err);
-              });
-        });
-
-        it("promise でレスポンスを取得できる", function(done){
-          user.login()
-              .then(function(){
-                return currentuser.loginWithMailAddress();
-              })
-              .then(function(){
-                ncmb.User.login(currentuser);
-              })
-              .then(function(){
-                return user.logout();
-              })
-              .then(function(res){
-                expect(ncmb.User.getCurrentUser()).to.not.eql(null);
-                expect(user.sessionToken).to.be.eql(null);
-                done();
-              })
-              .catch(function(err){
-                done(err);
-              });
-        });
-      });
-      context("ログイン中でないユーザでログアウトした場合エラーが返り、", function(){
-        var user = null;
-        beforeEach(function(){
-          user = new ncmb.User({userName:"name",password:"passwd"});
-        });
-        it("callback でレスポンスを取得できる", function(done){
-          user.logout(function(err, res){
-            if(err){
-              expect(err).to.be.an.instanceof(Error);
-              done();
-            }else{
-              done(new Error("失敗すべき"));
-            }
-          });
-        });
-
-        it("promise でレスポンスを取得できる", function(done){
-          user.logout()
-              .then(function(data){
-                done(new Error("失敗すべき"));
-              })
-              .catch(function(err){
-                expect(err).to.be.an.instanceof(Error);
-                done();
-              });
         });
       });
     });

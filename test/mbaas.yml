@@ -718,7 +718,7 @@
 # query
 -
   request:
-    url: /2013-09-01/classes/QueryTest/fetchById_object_1
+    url: /2013-09-01/classes/QueryTestFetchById/fetchById_object_1
     method: GET
   response:
     status: 200
@@ -771,7 +771,7 @@
     url: /2013-09-01/classes/QueryTestLessThanOrEqualTo
     method: GET
     query:
-      where: '{"number":{"$lte":2}}'
+      where: '{"number":{"$lte":1}}'
   response:
     status: 200
     file: 2013-09-01_classes_querytest_get_lessthanor_success.json
@@ -780,7 +780,7 @@
     url: /2013-09-01/classes/QueryTestGreaterThan
     method: GET
     query:
-      where: '{"number":{"$gt":0}}'
+      where: '{"number":{"$gt":1}}'
   response:
     status: 200
     file: 2013-09-01_classes_querytest_get_greaterthan_success.json
@@ -789,7 +789,7 @@
     url: /2013-09-01/classes/QueryTestGreaterThanOrEqualTo
     method: GET
     query:
-      where: '{"number":{"$gte":1}}'
+      where: '{"number":{"$gte":2}}'
   response:
     status: 200
     file: 2013-09-01_classes_querytest_get_greaterthanor_success.json
@@ -798,7 +798,7 @@
     url: /2013-09-01/classes/QueryTestIn
     method: GET
     query:
-      where: '{"number":{"$in":[1,2,3]}}'
+      where: '{"number":{"$in":[1,3,4]}}'
   response:
     status: 200
     file: 2013-09-01_classes_querytest_get_in_success.json
@@ -816,7 +816,7 @@
     url: /2013-09-01/classes/QueryTestExists
     method: GET
     query:
-      where: '{"number":{"$exists":true}}'
+      where: '{"name":{"$exists":true}}'
   response:
     status: 200
     file: 2013-09-01_classes_querytest_get_exists_success.json
@@ -828,13 +828,13 @@
       where: '{"name":{"$exists":false}}'
   response:
     status: 200
-    file: 2013-09-01_classes_querytest_get_exists_success.json
+    file: 2013-09-01_classes_querytest_get_exists_false.json
 -
   request:
     url: /2013-09-01/classes/QueryTestRegularExpressionTo
     method: GET
     query:
-      where: '{"name":{"$regex":"obj"}}'
+      where: '{"regex":{"$regex":"regex"}}'
   response:
     status: 200
     file: 2013-09-01_classes_querytest_get_regex_success.json
@@ -843,7 +843,7 @@
     url: /2013-09-01/classes/QueryTestRegularExpressionTo
     method: GET
     query:
-      where: '{"name":{"$regex":"^obj"}}'
+      where: '{"regex":{"$regex":"^for"}}'
   response:
     status: 200
     file: 2013-09-01_classes_querytest_get_regex_success.json
@@ -852,16 +852,16 @@
     url: /2013-09-01/classes/QueryTestRegularExpressionTo
     method: GET
     query:
-      where: '{"name":{"$regex":"Name$"}}'
+      where: '{"regex":{"$regex":"back$"}}'
   response:
     status: 200
-    file: 2013-09-01_classes_querytest_get_regex_success.json
+    file: 2013-09-01_classes_querytest_get_regex_back_success.json
 -
   request:
     url: /2013-09-01/classes/QueryTestInArray
     method: GET
     query:
-      where: '{"array":{"$inArray":[1,4,5]}}'
+      where: '{"array":{"$inArray":[1,5,6]}}'
   response:
     status: 200
     file: 2013-09-01_classes_querytest_get_inarray_success.json
@@ -960,7 +960,7 @@
     url: /2013-09-01/classes/QueryTestOr
     method: GET
     query:
-      where: '{"$or":[{"number":{"$gt":0}},{"number":{"$lt":10}}]}'
+      where: '{"$or":[{"number":{"$gt":2}},{"number":{"$lt":2}}]}'
   response:
     status: 200
     file: 2013-09-01_classes_querytest_get_or_success.json
@@ -997,6 +997,7 @@
     url: /2013-09-01/classes/QueryTestInclude
     method: GET
     query:
+      where: '{"pointer":{"$exists":true}}'
       include: "pointer"
   response:
     status: 200
@@ -1006,6 +1007,7 @@
     url: /2013-09-01/classes/QueryTestInclude
     method: GET
     query:
+      where: '{"pointer":{"$exists":true}}'
       include: "pointer,object"
   response:
     status: 200
@@ -1094,7 +1096,7 @@
     file: 2013-09-01_classes_querytest_get_empty.json
 -
   request:
-    url: /2013-09-01/classes/QueryTest
+    url: /2013-09-01/classes/QueryTestFetchAll
     method: GET
   response:
     status: 200

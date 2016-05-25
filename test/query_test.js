@@ -1650,13 +1650,39 @@ describe("NCMB Query", function(){
         }
       });
     });
+  });
 
+  describe("レスポンス加工", function(){
+    var OptionalKeyTest = null;
+    before(function(done){
+      if(!ncmb.stub){
+        OptionalKeyTest = ncmb.DataStore("OptionalKeyTest");
+        var queryTest1 = new OptionalKeyTest();
+        var queryTest2 = new OptionalKeyTest();
+        queryTest1.set("number", 1)
+                  .set("status", "pointed")
+                  .save()
+                  .then(function(obj){
+                    return queryTest2.set("number", 2)
+                                     .set("pointer", obj)
+                                     .save();
+                  })
+                  .then(function(){
+                    done();
+                  })
+                  .catch(function(){
+                    done(new Error("前処理に失敗しました。"));
+                  });
+      }else{
+        done();
+      }
+    });
     describe("include", function(){
       beforeEach(function(){
         if(ncmb.stub){
           QueryTest = ncmb.DataStore("QueryTestInclude");
         }else{
-          QueryTest = ncmb.DataStore("QueryTest");
+          QueryTest = ncmb.DataStore("OptionalKeyTest");
         }
       });
       context("指定したkeyのポインタの中身を含めたオブジェクトが返り", function(){
@@ -1737,7 +1763,7 @@ describe("NCMB Query", function(){
           QueryTest = ncmb.DataStore("QueryTestCount");
           res_count = 1;
         }else{
-          QueryTest = ncmb.DataStore("QueryTest");
+          QueryTest = ncmb.DataStore("OptionalKeyTest");
           res_count = 2;
         }
       });

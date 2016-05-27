@@ -6,7 +6,6 @@ var expect   = require("chai").expect;
 var NCMB = require("../lib/ncmb");
 
 describe("NCMB DataStore", function(){
-  this.timeout(10000);
   var ncmb = null;
   var userName = "Yamada Tarou"
   before(function(){

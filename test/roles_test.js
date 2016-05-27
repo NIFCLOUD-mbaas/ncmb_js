@@ -6,7 +6,6 @@ var expect   = require("chai").expect;
 var NCMB = require("../lib/ncmb");
 
 describe("NCMB Role", function(){
-  this.timeout(6000);
   var ncmb = null;
   var userName1 = "Yamada Tarou";
   var userName2 = "Yamada Hanako";

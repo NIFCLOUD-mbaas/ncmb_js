@@ -16,7 +16,6 @@ describe("NCMB Relation", function(){
           .set("proxy", config.apiserver.proxy || "")
           .set("stub", config.apiserver.stub);
     }
-    if(!ncmb.stub) this.timeout(5000);
   });
 
   var data_callback_id  = null;

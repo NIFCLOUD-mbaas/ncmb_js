@@ -257,6 +257,41 @@ $ npm test
 npm test is not working on default Windows OS environment.
 If you want to do that, please setup nohup command.
 
+## Automated Test On Frontend
+1.Generate test files
+```shell
+$ npm run test:modules:build (run only once at the first time)
+$ npm run test:build
+```
+2.Make app on mBaaS  
+3.Change anonymous user flag from disable to enable  
+4.Set files as below  
+5.Set Appkey and Secretkey in config.js  
+6.run index.html or Monaca app
+
+#### Directory Structure On Browser
+```
+(Any directory)/
+ ├ index.html (./test/frontend/)
+ ├ ncmb.min.js (./)
+ ├ ncmb.test.full.js (./test/frontend/)
+ ├ config.js (./test/frontend/)
+ └css/
+   └mocha.css (./node_modules/monaca/)
+```
+
+#### Directory Structure On Monaca
+```
+www/
+ ├ index.html (./test/frontend/) //overwrite
+ ├ ncmb.min.js (./)
+ ├ ncmb.test.full.js (./test/frontend/)
+ ├ config.js (./test/frontend/)
+ └css/
+   └mocha.css (./node_modules/monaca/)
+```
+
+
 ## License
 
 Please read [LICENSE](git://github.com/NIFTYCloud-mbaas/ncmb_js/blob/master/LICENSE).

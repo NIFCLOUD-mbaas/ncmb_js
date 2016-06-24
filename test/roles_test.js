@@ -331,6 +331,7 @@ describe("NCMB Role", function(){
           var acl = new ncmb.Acl();
           acl.setPublicReadAccess(true);
           user.set("acl", acl);
+          user2.set("acl", acl);
         }
         user.save()
             .then(function(obj){
@@ -361,7 +362,17 @@ describe("NCMB Role", function(){
                 }else{
                   expect(obj.objectId).to.exist;
                   add_user_id = obj.objectId;
-                  done();
+                  ncmb.User
+                      .relatedTo(obj, "belongUser")
+                      .fetchAll()
+                      .then(function(obj){
+                        expect(obj.length).to.be.eql(1);
+                        expect(obj[0].userName).to.be.eql(user.userName);
+                        done();
+                      })
+                      .catch(function(err){
+                        done(err);
+                      });
                 }
               });
         });
@@ -375,6 +386,13 @@ describe("NCMB Role", function(){
               .save()
               .then(function(obj){
                 expect(obj.objectId).to.exist;
+                return ncmb.User
+                           .relatedTo(obj, "belongUser")
+                           .fetchAll();
+              })
+              .then(function(obj){
+                expect(obj.length).to.be.eql(1);
+                expect(obj[0].userName).to.be.eql(user.userName);
                 done();
               })
               .catch(function(err){
@@ -395,7 +413,16 @@ describe("NCMB Role", function(){
                   done(err);
                 }else{
                   expect(obj.objectId).to.exist;
-                  done();
+                  ncmb.User
+                      .relatedTo(obj, "belongUser")
+                      .fetchAll()
+                      .then(function(obj){
+                        expect(obj.length).to.be.eql(2);
+                        done();
+                      })
+                      .catch(function(err){
+                        done(err);
+                      });
                 }
               });
         });
@@ -409,6 +436,12 @@ describe("NCMB Role", function(){
               .save()
               .then(function(obj){
                 expect(obj.objectId).to.exist;
+                return ncmb.User
+                           .relatedTo(obj, "belongUser")
+                           .fetchAll();
+              })
+              .then(function(obj){
+                expect(obj.length).to.be.eql(2);
                 done();
               })
               .catch(function(err){
@@ -430,7 +463,16 @@ describe("NCMB Role", function(){
                   done(err);
                 }else{
                   expect(obj.objectId).to.exist;
-                  done();
+                  ncmb.User
+                      .relatedTo(obj, "belongUser")
+                      .fetchAll()
+                      .then(function(obj){
+                        expect(obj.length).to.be.eql(2);
+                        done();
+                      })
+                      .catch(function(err){
+                        done(err);
+                      });
                 }
               });
         });
@@ -445,6 +487,12 @@ describe("NCMB Role", function(){
               .save()
               .then(function(obj){
                 expect(obj.objectId).to.exist;
+                return ncmb.User
+                           .relatedTo(obj, "belongUser")
+                           .fetchAll();
+              })
+              .then(function(obj){
+                expect(obj.length).to.be.eql(2);
                 done();
               })
               .catch(function(err){
@@ -491,7 +539,17 @@ describe("NCMB Role", function(){
                 }else{
                   expect(obj.objectId).to.exist;
                   add_role_id = obj.objectId;
-                  done();
+                  ncmb.Role
+                  .relatedTo(obj, "belongRole")
+                  .fetchAll()
+                  .then(function(obj){
+                    expect(obj.length).to.be.eql(1);
+                    expect(obj[0].roleName).to.be.eql(subrole.roleName);
+                    done()
+                  })
+                  .catch(function(err){
+                    done(err);
+                  });
                 }
               });
         });
@@ -505,7 +563,14 @@ describe("NCMB Role", function(){
               .save()
               .then(function(obj){
                 expect(obj.objectId).to.exist;
-                done();
+                return ncmb.Role
+                           .relatedTo(obj, "belongRole")
+                           .fetchAll();
+              })
+              .then(function(obj){
+                expect(obj.length).to.be.eql(1);
+                expect(obj[0].roleName).to.be.eql(subrole.roleName);
+                done()
               })
               .catch(function(err){
                 done(err);
@@ -525,7 +590,16 @@ describe("NCMB Role", function(){
                   done(err);
                 }else{
                   expect(obj.objectId).to.exist;
-                  done();
+                  ncmb.Role
+                      .relatedTo(obj, "belongRole")
+                      .fetchAll()
+                      .then(function(obj){
+                        expect(obj.length).to.be.eql(2);
+                        done();
+                      })
+                      .catch(function(err){
+                        done(err);
+                      });
                 }
               });
         });
@@ -539,6 +613,12 @@ describe("NCMB Role", function(){
               .save()
               .then(function(obj){
                 expect(obj.objectId).to.exist;
+                return ncmb.Role
+                           .relatedTo(obj, "belongRole")
+                           .fetchAll();
+              })
+              .then(function(obj){
+                expect(obj.length).to.be.eql(2);
                 done();
               })
               .catch(function(err){
@@ -560,7 +640,16 @@ describe("NCMB Role", function(){
                   done(err);
                 }else{
                   expect(obj.objectId).to.exist;
-                  done();
+                  ncmb.Role
+                      .relatedTo(obj, "belongRole")
+                      .fetchAll()
+                      .then(function(obj){
+                        expect(obj.length).to.be.eql(2);
+                        done();
+                      })
+                      .catch(function(err){
+                        done(err);
+                      });
                 }
               });
         });
@@ -575,6 +664,12 @@ describe("NCMB Role", function(){
               .save()
               .then(function(obj){
                 expect(obj.objectId).to.exist;
+                return ncmb.Role
+                           .relatedTo(obj, "belongRole")
+                           .fetchAll();
+              })
+              .then(function(obj){
+                expect(obj.length).to.be.eql(2);
                 done();
               })
               .catch(function(err){

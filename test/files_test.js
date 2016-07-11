@@ -5,7 +5,7 @@ var expect = require("chai").expect;
 var NCMB = require("../lib/ncmb");
 var fs = require("fs");
 
-describe("NCMB Files", function(){
+(typeof window !== "undefined" ? describe.skip : describe)("NCMB Files", function(){
   var ncmb = null;
 
   before(function(){

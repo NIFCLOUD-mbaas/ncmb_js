@@ -5,7 +5,7 @@ var expect   = require("chai").expect;
 
 var signature = require("../lib/signature");
 
-describe("NCMB signature", function(){
+(typeof window !== "undefined" ? describe.skip : describe)("NCMB signature", function(){
   describe("create", function(){
     it("[公式ドキュメント](http://bit.ly/1GsvAKL) の通りに成功する", function(){
       var sig = signature.create(

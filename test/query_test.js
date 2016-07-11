@@ -10,28 +10,51 @@ describe("NCMB Query", function(){
   before(function(){
     ncmb = new NCMB(config.apikey, config.clientkey );
     if(config.apiserver){
-      ncmb.set("protocol", config.apiserver.protocol || "http:")
+      ncmb.set("protocol", config.apiserver.protocol)
           .set("fqdn", config.apiserver.fqdn)
           .set("port", config.apiserver.port)
-          .set("proxy", config.apiserver.proxy || "");
+          .set("proxy", config.apiserver.proxy || "")
+          .set("stub", config.apiserver.stub);
     }
   });
 
   describe("オブジェクト検索", function(){
     var QueryTest = null;
     describe("fetchAll", function(){
+      var queryTest1   = null;
+      var queryTest2  = null;
+      var fetchAllId1 = "fetchAll_object_1";
+      var fetchAllId2 = "fetchAll_object_2";
+      before(function(done){
+        QueryTest  = ncmb.DataStore("QueryTestFetchAll");
+        if(!ncmb.stub){
+          queryTest1 = new QueryTest();
+          queryTest2 = new QueryTest();
+          queryTest1.save()
+                    .then(function(obj){
+                      fetchAllId1 = obj.objectId;
+                      return queryTest2.save();
+                    })
+                    .then(function(obj){
+                      fetchAllId2 = obj.objectId;
+                      done();
+                    })
+                    .catch(function(err){
+                      done(new Error("前処理に失敗しました。"));
+                    });
+        }else{
+          done();
+        }
+      });
       context("検索条件に合致するデータがあれば、リストが返り", function(){
-        before(function(){
-          QueryTest = ncmb.DataStore("QueryTest");
-        });
         it("callback で取得できる", function(done){
           QueryTest.fetchAll(function(err, objs){
             if(err){
               done(err);
             }else{
               expect(objs.length).to.be.equal(2);
-              expect(objs[0].objectId).to.be.equal("fetchAll_object_1");
-              expect(objs[1].objectId).to.be.equal("fetchAll_object_2");
+              expect(objs[0].objectId).to.be.equal(fetchAllId1);
+              expect(objs[1].objectId).to.be.equal(fetchAllId2);
               done();
             }
           });
@@ -40,8 +63,8 @@ describe("NCMB Query", function(){
           QueryTest.fetchAll()
                   .then(function(objs){
                     expect(objs.length).to.be.equal(2);
-                    expect(objs[0].objectId).to.be.equal("fetchAll_object_1");
-                    expect(objs[1].objectId).to.be.equal("fetchAll_object_2");
+                    expect(objs[0].objectId).to.be.equal(fetchAllId1);
+                    expect(objs[1].objectId).to.be.equal(fetchAllId2);
                     done();
                   })
                   .catch(function(err){
@@ -78,16 +101,31 @@ describe("NCMB Query", function(){
       });
     });
     describe("fetch", function(){
+      var queryTest  = null;
+      var fetchId = "fetch_object_1";
+      before(function(done){
+        QueryTest  = ncmb.DataStore("QueryTestFetch");
+        if(!ncmb.stub){
+          queryTest = new QueryTest();
+          queryTest.save()
+                   .then(function(obj){
+                     fetchId = obj.objectId;
+                     done();
+                   })
+                   .catch(function(err){
+                     done(new Error("前処理に失敗しました。"));
+                   });
+        }else{
+          done();
+        }
+      });
       context("検索条件に合致するデータがあれば、その中の一つがオブジェクトが返り", function(){
-        before(function(){
-          QueryTest = ncmb.DataStore("QueryTestFetch");
-        });
         it("callback で取得できる", function(done){
           QueryTest.fetch(function(err, obj){
             if(err){
               done(err);
             }else{
-              expect(obj.objectId).to.be.equal("fetch_object_1");
+              expect(obj.objectId).to.be.equal(fetchId);
               done();
             }
           });
@@ -95,7 +133,7 @@ describe("NCMB Query", function(){
         it("promise で取得できる", function(done){
           QueryTest.fetch()
                   .then(function(obj){
-                    expect(obj.objectId).to.be.equal("fetch_object_1");
+                    expect(obj.objectId).to.be.equal(fetchId);
                     done();
                   })
                   .catch(function(err){
@@ -130,24 +168,39 @@ describe("NCMB Query", function(){
       });
     });
     describe("fetchById", function(){
+      var queryTest  = null;
+      var fetchId = "fetchById_object_1";
+      before(function(done){
+        QueryTest  = ncmb.DataStore("QueryTestFetchById");
+        if(!ncmb.stub){
+          queryTest = new QueryTest();
+          queryTest.save()
+                   .then(function(obj){
+                     fetchId = obj.objectId;
+                     done();
+                   })
+                   .catch(function(err){
+                     done(new Error("前処理に失敗しました。"));
+                   });
+        }else{
+          done();
+        }
+      });
       context("指定したobjectIdのデータがあれば、オブジェクトが返り", function(){
-        before(function(){
-          QueryTest = ncmb.DataStore("QueryTest");
-        });
         it("callback で取得できる", function(done){
-          QueryTest.fetchById("fetchById_object_1", function(err, obj){
+          QueryTest.fetchById(fetchId, function(err, obj){
             if(err){
               done(err);
             }else{
-              expect(obj.objectId).to.be.equal("fetchById_object_1");
+              expect(obj.objectId).to.be.equal(fetchId);
               done();
             }
           });
         });
         it("promise で取得できる", function(done){
-          QueryTest.fetchById("fetchById_object_1")
+          QueryTest.fetchById(fetchId)
                   .then(function(obj){
-                    expect(obj.objectId).to.be.equal("fetchById_object_1");
+                    expect(obj.objectId).to.be.equal(fetchId);
                     done();
                   })
                   .catch(function(err){
@@ -162,7 +215,7 @@ describe("NCMB Query", function(){
         it("callback で取得できる", function(done){
           QueryTest.fetchById("empty_id",function(err, obj){
             if(err){
-              expect(err.text).to.be.equal('{"code":"E404001","error":"No data available."}');
+              expect(err).to.be.an.instanceof(Error);
               done();
             }else{
               done(new Error("失敗すべき"));
@@ -175,7 +228,7 @@ describe("NCMB Query", function(){
                     done(new Error("失敗すべき"));
                   })
                   .catch(function(err){
-                    expect(err.text).to.be.equal('{"code":"E404001","error":"No data available."}');
+                    expect(err).to.be.an.instanceof(Error);
                     done();
                   });
         });
@@ -184,11 +237,49 @@ describe("NCMB Query", function(){
   });
   describe("検索条件追加", function(){
     var QueryTest = null;
+    before(function(done){
+      if(!ncmb.stub){
+        QueryTest = ncmb.DataStore("QueryTest");
+        var queryTest1 = new QueryTest();
+        var queryTest2 = new QueryTest();
+        var geopoint1  = new ncmb.GeoPoint(5,5);
+        var geopoint2  = new ncmb.GeoPoint(70,100);
+        queryTest1.set("number", 1)
+                  .set("name", "exist")
+                  .set("regex", "forregex")
+                  .set("array", [1,2,3])
+                  .set("location", geopoint1)
+                  .set("city", "Tokyo")
+                  .set("status", "pointed")
+                  .save()
+                  .then(function(obj){
+                    return queryTest2.set("number", 2)
+                                     .set("regex", "Regexback")
+                                     .set("array", [2,3,4])
+                                     .set("location", geopoint2)
+                                     .set("city", "Sapporo")
+                                     .set("pointer", obj)
+                                     .save();
+                  })
+                  .then(function(){
+                    done();
+                  })
+                  .catch(function(){
+                    done(new Error("前処理に失敗しました。"));
+                  });
+      }else{
+        done();
+      }
+    });
     describe("where", function(){
-      context("検索条件を指定し、データがあれば、リストが返り", function(){
-        beforeEach(function(){
+      beforeEach(function(){
+        if(ncmb.stub){
           QueryTest = ncmb.DataStore("QueryTestWhere");
-        });
+        }else{
+          QueryTest = ncmb.DataStore("QueryTest");
+        }
+      });
+      context("検索条件を指定し、データがあれば、リストが返り", function(){
         it("callback で取得できる", function(done){
           QueryTest
           .where({number: 1})
@@ -197,7 +288,7 @@ describe("NCMB Query", function(){
               done(err);
             }else{
               expect(objs.length).to.be.equal(1);
-              expect(objs[0].objectId).to.be.equal("where_object_1");
+              expect(objs[0].number).to.be.equal(1);
               done();
             }
           });
@@ -208,7 +299,7 @@ describe("NCMB Query", function(){
           .fetchAll()
           .then(function(objs){
             expect(objs.length).to.be.equal(1);
-            expect(objs[0].objectId).to.be.equal("where_object_1");
+            expect(objs[0].number).to.be.equal(1);
             done();
           })
           .catch(function(err){
@@ -217,7 +308,6 @@ describe("NCMB Query", function(){
         });
       });
       it("検索条件がオブジェクト以外で指定されたとき、エラーが返る", function(done){
-        QueryTest = ncmb.DataStore("QueryTestWhere");
         try{
           QueryTest.where("{number: 1}");
           done(new Error("失敗するべき"));
@@ -227,10 +317,14 @@ describe("NCMB Query", function(){
       });
     });
     describe("equalTo", function(){
-      context("keyの値がvalueと等しいデータを検索した結果のリストが返り", function(){
-        beforeEach(function(){
+      beforeEach(function(){
+        if(ncmb.stub){
           QueryTest = ncmb.DataStore("QueryTestEqualTo");
-        });
+        }else{
+          QueryTest = ncmb.DataStore("QueryTest");
+        }
+      });
+      context("keyの値がvalueと等しいデータを検索した結果のリストが返り", function(){
         it("callback で取得できる", function(done){
           QueryTest
           .equalTo("number", 1)
@@ -239,7 +333,7 @@ describe("NCMB Query", function(){
               done(err);
             }else{
               expect(objs.length).to.be.equal(1);
-              expect(objs[0].objectId).to.be.equal("equalTo_object_1");
+              expect(objs[0].number).to.be.equal(1);
               done();
             }
           });
@@ -250,7 +344,7 @@ describe("NCMB Query", function(){
           .fetchAll()
           .then(function(objs){
             expect(objs.length).to.be.equal(1);
-            expect(objs[0].objectId).to.be.equal("equalTo_object_1");
+            expect(objs[0].number).to.be.equal(1);
             done();
           })
           .catch(function(err){
@@ -259,7 +353,6 @@ describe("NCMB Query", function(){
         });
       });
       it("検索キーが文字列で指定されたとき、エラーが返る", function(done){
-        QueryTest = ncmb.DataStore("QueryTestEqualTo");
         try{
           QueryTest.equalTo(["number"], 1);
           done(new Error("失敗するべき"));
@@ -271,7 +364,11 @@ describe("NCMB Query", function(){
     describe("notEqualTo", function(){
       context("keyの値がvalueと等しくないデータを検索した結果のリストが返り", function(){
         beforeEach(function(){
-          QueryTest = ncmb.DataStore("QueryTestNotEqualTo");
+          if(ncmb.stub){
+            QueryTest = ncmb.DataStore("QueryTestNotEqualTo");
+          }else{
+            QueryTest = ncmb.DataStore("QueryTest");
+          }
         });
         it("callback で取得できる", function(done){
           QueryTest
@@ -281,7 +378,7 @@ describe("NCMB Query", function(){
               done(err);
             }else{
               expect(objs.length).to.be.equal(1);
-              expect(objs[0].objectId).to.be.equal("notEqualTo_object_1");
+              expect(objs[0].number).to.be.equal(1);
               done();
             }
           });
@@ -292,7 +389,7 @@ describe("NCMB Query", function(){
           .fetchAll()
           .then(function(objs){
             expect(objs.length).to.be.equal(1);
-            expect(objs[0].objectId).to.be.equal("notEqualTo_object_1");
+            expect(objs[0].number).to.be.equal(1);
             done();
           })
           .catch(function(err){
@@ -304,7 +401,11 @@ describe("NCMB Query", function(){
     describe("lessThan", function(){
       context("keyの値がvalueより小さいデータを検索した結果のリストが返り", function(){
         beforeEach(function(){
-          QueryTest = ncmb.DataStore("QueryTestLessThan");
+          if(ncmb.stub){
+            QueryTest = ncmb.DataStore("QueryTestLessThan");
+          }else{
+            QueryTest = ncmb.DataStore("QueryTest");
+          }
         });
         it("callback で取得できる", function(done){
           QueryTest
@@ -314,7 +415,7 @@ describe("NCMB Query", function(){
               done(err);
             }else{
               expect(objs.length).to.be.equal(1);
-              expect(objs[0].objectId).to.be.equal("lessThan_object_1");
+              expect(objs[0].number).to.be.equal(1);
               done();
             }
           });
@@ -325,7 +426,7 @@ describe("NCMB Query", function(){
           .fetchAll()
           .then(function(objs){
             expect(objs.length).to.be.equal(1);
-            expect(objs[0].objectId).to.be.equal("lessThan_object_1");
+            expect(objs[0].number).to.be.equal(1);
             done();
           })
           .catch(function(err){
@@ -337,28 +438,32 @@ describe("NCMB Query", function(){
     describe("lessThanOrEqualTo", function(){
       context("keyの値がvalue以下のデータを検索した結果のリストが返り", function(){
         beforeEach(function(){
-          QueryTest = ncmb.DataStore("QueryTestLessThanOrEqualTo");
+          if(ncmb.stub){
+            QueryTest = ncmb.DataStore("QueryTestLessThanOrEqualTo");
+          }else{
+            QueryTest = ncmb.DataStore("QueryTest");
+          }
         });
         it("callback で取得できる", function(done){
           QueryTest
-          .lessThanOrEqualTo("number", 2)
+          .lessThanOrEqualTo("number", 1)
           .fetchAll(function(err, objs){
             if(err){
               done(err);
             }else{
               expect(objs.length).to.be.equal(1);
-              expect(objs[0].objectId).to.be.equal("lessThanOrEqualTo_object_1");
+              expect(objs[0].number).to.be.equal(1);
               done();
             }
           });
         });
         it("promise で取得できる", function(done){
           QueryTest
-          .lessThanOrEqualTo("number", 2)
+          .lessThanOrEqualTo("number", 1)
           .fetchAll()
           .then(function(objs){
             expect(objs.length).to.be.equal(1);
-            expect(objs[0].objectId).to.be.equal("lessThanOrEqualTo_object_1");
+            expect(objs[0].number).to.be.equal(1);
             done();
           })
           .catch(function(err){
@@ -370,28 +475,32 @@ describe("NCMB Query", function(){
     describe("greaterThan", function(){
       context("keyの値がvalueより大きいデータを検索した結果のリストが返り", function(){
         beforeEach(function(){
-          QueryTest = ncmb.DataStore("QueryTestGreaterThan");
+          if(ncmb.stub){
+            QueryTest = ncmb.DataStore("QueryTestGreaterThan");
+          }else{
+            QueryTest = ncmb.DataStore("QueryTest");
+          }
         });
         it("callback で取得できる", function(done){
           QueryTest
-          .greaterThan("number", 0)
+          .greaterThan("number", 1)
           .fetchAll(function(err, objs){
             if(err){
               done(err);
             }else{
               expect(objs.length).to.be.equal(1);
-              expect(objs[0].objectId).to.be.equal("greaterThan_object_1");
+              expect(objs[0].number).to.be.equal(2);
               done();
             }
           });
         });
         it("promise で取得できる", function(done){
           QueryTest
-          .greaterThan("number", 0)
+          .greaterThan("number", 1)
           .fetchAll()
           .then(function(objs){
             expect(objs.length).to.be.equal(1);
-            expect(objs[0].objectId).to.be.equal("greaterThan_object_1");
+            expect(objs[0].number).to.be.equal(2);
             done();
           })
           .catch(function(err){
@@ -403,28 +512,32 @@ describe("NCMB Query", function(){
     describe("greaterThanOrEqualTo", function(){
       context("keyの値がvalue以上のデータを検索した結果のリストが返り", function(){
         beforeEach(function(){
-          QueryTest = ncmb.DataStore("QueryTestGreaterThanOrEqualTo");
+          if(ncmb.stub){
+            QueryTest = ncmb.DataStore("QueryTestGreaterThanOrEqualTo");
+          }else{
+            QueryTest = ncmb.DataStore("QueryTest");
+          }
         });
         it("callback で取得できる", function(done){
           QueryTest
-          .greaterThanOrEqualTo("number", 1)
+          .greaterThanOrEqualTo("number", 2)
           .fetchAll(function(err, objs){
             if(err){
               done(err);
             }else{
               expect(objs.length).to.be.equal(1);
-              expect(objs[0].objectId).to.be.equal("greaterThanOrEqualTo_object_1");
+              expect(objs[0].number).to.be.equal(2);
               done();
             }
           });
         });
         it("promise で取得できる", function(done){
           QueryTest
-          .greaterThanOrEqualTo("number", 1)
+          .greaterThanOrEqualTo("number", 2)
           .fetchAll()
           .then(function(objs){
             expect(objs.length).to.be.equal(1);
-            expect(objs[0].objectId).to.be.equal("greaterThanOrEqualTo_object_1");
+            expect(objs[0].number).to.be.equal(2);
             done();
           })
           .catch(function(err){
@@ -434,30 +547,34 @@ describe("NCMB Query", function(){
       });
     });
     describe("in", function(){
-      context("keyの値がvalue配列のいずれかと等しいデータを検索した結果のリストが返り", function(){
-        beforeEach(function(){
+      beforeEach(function(){
+        if(ncmb.stub){
           QueryTest = ncmb.DataStore("QueryTestIn");
-        });
+        }else{
+          QueryTest = ncmb.DataStore("QueryTest");
+        }
+      });
+      context("keyの値がvalue配列のいずれかと等しいデータを検索した結果のリストが返り", function(){
         it("callback で取得できる", function(done){
           QueryTest
-          .in("number", [1,2,3])
+          .in("number", [1,3,4])
           .fetchAll(function(err, objs){
             if(err){
               done(err);
             }else{
               expect(objs.length).to.be.equal(1);
-              expect(objs[0].objectId).to.be.equal("in_object_1");
+              expect(objs[0].number).to.be.equal(1);
               done();
             }
           });
         });
         it("promise で取得できる", function(done){
           QueryTest
-          .in("number", [1,2,3])
+          .in("number", [1,3,4])
           .fetchAll()
           .then(function(objs){
             expect(objs.length).to.be.equal(1);
-            expect(objs[0].objectId).to.be.equal("in_object_1");
+            expect(objs[0].number).to.be.equal(1);
             done();
           })
           .catch(function(err){
@@ -466,7 +583,6 @@ describe("NCMB Query", function(){
         });
       });
       it("検索条件が配列以外で指定されたとき、エラーが返る", function(done){
-        QueryTest = ncmb.DataStore("QueryTestIn");
         try{
           QueryTest.in("number", 1);
           done(new Error("失敗するべき"));
@@ -476,10 +592,14 @@ describe("NCMB Query", function(){
       });
     });
     describe("notIn", function(){
-      context("keyの値がvalue配列のいずれとも等しくないデータを検索した結果のリストが返り", function(){
-        beforeEach(function(){
+      beforeEach(function(){
+        if(ncmb.stub){
           QueryTest = ncmb.DataStore("QueryTestNotIn");
-        });
+        }else{
+          QueryTest = ncmb.DataStore("QueryTest");
+        }
+      });
+      context("keyの値がvalue配列のいずれとも等しくないデータを検索した結果のリストが返り", function(){
         it("callback で取得できる", function(done){
           QueryTest
           .notIn("number", [2,3,4])
@@ -488,7 +608,7 @@ describe("NCMB Query", function(){
               done(err);
             }else{
               expect(objs.length).to.be.equal(1);
-              expect(objs[0].objectId).to.be.equal("notIn_object_1");
+              expect(objs[0].number).to.be.equal(1);
               done();
             }
           });
@@ -499,7 +619,7 @@ describe("NCMB Query", function(){
           .fetchAll()
           .then(function(objs){
             expect(objs.length).to.be.equal(1);
-            expect(objs[0].objectId).to.be.equal("notIn_object_1");
+            expect(objs[0].number).to.be.equal(1);
             done();
           })
           .catch(function(err){
@@ -508,7 +628,6 @@ describe("NCMB Query", function(){
         });
       });
       it("検索条件が配列以外で指定されたとき、エラーが返る", function(done){
-        QueryTest = ncmb.DataStore("QueryTestNotIn");
         try{
           QueryTest.notIn("number", 1);
           done(new Error("失敗するべき"));
@@ -518,30 +637,34 @@ describe("NCMB Query", function(){
       });
     });
     describe("exists", function(){
-      context("valueがtrueのとき、keyに値が存在するデータを検索した結果のリストが返り", function(){
-        beforeEach(function(){
+      beforeEach(function(){
+        if(ncmb.stub){
           QueryTest = ncmb.DataStore("QueryTestExists");
-        });
+        }else{
+          QueryTest = ncmb.DataStore("QueryTest");
+        }
+      });
+      context("valueがtrueのとき、keyに値が存在するデータを検索した結果のリストが返り", function(){
         it("callback で取得できる", function(done){
           QueryTest
-          .exists("number", true)
+          .exists("name", true)
           .fetchAll(function(err, objs){
             if(err){
               done(err);
             }else{
               expect(objs.length).to.be.equal(1);
-              expect(objs[0].objectId).to.be.equal("exists_object_1");
+              expect(objs[0].number).to.be.equal(1);
               done();
             }
           });
         });
         it("promise で取得できる", function(done){
           QueryTest
-          .exists("number", true)
+          .exists("name", true)
           .fetchAll()
           .then(function(objs){
             expect(objs.length).to.be.equal(1);
-            expect(objs[0].objectId).to.be.equal("exists_object_1");
+            expect(objs[0].number).to.be.equal(1);
             done();
           })
           .catch(function(err){
@@ -550,9 +673,6 @@ describe("NCMB Query", function(){
         });
       });
       context("valueがfalseのとき、keyに値が存在しないデータを検索した結果のリストが返り", function(){
-        beforeEach(function(){
-          QueryTest = ncmb.DataStore("QueryTestExists");
-        });
         it("callback で取得できる", function(done){
           QueryTest
           .exists("name", false)
@@ -561,7 +681,7 @@ describe("NCMB Query", function(){
               done(err);
             }else{
               expect(objs.length).to.be.equal(1);
-              expect(objs[0].objectId).to.be.equal("exists_object_1");
+              expect(objs[0].number).to.be.equal(2);
               done();
             }
           });
@@ -572,7 +692,7 @@ describe("NCMB Query", function(){
           .fetchAll()
           .then(function(objs){
             expect(objs.length).to.be.equal(1);
-            expect(objs[0].objectId).to.be.equal("exists_object_1");
+            expect(objs[0].number).to.be.equal(2);
             done();
           })
           .catch(function(err){
@@ -581,7 +701,6 @@ describe("NCMB Query", function(){
         });
       });
       it("検索条件が真偽値以外で指定されたとき、エラーが返る", function(done){
-        QueryTest = ncmb.DataStore("QueryTestExists");
         try{
           QueryTest.exists("number", 1);
           done(new Error("失敗するべき"));
@@ -591,30 +710,34 @@ describe("NCMB Query", function(){
       });
     });
     describe("regularExpressionTo", function(){
-      context("keyの値がvalueの正規表現を含むデータを検索した結果のリストが返り", function(){
-        beforeEach(function(){
+      beforeEach(function(){
+        if(ncmb.stub){
           QueryTest = ncmb.DataStore("QueryTestRegularExpressionTo");
-        });
+        }else{
+          QueryTest = ncmb.DataStore("QueryTest");
+        }
+      });
+      context("keyの値がvalueの正規表現を含むデータを検索した結果のリストが返り", function(){
         it("callback で取得できる", function(done){
           QueryTest
-          .regularExpressionTo("name", "obj")
+          .regularExpressionTo("regex", "regex")
           .fetchAll(function(err, objs){
             if(err){
               done(err);
             }else{
               expect(objs.length).to.be.equal(1);
-              expect(objs[0].objectId).to.be.equal("regex_object_1");
+              expect(objs[0].number).to.be.equal(1);
               done();
             }
           });
         });
         it("promise で取得できる", function(done){
           QueryTest
-          .regularExpressionTo("name", "obj")
+          .regularExpressionTo("regex", "regex")
           .fetchAll()
           .then(function(objs){
             expect(objs.length).to.be.equal(1);
-            expect(objs[0].objectId).to.be.equal("regex_object_1");
+            expect(objs[0].number).to.be.equal(1);
             done();
           })
           .catch(function(err){
@@ -623,29 +746,26 @@ describe("NCMB Query", function(){
         });
       });
       context("前方一致を指定し、データを検索した結果のリストが返り", function(){
-        beforeEach(function(){
-          QueryTest = ncmb.DataStore("QueryTestRegularExpressionTo");
-        });
         it("callback で取得できる", function(done){
           QueryTest
-          .regularExpressionTo("name", "^obj")
+          .regularExpressionTo("regex", "^for")
           .fetchAll(function(err, objs){
             if(err){
               done(err);
             }else{
               expect(objs.length).to.be.equal(1);
-              expect(objs[0].objectId).to.be.equal("regex_object_1");
+              expect(objs[0].number).to.be.equal(1);
               done();
             }
           });
         });
         it("promise で取得できる", function(done){
           QueryTest
-          .regularExpressionTo("name", "^obj")
+          .regularExpressionTo("regex", "^for")
           .fetchAll()
           .then(function(objs){
             expect(objs.length).to.be.equal(1);
-            expect(objs[0].objectId).to.be.equal("regex_object_1");
+            expect(objs[0].number).to.be.equal(1);
             done();
           })
           .catch(function(err){
@@ -654,29 +774,26 @@ describe("NCMB Query", function(){
         });
       });
       context("後方一致を指定し、データを検索した結果のリストが返り", function(){
-        beforeEach(function(){
-          QueryTest = ncmb.DataStore("QueryTestRegularExpressionTo");
-        });
         it("callback で取得できる", function(done){
           QueryTest
-          .regularExpressionTo("name", "Name$")
+          .regularExpressionTo("regex", "back$")
           .fetchAll(function(err, objs){
             if(err){
               done(err);
             }else{
               expect(objs.length).to.be.equal(1);
-              expect(objs[0].objectId).to.be.equal("regex_object_1");
+              expect(objs[0].number).to.be.equal(2);
               done();
             }
           });
         });
         it("promise で取得できる", function(done){
           QueryTest
-          .regularExpressionTo("name", "Name$")
+          .regularExpressionTo("regex", "back$")
           .fetchAll()
           .then(function(objs){
             expect(objs.length).to.be.equal(1);
-            expect(objs[0].objectId).to.be.equal("regex_object_1");
+            expect(objs[0].number).to.be.equal(2);
             done();
           })
           .catch(function(err){
@@ -685,9 +802,8 @@ describe("NCMB Query", function(){
         });
       });
       it("検索条件が文字列以外で指定されたとき、エラーが返る", function(done){
-        QueryTest = ncmb.DataStore("QueryTestRegularExpressionTo");
         try{
-          QueryTest.regularExpressionTo("name", 1);
+          QueryTest.regularExpressionTo("regex", 1);
           done(new Error("失敗するべき"));
         }catch(err){
           done();
@@ -695,30 +811,34 @@ describe("NCMB Query", function(){
       });
     });
     describe("inArray", function(){
-      context("keyの値がvalue配列のいずれかを含む配列のデータを検索した結果のリストが返り", function(){
-        beforeEach(function(){
+      beforeEach(function(){
+        if(ncmb.stub){
           QueryTest = ncmb.DataStore("QueryTestInArray");
-        });
+        }else{
+          QueryTest = ncmb.DataStore("QueryTest");
+        }
+      });
+      context("keyの値がvalue配列のいずれかを含む配列のデータを検索した結果のリストが返り", function(){
         it("callback で取得できる", function(done){
           QueryTest
-          .inArray("array", [1,4,5])
+          .inArray("array", [1,5,6])
           .fetchAll(function(err, objs){
             if(err){
               done(err);
             }else{
               expect(objs.length).to.be.equal(1);
-              expect(objs[0].objectId).to.be.equal("inArray_object_1");
+              expect(objs[0].array[0]).to.be.equal(1);
               done();
             }
           });
         });
         it("promise で取得できる", function(done){
           QueryTest
-          .inArray("array", [1,4,5])
+          .inArray("array", [1,5,6])
           .fetchAll()
           .then(function(objs){
             expect(objs.length).to.be.equal(1);
-            expect(objs[0].objectId).to.be.equal("inArray_object_1");
+            expect(objs[0].array[0]).to.be.equal(1);
             done();
           })
           .catch(function(err){
@@ -727,9 +847,6 @@ describe("NCMB Query", function(){
         });
       });
       context("検索条件を配列以外で指定でき、条件に合うデータを検索した結果のリストが返り", function(){
-        beforeEach(function(){
-          QueryTest = ncmb.DataStore("QueryTestInArray");
-        });
         it("callback で取得できる", function(done){
           QueryTest
           .inArray("array", 1)
@@ -738,7 +855,7 @@ describe("NCMB Query", function(){
               done(err);
             }else{
               expect(objs.length).to.be.equal(1);
-              expect(objs[0].objectId).to.be.equal("inArray_object_1");
+              expect(objs[0].array[0]).to.be.equal(1);
               done();
             }
           });
@@ -749,7 +866,7 @@ describe("NCMB Query", function(){
           .fetchAll()
           .then(function(objs){
             expect(objs.length).to.be.equal(1);
-            expect(objs[0].objectId).to.be.equal("inArray_object_1");
+              expect(objs[0].array[0]).to.be.equal(1);
             done();
           })
           .catch(function(err){
@@ -759,10 +876,14 @@ describe("NCMB Query", function(){
       });
     });
     describe("notInArray", function(){
-      context("keyの値がvalue配列のいずれも含まない配列のデータを検索した結果のリストが返り", function(){
-        beforeEach(function(){
+      beforeEach(function(){
+        if(ncmb.stub){
           QueryTest = ncmb.DataStore("QueryTestNotInArray");
-        });
+        }else{
+          QueryTest = ncmb.DataStore("QueryTest");
+        }
+      });
+      context("keyの値がvalue配列のいずれも含まない配列のデータを検索した結果のリストが返り", function(){
         it("callback で取得できる", function(done){
           QueryTest
           .notInArray("array", [4,5,6])
@@ -771,7 +892,7 @@ describe("NCMB Query", function(){
               done(err);
             }else{
               expect(objs.length).to.be.equal(1);
-              expect(objs[0].objectId).to.be.equal("notInArray_object_1");
+              expect(objs[0].array[0]).to.be.equal(1);
               done();
             }
           });
@@ -782,7 +903,7 @@ describe("NCMB Query", function(){
           .fetchAll()
           .then(function(objs){
             expect(objs.length).to.be.equal(1);
-            expect(objs[0].objectId).to.be.equal("notInArray_object_1");
+            expect(objs[0].array[0]).to.be.equal(1);
             done();
           })
           .catch(function(err){
@@ -791,9 +912,6 @@ describe("NCMB Query", function(){
         });
       });
       context("検索条件を配列以外で指定でき、条件に合うデータを検索した結果のリストが返り", function(){
-        beforeEach(function(){
-          QueryTest = ncmb.DataStore("QueryTestNotInArray");
-        });
         it("callback で取得できる", function(done){
           QueryTest
           .notInArray("array", 4)
@@ -802,7 +920,7 @@ describe("NCMB Query", function(){
               done(err);
             }else{
               expect(objs.length).to.be.equal(1);
-              expect(objs[0].objectId).to.be.equal("notInArray_object_1");
+              expect(objs[0].array[0]).to.be.equal(1);
               done();
             }
           });
@@ -813,7 +931,7 @@ describe("NCMB Query", function(){
           .fetchAll()
           .then(function(objs){
             expect(objs.length).to.be.equal(1);
-            expect(objs[0].objectId).to.be.equal("notInArray_object_1");
+            expect(objs[0].array[0]).to.be.equal(1);
             done();
           })
           .catch(function(err){
@@ -823,10 +941,14 @@ describe("NCMB Query", function(){
       });
     });
     describe("allInArray", function(){
-      context("keyの値がvalue配列のすべてを含む配列のデータを検索した結果のリストが返り", function(){
-        beforeEach(function(){
+      beforeEach(function(){
+        if(ncmb.stub){
           QueryTest = ncmb.DataStore("QueryTestAllInArray");
-        });
+        }else{
+          QueryTest = ncmb.DataStore("QueryTest");
+        }
+      });
+      context("keyの値がvalue配列のすべてを含む配列のデータを検索した結果のリストが返り", function(){
         it("callback で取得できる", function(done){
           QueryTest
           .allInArray("array", [1,2,3])
@@ -835,7 +957,7 @@ describe("NCMB Query", function(){
               done(err);
             }else{
               expect(objs.length).to.be.equal(1);
-              expect(objs[0].objectId).to.be.equal("allInArray_object_1");
+              expect(objs[0].array[0]).to.be.equal(1);
               done();
             }
           });
@@ -846,7 +968,7 @@ describe("NCMB Query", function(){
           .fetchAll()
           .then(function(objs){
             expect(objs.length).to.be.equal(1);
-            expect(objs[0].objectId).to.be.equal("allInArray_object_1");
+            expect(objs[0].array[0]).to.be.equal(1);
             done();
           })
           .catch(function(err){
@@ -855,9 +977,6 @@ describe("NCMB Query", function(){
         });
       });
       context("検索条件を配列以外で指定でき、条件に合致するデータを検索した結果のリストが返り", function(){
-        beforeEach(function(){
-          QueryTest = ncmb.DataStore("QueryTestAllInArray");
-        });
         it("callback で取得できる", function(done){
           QueryTest
           .allInArray("array", 1)
@@ -866,7 +985,7 @@ describe("NCMB Query", function(){
               done(err);
             }else{
               expect(objs.length).to.be.equal(1);
-              expect(objs[0].objectId).to.be.equal("allInArray_object_1");
+              expect(objs[0].array[0]).to.be.equal(1);
               done();
             }
           });
@@ -877,7 +996,7 @@ describe("NCMB Query", function(){
           .fetchAll()
           .then(function(objs){
             expect(objs.length).to.be.equal(1);
-            expect(objs[0].objectId).to.be.equal("allInArray_object_1");
+            expect(objs[0].array[0]).to.be.equal(1);
             done();
           })
           .catch(function(err){
@@ -887,10 +1006,16 @@ describe("NCMB Query", function(){
       });
     });
     describe("near", function(){
+      beforeEach(function(){
+        if(ncmb.stub){
+          QueryTest = ncmb.DataStore("QueryTestNear");
+        }else{
+          QueryTest = ncmb.DataStore("QueryTest");
+        }
+      });
       context("keyの値が位置情報のデータがあれば、valueの位置から近い順のリストが返り", function(){
         var geoPoint = null;
         beforeEach(function(){
-          QueryTest = ncmb.DataStore("QueryTestNear");
           geoPoint = new ncmb.GeoPoint(0,0);
         });
         it("callback で取得できる", function(done){
@@ -900,8 +1025,8 @@ describe("NCMB Query", function(){
             if(err){
               done(err);
             }else{
-              expect(objs.length).to.be.equal(1);
-              expect(objs[0].objectId).to.be.equal("near_object_1");
+              expect(objs.length).to.be.equal(2);
+              expect(objs[0].number).to.be.equal(1);
               done();
             }
           });
@@ -911,8 +1036,8 @@ describe("NCMB Query", function(){
           .near("location", geoPoint)
           .fetchAll()
           .then(function(objs){
-            expect(objs.length).to.be.equal(1);
-            expect(objs[0].objectId).to.be.equal("near_object_1");
+            expect(objs.length).to.be.equal(2);
+            expect(objs[0].number).to.be.equal(1);
             done();
           })
           .catch(function(err){
@@ -921,7 +1046,6 @@ describe("NCMB Query", function(){
         });
       });
       it("検索条件がncmb.GeoPoint以外で指定されたとき、エラーが返る", function(done){
-        QueryTest = ncmb.DataStore("QueryTestNear");
         try{
           QueryTest.near("location", [0, 0]);
           done(new Error("失敗するべき"));
@@ -931,10 +1055,16 @@ describe("NCMB Query", function(){
       });
     });
     describe("withinKilometers", function(){
+      beforeEach(function(){
+        if(ncmb.stub){
+          QueryTest = ncmb.DataStore("QueryTestWithinKm");
+        }else{
+          QueryTest = ncmb.DataStore("QueryTest");
+        }
+      });
       context("keyの値が位置情報のデータがあれば、指定したKmの範囲内でvalueの位置から近い順のリストが返り", function(){
         var geoPoint = null;
         beforeEach(function(){
-          QueryTest = ncmb.DataStore("QueryTestWithinKm");
           geoPoint = new ncmb.GeoPoint(0,0);
         });
         it("callback で取得できる", function(done){
@@ -945,7 +1075,7 @@ describe("NCMB Query", function(){
               done(err);
             }else{
               expect(objs.length).to.be.equal(1);
-              expect(objs[0].objectId).to.be.equal("withinKm_object_1");
+              expect(objs[0].number).to.be.equal(1);
               done();
             }
           });
@@ -956,7 +1086,7 @@ describe("NCMB Query", function(){
           .fetchAll()
           .then(function(objs){
             expect(objs.length).to.be.equal(1);
-            expect(objs[0].objectId).to.be.equal("withinKm_object_1");
+            expect(objs[0].number).to.be.equal(1);
             done();
           })
           .catch(function(err){
@@ -965,7 +1095,6 @@ describe("NCMB Query", function(){
         });
       });
       it("検索条件がncmb.GeoPoint以外で指定されたとき、エラーが返る", function(done){
-        QueryTest = ncmb.DataStore("QueryTestWithinKm");
         try{
           QueryTest.withinKilometers("location", [0, 0], 1000);
           done(new Error("失敗するべき"));
@@ -975,10 +1104,16 @@ describe("NCMB Query", function(){
       });
     });
     describe("withinMiles", function(){
+      beforeEach(function(){
+        if(ncmb.stub){
+          QueryTest = ncmb.DataStore("QueryTestWithinMile");
+        }else{
+          QueryTest = ncmb.DataStore("QueryTest");
+        }
+      });
       context("keyの値が位置情報のデータがあれば、指定したマイルの範囲内でvalueの位置から近い順のリストが返り", function(){
         var geoPoint = null;
         beforeEach(function(){
-          QueryTest = ncmb.DataStore("QueryTestWithinMile");
           geoPoint = new ncmb.GeoPoint(0,0);
         });
         it("callback で取得できる", function(done){
@@ -989,7 +1124,7 @@ describe("NCMB Query", function(){
               done(err);
             }else{
               expect(objs.length).to.be.equal(1);
-              expect(objs[0].objectId).to.be.equal("withinMile_object_1");
+              expect(objs[0].number).to.be.equal(1);
               done();
             }
           });
@@ -1000,7 +1135,7 @@ describe("NCMB Query", function(){
           .fetchAll()
           .then(function(objs){
             expect(objs.length).to.be.equal(1);
-            expect(objs[0].objectId).to.be.equal("withinMile_object_1");
+            expect(objs[0].number).to.be.equal(1);
             done();
           })
           .catch(function(err){
@@ -1009,7 +1144,6 @@ describe("NCMB Query", function(){
         });
       });
       it("検索条件がncmb.GeoPoint以外で指定されたとき、エラーが返る", function(done){
-        QueryTest = ncmb.DataStore("QueryTestWithinMile");
         try{
           QueryTest.withinMiles("location", [0, 0], 1000);
           done(new Error("失敗するべき"));
@@ -1019,10 +1153,16 @@ describe("NCMB Query", function(){
       });
     });
     describe("withinRadians", function(){
+      beforeEach(function(){
+        if(ncmb.stub){
+          QueryTest = ncmb.DataStore("QueryTestWithinRad");
+        }else{
+          QueryTest = ncmb.DataStore("QueryTest");
+        }
+      });
       context("keyの値が位置情報のデータがあれば、指定したラジアンの範囲内でvalueの位置から近い順のリストが返り", function(){
         var geoPoint = null;
         beforeEach(function(){
-          QueryTest = ncmb.DataStore("QueryTestWithinRad");
           geoPoint = new ncmb.GeoPoint(0,0);
         });
         it("callback で取得できる", function(done){
@@ -1033,7 +1173,7 @@ describe("NCMB Query", function(){
               done(err);
             }else{
               expect(objs.length).to.be.equal(1);
-              expect(objs[0].objectId).to.be.equal("withinRad_object_1");
+              expect(objs[0].number).to.be.equal(1);
               done();
             }
           });
@@ -1044,7 +1184,7 @@ describe("NCMB Query", function(){
           .fetchAll()
           .then(function(objs){
             expect(objs.length).to.be.equal(1);
-            expect(objs[0].objectId).to.be.equal("withinRad_object_1");
+            expect(objs[0].number).to.be.equal(1);
             done();
           })
           .catch(function(err){
@@ -1053,7 +1193,6 @@ describe("NCMB Query", function(){
         });
       });
       it("検索条件がncmb.GeoPoint以外で指定されたとき、エラーが返る", function(done){
-        QueryTest = ncmb.DataStore("QueryTestWithinRad");
         try{
           QueryTest.withinRadians("location", [0, 0], 0.5);
           done(new Error("失敗するべき"));
@@ -1063,11 +1202,17 @@ describe("NCMB Query", function(){
       });
     });
     describe("withinSquare", function(){
+      beforeEach(function(){
+        if(ncmb.stub){
+          QueryTest = ncmb.DataStore("QueryTestWithinSquare");
+        }else{
+          QueryTest = ncmb.DataStore("QueryTest");
+        }
+      });
       context("keyの値が指定した矩形内の位置情報のデータを検索した結果のリストが返り", function(){
         var swPoint = null;
         var nePoint = null;
         beforeEach(function(){
-          QueryTest = ncmb.DataStore("QueryTestWithinSquare");
           swPoint = new ncmb.GeoPoint(0,0);
           nePoint = new ncmb.GeoPoint(80, 80);
         });
@@ -1079,7 +1224,7 @@ describe("NCMB Query", function(){
               done(err);
             }else{
               expect(objs.length).to.be.equal(1);
-              expect(objs[0].objectId).to.be.equal("withinSquare_object_1");
+              expect(objs[0].number).to.be.equal(1);
               done();
             }
           });
@@ -1090,7 +1235,7 @@ describe("NCMB Query", function(){
           .fetchAll()
           .then(function(objs){
             expect(objs.length).to.be.equal(1);
-            expect(objs[0].objectId).to.be.equal("withinSquare_object_1");
+            expect(objs[0].number).to.be.equal(1);
             done();
           })
           .catch(function(err){
@@ -1099,7 +1244,6 @@ describe("NCMB Query", function(){
         });
       });
       it("検索条件がncmb.GeoPoint以外で指定されたとき、エラーが返る", function(done){
-        QueryTest = ncmb.DataStore("QueryTestWithinSquare");
         try{
           QueryTest.withinSquare("location", [0, 0], [100, 100]);
           done(new Error("失敗するべき"));
@@ -1110,32 +1254,36 @@ describe("NCMB Query", function(){
     });
 
     describe("or", function(){
-      context("複数の検索条件を配列で指定し、いずれかに合致するデータの検索結果が返り", function(){
-        beforeEach(function(){
+      beforeEach(function(){
+        if(ncmb.stub){
           QueryTest = ncmb.DataStore("QueryTestOr");
-        });
+        }else{
+          QueryTest = ncmb.DataStore("QueryTest");
+        }
+      });
+      context("複数の検索条件を配列で指定し、いずれかに合致するデータの検索結果が返り", function(){
         it("callback で取得できる", function(done){
           QueryTest
-          .or([QueryTest.greaterThan("number",0),
-               QueryTest.lessThan("number",10)])
+          .or([QueryTest.greaterThan("number",2),
+               QueryTest.lessThan("number",2)])
           .fetchAll(function(err, objs){
             if(err){
               done(err);
             }else{
               expect(objs.length).to.be.equal(1);
-              expect(objs[0].objectId).to.be.equal("or_object_1");
+              expect(objs[0].number).to.be.equal(1);
               done();
             }
           });
         });
         it("promise で取得できる", function(done){
           QueryTest
-          .or([QueryTest.greaterThan("number",0),
-               QueryTest.lessThan("number",10)])
+          .or([QueryTest.greaterThan("number",2),
+               QueryTest.lessThan("number",2)])
           .fetchAll()
           .then(function(objs){
             expect(objs.length).to.be.equal(1);
-            expect(objs[0].objectId).to.be.equal("or_object_1");
+            expect(objs[0].number).to.be.equal(1);
             done();
           })
           .catch(function(err){
@@ -1144,31 +1292,28 @@ describe("NCMB Query", function(){
         });
       });
       context("複数回条件を指定したとき、すべての条件に合致する検索結果が返り", function(){
-        beforeEach(function(){
-          QueryTest = ncmb.DataStore("QueryTestOr");
-        });
         it("callback で取得できる", function(done){
           QueryTest
-          .or([QueryTest.greaterThan("number",0)])
-          .or([QueryTest.lessThan("number",10)])
+          .or([QueryTest.greaterThan("number",2)])
+          .or([QueryTest.lessThan("number",2)])
           .fetchAll(function(err, objs){
             if(err){
               done(err);
             }else{
               expect(objs.length).to.be.equal(1);
-              expect(objs[0].objectId).to.be.equal("or_object_1");
+              expect(objs[0].number).to.be.equal(1);
               done();
             }
           });
         });
         it("promise で取得できる", function(done){
           QueryTest
-          .or([QueryTest.greaterThan("number",0)])
-          .or([QueryTest.lessThan("number",10)])
+          .or([QueryTest.greaterThan("number",2)])
+          .or([QueryTest.lessThan("number",2)])
           .fetchAll()
           .then(function(objs){
             expect(objs.length).to.be.equal(1);
-            expect(objs[0].objectId).to.be.equal("or_object_1");
+            expect(objs[0].number).to.be.equal(1);
             done();
           })
           .catch(function(err){
@@ -1177,31 +1322,28 @@ describe("NCMB Query", function(){
         });
       });
       context("単一条件を配列に入れずに直接追加することができ、条件に合う検索結果が返り", function(){
-        beforeEach(function(){
-          QueryTest = ncmb.DataStore("QueryTestOr");
-        });
         it("callback で取得できる", function(done){
           QueryTest
-          .or([QueryTest.greaterThan("number",0)])
-          .or(QueryTest.lessThan("number",10))
+          .or([QueryTest.greaterThan("number",2)])
+          .or(QueryTest.lessThan("number",2))
           .fetchAll(function(err, objs){
             if(err){
               done(err);
             }else{
               expect(objs.length).to.be.equal(1);
-              expect(objs[0].objectId).to.be.equal("or_object_1");
+              expect(objs[0].number).to.be.equal(1);
               done();
             }
           });
         });
         it("promise で取得できる", function(done){
           QueryTest
-          .or([QueryTest.greaterThan("number",0)])
-          .or(QueryTest.lessThan("number",10))
+          .or([QueryTest.greaterThan("number",2)])
+          .or(QueryTest.lessThan("number",2))
           .fetchAll()
           .then(function(objs){
             expect(objs.length).to.be.equal(1);
-            expect(objs[0].objectId).to.be.equal("or_object_1");
+            expect(objs[0].number).to.be.equal(1);
             done();
           })
           .catch(function(err){
@@ -1210,7 +1352,6 @@ describe("NCMB Query", function(){
         });
       });
       it("検索条件がクエリ以外で指定されたとき、エラーが返る", function(done){
-        QueryTest = ncmb.DataStore("QueryTestOr");
         try{
           QueryTest.or({number:1});
           done(new Error("失敗するべき"));
@@ -1221,10 +1362,33 @@ describe("NCMB Query", function(){
     });
     describe("select", function(){
       var SubQuery = null;
+      before(function(done){
+        if(!ncmb.stub){
+          SubQuery = ncmb.DataStore("SubQuery");
+          var subquery = new SubQuery();
+          subquery.set("population", 10000001)
+                  .set("cityName", "Tokyo")
+                  .save()
+                  .then(function(){
+                    done();
+                  })
+                  .catch(function(){
+                    done(new Error("前処理に失敗しました。"));
+                  });
+        }else{
+          done();
+        }
+      });
+      beforeEach(function(){
+        if(ncmb.stub){
+          QueryTest = ncmb.DataStore("QueryTestSelect");
+        }else{
+          QueryTest = ncmb.DataStore("QueryTest");
+        }
+      });
       context("keyの値が、サブクエリの検索結果がsubkeyに持つ値のいずれかと一致するオブジェクトを検索した結果が返り", function(){
         beforeEach(function(){
           SubQuery = ncmb.DataStore("SubQuery");
-          QueryTest = ncmb.DataStore("QueryTestSelect");
         });
         it("callback で取得できる", function(done){
           QueryTest
@@ -1234,7 +1398,7 @@ describe("NCMB Query", function(){
               done(err);
             }else{
               expect(objs.length).to.be.equal(1);
-              expect(objs[0].objectId).to.be.equal("select_object_1");
+              expect(objs[0].city).to.be.equal("Tokyo");
               done();
             }
           });
@@ -1245,7 +1409,7 @@ describe("NCMB Query", function(){
           .fetchAll()
           .then(function(objs){
             expect(objs.length).to.be.equal(1);
-            expect(objs[0].objectId).to.be.equal("select_object_1");
+            expect(objs[0].city).to.be.equal("Tokyo");
             done();
           })
           .catch(function(err){
@@ -1254,7 +1418,6 @@ describe("NCMB Query", function(){
         });
       });
       it("検索条件がクエリ以外で指定されたとき、エラーが返る", function(done){
-        QueryTest = ncmb.DataStore("QueryTestSelect");
         try{
           QueryTest.select("city", "cityName", {population:10000000});
           done(new Error("失敗するべき"));
@@ -1264,7 +1427,6 @@ describe("NCMB Query", function(){
       });
       it("keyが文字列以外で指定されたとき、エラーが返る", function(done){
         SubQuery = ncmb.DataStore("SubQuery");
-        QueryTest = ncmb.DataStore("QueryTestSelect");
         try{
           QueryTest.select(["city"], "cityName", SubQuery.greaterThan("population",10000000));
           done(new Error("失敗するべき"));
@@ -1274,7 +1436,6 @@ describe("NCMB Query", function(){
       });
       it("subkeyが文字列以外で指定されたとき、エラーが返る", function(done){
         SubQuery = ncmb.DataStore("SubQuery");
-        QueryTest = ncmb.DataStore("QueryTestSelect");
         try{
           QueryTest.select("city", ["cityName"], SubQuery.greaterThan("population",10000000));
           done(new Error("失敗するべき"));
@@ -1283,7 +1444,6 @@ describe("NCMB Query", function(){
         }
       });
       it("Userクラスの検索条件を指定できる", function(done){
-        QueryTest = ncmb.DataStore("QueryTestSelect");
         try{
           QueryTest.select("Mayer", "name", ncmb.User.equalTo("post","Mayer"));
           done();
@@ -1292,7 +1452,6 @@ describe("NCMB Query", function(){
         }
       });
       it("Roleクラスの検索条件を指定できる", function(done){
-        QueryTest = ncmb.DataStore("QueryTestSelect");
         try{
           QueryTest.select("class", "classname", ncmb.Role.equalTo("course","upper"));
           done();
@@ -1304,12 +1463,37 @@ describe("NCMB Query", function(){
     describe("relatedTo", function(){
       var BaseClass = null;
       var baseObj = null;
-      context("設定したオブジェクトのkeyに関連づけられているオブジェクトを検索した結果が返り", function(){
-        beforeEach(function(){
-          QueryTest = ncmb.DataStore("QueryTestRelatedTo");
-          BaseClass = ncmb.DataStore("BaseClass");
+      var baseObjId = null;
+      before(function(done){
+        BaseClass = ncmb.DataStore("BaseClass");
+        if(!ncmb.stub){
           baseObj = new BaseClass();
-          baseObj.objectId = "base_id";
+          QueryTest = ncmb.DataStore("QueryTest");
+          QueryTest.equalTo("number", 1)
+                   .fetch()
+                   .then(function(obj){
+                     var relation = new ncmb.Relation();
+                     relation.add(obj);
+                     return baseObj.set("belongs", relation)
+                                   .save();
+                   })
+                   .then(function(obj){
+                     baseObjId = obj.objectId;
+                     done();
+                   })
+                   .catch(function(err){
+                     done(err);
+                   });
+        }else{
+          QueryTest = ncmb.DataStore("QueryTestRelatedTo");
+          baseObjId = "base_id";
+          done();
+        }
+      });
+      context("設定したオブジェクトのkeyに関連づけられているオブジェクトを検索した結果が返り", function(){
+        before(function(){
+          baseObj = new BaseClass();
+          baseObj.objectId = baseObjId;
         });
         it("callback で取得できる", function(done){
           QueryTest
@@ -1319,7 +1503,7 @@ describe("NCMB Query", function(){
               done(err);
             }else{
               expect(objs.length).to.be.equal(1);
-              expect(objs[0].objectId).to.be.equal("related_object_1");
+              expect(objs[0].number).to.be.equal(1);
               done();
             }
           });
@@ -1330,7 +1514,7 @@ describe("NCMB Query", function(){
           .fetchAll()
           .then(function(objs){
             expect(objs.length).to.be.equal(1);
-            expect(objs[0].objectId).to.be.equal("related_object_1");
+            expect(objs[0].number).to.be.equal(1);
             done();
           })
           .catch(function(err){
@@ -1339,7 +1523,6 @@ describe("NCMB Query", function(){
         });
       });
       it("ncmb.Userの関連オブジェクトを検索できる", function(done){
-        QueryTest = ncmb.DataStore("QueryTestRelatedTo");
         var user = new ncmb.User();
         user.objectId = "user_id";
         try{
@@ -1351,7 +1534,6 @@ describe("NCMB Query", function(){
         }
       });
       it("ncmb.Roleの関連オブジェクトを検索できる", function(done){
-        QueryTest = ncmb.DataStore("QueryTestRelatedTo");
         var role = new ncmb.Role("related_role");
         role.objectId = "role_id";
         try{
@@ -1364,7 +1546,6 @@ describe("NCMB Query", function(){
       });
 
       it("objectがobjectIdを持たないときエラーが返る", function(done){
-        QueryTest = ncmb.DataStore("QueryTestRelatedTo");
         BaseClass = ncmb.DataStore("BaseClass");
         baseObj = new BaseClass();
         try{
@@ -1376,7 +1557,6 @@ describe("NCMB Query", function(){
         }
       });
       it("objectがncmbオブジェクトでないときエラーが返る", function(done){
-        QueryTest = ncmb.DataStore("QueryTestRelatedTo");
         try{
           QueryTest
           .relatedTo({name:"name"}, "belongs");
@@ -1386,7 +1566,6 @@ describe("NCMB Query", function(){
         }
       });
       it("keyが文字列でないときエラーが返る", function(done){
-        QueryTest = ncmb.DataStore("QueryTestRelatedTo");
         BaseClass = ncmb.DataStore("BaseClass");
         baseObj = new BaseClass();
         baseObj.objectId = "base_id";
@@ -1401,11 +1580,16 @@ describe("NCMB Query", function(){
     });
     describe("inQuery", function(){
       var SubQuery = null;
-      context("サブクエリの検索結果のいずれかのポインタをkeyに持つオブジェクトを検索した結果が返り", function(){
-        beforeEach(function(){
-          SubQuery = ncmb.DataStore("SubQuery");
+      beforeEach(function(){
+        if(ncmb.stub){
           QueryTest = ncmb.DataStore("QueryTestInQuery");
-        });
+          SubQuery = ncmb.DataStore("SubQuery");
+        }else{
+          QueryTest = ncmb.DataStore("QueryTest");
+          SubQuery = ncmb.DataStore("QueryTest");
+        }
+      });
+      context("サブクエリの検索結果のいずれかのポインタをkeyに持つオブジェクトを検索した結果が返り", function(){
         it("callback で取得できる", function(done){
           QueryTest
           .inQuery("pointer", SubQuery.equalTo("status","pointed"))
@@ -1414,7 +1598,7 @@ describe("NCMB Query", function(){
               done(err);
             }else{
               expect(objs.length).to.be.equal(1);
-              expect(objs[0].objectId).to.be.equal("inquery_object_1");
+              expect(objs[0].number).to.be.equal(2);
               done();
             }
           });
@@ -1425,7 +1609,7 @@ describe("NCMB Query", function(){
           .fetchAll()
           .then(function(objs){
             expect(objs.length).to.be.equal(1);
-            expect(objs[0].objectId).to.be.equal("inquery_object_1");
+            expect(objs[0].number).to.be.equal(2);
             done();
           })
           .catch(function(err){
@@ -1434,7 +1618,6 @@ describe("NCMB Query", function(){
         });
       });
       it("検索条件がクエリ以外で指定されたとき、エラーが返る", function(done){
-        QueryTest = ncmb.DataStore("QueryTestInQuery");
         try{
           QueryTest.inQuery("pointer", {status:"pointed"});
           done(new Error("失敗するべき"));
@@ -1443,8 +1626,6 @@ describe("NCMB Query", function(){
         }
       });
       it("keyが文字列以外で指定されたとき、エラーが返る", function(done){
-        SubQuery = ncmb.DataStore("SubQuery");
-        QueryTest = ncmb.DataStore("QueryTestInQuery");
         try{
           QueryTest.inQuery(["pointer"], SubQuery.equalTo("status","pointed"));
           done(new Error("失敗するべき"));
@@ -1453,7 +1634,6 @@ describe("NCMB Query", function(){
         }
       });
       it("Userクラスの検索条件を指定できる", function(done){
-        QueryTest = ncmb.DataStore("QueryTestInQuery");
         try{
           QueryTest.inQuery("pointer", ncmb.User.equalTo("status","pointed"));
           done();
@@ -1462,7 +1642,6 @@ describe("NCMB Query", function(){
         }
       });
       it("Roleクラスの検索条件を指定できる", function(done){
-        QueryTest = ncmb.DataStore("QueryTestInQuery");
         try{
           QueryTest.inQuery("pointer", ncmb.Role.equalTo("status","pointed"));
           done();
@@ -1471,32 +1650,75 @@ describe("NCMB Query", function(){
         }
       });
     });
+  });
 
+  describe("レスポンス加工", function(){
+    var QueryTest = null;
+    var date = new Date(2015, 6, 29, 23, 59, 59, 999);
+    var dateString = '{"__type":"Date","iso":"2015-07-29T14:59:59.999Z"}'
+    before(function(done){
+      if(!ncmb.stub){
+        QueryTest = ncmb.DataStore("OptionalKeyTest");
+        var queryTest1 = new QueryTest();
+        var queryTest2 = new QueryTest();
+        var queryTest3 = new QueryTest();
+        queryTest1.set("number", 2)
+                  .set("order", 1)
+                  .set("status", "pointed")
+                  .save()
+                  .then(function(obj){
+                    return queryTest2.set("number", 1)
+                                     .set("order", 2)
+                                     .set("pointer", obj)
+                                     .save();
+                  })
+                  .then(function(){
+                    return queryTest3.set("number", 2)
+                                     .set("order", 2)
+                                     .set("date", date)
+                                     .save();
+                  })
+                  .then(function(){
+                    done();
+                  })
+                  .catch(function(){
+                    done(new Error("前処理に失敗しました。"));
+                  });
+      }else{
+        done();
+      }
+    });
     describe("include", function(){
-      context("指定したkeyのポインタの中身を含めたオブジェクトが返り", function(){
-        beforeEach(function(){
+      beforeEach(function(){
+        if(ncmb.stub){
           QueryTest = ncmb.DataStore("QueryTestInclude");
-        });
+        }else{
+          QueryTest = ncmb.DataStore("OptionalKeyTest");
+        }
+      });
+      context("指定したkeyのポインタの中身を含めたオブジェクトが返り", function(){
         it("callback で取得できる", function(done){
           QueryTest
+          .exists("pointer", true)
           .include("pointer")
           .fetchAll(function(err, objs){
             if(err){
               done(err);
             }else{
               expect(objs.length).to.be.equal(1);
-              expect(objs[0].pointer.objectId).to.be.equal("pointer_object_1");
+              expect(objs[0].pointer.status).to.be.equal("pointed");
               done();
             }
           });
         });
         it("promise で取得できる", function(done){
           QueryTest
+          .exists("pointer", true)
           .include("pointer")
           .fetchAll()
           .then(function(objs){
             expect(objs.length).to.be.equal(1);
-            expect(objs[0].pointer.objectId).to.be.equal("pointer_object_1");
+            expect(objs[0].pointer.status).to.be.equal("pointed");
             done();
           })
           .catch(function(err){
@@ -1505,11 +1727,9 @@ describe("NCMB Query", function(){
         });
       });
       context("複数のkeyを指定したとき、最後に設定したキーを反映し、", function(){
-        beforeEach(function(){
-          QueryTest = ncmb.DataStore("QueryTestInclude");
-        });
         it("callback で取得できる", function(done){
           QueryTest
+          .exists("pointer", true)
           .include("object")
           .include("pointer")
           .fetchAll(function(err, objs){
@@ -1517,19 +1737,20 @@ describe("NCMB Query", function(){
               done(err);
             }else{
               expect(objs.length).to.be.equal(1);
-              expect(objs[0].pointer.objectId).to.be.equal("pointer_object_1");
+              expect(objs[0].pointer.status).to.be.equal("pointed");
               done();
             }
           });
         });
         it("promise で取得できる", function(done){
           QueryTest
+          .exists("pointer", true)
           .include("object")
           .include("pointer")
           .fetchAll()
           .then(function(objs){
             expect(objs.length).to.be.equal(1);
-            expect(objs[0].pointer.objectId).to.be.equal("pointer_object_1");
+            expect(objs[0].pointer.status).to.be.equal("pointed");
             done();
           })
           .catch(function(err){
@@ -1538,7 +1759,6 @@ describe("NCMB Query", function(){
         });
       });
       it("keyが文字列以外で指定されたとき、エラーが返る", function(done){
-        QueryTest = ncmb.DataStore("QueryTestInclude");
         try{
           QueryTest.include(["number"]);
           done(new Error("失敗するべき"));
@@ -1548,10 +1768,17 @@ describe("NCMB Query", function(){
       });
     });
     describe("count", function(){
-      context("設定するとリスト共に件数が返り", function(){
-        beforeEach(function(){
+      var res_count = null;
+      beforeEach(function(){
+        if(ncmb.stub){
           QueryTest = ncmb.DataStore("QueryTestCount");
-        });
+          res_count = 1;
+        }else{
+          QueryTest = ncmb.DataStore("OptionalKeyTest");
+          res_count = 3;
+        }
+      });
+      context("設定するとリスト共に件数が返り", function(){
         it("callback で取得できる", function(done){
           QueryTest
           .count()
@@ -1559,8 +1786,8 @@ describe("NCMB Query", function(){
             if(err){
               done(err);
             }else{
-              expect(objs.length).to.be.equal(1);
-              expect(objs.count).to.be.equal(1);
+              expect(objs.length).to.be.equal(res_count);
+              expect(objs.count).to.be.equal(res_count);
               done();
             }
           });
@@ -1570,8 +1797,8 @@ describe("NCMB Query", function(){
           .count()
           .fetchAll()
           .then(function(objs){
-            expect(objs.length).to.be.equal(1);
-            expect(objs.count).to.be.equal(1);
+            expect(objs.length).to.be.equal(res_count);
+            expect(objs.count).to.be.equal(res_count);
             done();
           })
           .catch(function(err){
@@ -1580,9 +1807,6 @@ describe("NCMB Query", function(){
         });
       });
       context("検索結果が0件のとき件数が正しく返り", function(){
-        beforeEach(function(){
-          QueryTest = ncmb.DataStore("QueryTestCount");
-        });
         it("callback で取得できる", function(done){
           QueryTest
           .count()
@@ -1614,10 +1838,14 @@ describe("NCMB Query", function(){
       });
     });
     describe("order", function(){
-      context("指定したkeyの昇順でリストが返り", function(){
-        beforeEach(function(){
+      beforeEach(function(){
+        if(ncmb.stub){
           QueryTest = ncmb.DataStore("QueryTestOrder");
-        });
+        }else{
+          QueryTest = ncmb.DataStore("OptionalKeyTest");
+        }
+      });
+      context("指定したkeyの昇順でリストが返り", function(){
         it("callback で取得できる", function(done){
           QueryTest
           .order("number")
@@ -1625,8 +1853,10 @@ describe("NCMB Query", function(){
             if(err){
               done(err);
             }else{
-              expect(objs.length).to.be.equal(2);
-              expect(objs[0].objectId).to.be.equal("order_object_1");
+              expect(objs.length).to.be.equal(3);
+              expect(objs[0].number).to.be.equal(1);
+              expect(objs[1].number).to.be.equal(2);
+              expect(objs[2].number).to.be.equal(2);
               done();
             }
           });
@@ -1636,8 +1866,10 @@ describe("NCMB Query", function(){
           .order("number")
           .fetchAll()
           .then(function(objs){
-            expect(objs.length).to.be.equal(2);
-            expect(objs[0].objectId).to.be.equal("order_object_1");
+            expect(objs.length).to.be.equal(3);
+            expect(objs[0].number).to.be.equal(1);
+            expect(objs[1].number).to.be.equal(2);
+            expect(objs[2].number).to.be.equal(2);
             done();
           })
           .catch(function(err){
@@ -1646,9 +1878,6 @@ describe("NCMB Query", function(){
         });
       });
       context("descendingフラグをtrueにすると降順でリストが返り", function(){
-        beforeEach(function(){
-          QueryTest = ncmb.DataStore("QueryTestOrder");
-        });
         it("callback で取得できる", function(done){
           QueryTest
           .order("number", true)
@@ -1656,8 +1885,10 @@ describe("NCMB Query", function(){
             if(err){
               done(err);
             }else{
-              expect(objs.length).to.be.equal(2);
-              expect(objs[0].objectId).to.be.equal("order_object_2");
+              expect(objs.length).to.be.equal(3);
+              expect(objs[0].number).to.be.equal(2);
+              expect(objs[1].number).to.be.equal(2);
+              expect(objs[2].number).to.be.equal(1);
               done();
             }
           });
@@ -1667,8 +1898,10 @@ describe("NCMB Query", function(){
           .order("number", true)
           .fetchAll()
           .then(function(objs){
-            expect(objs.length).to.be.equal(2);
-            expect(objs[0].objectId).to.be.equal("order_object_2");
+            expect(objs.length).to.be.equal(3);
+            expect(objs[0].number).to.be.equal(2);
+            expect(objs[1].number).to.be.equal(2);
+            expect(objs[2].number).to.be.equal(1);
             done();
           })
           .catch(function(err){
@@ -1677,19 +1910,21 @@ describe("NCMB Query", function(){
         });
       });
       context("複数の条件を指定して検索するとリストが返り", function(){
-        beforeEach(function(){
-          QueryTest = ncmb.DataStore("QueryTestOrder");
-        });
         it("callback で取得できる", function(done){
           QueryTest
           .order("number")
-          .order("createDate")
+          .order("order")
           .fetchAll(function(err, objs){
             if(err){
               done(err);
             }else{
               expect(objs.length).to.be.equal(3);
-              expect(objs[0].objectId).to.be.equal("order_object_1");
+              expect(objs[0].number).to.be.equal(1);
+              expect(objs[1].number).to.be.equal(2);
+              expect(objs[2].number).to.be.equal(2);
+              expect(objs[0].order).to.be.equal(2);
+              expect(objs[1].order).to.be.equal(1);
+              expect(objs[2].order).to.be.equal(2);
               done();
             }
           });
@@ -1697,11 +1932,16 @@ describe("NCMB Query", function(){
         it("promise で取得できる", function(done){
           QueryTest
           .order("number")
-          .order("createDate")
+          .order("order")
           .fetchAll()
           .then(function(objs){
             expect(objs.length).to.be.equal(3);
-            expect(objs[0].objectId).to.be.equal("order_object_1");
+            expect(objs[0].number).to.be.equal(1);
+            expect(objs[1].number).to.be.equal(2);
+            expect(objs[2].number).to.be.equal(2);
+            expect(objs[0].order).to.be.equal(2);
+            expect(objs[1].order).to.be.equal(1);
+            expect(objs[2].order).to.be.equal(2);
             done();
           })
           .catch(function(err){
@@ -1710,7 +1950,6 @@ describe("NCMB Query", function(){
         });
       });
       it("descendingフラグが真偽値以外で指定されたとき、エラーが返る", function(done){
-        QueryTest = ncmb.DataStore("QueryTestOrder");
         try{
           QueryTest.order("number", "true");
           done(new Error("失敗するべき"));
@@ -1719,7 +1958,6 @@ describe("NCMB Query", function(){
         }
       });
       it("keyが文字列以外で指定されたとき、エラーが返る", function(done){
-        QueryTest = ncmb.DataStore("QueryTestOrder");
         try{
           QueryTest.order(["number"]);
           done(new Error("失敗するべき"));
@@ -1729,10 +1967,14 @@ describe("NCMB Query", function(){
       });
     });
     describe("limit", function(){
-      context("指定した件数だけリストが返り", function(){
-        beforeEach(function(){
+      beforeEach(function(){
+        if(ncmb.stub){
           QueryTest = ncmb.DataStore("QueryTestLimit");
-        });
+        }else{
+          QueryTest = ncmb.DataStore("OptionalKeyTest");
+        }
+      });
+      context("指定した件数だけリストが返り", function(){
         it("callback で取得できる", function(done){
           QueryTest
           .limit(1)
@@ -1741,7 +1983,6 @@ describe("NCMB Query", function(){
               done(err);
             }else{
               expect(objs.length).to.be.equal(1);
-              expect(objs[0].objectId).to.be.equal("limit_object_1");
               done();
             }
           });
@@ -1752,7 +1993,6 @@ describe("NCMB Query", function(){
           .fetchAll()
           .then(function(objs){
             expect(objs.length).to.be.equal(1);
-            expect(objs[0].objectId).to.be.equal("limit_object_1");
             done();
           })
           .catch(function(err){
@@ -1761,9 +2001,6 @@ describe("NCMB Query", function(){
         });
       });
       context("複数回実行すると最後に設定した件数でリストが返り", function(){
-        beforeEach(function(){
-          QueryTest = ncmb.DataStore("QueryTestLimit");
-        });
         it("callback で取得できる", function(done){
           QueryTest
           .limit(50)
@@ -1773,7 +2010,6 @@ describe("NCMB Query", function(){
               done(err);
             }else{
               expect(objs.length).to.be.equal(1);
-              expect(objs[0].objectId).to.be.equal("limit_object_1");
               done();
             }
           });
@@ -1785,7 +2021,6 @@ describe("NCMB Query", function(){
           .fetchAll()
           .then(function(objs){
             expect(objs.length).to.be.equal(1);
-            expect(objs[0].objectId).to.be.equal("limit_object_1");
             done();
           })
           .catch(function(err){
@@ -1794,7 +2029,6 @@ describe("NCMB Query", function(){
         });
       });
       it("件数が数字以外で指定されたとき、エラーが返る", function(done){
-        QueryTest = ncmb.DataStore("QueryTestLimit");
         try{
           QueryTest.limit("1");
           done(new Error("失敗するべき"));
@@ -1803,7 +2037,6 @@ describe("NCMB Query", function(){
         }
       });
       it("件数が設定可能範囲より大きく指定されたとき、エラーが返る", function(done){
-        QueryTest = ncmb.DataStore("QueryTestLimit");
         try{
           QueryTest.limit(1001);
           done(new Error("失敗するべき"));
@@ -1812,7 +2045,6 @@ describe("NCMB Query", function(){
         }
       });
       it("件数が設定可能範囲より小さく指定されたとき、エラーが返る", function(done){
-        QueryTest = ncmb.DataStore("QueryTestLimit");
         try{
           QueryTest.limit(0);
           done(new Error("失敗するべき"));
@@ -1822,10 +2054,14 @@ describe("NCMB Query", function(){
       });
     });
     describe("skip", function(){
-      context("指定した件数だけ取得開始位置を後ろにしたリストが返り", function(){
-        beforeEach(function(){
+      beforeEach(function(){
+        if(ncmb.stub){
           QueryTest = ncmb.DataStore("QueryTestSkip");
-        });
+        }else{
+          QueryTest = ncmb.DataStore("OptionalKeyTest");
+        }
+      });
+      context("指定した件数だけ取得開始位置を後ろにしたリストが返り", function(){
         it("callback で取得できる", function(done){
           QueryTest
           .skip(1)
@@ -1833,8 +2069,7 @@ describe("NCMB Query", function(){
             if(err){
               done(err);
             }else{
-              expect(objs.length).to.be.equal(1);
-              expect(objs[0].objectId).to.be.equal("skip_object_2");
+              expect(objs.length).to.be.equal(2);
               done();
             }
           });
@@ -1844,8 +2079,7 @@ describe("NCMB Query", function(){
           .skip(1)
           .fetchAll()
           .then(function(objs){
-            expect(objs.length).to.be.equal(1);
-            expect(objs[0].objectId).to.be.equal("skip_object_2");
+            expect(objs.length).to.be.equal(2);
             done();
           })
           .catch(function(err){
@@ -1854,9 +2088,6 @@ describe("NCMB Query", function(){
         });
       });
       context("複数回実行すると最後に設定した条件でリストが返り", function(){
-        beforeEach(function(){
-          QueryTest = ncmb.DataStore("QueryTestSkip");
-        });
         it("callback で取得できる", function(done){
           QueryTest
           .skip(50)
@@ -1865,8 +2096,7 @@ describe("NCMB Query", function(){
             if(err){
               done(err);
             }else{
-              expect(objs.length).to.be.equal(1);
-              expect(objs[0].objectId).to.be.equal("skip_object_2");
+              expect(objs.length).to.be.equal(2);
               done();
             }
           });
@@ -1877,8 +2107,7 @@ describe("NCMB Query", function(){
           .skip(1)
           .fetchAll()
           .then(function(objs){
-            expect(objs.length).to.be.equal(1);
-            expect(objs[0].objectId).to.be.equal("skip_object_2");
+            expect(objs.length).to.be.equal(2);
             done();
           })
           .catch(function(err){
@@ -1887,7 +2116,6 @@ describe("NCMB Query", function(){
         });
       });
       it("引数が負の値で指定されたとき、エラーが返る", function(done){
-        QueryTest = ncmb.DataStore("QueryTestSkip");
         try{
           QueryTest.skip(-1);
           done(new Error("失敗するべき"));
@@ -1896,7 +2124,6 @@ describe("NCMB Query", function(){
         }
       });
       it("引数が数値以外で指定されたとき、エラーが返る", function(done){
-        QueryTest = ncmb.DataStore("QueryTestSkip");
         try{
           QueryTest.skip("1");
           done(new Error("失敗するべき"));
@@ -1906,32 +2133,34 @@ describe("NCMB Query", function(){
       });
     });
     describe("setOperand", function(){
-      context("オペランドなしの検索条件でvalueにDate型がセットされたとき、検索結果のリストが返り", function(){
-        var date = null;
-        beforeEach(function(){
+      beforeEach(function(){
+        if(ncmb.stub){
           QueryTest = ncmb.DataStore("QueryTestDate");
-          date = new Date(2015, 6, 29, 23, 59, 59, 999);
-        });
+        }else{
+          QueryTest = ncmb.DataStore("OptionalKeyTest");
+        }
+      });
+      context("オペランドなしの検索条件でvalueにDate型がセットされたとき、検索結果のリストが返り", function(){
         it("callback で取得できる", function(done){
           QueryTest
-          .equalTo("createDate", date)
+          .equalTo("date", date)
           .fetchAll(function(err, objs){
             if(err){
               done(err);
             }else{
               expect(objs.length).to.be.equal(1);
-              expect(objs[0].createDate).to.be.equal("2015-07-29T23:59:59.999Z");
+              expect(JSON.stringify(objs[0].date)).to.be.equal(dateString);
               done();
             }
           });
         });
         it("promise で取得できる", function(done){
           QueryTest
-          .equalTo("createDate", date)
+          .equalTo("date", date)
           .fetchAll()
           .then(function(objs){
             expect(objs.length).to.be.equal(1);
-            expect(objs[0].createDate).to.be.equal("2015-07-29T23:59:59.999Z");
+            expect(JSON.stringify(objs[0].date)).to.be.equal(dateString);
             done();
           })
           .catch(function(err){
@@ -1940,31 +2169,28 @@ describe("NCMB Query", function(){
         });
       });
       context("オペランドありの検索条件でvalueにDate型がセットされたとき、検索結果のリストが返り", function(){
-        var date = null;
-        beforeEach(function(){
-          QueryTest = ncmb.DataStore("QueryTestDate");
-          date = new Date(2015, 6, 29, 23, 59, 59, 999);
-        });
         it("callback で取得できる", function(done){
           QueryTest
-          .notEqualTo("createDate", date)
+          .notEqualTo("date", date)
           .fetchAll(function(err, objs){
             if(err){
               done(err);
             }else{
-              expect(objs.length).to.be.equal(1);
-              expect(objs[0].createDate).to.not.eql("2015-07-29T23:59:59.999Z");
+              expect(objs.length).to.be.equal(2);
+              expect(JSON.stringify(objs[0].date)).to.not.eql(dateString);
+              expect(JSON.stringify(objs[1].date)).to.not.eql(dateString);
               done();
             }
           });
         });
         it("promise で取得できる", function(done){
           QueryTest
-          .notEqualTo("createDate", date)
+          .notEqualTo("date", date)
           .fetchAll()
           .then(function(objs){
-            expect(objs.length).to.be.equal(1);
-            expect(objs[0].objectId).to.not.eql("2015-07-29T23:59:59.999Z");
+            expect(objs.length).to.be.equal(2);
+            expect(JSON.stringify(objs[0].date)).to.not.eql(dateString);
+            expect(JSON.stringify(objs[1].date)).to.not.eql(dateString);
             done();
           })
           .catch(function(err){

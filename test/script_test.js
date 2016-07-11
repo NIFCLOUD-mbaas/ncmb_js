@@ -5,7 +5,7 @@ var expect   = require("chai").expect;
 
 var NCMB = require("../lib/ncmb");
 
-describe("NCMB Script", function(){
+(typeof window !== "undefined" ? describe.skip : describe)("NCMB Script", function(){
   var ncmb = null;
   before(function(){
     ncmb = new NCMB(config.apikey, config.clientkey);

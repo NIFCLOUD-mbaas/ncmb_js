@@ -248,7 +248,7 @@ $ browserify -r -p licensify -t [ uglifyify -x .js ] -o ncmb.min.js lib/ncmb.js
 ## For Developer
 
 ```shell
-$ git clone XXX
+$ git clone https://github.com/NIFTYCloud-mbaas/ncmb_js
 $ cd ncmb_js
 $ npm install
 $ npm test
@@ -258,37 +258,38 @@ npm test is not working on default Windows OS environment.
 If you want to do that, please setup nohup command.
 
 ## Automated Test On Frontend
-1.Generate test files
+1. Generate test files
 ```shell
-$ npm run test:modules:build (run only once at the first time)
-$ npm run test:build
+$ npm run test:frontend:modules # run only once at the first time
+$ npm run test:frontend:prepare # generate test files at test/frontend/www
 ```
-2.Make app on mBaaS  
-3.Change anonymous user flag from disable to enable  
-4.Set files as below  
-5.Set Appkey and Secretkey in config.js  
-6.run index.html or Monaca app
+2. Make app on mBaaS
+3. Change anonymous user flag from disable to enable in application setting page
+4. Files exists as below after npm commands
+5. Set Appkey and Secretkey in config.js
+6. Run index.html on browser
+7. Run application in Monaca (Upload files as below)
 
 #### Directory Structure On Browser
 ```
 (Any directory)/
- ├ index.html (./test/frontend/)
- ├ ncmb.min.js (./)
- ├ ncmb.test.full.js (./test/frontend/)
- ├ config.js (./test/frontend/)
+ ├ index.html
+ ├ ncmb.min.js
+ ├ ncmb.test.full.js
+ ├ config.js
  └css/
-   └mocha.css (./node_modules/monaca/)
+   └mocha.css
 ```
 
 #### Directory Structure On Monaca
 ```
 www/
- ├ index.html (./test/frontend/) //overwrite
- ├ ncmb.min.js (./)
- ├ ncmb.test.full.js (./test/frontend/)
- ├ config.js (./test/frontend/)
+ ├ index.html //overwrite
+ ├ ncmb.min.js
+ ├ ncmb.test.full.js
+ ├ config.js
  └css/
-   └mocha.css (./node_modules/monaca/)
+   └mocha.css
 ```
 
 

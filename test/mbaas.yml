@@ -409,6 +409,15 @@
 
 -
   request:
+    url: /2013-09-01/users/objectid
+    method: PUT
+    body: {"mailAddress": "test@example.com"}
+  response:
+    status: 201
+    file: 2013-09-01_users_update_success.json
+
+-
+  request:
     url: /2013-09-01/users
     method: POST
     body:

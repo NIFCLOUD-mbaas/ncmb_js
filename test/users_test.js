@@ -3380,6 +3380,75 @@ describe("NCMB Users", function(){
         });
       });
     });
+    context("mailAddressを保持したインスタンスを更新した場合", function(){
+      beforeEach(function(done){
+        if(!ncmb.stub){
+          user = new ncmb.User({userName:callback_name,password:callback_password,mailAddress:"test@example.com"});
+          ncmb.User
+              .login(user)
+              .then(function(){
+                done();
+              })
+              .catch(function(){
+                done(new Error("前処理に失敗しました。"));
+              });
+        }else{
+          user = new ncmb.User({ objectId:"objectid", mailAddress: "test@example.com"});
+          done();
+        }
+      });
+      context("mailAddressをsetし直さなければbodyに含めずにリクエストして", function(){
+        it("callback でレスポンスを取得できる", function(done){
+          user.set("updatefield", "updated")
+              .update(function(err, data){
+                if(err){
+                  done(err);
+                }else{
+                  expect(data.updateDate).to.exist;
+                  done();
+                }
+              });
+        });
+
+        it("promise でレスポンスを取得できる", function(done){
+          user.set("updatefield", "updated")
+              .update()
+              .then(function(data){
+                expect(data.updateDate).to.exist;
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+      });
+
+      context("mailAddressをsetし直したらbodyに含めてリクエストして", function(){
+        it("callback でレスポンスを取得できる", function(done){
+          user.set("mailAddress", "test@example.com")
+              .update(function(err, data){
+                if(err){
+                  done(err);
+                }else{
+                  expect(data.updateDate).to.exist;
+                  done();
+                }
+              });
+        });
+
+        it("promise でレスポンスを取得できる", function(done){
+          user.set("mailAddress", "test@example.com")
+              .update()
+              .then(function(data){
+                expect(data.updateDate).to.exist;
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+      });
+    });
 
     context("失敗した理由が", function(){
       context("objectId がないときに", function(){

@@ -34,7 +34,6 @@
     "create-error": "^0.3.1",
     "localforage": "^1.2.3",
     "lodash.flatten": "^4.1.1",
-    "lodash.merge": "^4.3.2",
     "node-localstorage": "^0.5.1",
     "object-assign": "^3.0.0",
     "qs": "^2.4.1",

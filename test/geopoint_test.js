@@ -9,15 +9,15 @@ var errors   = require("../lib/errors");
 
 describe("NCMB GeoPoint", function(){
   var ncmb = null;
-
   before(function(){
     ncmb = new NCMB(config.apikey, config.clientkey );
     if(config.apiserver){
       ncmb
-      .set("protocol", config.apiserver.protocol || "http:")
+      .set("protocol", config.apiserver.protocol)
       .set("fqdn",     config.apiserver.fqdn)
       .set("port",     config.apiserver.port)
-      .set("proxy",    config.apiserver.proxy || "");
+      .set("proxy",    config.apiserver.proxy || "")
+      .set("stub", config.apiserver.stub);
     }
   });
 
@@ -99,17 +99,24 @@ describe("NCMB GeoPoint", function(){
       });
 
       it("callback で取得できる", function(done){
-        food.save(function(err, food){
-          if(err) return done(err);
-          expect(food).to.be.an.instanceof(Food);
-          done();
+        food.save(function(err, obj){
+          if(err){
+            done(err);
+          }else{
+            expect(obj.objectId).to.exist;
+            done();
+          }
         });
       });
       it("promise で取得できる", function(done){
-        food.save().then(function(food){
-          expect(food).to.be.an.instanceof(Food);
-          done();
-        }).catch(done);
+        food.save()
+            .then(function(obj){
+              expect(obj.objectId).to.exist;
+              done();
+            })
+            .catch(function(err){
+              done(err);
+            });
       });
     });
   });

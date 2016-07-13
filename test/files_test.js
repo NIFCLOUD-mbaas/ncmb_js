@@ -5,7 +5,7 @@ var expect = require("chai").expect;
 var NCMB = require("../lib/ncmb");
 var fs = require("fs");
 
-describe("NCMB Files", function(){
+(typeof window !== "undefined" ? describe.skip : describe)("NCMB Files", function(){
   var ncmb = null;
 
   before(function(){
@@ -20,13 +20,15 @@ describe("NCMB Files", function(){
 
   describe("ファイル保存", function(){
     var fileName = null;
+    var filePath = null;
     before(function(){
       fileName = "upload.text";
+      filePath = "./test/files/test.text";
     });
     context("upload", function(){
       context("成功した場合", function(){
         it("callback でレスポンスを取得できる", function(done){
-          fs.readFile("./test/files/test.text", function(err, data){
+          fs.readFile(filePath, function(err, data){
             if(err){
               done(err);
             }else{
@@ -43,7 +45,7 @@ describe("NCMB Files", function(){
         });
 
         it("promise でレスポンスを取得できる", function(done){
-          fs.readFile("./test/files/test.text", function(err, data){
+          fs.readFile(filePath, function(err, data){
             if(err){
               done(err);
             }else{
@@ -66,7 +68,7 @@ describe("NCMB Files", function(){
           acl.setPublicReadAccess(true);
         });
         it("callback でレスポンスを取得できる", function(done){
-          fs.readFile("./test/files/test.text", function(err, data){
+          fs.readFile(filePath, function(err, data){
             if(err){
               done(err);
             }else{
@@ -82,7 +84,7 @@ describe("NCMB Files", function(){
           });
         });
         it("promise でレスポンスを取得できる", function(done){
-          fs.readFile("./test/files/test.text", function(err, data){
+          fs.readFile(filePath, function(err, data){
             if(err){
               done(err);
             }else{
@@ -102,7 +104,7 @@ describe("NCMB Files", function(){
       context("失敗した理由が", function(){
         context("fileName がないときに", function(){
           it("callback で取得時エラーを取得できる", function(done){
-            ncmb.File.upload(null, "./test/files/test.text", function(err, file){
+            ncmb.File.upload(null, filePath, function(err, file){
               if(err){
                 expect(err).to.be.an.instanceof(Error);
                 done();
@@ -112,7 +114,7 @@ describe("NCMB Files", function(){
             });
           });
           it("promise で取得時エラーを取得できる", function(done){
-            ncmb.File.upload(null, "./test/files/test.text")
+            ncmb.File.upload(null, filePath)
             .then(function(file){
               done(new Error("失敗すべき"));
             })
@@ -124,7 +126,7 @@ describe("NCMB Files", function(){
         });
         context("fileData がないときに", function(){
           it("callback で取得時エラーを取得できる", function(done){
-            ncmb.File.upload("upload.text", null, function(err, file){
+            ncmb.File.upload(fileName, null, function(err, file){
               if(err){
                 expect(err).to.be.an.instanceof(Error);
                 done();
@@ -134,7 +136,7 @@ describe("NCMB Files", function(){
             });
           });
           it("promise で取得時エラーを取得できる", function(done){
-            ncmb.File.upload("upload.text", null)
+            ncmb.File.upload(fileName, null)
             .then(function(file){
               done(new Error("失敗すべき"));
             })
@@ -150,7 +152,7 @@ describe("NCMB Files", function(){
 
   describe("ファイル取得", function(){
     context("download", function(){
-      context("成功した場合", function(){
+      context("fileNameを設定したときファイルの取得に成功し、", function(){
         it("callback でレスポンスを取得できる", function(done){
           ncmb.File.download("fetch_file.text", function(err, file){
             done(err ? err : null);
@@ -159,6 +161,23 @@ describe("NCMB Files", function(){
 
         it("promise でレスポンスを取得できる", function(done){
           ncmb.File.download("fetch_file.text")
+          .then(function(file){
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
+        });
+      });
+      context("fileNameとresponseTypeを設定したときファイルの取得に成功し、", function(){
+        it("callback でレスポンスを取得できる", function(done){
+          ncmb.File.download("fetch_with_responsetype.text", "arraybuffer", function(err, file){
+            done(err ? err : null);
+          });
+        });
+
+        it("promise でレスポンスを取得できる", function(done){
+          ncmb.File.download("fetch_with_responsetype.text")
           .then(function(file){
             done();
           })
@@ -180,6 +199,46 @@ describe("NCMB Files", function(){
 
           it("promise で取得時エラーを取得できる", function(done){
             ncmb.File.download()
+            .then(function(file){
+              done(new Error("失敗すべき"));
+            })
+            .catch(function(err){
+              expect(err).to.be.an.instanceof(Error);
+              done();
+            });
+          });
+        });
+        context("fileName がstring型でないときに", function(){
+
+          it("callback で取得時エラーを取得できる", function(done){
+            ncmb.File.download(["fileName"], function(err, file){
+              expect(err).to.be.an.instanceof(Error);
+              done();
+            });
+          });
+
+          it("promise で取得時エラーを取得できる", function(done){
+            ncmb.File.download(["fileName"])
+            .then(function(file){
+              done(new Error("失敗すべき"));
+            })
+            .catch(function(err){
+              expect(err).to.be.an.instanceof(Error);
+              done();
+            });
+          });
+        });
+        context("responseType がstring型でないときに", function(){
+
+          it("callback で取得時エラーを取得できる", function(done){
+            ncmb.File.download("fetch_file.text", ["bufferarray"], function(err, file){
+              expect(err).to.be.an.instanceof(Error);
+              done();
+            });
+          });
+
+          it("promise で取得時エラーを取得できる", function(done){
+            ncmb.File.download("fetch_file.text", ["bufferarray"])
             .then(function(file){
               done(new Error("失敗すべき"));
             })

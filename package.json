@@ -1,7 +1,7 @@
 {
   "name": "ncmb",
   "description": "JavaScript SDK for NiftyCloud mobile backend",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "homepage": "http://mb.cloud.nifty.com/",
   "repository": {
     "type": "git",
@@ -34,7 +34,6 @@
     "create-error": "^0.3.1",
     "localforage": "^1.2.3",
     "lodash.flatten": "^4.1.1",
-    "lodash.merge": "^4.3.2",
     "node-localstorage": "^0.5.1",
     "object-assign": "^3.0.0",
     "qs": "^2.4.1",
@@ -53,13 +52,18 @@
     "mocha": "^2.1.0",
     "licensify": "^1.4.0",
     "stubcell": "^0.8.0",
-    "uglifyify": "^3.0.1"
+    "uglifyify": "^3.0.1",
+    "lodash-cli": "^4.5.0"
   },
   "browser": {
     "superagent-proxy": false
   },
   "scripts": {
     "test": "nohup npm run stub:start & sleep 5 && NODE_ENV=test mocha -R list test/**_test.js && npm run cov:80 && npm run stub:stop",
+    "test:frontend:modules": "lodash -o test/frontend/lodash.js && cat node_modules/mocha/mocha.js node_modules/chai/chai.js test/frontend/lodash.min.js > test/frontend/test_modules.js",
+    "test:frontend:testfile": "cat test/frontend/header.js test/**_test.js test/frontend/footer.js |sed -e '/require(.*)/d' -e '/use strict/d' > test/frontend/ncmb_test.js",
+    "test:frontend:build": "npm run test:frontend:testfile && cat test/frontend/test_modules.js test/frontend/module_setup.js test/frontend/ncmb_test.js test/frontend/test_run.js > test/frontend/www/ncmb_test.full.js",
+    "test:frontend:prepare": "mkdir -p test/frontend/www/css && npm run test:frontend:build && cp test/frontend/index.html ncmb.min.js test/frontend/config.js test/frontend/www && cp node_modules/mocha/mocha.css test/frontend/www/css",
     "coverage": "NODE_ENV=test istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec test/**_test.js && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "coverage_": "nohup npm run stub:start & sleep 5 && NODE_ENV=test istanbul cover _mocha -- -R spec test/**_test.js && npm run stub:stop",
     "cov:80": "npm run coverage 2>&1 | grep Lines | perl -nle 'my ($l, $c, $p, @d) = split(/[\\s%]+/); exit(($p > 80) == 0)'",

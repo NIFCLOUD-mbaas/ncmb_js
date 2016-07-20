@@ -248,7 +248,7 @@ $ browserify -r -p licensify -t [ uglifyify -x .js ] -o ncmb.min.js lib/ncmb.js
 ## For Developer
 
 ```shell
-$ git clone XXX
+$ git clone https://github.com/NIFTYCloud-mbaas/ncmb_js
 $ cd ncmb_js
 $ npm install
 $ npm test
@@ -256,6 +256,42 @@ $ npm test
 
 npm test is not working on default Windows OS environment.
 If you want to do that, please setup nohup command.
+
+## Automated Test On Frontend
+1. Generate test files
+```shell
+$ npm run test:frontend:modules # run only once at the first time
+$ npm run test:frontend:prepare # generate test files at test/frontend/www
+```
+2. Make app on mBaaS
+3. Change anonymous user flag from disable to enable in application setting page
+4. Files exists as below after npm commands
+5. Set Appkey and Secretkey in config.js
+6. Run index.html on browser
+7. Run application in Monaca (Upload files as below)
+
+#### Directory Structure On Browser
+```
+(Any directory)/
+ ├ index.html
+ ├ ncmb.min.js
+ ├ ncmb.test.full.js
+ ├ config.js
+ └css/
+   └mocha.css
+```
+
+#### Directory Structure On Monaca
+```
+www/
+ ├ index.html //overwrite
+ ├ ncmb.min.js
+ ├ ncmb.test.full.js
+ ├ config.js
+ └css/
+   └mocha.css
+```
+
 
 ## License
 

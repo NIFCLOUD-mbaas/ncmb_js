@@ -10,12 +10,27 @@ describe("NCMB Relation", function(){
   before(function(){
     ncmb = new NCMB(config.apikey, config.clientkey);
     if(config.apiserver){
-      ncmb.set("protocol", config.apiserver.protocol || "http:")
+      ncmb.set("protocol", config.apiserver.protocol)
           .set("fqdn", config.apiserver.fqdn)
           .set("port", config.apiserver.port)
-          .set("proxy", config.apiserver.proxy || "");
+          .set("proxy", config.apiserver.proxy || "")
+          .set("stub", config.apiserver.stub);
     }
   });
+
+  var data_callback_id  = null;
+  var data_promise_id   = null;
+  var data_related_id   = null;
+  var user_callback_id  = null;
+  var user_promise_id   = null;
+  var user_related_id   = null;
+  var role_callback_id  = null;
+  var role_promise_id   = null;
+  var role_related_id   = null;
+  var array_callback_id = null;
+  var array_promise_id  = null;
+  var array_related1_id = null;
+  var array_related2_id = null;
 
   describe("リレーションの追加", function(){
     var relation = null;
@@ -39,17 +54,23 @@ describe("NCMB Relation", function(){
             if(err){
               done(err);
             }else{
-              expect(obj.objectId).to.be.eql("relation_id");
+              expect(obj).to.have.property("objectId");
+              expect(food).to.have.property("objectId");
+              data_callback_id = obj.objectId;
+              data_related_id  = food.objectId;
               done();
             }
           });
         });
         it("promise で取得できる", function(done){
+          food.objectId = data_related_id;
           relation.add(food);
           mainobj.relation = relation;
           mainobj.save()
                  .then(function(obj){
-                   expect(obj.objectId).to.be.eql("relation_id");
+                   expect(obj).to.have.property("objectId");
+                   expect(food).to.have.property("objectId");
+                   data_promise_id = obj.objectId;
                    done();
                  })
                  .catch(function(err){
@@ -72,17 +93,23 @@ describe("NCMB Relation", function(){
             if(err){
               done(err);
             }else{
-              expect(obj.objectId).to.be.eql("relation_user_id");
+              expect(obj).to.have.property("objectId");
+              expect(subuser).to.have.property("objectId");
+              user_callback_id = obj.objectId;
+              user_related_id = subuser.objectId;
               done();
             }
           });
         });
         it("promise で取得できる", function(done){
+          subuser.objectId = user_related_id;
           relation.add(subuser);
           mainobj.relation = relation;
           mainobj.save()
                  .then(function(obj){
-                  expect(obj.objectId).to.be.eql("relation_user_id");
+                   expect(obj).to.have.property("objectId");
+                   expect(subuser).to.have.property("objectId");
+                   user_promise_id = obj.objectId;
                    done();
                  })
                  .catch(function(err){
@@ -105,17 +132,23 @@ describe("NCMB Relation", function(){
             if(err){
               done(err);
             }else{
-              expect(obj.objectId).to.be.eql("relation_role_id");
+              expect(obj).to.have.property("objectId");
+              expect(subrole).to.have.property("objectId");
+              role_related_id = subrole.objectId;
+              role_callback_id = obj.objectId;
               done();
             }
           });
         });
         it("promise で取得できる", function(done){
+          subrole.objectId = role_related_id;
           relation.add(subrole);
           mainobj.relation = relation;
           mainobj.save()
                  .then(function(obj){
-                  expect(obj.objectId).to.be.eql("relation_role_id");
+                   expect(obj).to.have.property("objectId");
+                   expect(subrole).to.have.property("objectId");
+                   role_promise_id = obj.objectId;
                    done();
                  })
                  .catch(function(err){
@@ -139,23 +172,32 @@ describe("NCMB Relation", function(){
         });
         it("callback で取得できる", function(done){
           relation.add(array);
-
           mainobj.relation = relation;
           mainobj.save(function(err, obj){
             if(err){
               done(err);
             }else{
-              expect(obj.objectId).to.be.eql("relation_multi_id");
+              expect(obj).to.have.property("objectId");
+              expect(food1).to.have.property("objectId");
+              expect(food2).to.have.property("objectId");
+              array_related1_id = food1.objectId;
+              array_related2_id = food2.objectId;
+              array_callback_id = obj.objectId;
               done();
             }
           });
         });
         it("promise で取得できる", function(done){
+          food1.objectId = array_related1_id;
+          food2.objectId = array_related2_id;
           relation.add(array);
           mainobj.relation = relation;
           mainobj.save()
                  .then(function(obj){
-                   expect(obj.objectId).to.be.eql("relation_multi_id");
+                   expect(obj).to.have.property("objectId");
+                   expect(food1).to.have.property("objectId");
+                   expect(food2).to.have.property("objectId");
+                   array_promise_id = obj.objectId;
                    done();
                  })
                  .catch(function(err){
@@ -275,28 +317,31 @@ describe("NCMB Relation", function(){
           relation = new ncmb.Relation();
           MainObj = ncmb.DataStore("MainObj");
           mainobj = new MainObj();
-          mainobj.objectId = "remove_id";
+          if(ncmb.stub) data_callback_id = data_promise_id = "remove_id";
           Food = ncmb.DataStore("food");
           food = new Food({name: "orange", type: "fruit", status: "success"});
+          food.objectId = data_related_id;
         });
         it("callback で取得できる", function(done){
+          mainobj.objectId = data_callback_id;
           relation.remove(food);
           mainobj.relation = relation;
           mainobj.update(function(err, obj){
             if(err){
               done(err);
             }else{
-              expect(obj.objectId).to.be.eql("remove_id");
+              expect(obj.objectId).to.be.eql(data_callback_id);
               done();
             }
           });
         });
         it("promise で取得できる", function(done){
+          mainobj.objectId = data_promise_id;
           relation.remove(food);
           mainobj.relation = relation;
           mainobj.update()
                  .then(function(obj){
-                  expect(obj.objectId).to.be.eql("remove_id");
+                   expect(obj.objectId).to.be.eql(data_promise_id);
                    done();
                  })
                  .catch(function(err){
@@ -310,27 +355,30 @@ describe("NCMB Relation", function(){
           relation = new ncmb.Relation();
           MainObj = ncmb.DataStore("MainObj");
           mainobj = new MainObj();
-          mainobj.objectId = "remove_user_id";
+          if(ncmb.stub) user_callback_id = user_promise_id = "remove_user_id";
           subuser = new ncmb.User({userName:"Yamada Tarou", password:"password"});
+          subuser.objectId = user_related_id;
         });
         it("callback で取得できる", function(done){
+          mainobj.objectId = user_callback_id;
           relation.remove(subuser);
           mainobj.relation = relation;
           mainobj.update(function(err, obj){
             if(err){
               done(err);
             }else{
-              expect(obj.objectId).to.be.eql("remove_user_id");
+              expect(obj.objectId).to.be.eql(user_callback_id);
               done();
             }
           });
         });
         it("promise で取得できる", function(done){
+          mainobj.objectId = user_promise_id;
           relation.remove(subuser);
           mainobj.relation = relation;
           mainobj.update()
                  .then(function(obj){
-                  expect(obj.objectId).to.be.eql("remove_user_id");
+                   expect(obj.objectId).to.be.eql(user_promise_id);
                    done();
                  })
                  .catch(function(err){
@@ -344,27 +392,30 @@ describe("NCMB Relation", function(){
           relation = new ncmb.Relation();
           MainObj = ncmb.DataStore("MainObj");
           mainobj = new MainObj();
-          mainobj.objectId = "remove_role_id";
+          if(ncmb.stub) role_callback_id = role_promise_id = "remove_role_id";
           subrole = new ncmb.Role("role_name");
+          subrole.objectId = role_related_id;
         });
         it("callback で取得できる", function(done){
+          mainobj.objectId = role_callback_id;
           relation.remove(subrole);
           mainobj.relation = relation;
           mainobj.update(function(err, obj){
             if(err){
               done(err);
             }else{
-              expect(obj.objectId).to.be.eql("remove_role_id");
+              expect(obj.objectId).to.be.eql(role_callback_id);
               done();
             }
           });
         });
         it("promise で取得できる", function(done){
+          mainobj.objectId = role_promise_id;
           relation.remove(subrole);
           mainobj.relation = relation;
           mainobj.update()
                  .then(function(obj){
-                  expect(obj.objectId).to.be.eql("remove_role_id");
+                   expect(obj.objectId).to.be.eql(role_promise_id);
                    done();
                  })
                  .catch(function(err){
@@ -381,30 +432,34 @@ describe("NCMB Relation", function(){
           relation = new ncmb.Relation();
           MainObj = ncmb.DataStore("MainObj");
           mainobj = new MainObj();
-          mainobj.objectId = "remove_multi_id";
+          if(ncmb.stub) array_callback_id = array_promise_id = "remove_multi_id";
           Food = ncmb.DataStore("food");
           food1 = new Food({name: "orange", type: "fruit", status: "success"});
           food2 = new Food({name: "apple", type: "fruit", status: "success"});
+          food1.objectId = array_related1_id;
+          food2.objectId = array_related2_id;
           array = [food1, food2];
         });
         it("callback で取得できる", function(done){
+          mainobj.objectId = array_callback_id;
           relation.remove(array);
           mainobj.relation = relation;
           mainobj.update(function(err, obj){
             if(err){
               done(err);
             }else{
-              expect(obj.objectId).to.be.eql("remove_multi_id");
+              expect(obj.objectId).to.be.eql(array_callback_id);
               done();
             }
           });
         });
         it("promise で取得できる", function(done){
+          mainobj.objectId = array_promise_id;
           relation.remove(array);
           mainobj.relation = relation;
           mainobj.update()
                  .then(function(obj){
-                  expect(obj.objectId).to.be.eql("remove_multi_id");
+                   expect(obj.objectId).to.be.eql(array_promise_id);
                    done();
                  })
                  .catch(function(err){

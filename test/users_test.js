@@ -3756,4 +3756,27 @@ describe("NCMB Users", function(){
     });
   });
 
+　// テスト:メールアドレスの確認を行っているか調べる
+　describe("isMailAddressConfirmed", function(){
+  	context("メールアドレスの確認を行っているか調べる、", function(){
+	　  var user = null;
+	    beforeEach(function(){
+	          user = new ncmb.User({userName:"name",password:"passwd"});
+	    });
+	    it("mailAddressConfirm存在しない場合 nullが返る", function(){
+	       user.set("mailAddressConfirm", null);
+	       expect(user.isMailAddressConfirmed()).to.be.eql(null);
+	    });
+	    it("mailAddressConfirm存在し値がtrue場合 trueが返る", function(){
+	       user.set("mailAddressConfirm", true);
+	       expect(user.isMailAddressConfirmed()).to.be.eql(true);
+	    });
+	    it("mailAddressConfirm存在し値がfalse場合 falseが返る", function(){
+	        user.set("mailAddressConfirm", false);
+	        expect(user.isMailAddressConfirmed()).to.be.eql(false);
+	    });
+  	});
+　});
+
+
 });

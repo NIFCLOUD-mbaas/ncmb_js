@@ -3756,9 +3756,9 @@ describe("NCMB Users", function(){
     });
   });
 
-　// テスト:メールアドレスの確認を行っているか調べる
+　// テスト:メールアドレスの確認を行っているかどうかを判別する
 　describe("isMailAddressConfirmed", function(){
-  	context("メールアドレスの確認を行っているか調べる、", function(){
+  	context("メールアドレスの確認を行っているかどうかを判別する", function(){
 	　  var user = null;
 	    beforeEach(function(){
 	          user = new ncmb.User({userName:"name",password:"passwd"});

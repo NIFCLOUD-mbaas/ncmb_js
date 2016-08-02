@@ -3763,9 +3763,9 @@ describe("NCMB Users", function(){
 	    beforeEach(function(){
 	          user = new ncmb.User({userName:"name",password:"passwd"});
 	    });
-	    it("mailAddressConfirm存在しない場合 nullが返る", function(){
+	    it("mailAddressConfirm存在しない場合 falseが返る", function(){
 	       user.set("mailAddressConfirm", null);
-	       expect(user.isMailAddressConfirmed()).to.be.eql(null);
+	       expect(user.isMailAddressConfirmed()).to.be.eql(false);
 	    });
 	    it("mailAddressConfirm存在し値がtrue場合 trueが返る", function(){
 	       user.set("mailAddressConfirm", true);

@@ -3756,10 +3756,10 @@ describe("NCMB Users", function(){
     });
   });
 
-　// テスト:メールアドレスの確認を行っているかどうかを判別する
-　describe("isMailAddressConfirmed", function(){
+  // テスト:メールアドレスの確認を行っているかどうかを判別する
+  describe("isMailAddressConfirmed", function(){
     context("メールアドレスの確認を行っているかどうかを判別する", function(){
-  　  var user = null;
+      var user = null;
       beforeEach(function(){
         user = new ncmb.User({userName:"name",password:"passwd"});
       });
@@ -3779,7 +3779,7 @@ describe("NCMB Users", function(){
           expect(user.isMailAddressConfirmed()).to.be.eql(false);
       });
     });
-　});
+  });
 
 
 });

@@ -260,6 +260,7 @@ If you want to do that, please setup nohup command.
 ## Automated Test On Frontend
 1. Generate test files
 ```shell
+$ npm run build                 # if library is updated, frontend test need to update ncmb.min.js
 $ npm run test:frontend:modules # run only once at the first time
 $ npm run test:frontend:prepare # generate test files at test/frontend/www
 ```

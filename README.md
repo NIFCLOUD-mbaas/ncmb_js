@@ -295,7 +295,7 @@ www/
 
 ## Create SDK Document
 
-Run `npm run doc` command, then documents has created in doc directory.
+Run `npm run docment:generate` command, then documents has created in doc directory.
 
 ## License
 

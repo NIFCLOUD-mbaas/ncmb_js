@@ -293,6 +293,9 @@ www/
    └mocha.css
 ```
 
+## Create SDK Document
+
+Run `npm run docment:generate` command, then documents has created in `jsdoc` directory.
 
 ## License
 

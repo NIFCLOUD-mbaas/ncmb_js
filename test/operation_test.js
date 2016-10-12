@@ -10,7 +10,8 @@ describe("NCMB Operation", function(){
   before(function(){
     ncmb = new NCMB(config.apikey, config.clientkey );
     if(config.apiserver){
-      ncmb.set("protocol", config.apiserver.protocol || "http:")
+      //ncmb.set("protocol", config.apiserver.protocol || "http:")
+      ncmb.set("protocol", config.apiserver.protocol )
           .set("fqdn", config.apiserver.fqdn)
           .set("port", config.apiserver.port)
           .set("proxy", config.apiserver.proxy || "");
@@ -78,46 +79,190 @@ describe("NCMB Operation", function(){
   });
 
   describe("更新オペレーション設定", function(){
+    var Increment = null;
+    var increment = null;
     var user = null;
     context("setIncrement", function(){
       beforeEach(function(){
-        user = new ncmb.User();
+        Increment = ncmb.DataStore("Increment");
+        increment = new Increment;
       });
-      it("keyとamountを指定した場合、keyのプロパティにオペレーションを設定できる", function(done){
-        user.setIncrement("key", 2);
-        expect(user.key).to.be.eql({__op:"Increment", amount: 2});
-        done();
+      it("keyとamountを指定した場合、keyのプロパティにオペレーションを設定できる (In Case save() )", function(done){
+        increment.setIncrement("increment", 2);
+        increment.save(function(err, obj){
+          if(err){
+            done(err);
+          }else{
+            expect(obj.increment).to.be.eql(2);
+            done();
+          }
+        });
       });
-      it("keyのみを指定した場合、keyのプロパティにamountが1のオペレーションを設定できる", function(done){
-        user.setIncrement("key");
-        expect(user.key).to.be.eql({__op:"Increment", amount: 1});
-        done();
+      it("keyのみを指定した場合、keyのプロパティにamountが1のオペレーションを設定できる (In Case save() )", function(done){
+        increment.setIncrement("increment");
+        increment.save(function(err, obj){
+          if(err){
+            done(err);
+          }else{
+            expect(obj.increment).to.be.eql(1);
+            done();
+          }
+        });
       });
-      it("複数回実行した場合、amountが各入力値の合計値のオペレーションを設定できる", function(done){
-        user.setIncrement("key", 3);
-        user.setIncrement("key", 2);
-        expect(user.key).to.be.eql({__op:"Increment", amount: 5});
-        done();
+      it("複数回実行した場合、amountが各入力値の合計値のオペレーションを設定できる (In Case save() )", function(done){
+        increment.setIncrement("increment", 3);
+        increment.setIncrement("increment", 2);
+        increment.save(function(err, obj){
+          if(err){
+            done(err);
+          }else{
+            expect(obj.increment).to.be.eql(5);
+            done();
+          }
+        });
       });
-      it("メソッドチェインで連続実行できる", function(done){
-        user.setIncrement("key", 3).setIncrement("key");
-        expect(user.key).to.be.eql({__op:"Increment", amount: 4});
-        done();
+      it("メソッドチェインで連続実行できる(In Case save() )", function(done){
+        increment.setIncrement("increment", 3).setIncrement("increment");
+        increment.save(function(err, obj){
+          if(err){
+            done(err);
+          }else{
+            expect(obj.increment).to.be.eql(4);
+            done();
+          }
+        });
       });
-      it("他のオペレーションメソッドを上書きできる", function(done){
-        user.add("key", ["apple"]).setIncrement("key");
-        expect(user.key).to.be.eql({__op:"Increment", amount: 1});
-        done();
+      it("他のオペレーションメソッドを上書きできる (In Case save() )", function(done){
+        increment.add("increment", ["apple"]).setIncrement("increment");
+        increment.save(function(err, obj){
+          if(err){
+            done(err);
+          }else{
+            expect(obj.increment).to.be.eql(1);
+            done();
+          }
+        });
+      });
+      it("keyとamountを指定した場合、keyのプロパティにオペレーションを設定できる (In Case update() )", function(done){
+        increment.set("message", "update increment");
+        increment.save()
+          .then(function(i) {
+            increment.setIncrement("increment", 1);
+            increment.update()
+              .then(function(obj_u) {
+                Increment.fetchById(obj_u.objectId, function(err, obj){
+                  if(err){
+                    done(err);
+                  }else{
+                    expect(obj.increment).to.be.eql(1);
+                    done();
+                  }
+                });
+              }).catch(function(err){
+                done(err);
+              });
+          }).catch(function(err){
+            done(err);
+          });
+      });
+      it("keyのみを指定した場合、keyのプロパティにamountが1のオペレーションを設定できる (In Case update() )", function(done){
+        increment.set("message", "update increment");
+        increment.save()
+          .then(function(i) {
+            increment.setIncrement("increment");
+            increment.update()
+              .then(function(obj_u) {
+                Increment.fetchById(obj_u.objectId, function(err, obj){
+                  if(err){
+                    done(err);
+                  }else{
+                    expect(obj.increment).to.be.eql(1);
+                    done();
+                  }
+                });
+              }).catch(function(err){
+                done(err);
+              });
+          }).catch(function(err){
+            done(err);
+          });
+      });
+      it("複数回実行した場合、amountが各入力値の合計値のオペレーションを設定できる (In Case update() )", function(done){
+        increment.set("message", "update increment");
+        increment.save()
+          .then(function(i) {
+            increment.setIncrement("increment", 3);
+            increment.setIncrement("increment", 2);
+            increment.update()
+              .then(function(obj_u) {
+                Increment.fetchById(obj_u.objectId, function(err, obj){
+                  if(err){
+                    done(err);
+                  }else{
+                    expect(obj.increment).to.be.eql(5);
+                    done();
+                  }
+                });
+              }).catch(function(err){
+                done(err);
+              });
+          }).catch(function(err){
+            done(err);
+          });
+      });
+      it("メソッドチェインで連続実行できる(In Case update() )", function(done){
+        increment.set("message", "update increment");
+        increment.save()
+          .then(function(i) {
+            increment.setIncrement("increment", 3).setIncrement("increment");
+            increment.update()
+              .then(function(obj_u) {
+                Increment.fetchById(obj_u.objectId, function(err, obj){
+                  if(err){
+                    done(err);
+                  }else{
+                    expect(obj.increment).to.be.eql(4);
+                    done();
+                  }
+                });
+              }).catch(function(err){
+                done(err);
+              });
+          }).catch(function(err){
+            done(err);
+          });
+      });
+      it("他のオペレーションメソッドを上書きできる (In Case update() )", function(done){
+        increment.set("message", "update increment");
+        increment.save()
+          .then(function(i) {
+            increment.add("increment", ["apple"]).setIncrement("increment");
+            increment.update()
+              .then(function(obj_u) {
+                Increment.fetchById(obj_u.objectId, function(err, obj){
+                  if(err){
+                    done(err);
+                  }else{
+                    expect(obj.increment).to.be.eql(1);
+                    done();
+                  }
+                });
+              }).catch(function(err){
+                done(err);
+              });
+          }).catch(function(err){
+            done(err);
+          });
       });
       it("amountがnumber以外のとき、エラーが返る", function(done){
         expect(function(){
-          user.setIncrement("key","1");
+          increment.setIncrement("increment","1");
         }).to.throw(Error);
         done();
       });
       it("keyが変更禁止のとき、エラーが返る", function(done){
         expect(function(){
-          user.setIncrement("save",1);
+          increment.setIncrement("save",1);
         }).to.throw(Error);
         done();
       });

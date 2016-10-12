@@ -7,3 +7,4 @@ test/frontend/lodash*
 test/frontend/ncmb*
 test/frontend/test_modules.js
 test/frontend/www
+doc

@@ -53,7 +53,8 @@
     "licensify": "^1.4.0",
     "stubcell": "^0.8.0",
     "uglifyify": "^3.0.1",
-    "lodash-cli": "^4.5.0"
+    "lodash-cli": "^4.5.0",
+    "yuidocjs": "^0.10.2"
   },
   "browser": {
     "superagent-proxy": false
@@ -70,6 +71,7 @@
     "test-one": "NODE_ENV=test mocha -R spec ",
     "build": "browserify -r -p licensify -t [ uglifyify --keep-fname -x .js ] -o ncmb.min.js lib/ncmb.js",
     "stub:start": "stubcell -e test/mbaas.yml --basepath test/stub -p 18000",
-    "stub:stop": "kill `ps aux | grep stubc[e]ll | awk '{print $2}'`"
+    "stub:stop": "kill `ps aux | grep stubc[e]ll | awk '{print $2}'`",
+    "doc": "mkdir ./doc && yuidoc ./lib -o ./doc"
   }
 }

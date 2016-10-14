@@ -10,8 +10,7 @@ describe("NCMB Operation", function(){
   before(function(){
     ncmb = new NCMB(config.apikey, config.clientkey );
     if(config.apiserver){
-      //ncmb.set("protocol", config.apiserver.protocol || "http:")
-      ncmb.set("protocol", config.apiserver.protocol )
+      ncmb.set("protocol", config.apiserver.protocol || "http:")
           .set("fqdn", config.apiserver.fqdn)
           .set("port", config.apiserver.port)
           .set("proxy", config.apiserver.proxy || "");

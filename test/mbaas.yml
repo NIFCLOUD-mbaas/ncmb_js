@@ -1592,3 +1592,74 @@
   response:
     status: 200
     body: get_with_lower_case
+
+#operation
+-
+  request:
+    url: /2013-09-01/classes/increment
+    method: POST
+    body:
+      increment: 2
+  response:
+    status: 201
+    file: 2013-09-01_classes_increment_save_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/increment
+    method: POST
+    body:
+      increment: 1
+  response:
+    status: 201
+    file: 2013-09-01_classes_increment_save_no_amount_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/increment
+    method: POST
+    body:
+      increment: 5
+  response:
+    status: 201
+    file: 2013-09-01_classes_increment_save_double_amount_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/increment
+    method: POST
+    body:
+      increment: 4
+  response:
+    status: 201
+    file: 2013-09-01_classes_increment_save_double_amount2_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/increment
+    method: POST
+    body:
+      increment: 1
+  response:
+    status: 201
+    file: 2013-09-01_classes_increment_save_override_amount_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/increment
+    method: POST
+    body:
+      message: "update message"
+  response:
+    status: 201
+    file: 2013-09-01_classes_increment_save_for_update_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/increment/object_id
+    method: PUT
+    body:
+	increment: 1
+  response:
+    status: 201
+    file: 2013-09-01_classes_TestClass_put_success.json

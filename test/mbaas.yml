@@ -189,6 +189,7 @@
   response:
     status: 200
     file: 2013-09-01_classes_food_get_acl_success.json
+
 -
   request:
     url: /2013-09-01/classes/food/object_id
@@ -196,6 +197,7 @@
   response:
     status: 200
     file: 2013-09-01_classes_TestClass_fetch_success.json
+
 -
   request:
     url: /2013-09-01/classes/food
@@ -1639,27 +1641,93 @@
     url: /2013-09-01/classes/increment
     method: POST
     body:
-      increment: 1
+      increment: 6
   response:
     status: 201
     file: 2013-09-01_classes_increment_save_override_amount_success.json
 
 -
   request:
-    url: /2013-09-01/classes/increment
-    method: POST
+    url: /2013-09-01/classes/increment/increment_id1
+    method: PUT
     body:
-      message: "update message"
+      increment: { __op: 'Increment', amount: 1 }
   response:
-    status: 201
-    file: 2013-09-01_classes_increment_save_for_update_success.json
+    status: 200
+    file: 2013-09-01_classes_increment_update_success.json
 
 -
   request:
-    url: /2013-09-01/classes/increment/object_id
+    url: /2013-09-01/classes/increment/increment_id1
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_increment_get_id1.json
+-
+  request:
+    url: /2013-09-01/classes/increment/increment_id2
     method: PUT
     body:
-	increment: 1
+      increment: { __op: 'Increment', amount: 1 }
   response:
-    status: 201
-    file: 2013-09-01_classes_TestClass_put_success.json
+    status: 200
+    file: 2013-09-01_classes_increment_update_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/increment/increment_id2
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_increment_get_id2.json
+-
+  request:
+    url: /2013-09-01/classes/increment/increment_id3
+    method: PUT
+    body:
+      increment: { __op: 'Increment', amount: 5 }
+  response:
+    status: 200
+    file: 2013-09-01_classes_increment_update_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/increment/increment_id3
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_increment_get_id3.json
+-
+  request:
+    url: /2013-09-01/classes/increment/increment_id4
+    method: PUT
+    body:
+      increment: { __op: 'Increment', amount: 4 }
+  response:
+    status: 200
+    file: 2013-09-01_classes_increment_update_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/increment/increment_id4
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_increment_get_id4.json
+-
+  request:
+    url: /2013-09-01/classes/increment/increment_id5
+    method: PUT
+    body:
+      increment: { __op: 'Increment', amount: 6 }
+  response:
+    status: 200
+    file: 2013-09-01_classes_increment_update_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/increment/increment_id5
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_increment_get_id5.json

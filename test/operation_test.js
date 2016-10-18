@@ -10,7 +10,7 @@ describe("NCMB Operation", function(){
   before(function(){
     ncmb = new NCMB(config.apikey, config.clientkey );
     if(config.apiserver){
-      ncmb.set("protocol", config.apiserver.protocol || "http:")
+      ncmb.set("protocol", config.apiserver.protocol )
           .set("fqdn", config.apiserver.fqdn)
           .set("port", config.apiserver.port)
           .set("proxy", config.apiserver.proxy || "");
@@ -81,9 +81,14 @@ describe("NCMB Operation", function(){
     var Increment = null;
     var increment = null;
     var user = null;
+    var increment_id1 =  null;
+    var increment_id2 =  null;
+    var increment_id3 =  null;
+    var increment_id4 =  null;
+    var increment_id5 =  null;
     context("setIncrement", function(){
       beforeEach(function(){
-        Increment = ncmb.DataStore("Increment");
+        Increment = ncmb.DataStore("increment");
         increment = new Increment;
       });
       it("keyとamountを指定した場合、keyのプロパティにオペレーションを設定できる (In Case save() )", function(done){
@@ -93,6 +98,7 @@ describe("NCMB Operation", function(){
             done(err);
           }else{
             expect(obj.increment).to.be.eql(2);
+            increment_id1 = obj.objectId;
             done();
           }
         });
@@ -104,6 +110,7 @@ describe("NCMB Operation", function(){
             done(err);
           }else{
             expect(obj.increment).to.be.eql(1);
+            increment_id2 = obj.objectId;
             done();
           }
         });
@@ -116,6 +123,7 @@ describe("NCMB Operation", function(){
             done(err);
           }else{
             expect(obj.increment).to.be.eql(5);
+            increment_id3 = obj.objectId;
             done();
           }
         });
@@ -127,132 +135,118 @@ describe("NCMB Operation", function(){
             done(err);
           }else{
             expect(obj.increment).to.be.eql(4);
+            increment_id4 = obj.objectId;
             done();
           }
         });
       });
       it("他のオペレーションメソッドを上書きできる (In Case save() )", function(done){
-        increment.add("increment", ["apple"]).setIncrement("increment");
+        increment.add("increment", ["apple"]).setIncrement("increment",6);
         increment.save(function(err, obj){
           if(err){
             done(err);
           }else{
-            expect(obj.increment).to.be.eql(1);
+            expect(obj.increment).to.be.eql(6);
+            increment_id5 = obj.objectId;
             done();
           }
         });
       });
+
       it("keyとamountを指定した場合、keyのプロパティにオペレーションを設定できる (In Case update() )", function(done){
-        increment.set("message", "update increment");
-        increment.save()
-          .then(function(i) {
-            increment.setIncrement("increment", 1);
-            increment.update()
-              .then(function(obj_u) {
-                Increment.fetchById(obj_u.objectId, function(err, obj){
-                  if(err){
-                    done(err);
-                  }else{
-                    expect(obj.increment).to.be.eql(1);
-                    done();
-                  }
-                });
-              }).catch(function(err){
-                done(err);
+        increment.objectId = increment_id1;
+        increment.setIncrement("increment", 1);
+        increment.update()
+            .then(function(obj){
+              Increment.fetchById(increment_id1, function(err, obj){
+                if(err){
+                  done(err);
+                }else{
+                  expect(obj.increment).to.be.eql(3);
+                  done();
+                }
               });
-          }).catch(function(err){
-            done(err);
-          });
+            })
+            .catch(function(err){
+              done(err);
+            });
       });
       it("keyのみを指定した場合、keyのプロパティにamountが1のオペレーションを設定できる (In Case update() )", function(done){
-        increment.set("message", "update increment");
-        increment.save()
-          .then(function(i) {
-            increment.setIncrement("increment");
-            increment.update()
-              .then(function(obj_u) {
-                Increment.fetchById(obj_u.objectId, function(err, obj){
-                  if(err){
-                    done(err);
-                  }else{
-                    expect(obj.increment).to.be.eql(1);
-                    done();
-                  }
-                });
-              }).catch(function(err){
-                done(err);
+        increment.objectId = increment_id2;
+        increment.setIncrement("increment");
+        increment.update()
+            .then(function(obj){
+              Increment.fetchById(increment_id2, function(err, obj){
+                if(err){
+                  done(err);
+                }else{
+                  expect(obj.increment).to.be.eql(2);
+                  done();
+                }
               });
-          }).catch(function(err){
-            done(err);
-          });
+            })
+            .catch(function(err){
+              done(err);
+            });
       });
-      it("複数回実行した場合、amountが各入力値の合計値のオペレーションを設定できる (In Case update() )", function(done){
-        increment.set("message", "update increment");
-        increment.save()
-          .then(function(i) {
-            increment.setIncrement("increment", 3);
-            increment.setIncrement("increment", 2);
-            increment.update()
-              .then(function(obj_u) {
-                Increment.fetchById(obj_u.objectId, function(err, obj){
-                  if(err){
-                    done(err);
-                  }else{
-                    expect(obj.increment).to.be.eql(5);
-                    done();
-                  }
-                });
-              }).catch(function(err){
-                done(err);
+
+      it("複数回実行した場合、amountが各入力値の合計値のオペレーションを設定できる  (In Case update() )", function(done){
+        increment.objectId = increment_id3;
+        increment.setIncrement("increment",3);
+        increment.setIncrement("increment",2);
+        increment.update()
+            .then(function(obj){
+              Increment.fetchById(increment_id3, function(err, obj){
+                if(err){
+                  done(err);
+                }else{
+                  expect(obj.increment).to.be.eql(10);
+                  done();
+                }
               });
-          }).catch(function(err){
-            done(err);
-          });
+            })
+            .catch(function(err){
+              done(err);
+            });
       });
-      it("メソッドチェインで連続実行できる(In Case update() )", function(done){
-        increment.set("message", "update increment");
-        increment.save()
-          .then(function(i) {
-            increment.setIncrement("increment", 3).setIncrement("increment");
-            increment.update()
-              .then(function(obj_u) {
-                Increment.fetchById(obj_u.objectId, function(err, obj){
-                  if(err){
-                    done(err);
-                  }else{
-                    expect(obj.increment).to.be.eql(4);
-                    done();
-                  }
-                });
-              }).catch(function(err){
-                done(err);
+      it("メソッドチェインで連続実行できる  (In Case update() )", function(done){
+        increment.objectId = increment_id4;
+        increment.setIncrement("increment", 3).setIncrement("increment");
+        increment.update()
+            .then(function(obj){
+              Increment.fetchById(increment_id4, function(err, obj){
+                if(err){
+                  done(err);
+                }else{
+                  expect(obj.increment).to.be.eql(8);
+                  done();
+                }
               });
-          }).catch(function(err){
-            done(err);
-          });
+            })
+            .catch(function(err){
+              done(err);
+            });
       });
-      it("他のオペレーションメソッドを上書きできる (In Case update() )", function(done){
-        increment.set("message", "update increment");
-        increment.save()
-          .then(function(i) {
-            increment.add("increment", ["apple"]).setIncrement("increment");
-            increment.update()
-              .then(function(obj_u) {
-                Increment.fetchById(obj_u.objectId, function(err, obj){
-                  if(err){
-                    done(err);
-                  }else{
-                    expect(obj.increment).to.be.eql(1);
-                    done();
-                  }
-                });
-              }).catch(function(err){
-                done(err);
+
+      it("他のオペレーションメソッドを上書きできる  (In Case update() )", function(done){
+        increment.objectId = increment_id5;
+        increment.add("increment", ["apple"]).setIncrement("increment",6);
+        increment.update()
+            .then(function(obj){
+              Increment.fetchById(increment_id5, function(err, obj){
+                if(err){
+                  done(err);
+                }else{
+                  expect(obj.increment).to.be.eql(12);
+                  done();
+                }
               });
-          }).catch(function(err){
-            done(err);
-          });
+            })
+            .catch(function(err){
+              done(err);
+            });
       });
+
       it("amountがnumber以外のとき、エラーが返る", function(done){
         expect(function(){
           increment.setIncrement("increment","1");

@@ -262,34 +262,170 @@ describe("NCMB Operation", function(){
     });
     context("add", function(){
       var arr =  null;
+      var Adds = null;
+      var adds = null;
+      var add_id = null;
+      var add_id2 = null;
+      var add_id3 = null;
+      var add_id4 = null;
+      var add_id5 = null;
       beforeEach(function(){
+        Adds = ncmb.DataStore("adds");
+        adds = new Adds;
         user = new ncmb.User();
       });
-      it("keyとobjectsを指定した場合、keyのプロパティにオペレーションを設定できる", function(done){
-        user.add("key", [1,2,3]);
-        expect(user.key).to.be.eql({__op:"Add", objects: [1,2,3]});
-        done();
+      it("keyとobjectsを指定した場合、keyのプロパティにオペレーションを設定できる(In case save)", function(done){
+        adds.add("key", [1,2,3,4]);
+        adds.save(function(err, obj){
+          if(err){
+            done(err);
+          }else{
+            expect(obj.key).to.be.eql([1,2,3,4]);
+            add_id = obj.objectId;
+            done();
+          }
+        });
       });
-      it("objectsに配列以外を指定した場合、要素数1の配列に変換してプロパティにオペレーションを設定できる", function(done){
-        user.add("key", 1);
-        expect(user.key).to.be.eql({__op:"Add", objects: [1]});
-        done();
+      it("objectsに配列以外を指定した場合、要素数1の配列に変換してプロパティにオペレーションを設定できる(In case save)", function(done){
+        adds.add("key", 1);
+        adds.save(function(err, obj){
+          if(err){
+            done(err);
+          }else{
+            expect(obj.key).to.be.eql([1]);
+            add_id2 = obj.objectId;
+            done();
+          }
+        });
       });
-      it("複数回実行した場合、objectsが各入力を連結した配列のオペレーションを設定できる", function(done){
-        user.add("key", [1,2,3]);
-        user.add("key", [4,5,6]);
-        expect(user.key).to.be.eql({__op:"Add", objects: [1,2,3,4,5,6]});
-        done();
+      it("複数回実行した場合、objectsが各入力を連結した配列のオペレーションを設定できる(In case save)", function(done){
+        adds.add("key", [1,2,3]);
+        adds.add("key", [4,5,6]);
+        adds.save(function(err, obj){
+          if(err){
+            done(err);
+          }else{
+            expect(obj.key).to.be.eql([1,2,3,4,5,6]);
+            add_id3 = obj.objectId;
+            done();
+          }
+        });
       });
-      it("メソッドチェインで連続実行できる", function(done){
-        user.add("key", [1,2,3]).add("key", [4,5,6]);
-        expect(user.key).to.be.eql({__op:"Add", objects: [1,2,3,4,5,6]});
-        done();
+      it("メソッドチェインで連続実行できる(In case save)", function(done){
+        adds.add("key", [1,2,3]).add("key", [4,5]);
+        adds.save(function(err, obj){
+          if(err){
+            done(err);
+          }else{
+            expect(obj.key).to.be.eql([1,2,3,4,5]);
+            add_id4 = obj.objectId;
+            done();
+          }
+        });
       });
-      it("他のオペレーションメソッドを上書きできる", function(done){
-        user.remove("key", ["apple"]).add("key", [1,2,3]);
-        expect(user.key).to.be.eql({__op:"Add", objects: [1,2,3]});
-        done();
+      it("他のオペレーションメソッドを上書きできる(In case save)", function(done){
+        adds.remove("key", ["apple"]).add("key", [1,2,3]);
+        adds.save(function(err, obj){
+          if(err){
+            done(err);
+          }else{
+            expect(obj.key).to.be.eql([1,2,3]);
+            add_id5 = obj.objectId;
+            done();
+          }
+        });
+      });
+      it("keyとobjectsを指定した場合、keyのプロパティにオペレーションを設定できる (In Case update() )", function(done){
+        adds.objectId = add_id;
+        adds.add("key", [1,2,3,4]);
+        adds.update()
+            .then(function(obj){
+              Adds.fetchById(add_id, function(err, obj){
+                if(err){
+                  done(err);
+                }else{
+                  expect(obj.key).to.be.eql([1,2,3,4,1,2,3,4]);
+                  done();
+                }
+              });
+            })
+            .catch(function(err){
+              done(err);
+            });
+      });
+
+      it("objectsに配列以外を指定した場合、要素数1の配列に変換してプロパティにオペレーションを設定できる(In case update() )", function(done){
+        adds.objectId = add_id2;
+        adds.add("key", 1);
+        adds.update()
+            .then(function(obj){
+              Adds.fetchById(add_id2, function(err, obj){
+                if(err){
+                  done(err);
+                }else{
+                  expect(obj.key).to.be.eql([1,1]);
+                  done();
+                }
+              });
+            })
+            .catch(function(err){
+              done(err);
+            });
+      });
+      it("複数回実行した場合、objectsが各入力を連結した配列のオペレーションを設定できる(In case update())", function(done){
+        adds.objectId = add_id3;
+        adds.add("key", [1,2,3]);
+        adds.add("key", [4,5,6]);
+        adds.update()
+            .then(function(obj){
+              Adds.fetchById(add_id3, function(err, obj){
+                if(err){
+                  done(err);
+                }else{
+                  expect(obj.key).to.be.eql([1,2,3,4,5,6,1,2,3,4,5,6]);
+                  done();
+                }
+              });
+            })
+            .catch(function(err){
+              done(err);
+            });
+      });
+      it("メソッドチェインで連続実行できる(In case update())", function(done){
+        adds.objectId = add_id4;
+        adds.add("key", [4,2,3]).add("key", [4,5,6]);
+        adds.update()
+            .then(function(obj){
+              Adds.fetchById(add_id4, function(err, obj){
+                if(err){
+                  done(err);
+                }else{
+                  expect(obj.key).to.be.eql([1,2,3,4,5,4,2,3,4,5,6]);
+                  done();
+                }
+              });
+            })
+            .catch(function(err){
+              done(err);
+            });
+      });
+      it("他のオペレーションメソッドを上書きできる(In case update())", function(done){
+        adds.objectId = add_id5;
+        adds.remove("key", ["apple"]).add("key", [1,2,4]);
+        adds.update()
+            .then(function(obj){
+              Adds.fetchById(add_id5, function(err, obj){
+                if(err){
+                  done(err);
+                }else{
+                  expect(obj.key).to.be.eql([1,2,3,1,2,4]);
+                  done();
+                }
+              });
+            })
+            .catch(function(err){
+              done(err);
+            });
       });
       it("keyが変更禁止のとき、エラーが返る", function(done){
         expect(function(){

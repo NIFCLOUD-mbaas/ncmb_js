@@ -1731,3 +1731,142 @@
   response:
     status: 200
     file: 2013-09-01_classes_increment_get_id5.json
+
+-
+  request:
+    url: /2013-09-01/classes/adds
+    method: POST
+    body:
+      key: [1,2,3,4]
+  response:
+    status: 201
+    file: 013-09-01_classes_add_save_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/adds
+    method: POST
+    body:
+      key: [1]
+  response:
+    status: 201
+    file: 013-09-01_classes_add_one_value_save_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/adds
+    method: POST
+    body:
+      key: [1,2,3,4,5,6]
+  response:
+    status: 201
+    file: 013-09-01_classes_add_multi_value_save_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/adds
+    method: POST
+    body:
+      key: [1,2,3,4,5]
+  response:
+    status: 201
+    file: 013-09-01_classes_add_multi2_value_save_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/adds
+    method: POST
+    body:
+      key: [1,2,3]
+  response:
+    status: 201
+    file: 013-09-01_classes_add_override_value_save_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/adds/add_id
+    method: PUT
+    body:
+      key: { __op: 'Add', objects: [1,2,3,4] }
+  response:
+    status: 200
+    file: 2013-09-01_classes_add_update_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/adds/add_id
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_add_get_id.json
+
+-
+  request:
+    url: /2013-09-01/classes/adds/add_id2
+    method: PUT
+    body:
+      key: { __op: 'Add', objects: [1] }
+  response:
+    status: 200
+    file: 2013-09-01_classes_add_update_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/adds/add_id2
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_add_get_id2.json
+
+-
+  request:
+    url: /2013-09-01/classes/adds/add_id3
+    method: PUT
+    body:
+      key: { __op: 'Add', objects: [1,2,3,4,5,6] }
+  response:
+    status: 200
+    file: 2013-09-01_classes_add_update_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/adds/add_id3
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_add_get_id3.json
+
+-
+  request:
+    url: /2013-09-01/classes/adds/add_id4
+    method: PUT
+    body:
+      key: { __op: 'Add', objects: [4,2,3,4,5,6] }
+  response:
+    status: 200
+    file: 2013-09-01_classes_add_update_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/adds/add_id4
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_add_get_id4.json
+-
+  request:
+    url: /2013-09-01/classes/adds/add_id5
+    method: PUT
+    body:
+      key: { __op: 'Add', objects: [1,2,4] }
+  response:
+    status: 200
+    file: 2013-09-01_classes_add_update_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/adds/add_id5
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_add_get_id5.json

@@ -700,6 +700,34 @@ describe("NCMB Query", function(){
           });
         });
       });
+      context("valueがundefinedのとき、keyに値が存在するデータを検索した結果のリストが返り", function(){
+        it("callback で取得できる", function(done){
+          QueryTest
+              .exists("name")
+              .fetchAll(function(err, objs){
+                if(err){
+                  done(err);
+                }else{
+                  expect(objs.length).to.be.equal(1);
+                  expect(objs[0].number).to.be.equal(1);
+                  done();
+                }
+              });
+        });
+        it("promise で取得できる", function(done){
+          QueryTest
+              .exists("name")
+              .fetchAll()
+              .then(function(objs){
+                expect(objs.length).to.be.equal(1);
+                expect(objs[0].number).to.be.equal(1);
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+      });
       it("検索条件が真偽値以外で指定されたとき、エラーが返る", function(done){
         try{
           QueryTest.exists("number", 1);

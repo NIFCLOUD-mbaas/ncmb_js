@@ -4,6 +4,15 @@ JavaScript SDK for NiftyCloud mobile backend
 [![Coverage Status](https://coveralls.io/repos/NIFTYCloud-mbaas/ncmb_js/badge.svg?branch=apply_coveralls&service=github)](https://coveralls.io/github/NIFTYCloud-mbaas/ncmb_js?branch=apply_coveralls)
 [![Code Climate](https://codeclimate.com/github/NIFTYCloud-mbaas/ncmb_js/badges/gpa.svg)](https://codeclimate.com/github/NIFTYCloud-mbaas/ncmb_js)
 
+## SDKの動作環境について
+JavaScript SDKの動作環境は以下の通りです。
+
+| 動作環境              | 対応バージョン |
+|:---                  |:---        |
+| Node.js              | 0.12.x, 4.2.x |
+| Mozilla Firefox      | 最新版     |
+| Google Chrome        | 最新版     |
+
 ## Install
 
 ```shell

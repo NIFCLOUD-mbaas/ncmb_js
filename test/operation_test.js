@@ -78,87 +78,87 @@ describe("NCMB Operation", function(){
   });
 
   describe("更新オペレーション設定", function(){
-    var Increment = null;
-    var increment = null;
+    var classForIncrementTest = null;
+    var objForIncrementTest = null;
     var user = null;
-    var increment_id1 =  null;
-    var increment_id2 =  null;
-    var increment_id3 =  null;
-    var increment_id4 =  null;
-    var increment_id5 =  null;
+    var validObjIdThatIsSetIncrementWithAmount =  null;
+    var validObjIdThatIsSetIncrementWithoutAmount =  null;
+    var validObjIdThatIsSetIncrementMultiple =  null;
+    var validObjIdThatIsSetIncrementWithMethodChain =  null;
+    var validObjIdThatIsOverrideOperation =  null;
     context("setIncrement", function(){
       beforeEach(function(){
-        Increment = ncmb.DataStore("increment");
-        increment = new Increment;
+        classForIncrementTest = ncmb.DataStore("increment");
+        objForIncrementTest = new classForIncrementTest;
       });
-      it("keyとamountを指定した場合、keyのプロパティにオペレーションを設定できる (In Case save() )", function(done){
-        increment.setIncrement("increment", 2);
-        increment.save(function(err, obj){
+      it("keyとamountを指定してsetIncrementを利用し、オブジェクトを新規保存すると、keyのプロパティにIncrementした結果の数が設定される", function(done){
+        objForIncrementTest.setIncrement("increment", 2);
+        objForIncrementTest.save(function(err, obj){
           if(err){
             done(err);
           }else{
             expect(obj.increment).to.be.eql(2);
-            increment_id1 = obj.objectId;
+            validObjIdThatIsSetIncrementWithAmount = obj.objectId;
             done();
           }
         });
       });
-      it("keyのみを指定した場合、keyのプロパティにamountが1のオペレーションを設定できる (In Case save() )", function(done){
-        increment.setIncrement("increment");
-        increment.save(function(err, obj){
+      it("keyのみを指定した場合、amountが1になる", function(done){
+        objForIncrementTest.setIncrement("increment");
+        objForIncrementTest.save(function(err, obj){
           if(err){
             done(err);
           }else{
             expect(obj.increment).to.be.eql(1);
-            increment_id2 = obj.objectId;
+            validObjIdThatIsSetIncrementWithoutAmount = obj.objectId;
             done();
           }
         });
       });
-      it("複数回実行した場合、amountが各入力値の合計値のオペレーションを設定できる (In Case save() )", function(done){
-        increment.setIncrement("increment", 3);
-        increment.setIncrement("increment", 2);
-        increment.save(function(err, obj){
+      it("複数回setIncrementを実行した場合、amountの合計値が保存される", function(done){
+        objForIncrementTest.setIncrement("increment", 3);
+        objForIncrementTest.setIncrement("increment", 2);
+        objForIncrementTest.save(function(err, obj){
           if(err){
             done(err);
           }else{
             expect(obj.increment).to.be.eql(5);
-            increment_id3 = obj.objectId;
+            validObjIdThatIsSetIncrementMultiple = obj.objectId;
             done();
           }
         });
       });
-      it("メソッドチェインで連続実行できる(In Case save() )", function(done){
-        increment.setIncrement("increment", 3).setIncrement("increment");
-        increment.save(function(err, obj){
+      it("メソッドチェインで連続実行できる", function(done){
+        objForIncrementTest.setIncrement("increment", 3).setIncrement("increment");
+        objForIncrementTest.save(function(err, obj){
           if(err){
             done(err);
           }else{
             expect(obj.increment).to.be.eql(4);
-            increment_id4 = obj.objectId;
+            validObjIdThatIsSetIncrementWithMethodChain = obj.objectId;
             done();
           }
         });
       });
-      it("他のオペレーションメソッドを上書きできる (In Case save() )", function(done){
-        increment.add("increment", ["apple"]).setIncrement("increment",6);
-        increment.save(function(err, obj){
+      it("同じキーに複数のオペレーションが設定された場合は上書きする", function(done){
+        objForIncrementTest.add("increment", ["apple"]).setIncrement("increment",6);
+        objForIncrementTest.save(function(err, obj){
           if(err){
             done(err);
           }else{
             expect(obj.increment).to.be.eql(6);
-            increment_id5 = obj.objectId;
+            validObjIdThatIsOverrideOperation = obj.objectId;
             done();
           }
         });
       });
 
-      it("keyとamountを指定した場合、keyのプロパティにオペレーションを設定できる (In Case update() )", function(done){
-        increment.objectId = increment_id1;
-        increment.setIncrement("increment", 1);
-        increment.update()
+      it("keyとamountを指定してsetIncrementを利用し、オブジェクトを更新すると、setIncrementした結果がデータストア上で設定される", function(done){
+        objForIncrementTest.objectId = validObjIdThatIsSetIncrementWithAmount;
+        objForIncrementTest.setIncrement("increment", 1);
+        objForIncrementTest.update()
             .then(function(obj){
-              Increment.fetchById(increment_id1, function(err, obj){
+              classForIncrementTest.fetchById(validObjIdThatIsSetIncrementWithAmount, function(err, obj){
                 if(err){
                   done(err);
                 }else{
@@ -171,12 +171,12 @@ describe("NCMB Operation", function(){
               done(err);
             });
       });
-      it("keyのみを指定した場合、keyのプロパティにamountが1のオペレーションを設定できる (In Case update() )", function(done){
-        increment.objectId = increment_id2;
-        increment.setIncrement("increment");
-        increment.update()
+      it("keyのみを指定した場合、amountが1に設定されてオブジェクト更新がされる", function(done){
+        objForIncrementTest.objectId = validObjIdThatIsSetIncrementWithoutAmount;
+        objForIncrementTest.setIncrement("increment");
+        objForIncrementTest.update()
             .then(function(obj){
-              Increment.fetchById(increment_id2, function(err, obj){
+              classForIncrementTest.fetchById(validObjIdThatIsSetIncrementWithoutAmount, function(err, obj){
                 if(err){
                   done(err);
                 }else{
@@ -190,13 +190,13 @@ describe("NCMB Operation", function(){
             });
       });
 
-      it("複数回実行した場合、amountが各入力値の合計値のオペレーションを設定できる  (In Case update() )", function(done){
-        increment.objectId = increment_id3;
-        increment.setIncrement("increment",3);
-        increment.setIncrement("increment",2);
-        increment.update()
+      it("複数回実行した場合、amountの合計値でオブジェクトが更新される", function(done){
+        objForIncrementTest.objectId = validObjIdThatIsSetIncrementMultiple;
+        objForIncrementTest.setIncrement("increment",3);
+        objForIncrementTest.setIncrement("increment",2);
+        objForIncrementTest.update()
             .then(function(obj){
-              Increment.fetchById(increment_id3, function(err, obj){
+              classForIncrementTest.fetchById(validObjIdThatIsSetIncrementMultiple, function(err, obj){
                 if(err){
                   done(err);
                 }else{
@@ -209,12 +209,12 @@ describe("NCMB Operation", function(){
               done(err);
             });
       });
-      it("メソッドチェインで連続実行できる  (In Case update() )", function(done){
-        increment.objectId = increment_id4;
-        increment.setIncrement("increment", 3).setIncrement("increment");
-        increment.update()
+      it("メソッドチェインで指定したsetIncrementでオブジェクトが更新される", function(done){
+        objForIncrementTest.objectId = validObjIdThatIsSetIncrementWithMethodChain;
+        objForIncrementTest.setIncrement("increment", 3).setIncrement("increment");
+        objForIncrementTest.update()
             .then(function(obj){
-              Increment.fetchById(increment_id4, function(err, obj){
+              classForIncrementTest.fetchById(validObjIdThatIsSetIncrementWithMethodChain, function(err, obj){
                 if(err){
                   done(err);
                 }else{
@@ -228,12 +228,12 @@ describe("NCMB Operation", function(){
             });
       });
 
-      it("他のオペレーションメソッドを上書きできる  (In Case update() )", function(done){
-        increment.objectId = increment_id5;
-        increment.add("increment", ["apple"]).setIncrement("increment",6);
-        increment.update()
+      it("同じキーに複数のオペレーションが設定された場合、上書きされてオブジェクトが更新される", function(done){
+        objForIncrementTest.objectId = validObjIdThatIsOverrideOperation;
+        objForIncrementTest.add("increment", ["apple"]).setIncrement("increment",6);
+        objForIncrementTest.update()
             .then(function(obj){
-              Increment.fetchById(increment_id5, function(err, obj){
+              classForIncrementTest.fetchById(validObjIdThatIsOverrideOperation, function(err, obj){
                 if(err){
                   done(err);
                 }else{
@@ -249,13 +249,13 @@ describe("NCMB Operation", function(){
 
       it("amountがnumber以外のとき、エラーが返る", function(done){
         expect(function(){
-          increment.setIncrement("increment","1");
+          objForIncrementTest.setIncrement("increment","1");
         }).to.throw(Error);
         done();
       });
       it("keyが変更禁止のとき、エラーが返る", function(done){
         expect(function(){
-          increment.setIncrement("save",1);
+          objForIncrementTest.setIncrement("save",1);
         }).to.throw(Error);
         done();
       });

@@ -1624,7 +1624,7 @@
       increment: 5
   response:
     status: 201
-    file: 2013-09-01_classes_increment_save_double_amount_success.json
+    file: 2013-09-01_classes_increment_save_multiple_increment_operation_success.json
 
 -
   request:
@@ -1634,7 +1634,7 @@
       increment: 4
   response:
     status: 201
-    file: 2013-09-01_classes_increment_save_double_amount2_success.json
+    file: 2013-09-01_classes_increment_save_multiple_increment_operation_with_method_chain_success.json
 
 -
   request:
@@ -1648,7 +1648,7 @@
 
 -
   request:
-    url: /2013-09-01/classes/increment/increment_id1
+    url: /2013-09-01/classes/increment/validObjIdThatIsSetIncrementWithAmount
     method: PUT
     body:
       increment: { __op: 'Increment', amount: 1 }
@@ -1658,14 +1658,14 @@
 
 -
   request:
-    url: /2013-09-01/classes/increment/increment_id1
+    url: /2013-09-01/classes/increment/validObjIdThatIsSetIncrementWithAmount
     method: GET
   response:
     status: 200
-    file: 2013-09-01_classes_increment_get_id1.json
+    file: 2013-09-01_classes_increment_get_validObjIdThatIsSetIncrementWithAmount.json
 -
   request:
-    url: /2013-09-01/classes/increment/increment_id2
+    url: /2013-09-01/classes/increment/validObjIdThatIsSetIncrementWithoutAmount
     method: PUT
     body:
       increment: { __op: 'Increment', amount: 1 }
@@ -1675,14 +1675,14 @@
 
 -
   request:
-    url: /2013-09-01/classes/increment/increment_id2
+    url: /2013-09-01/classes/increment/validObjIdThatIsSetIncrementWithoutAmount
     method: GET
   response:
     status: 200
-    file: 2013-09-01_classes_increment_get_id2.json
+    file: 2013-09-01_classes_increment_get_validObjIdThatIsSetIncrementWithoutAmount.json
 -
   request:
-    url: /2013-09-01/classes/increment/increment_id3
+    url: /2013-09-01/classes/increment/validObjIdThatIsSetIncrementMultiple
     method: PUT
     body:
       increment: { __op: 'Increment', amount: 5 }
@@ -1692,14 +1692,14 @@
 
 -
   request:
-    url: /2013-09-01/classes/increment/increment_id3
+    url: /2013-09-01/classes/increment/validObjIdThatIsSetIncrementMultiple
     method: GET
   response:
     status: 200
-    file: 2013-09-01_classes_increment_get_id3.json
+    file: 2013-09-01_classes_increment_get_validObjIdThatIsSetIncrementMultiple.json
 -
   request:
-    url: /2013-09-01/classes/increment/increment_id4
+    url: /2013-09-01/classes/increment/validObjIdThatIsSetIncrementWithMethodChain
     method: PUT
     body:
       increment: { __op: 'Increment', amount: 4 }
@@ -1709,14 +1709,14 @@
 
 -
   request:
-    url: /2013-09-01/classes/increment/increment_id4
+    url: /2013-09-01/classes/increment/validObjIdThatIsSetIncrementWithMethodChain
     method: GET
   response:
     status: 200
-    file: 2013-09-01_classes_increment_get_id4.json
+    file: 2013-09-01_classes_increment_get_validObjIdThatIsSetIncrementWithMethodChain.json
 -
   request:
-    url: /2013-09-01/classes/increment/increment_id5
+    url: /2013-09-01/classes/increment/validObjIdThatIsOverrideOperation
     method: PUT
     body:
       increment: { __op: 'Increment', amount: 6 }
@@ -1726,11 +1726,11 @@
 
 -
   request:
-    url: /2013-09-01/classes/increment/increment_id5
+    url: /2013-09-01/classes/increment/validObjIdThatIsOverrideOperation
     method: GET
   response:
     status: 200
-    file: 2013-09-01_classes_increment_get_id5.json
+    file: 2013-09-01_classes_increment_get_validObjIdThatIsOverrideOperation.json
 
 -
   request:

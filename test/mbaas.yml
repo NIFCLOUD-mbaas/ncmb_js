@@ -1740,7 +1740,7 @@
       key: [1,2,3,4]
   response:
     status: 201
-    file: 013-09-01_classes_add_save_success.json
+    file: 2013-09-01_classes_add_save_success.json
 
 -
   request:
@@ -1750,7 +1750,7 @@
       key: [1]
   response:
     status: 201
-    file: 013-09-01_classes_add_one_value_save_success.json
+    file: 2013-09-01_classes_add_one_value_save_success.json
 
 -
   request:
@@ -1760,7 +1760,7 @@
       key: [1,2,3,4,5,6]
   response:
     status: 201
-    file: 013-09-01_classes_add_multi_value_save_success.json
+    file: 2013-09-01_classes_add_multi_value_save_success.json
 
 -
   request:
@@ -1770,7 +1770,7 @@
       key: [1,2,3,4,5]
   response:
     status: 201
-    file: 013-09-01_classes_add_multi2_value_save_success.json
+    file: 2013-09-01_classes_add_multi2_value_save_success.json
 
 -
   request:
@@ -1780,7 +1780,7 @@
       key: [1,2,3]
   response:
     status: 201
-    file: 013-09-01_classes_add_override_value_save_success.json
+    file: 2013-09-01_classes_add_override_value_save_success.json
 
 -
   request:

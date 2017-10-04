@@ -1210,27 +1210,6 @@
   response:
     status: 201
     file: 2013-09-01_classes_relation_post_success.json
-
--
-  request:
-    url: /2013-09-01/classes/MainObj
-    method: POST
-    body: {"score":111,"relation":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"food","objectId":"object_id"}]}}
-  response:
-    status: 201
-    file: 2013-09-01_classes_relation_otherfield_post_success.json
-
--
-  request:
-    url: /2013-09-01/classes/MainObj/object_id
-    method: PUT
-    body: 
-      score: 222
-  response:
-    status: 201
-    file: 2013-09-01_classes_relation_put_update_success.json
-
-
 -
   request:
     url: /2013-09-01/classes/MainObj

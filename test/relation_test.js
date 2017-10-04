@@ -32,6 +32,61 @@ describe("NCMB Relation", function(){
   var array_related1_id = null;
   var array_related2_id = null;
 
+  describe("Update Relation", function(){
+    var relation = null;
+    var MainObj  = null;
+    var mainobj  = null;
+
+    describe("Update", function(){
+      context("Update other field while table has field relation", function(){
+        var Food = null;
+        var food1 = null;
+        var food2 = null;
+        var array = null;
+        beforeEach(function(){
+          relation = new ncmb.Relation();
+          MainObj = ncmb.DataStore("MainObj");
+          mainobj = new MainObj();
+          Food = ncmb.DataStore("food");
+          food1 = new Food({name: "orange", type: "fruit", status: "success"});
+          food2 = new Food({name: "apple", type: "fruit", status: "success"});
+          array = [food1, food2];
+        });
+        it("callback add relation", function(done){
+          relation.add(array);
+          mainobj.relation = relation;
+          mainobj.otherfield='1';
+          mainobj.save(function(err, obj){
+            if(err){
+              done(err);
+            }else{
+              expect(obj).to.have.property("objectId");
+              expect(food1).to.have.property("objectId");
+              expect(food2).to.have.property("objectId");
+              array_related1_id = food1.objectId;
+              array_related2_id = food2.objectId;
+              array_callback_id = obj.objectId;
+              done();
+            }
+          });
+        });
+
+        it("callback update other field", function(done){
+          mainobj.otherfield='2';
+          mainobj.objectId = array_callback_id;
+          food.update(function(err, obj){
+            if(err){
+              done(err);
+            }else{
+              expect(obj.updateDate).to.exist;
+              done();
+            }
+          });
+        });
+      });
+    });
+  });
+
   describe("リレーションの追加", function(){
     var relation = null;
     var MainObj  = null;

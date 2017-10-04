@@ -50,7 +50,6 @@ describe("NCMB Relation", function(){
         it("callback で取得できる", function(done){
           relation.add(food);
           mainobj.relation = relation;
-          mainobj.otherfield='1';
           mainobj.save(function(err, obj){
             if(err){
               done(err);

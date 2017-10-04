@@ -118,18 +118,18 @@ describe("NCMB Relation", function(){
             }
           });
         });
-        it("callback update other field", function(done){
-          mainobj.otherfield='2';
-          mainobj.objectId = data_callback_id;
-          food.update(function(err, obj){
-            if(err){
-              done(err);
-            }else{
-              expect(obj.updateDate).to.exist;
-              done();
-            }
-          });
-        });
+        // it("callback update other field", function(done){
+        //   mainobj.otherfield='2';
+        //   mainobj.objectId = data_callback_id;
+        //   food.update(function(err, obj){
+        //     if(err){
+        //       done(err);
+        //     }else{
+        //       expect(obj.updateDate).to.exist;
+        //       done();
+        //     }
+        //   });
+        // });
         it("promise で取得できる", function(done){
           food.objectId = data_related_id;
           relation.add(food);

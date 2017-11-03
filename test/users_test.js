@@ -3781,5 +3781,66 @@ describe("NCMB Users", function(){
     });
   });
 
+  describe("メールアドレス更新フラグのリセット", function () {
+    var user = null;
+    context("mailAddressを保持したインスタンスを更新した場合", function () {
+      beforeEach(function (done) {
+        if (!ncmb.stub) {
+          user = new ncmb.User({ userName: "name", password: "passwd", mailAddress: "abc@example.com" });
+          ncmb.User
+            .login(user)
+            .then(function () {
+              done();
+            })
+            .catch(function () {
+              done(new Error("前処理に失敗しました。"));
+            });
+        } else {
+          user = new ncmb.User({ objectId: "objectid", mailAddress: "abc@example.com" });
+          done();
+        }
+      });
+
+      context("一度メールアドレスをsetすると以降updateのたびに更新がかかっていなくて", function () {
+        it("callback でレスポンスを取得できる", function (done) {
+          user.set("mailAddress", "test@example.com")
+            .update(function (err, data) {
+              if (err) {
+                done(err);
+              } else {
+                user.set("updatefield", "updated")
+                  .update(function (err, data) {
+                    if (err) {
+                      done(err);
+                    } else {
+                      expect(data.updateDate).to.equal("2013-08-28T12:21:17.087Z");
+                    }
+                  });
+                done();
+              }
+            });
+        });
+        it("promise でレスポンスを取得できる", function (done) {
+          user.set("mailAddress", "test@example.com")
+            .update(function (err, data) {
+              if (err) {
+                done(err);
+              } else {
+                user.set("updatefield", "updated")
+                  .update(function (err, data) {
+                    if (err) {
+                      done(err);
+                    } else {
+                      expect(data.updateDate).to.equal("2013-08-28T12:21:17.087Z");
+                      done();
+                    }
+                  });
+                done();
+              }
+            });
+        });
+      });
+    });
+  });
 
 });

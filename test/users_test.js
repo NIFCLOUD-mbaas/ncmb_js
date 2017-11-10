@@ -3814,30 +3814,29 @@ describe("NCMB Users", function(){
                       done(err);
                     } else {
                       expect(data.updateDate).to.equal("2013-08-28T12:21:17.087Z");
+                      done();
                     }
                   });
-                done();
               }
             });
         });
         it("promise でレスポンスを取得できる", function (done) {
           user.set("mailAddress", "test@example.com")
-            .update(function (err, data) {
-              if (err) {
-                done(err);
-              } else {
+              .update()
+              .then(function(data){
                 user.set("updatefield", "updated")
-                  .update(function (err, data) {
-                    if (err) {
-                      done(err);
-                    } else {
+                    .update()
+                    .then(function(data){
                       expect(data.updateDate).to.equal("2013-08-28T12:21:17.087Z");
                       done();
-                    }
-                  });
-                done();
-              }
-            });
+                    })
+                    .catch(function(err){
+                      done(err);
+                    });
+              })
+              .catch(function(err){
+                done(err);
+              });
         });
       });
     });

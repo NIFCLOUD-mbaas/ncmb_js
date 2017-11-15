@@ -1493,7 +1493,7 @@ describe("NCMB Query", function(){
       var SubQuery = null;
       
       before(function(){
-             QueryTest = ncmb.DataStore("QueryTestSelect");
+             QueryTest = ncmb.DataStore("QueryTestSelectLimitSkip");
              SubQuery = ncmb.DataStore("SubQuery");
       });
       context("keyの値が、サブクエリの検索結果がsubkeyに持つ値のいずれかと一致するオブジェクトを検索した結果が返り", function(){

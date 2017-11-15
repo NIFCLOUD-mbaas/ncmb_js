@@ -1028,7 +1028,7 @@
     file: 2013-09-01_classes_querytest_get_select_success.json
 -  
   request:
-    url: /2013-09-01/classes/QueryTestSelect
+    url: /2013-09-01/classes/QueryTestSelectLimitSkip
     method: GET
     query:
       where: '{"city":{"$select":{"query":{"className":"SubQuery","where":{"population":{"$gt":10000000}},"limit":1,"skip":1},"key":"cityName"}}}'

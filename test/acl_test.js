@@ -24,6 +24,10 @@ describe("NCMB ACL", function(){
     aclObj = new ncmb.Acl({"*":{read: true}});
     expect(aclObj.toJSON()).to.be.eql({"*":{read: true}});
   });
+  it("権限をconstructorで指定し、datnh", function() {
+    var acl  = new ncmb.Acl({"*":{read:true, write:false}});
+    expect(acl.toJSON()).to.be.eql({"*":{read: true, write:true}});
+  });
 
   describe("権限をプロパティで指定し、取得できる", function() {
     beforeEach(function(){

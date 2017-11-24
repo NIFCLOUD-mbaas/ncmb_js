@@ -297,6 +297,8 @@
       "userName": "Yamada Tarou"
       "password": "password"
   response:
+    headers:
+      x-ncmb-response-signature: c8mzeCvMdRDK5BgI9vC37d2CsngCYnse2Mxqnr/uF2I=
     status: 201
     file: 2013-09-01_classes_users_post_idpw_success.json
 

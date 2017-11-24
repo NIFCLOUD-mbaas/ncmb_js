@@ -37,13 +37,6 @@ var ncmb = null;
     });
     it("レスポンスシグネチャチェック", function(done){
       ncmb.enableResponseValidation(true);
-      ncmb.createSignature(
-        "https://"+ncmb.fqdn+"/" + ncmb.version +"/users",
-        "POST",
-        {userName: "Yamada Tarou", password:"password"},
-        "2017-11-16T09:56:28.373Z"
-      );
-    
       ncmb.request({
         path: "/" + ncmb.version + "/users",
         method: "POST",

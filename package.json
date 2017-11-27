@@ -1,7 +1,7 @@
 {
   "name": "ncmb",
-  "description": "JavaScript SDK for NiftyCloud mobile backend",
-  "version": "2.1.5",
+  "description": "JavaScript SDK for NIFCloud mobile backend",
+  "version": "2.2.0",
   "homepage": "http://mb.cloud.nifty.com/",
   "repository": {
     "type": "git",
@@ -9,7 +9,7 @@
   },
   "maintainers": [
     {
-      "name": "NiftyCloud mobile backend Team",
+      "name": "NIFCloud mobile backend Team",
       "url": "http://mb.cloud.nifty.com/support.htm"
     }
   ],

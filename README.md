@@ -1,8 +1,8 @@
 JavaScript SDK for NIF Cloud mobile backend
 ------------------------------------------------------------
-[![Build Status](https://travis-ci.org/NIFTYCloud-mbaas/ncmb_js.png)](https://travis-ci.org/NIFTYCloud-mbaas/ncmb_js)
-[![Coverage Status](https://coveralls.io/repos/NIFTYCloud-mbaas/ncmb_js/badge.svg?branch=apply_coveralls&service=github)](https://coveralls.io/github/NIFTYCloud-mbaas/ncmb_js?branch=apply_coveralls)
-[![Code Climate](https://codeclimate.com/github/NIFTYCloud-mbaas/ncmb_js/badges/gpa.svg)](https://codeclimate.com/github/NIFTYCloud-mbaas/ncmb_js)
+[![Build Status](https://travis-ci.org/NIFCloud-mbaas/ncmb_js.png)](https://travis-ci.org/NIFCloud-mbaas/ncmb_js)
+[![Coverage Status](https://coveralls.io/repos/NIFCloud-mbaas/ncmb_js/badge.svg?branch=apply_coveralls&service=github)](https://coveralls.io/github/NIFCloud-mbaas/ncmb_js?branch=apply_coveralls)
+[![Code Climate](https://codeclimate.com/github/NIFCloud-mbaas/ncmb_js/badges/gpa.svg)](https://codeclimate.com/github/NIFCloud-mbaas/ncmb_js)
 
 ## Supported environment
 
@@ -256,7 +256,7 @@ $ browserify -r -p licensify -t [ uglifyify -x .js ] -o ncmb.min.js lib/ncmb.js
 ## For Developer
 
 ```shell
-$ git clone https://github.com/NIFTYCloud-mbaas/ncmb_js
+$ git clone https://github.com/NIFCloud-mbaas/ncmb_js
 $ cd ncmb_js
 $ npm install
 $ npm test
@@ -307,4 +307,4 @@ Run `npm run document:generate` command, then documents has created in `jsdoc` d
 
 ## License
 
-Please read [LICENSE](git://github.com/NIFTYCloud-mbaas/ncmb_js/blob/master/LICENSE).
+Please read [LICENSE](git://github.com/NIFCloud-mbaas/ncmb_js/blob/master/LICENSE).

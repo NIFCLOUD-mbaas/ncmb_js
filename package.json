@@ -5,7 +5,7 @@
   "homepage": "http://mb.cloud.nifty.com/",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NIFTYCloud-mbaas/ncmb_js"
+    "url": "git+https://github.com/NIFCloud-mbaas/ncmb_js"
   },
   "maintainers": [
     {

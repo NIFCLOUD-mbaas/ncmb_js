@@ -411,6 +411,39 @@ describe("NCMB DataStore", function(){
       });
     });
 
+    context("リレーションを含むレコードの場合update成功", function(){
+      var Food = null;
+      var food = null;
+      beforeEach(function(){
+        Food = ncmb.DataStore("food");
+        food = new Food({key: "value_new",relation:{__type: 'Relation',className : 'TestJS'}});
+      });
+
+      it("callback で取得できる", function(done){
+        food.objectId = data_callback_id;
+        food.update(function(err, obj){
+          if(err){
+            done(err);
+          }else{
+            expect(obj.updateDate).to.exist;
+            done();
+          }
+        });
+      });
+
+      it("promise で取得できる", function(done){
+        food.objectId = data_promise_id;
+        food.update()
+            .then(function(obj){
+              expect(obj.updateDate).to.exist;
+              done();
+            })
+            .catch(function(err){
+              done(err);
+            });
+      });
+    });
+
     context("update失敗", function(){
       context("objectIdがない理由で", function(){
         var Food = null;

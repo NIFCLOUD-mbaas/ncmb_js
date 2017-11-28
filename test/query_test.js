@@ -1488,6 +1488,44 @@ describe("NCMB Query", function(){
         }
       });
     });
+    describe("select limit skip", function(){
+      var QueryTest = null;
+      var SubQuery = null;
+      
+      before(function(){
+             QueryTest = ncmb.DataStore("QueryTestSelectLimitSkip");
+             SubQuery = ncmb.DataStore("SubQuery");
+      });
+      context("keyの値が、サブクエリの検索結果がsubkeyに持つ値のいずれかと一致するオブジェクトを検索した結果が返り", function(){
+        it("callback で取得できる", function(done){
+          QueryTest
+          .select("city", "cityName", SubQuery.greaterThan("population",10000000).limit(1).skip(1))
+          .fetchAll(function(err, objs){
+            if(err){
+              done(err);
+            }else{
+              expect(objs.length).to.be.equal(1);
+              expect(objs[0].city).to.be.equal("Tokyo");
+              done();
+            }
+          });
+        });
+        it("promise で取得できる", function(done){
+          QueryTest
+          .select("city", "cityName", SubQuery.greaterThan("population",10000000).limit(1).skip(1))
+          .fetchAll()
+          .then(function(objs){
+            expect(objs.length).to.be.equal(1);
+            expect(objs[0].city).to.be.equal("Tokyo");
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
+        });
+      });
+    });
+    
     describe("relatedTo", function(){
       var BaseClass = null;
       var baseObj = null;
@@ -1678,6 +1716,45 @@ describe("NCMB Query", function(){
         }
       });
     });
+  });
+
+  describe("inQueryのSubQueryにLimit,Skip追加テスト", function(){
+      var QueryTest = null;
+      var SubQuery = null;
+      
+      before(function(){
+             QueryTest = ncmb.DataStore("QueryTestInQueryLimitSkip");
+             SubQuery = ncmb.DataStore("SubQuery");
+      });
+      
+      context("サブクエリの検索結果のいずれかのポインタをkeyに持つオブジェクトをLimit,Skip検索した結果が返り", function(){
+          it("callback で取得できる", function(done){
+             QueryTest
+             .inQuery("pointer", SubQuery.equalTo("status","pointed").limit(1).skip(1))
+             .fetchAll(function(err, objs){
+                       if(err){
+                         done(err);
+                       }else{
+                         expect(objs.length).to.be.equal(1);
+                         expect(objs[0].number).to.be.equal(2);
+                         done();
+                       }
+             });
+          });
+          it("promise で取得できる", function(done){
+             QueryTest
+             .inQuery("pointer", SubQuery.equalTo("status","pointed").limit(1).skip(1))
+             .fetchAll()
+             .then(function(objs){
+                   expect(objs.length).to.be.equal(1);
+                   expect(objs[0].number).to.be.equal(2);
+                   done();
+              })
+             .catch(function(err){
+                    done(err);
+              });
+          });
+      });
   });
 
   describe("レスポンス加工", function(){

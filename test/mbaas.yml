@@ -198,6 +198,17 @@
 -
   request:
     url: /2013-09-01/classes/food/object_id
+    method: PUT
+    body:
+      key: "value_new"
+      relation: { __type: 'Relation', className: 'TestJS'}
+  response:
+    status: 200
+    file: 2013-09-01_classes_TestClass_put_datacontainrelation_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/food/object_id
     method: DELETE
   response:
     status: 200
@@ -286,6 +297,8 @@
       "userName": "Yamada Tarou"
       "password": "password"
   response:
+    headers:
+      x-ncmb-response-signature: c8mzeCvMdRDK5BgI9vC37d2CsngCYnse2Mxqnr/uF2I=
     status: 201
     file: 2013-09-01_classes_users_post_idpw_success.json
 
@@ -997,6 +1010,15 @@
   response:
     status: 200
     file: 2013-09-01_classes_querytest_get_select_success.json
+-  
+  request:
+    url: /2013-09-01/classes/QueryTestSelectLimitSkip
+    method: GET
+    query:
+      where: '{"city":{"$select":{"query":{"className":"SubQuery","where":{"population":{"$gt":10000000}},"limit":1,"skip":1},"key":"cityName"}}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_select_limit_skip_success.json
 -
   request:
     url: /2013-09-01/classes/QueryTestRelatedTo
@@ -1012,6 +1034,16 @@
     method: GET
     query:
       where: '{"pointer":{"$inQuery":{"where":{"status":"pointed"},"className":"SubQuery"}}}'
+  response:
+    status: 200
+    file: 2013-09-01_classes_querytest_get_inquery_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/QueryTestInQueryLimitSkip
+    method: GET
+    query:
+      where: '{"pointer":{"$inQuery":{"where":{"status":"pointed"},"className":"SubQuery","limit":1,"skip":1}}}'
   response:
     status: 200
     file: 2013-09-01_classes_querytest_get_inquery_success.json

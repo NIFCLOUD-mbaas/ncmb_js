@@ -4,9 +4,9 @@
   "homepage": "http://mb.cloud.nifty.com/",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NIFTYCloud-mbaas/ncmb_js"
+    "url": "git+https://github.com/NIFCloud-mbaas/ncmb_js"
   },
-  "description": "JavaScript SDK for NiftyCloud mobile backend",
+  "description": "JavaScript SDK for NIFCloud mobile backend",
   "main": "ncmb.min.js",
   "keywords": [
     "mbaas",

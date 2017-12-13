@@ -14,8 +14,8 @@
     url: '/2013-09-01/login'
     method: GET
     query:
-      userName: user
-      password: password
+      userName: wronguser
+      password: wrongpassword
   response:
     status: 401
     file: 2013-09-01_user_login_namepw_error.json

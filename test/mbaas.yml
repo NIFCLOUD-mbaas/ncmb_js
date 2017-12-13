@@ -1665,6 +1665,13 @@
     file: 2013-09-01_classes_increment_get_validObjIdThatIsSetIncrementWithAmount.json
 -
   request:
+    url: /2013-09-01/classes/increment/validObjIdThatIsSetIncrementWithAmountSave
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_increment_get_validObjIdThatIsSetIncrementWithAmountSave.json
+-
+  request:
     url: /2013-09-01/classes/increment/validObjIdThatIsSetIncrementWithoutAmount
     method: PUT
     body:
@@ -1680,6 +1687,15 @@
   response:
     status: 200
     file: 2013-09-01_classes_increment_get_validObjIdThatIsSetIncrementWithoutAmount.json
+
+-
+  request:
+    url: /2013-09-01/classes/increment/validObjIdThatIsSetIncrementWithoutAmountSave
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_increment_get_validObjIdThatIsSetIncrementWithoutAmountSave.json
+
 -
   request:
     url: /2013-09-01/classes/increment/validObjIdThatIsSetIncrementMultiple
@@ -1699,6 +1715,14 @@
     file: 2013-09-01_classes_increment_get_validObjIdThatIsSetIncrementMultiple.json
 -
   request:
+    url: /2013-09-01/classes/increment/validObjIdThatIsSetIncrementMultipleSave
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_increment_get_validObjIdThatIsSetIncrementMultipleSave.json
+
+-
+  request:
     url: /2013-09-01/classes/increment/validObjIdThatIsSetIncrementWithMethodChain
     method: PUT
     body:
@@ -1716,6 +1740,13 @@
     file: 2013-09-01_classes_increment_get_validObjIdThatIsSetIncrementWithMethodChain.json
 -
   request:
+    url: /2013-09-01/classes/increment/validObjIdThatIsSetIncrementWithMethodChainSave
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_increment_get_validObjIdThatIsSetIncrementWithMethodChainSave.json
+-
+  request:
     url: /2013-09-01/classes/increment/validObjIdThatIsOverrideOperation
     method: PUT
     body:
@@ -1731,6 +1762,13 @@
   response:
     status: 200
     file: 2013-09-01_classes_increment_get_validObjIdThatIsOverrideOperation.json
+-
+  request:
+    url: /2013-09-01/classes/increment/validObjIdThatIsOverrideOperationSave
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_increment_get_validObjIdThatIsOverrideOperationSave.json
 
 -
   request:
@@ -1799,6 +1837,13 @@
   response:
     status: 200
     file: 2013-09-01_classes_add_get_id.json
+-
+  request:
+    url: /2013-09-01/classes/adds/add_id_save
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_add_get_id_save.json
 
 -
   request:
@@ -1817,6 +1862,13 @@
   response:
     status: 200
     file: 2013-09-01_classes_add_get_id2.json
+-
+  request:
+    url: /2013-09-01/classes/adds/add_id2_save
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_add_get_id2_save.json
 
 -
   request:
@@ -1835,6 +1887,13 @@
   response:
     status: 200
     file: 2013-09-01_classes_add_get_id3.json
+-
+  request:
+    url: /2013-09-01/classes/adds/add_id3_save
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_add_get_id3_save.json
 
 -
   request:
@@ -1855,6 +1914,13 @@
     file: 2013-09-01_classes_add_get_id4.json
 -
   request:
+    url: /2013-09-01/classes/adds/add_id4_save
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_add_get_id4_save.json
+-
+  request:
     url: /2013-09-01/classes/adds/add_id5
     method: PUT
     body:
@@ -1870,3 +1936,10 @@
   response:
     status: 200
     file: 2013-09-01_classes_add_get_id5.json
+-
+  request:
+    url: /2013-09-01/classes/adds/add_id5_save
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_add_get_id5_save.json

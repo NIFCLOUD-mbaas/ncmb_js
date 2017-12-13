@@ -97,9 +97,15 @@ describe("NCMB Operation", function(){
           if(err){
             done(err);
           }else{
-            expect(obj.increment).to.be.eql(2);
             validObjIdThatIsSetIncrementWithAmount = obj.objectId;
-            done();
+            classForIncrementTest.fetchById(validObjIdThatIsSetIncrementWithAmount, function(err, obj){
+              if(err){
+                done(err);
+              }else{
+                expect(obj.increment).to.be.eql(2);
+                done();
+              }
+            });
           }
         });
       });
@@ -109,9 +115,15 @@ describe("NCMB Operation", function(){
           if(err){
             done(err);
           }else{
-            expect(obj.increment).to.be.eql(1);
             validObjIdThatIsSetIncrementWithoutAmount = obj.objectId;
-            done();
+            classForIncrementTest.fetchById(validObjIdThatIsSetIncrementWithoutAmount, function(err, obj){
+              if(err){
+                done(err);
+              }else{
+                expect(obj.increment).to.be.eql(1);
+                done();
+              }
+            });
           }
         });
       });
@@ -122,9 +134,15 @@ describe("NCMB Operation", function(){
           if(err){
             done(err);
           }else{
-            expect(obj.increment).to.be.eql(5);
             validObjIdThatIsSetIncrementMultiple = obj.objectId;
-            done();
+            classForIncrementTest.fetchById(validObjIdThatIsSetIncrementMultiple, function(err, obj){
+              if(err){
+                done(err);
+              }else{
+                expect(obj.increment).to.be.eql(5);
+                done();
+              }
+            });
           }
         });
       });
@@ -134,9 +152,15 @@ describe("NCMB Operation", function(){
           if(err){
             done(err);
           }else{
-            expect(obj.increment).to.be.eql(4);
             validObjIdThatIsSetIncrementWithMethodChain = obj.objectId;
-            done();
+            classForIncrementTest.fetchById(validObjIdThatIsSetIncrementWithMethodChain, function(err, obj){
+              if(err){
+                done(err);
+              }else{
+                expect(obj.increment).to.be.eql(4);
+                done();
+              }
+            });
           }
         });
       });
@@ -146,14 +170,21 @@ describe("NCMB Operation", function(){
           if(err){
             done(err);
           }else{
-            expect(obj.increment).to.be.eql(6);
             validObjIdThatIsOverrideOperation = obj.objectId;
-            done();
+            classForIncrementTest.fetchById(validObjIdThatIsOverrideOperation, function(err, obj){
+              if(err){
+                done(err);
+              }else{
+                expect(obj.increment).to.be.eql(6);
+                done();
+              }
+            });
           }
         });
       });
 
       it("keyとamountを指定してsetIncrementを利用し、オブジェクトを更新すると、setIncrementした結果がデータストア上で設定される", function(done){
+        validObjIdThatIsSetIncrementWithAmount = "validObjIdThatIsSetIncrementWithAmount";
         objForIncrementTest.objectId = validObjIdThatIsSetIncrementWithAmount;
         objForIncrementTest.setIncrement("increment", 1);
         objForIncrementTest.update()
@@ -172,6 +203,7 @@ describe("NCMB Operation", function(){
             });
       });
       it("keyのみを指定した場合、amountが1に設定されてオブジェクト更新がされる", function(done){
+        validObjIdThatIsSetIncrementWithoutAmount = "validObjIdThatIsSetIncrementWithoutAmount";
         objForIncrementTest.objectId = validObjIdThatIsSetIncrementWithoutAmount;
         objForIncrementTest.setIncrement("increment");
         objForIncrementTest.update()
@@ -191,6 +223,7 @@ describe("NCMB Operation", function(){
       });
 
       it("複数回実行した場合、amountの合計値でオブジェクトが更新される", function(done){
+        validObjIdThatIsSetIncrementMultiple = "validObjIdThatIsSetIncrementMultiple";
         objForIncrementTest.objectId = validObjIdThatIsSetIncrementMultiple;
         objForIncrementTest.setIncrement("increment",3);
         objForIncrementTest.setIncrement("increment",2);
@@ -210,6 +243,7 @@ describe("NCMB Operation", function(){
             });
       });
       it("メソッドチェインで指定したsetIncrementでオブジェクトが更新される", function(done){
+        validObjIdThatIsSetIncrementWithMethodChain = "validObjIdThatIsSetIncrementWithMethodChain";
         objForIncrementTest.objectId = validObjIdThatIsSetIncrementWithMethodChain;
         objForIncrementTest.setIncrement("increment", 3).setIncrement("increment");
         objForIncrementTest.update()
@@ -229,6 +263,7 @@ describe("NCMB Operation", function(){
       });
 
       it("同じキーに複数のオペレーションが設定された場合、上書きされてオブジェクトが更新される", function(done){
+        validObjIdThatIsOverrideOperation = "validObjIdThatIsOverrideOperation";
         objForIncrementTest.objectId = validObjIdThatIsOverrideOperation;
         objForIncrementTest.add("increment", ["apple"]).setIncrement("increment",6);
         objForIncrementTest.update()
@@ -280,9 +315,15 @@ describe("NCMB Operation", function(){
           if(err){
             done(err);
           }else{
-            expect(obj.key).to.be.eql([1,2,3,4]);
             add_id = obj.objectId;
-            done();
+            Adds.fetchById(add_id, function(err, obj){
+              if(err){
+                done(err);
+              }else{
+                expect(obj.key).to.be.eql([1,2,3,4]);
+                done();
+              }
+            });
           }
         });
       });
@@ -292,9 +333,15 @@ describe("NCMB Operation", function(){
           if(err){
             done(err);
           }else{
-            expect(obj.key).to.be.eql([1]);
             add_id2 = obj.objectId;
-            done();
+            Adds.fetchById(add_id2, function(err, obj){
+              if(err){
+                done(err);
+              }else{
+                expect(obj.key).to.be.eql([1]);
+                done();
+              }
+            });
           }
         });
       });
@@ -305,9 +352,15 @@ describe("NCMB Operation", function(){
           if(err){
             done(err);
           }else{
-            expect(obj.key).to.be.eql([1,2,3,4,5,6]);
             add_id3 = obj.objectId;
-            done();
+            Adds.fetchById(add_id3, function(err, obj){
+              if(err){
+                done(err);
+              }else{
+                expect(obj.key).to.be.eql([1,2,3,4,5,6]);
+                done();
+              }
+            });
           }
         });
       });
@@ -317,9 +370,15 @@ describe("NCMB Operation", function(){
           if(err){
             done(err);
           }else{
-            expect(obj.key).to.be.eql([1,2,3,4,5]);
             add_id4 = obj.objectId;
-            done();
+            Adds.fetchById(add_id4, function(err, obj){
+              if(err){
+                done(err);
+              }else{
+                expect(obj.key).to.be.eql([1,2,3,4,5]);
+                done();
+              }
+            });
           }
         });
       });
@@ -329,13 +388,20 @@ describe("NCMB Operation", function(){
           if(err){
             done(err);
           }else{
-            expect(obj.key).to.be.eql([1,2,3]);
             add_id5 = obj.objectId;
-            done();
+            Adds.fetchById(add_id5, function(err, obj){
+              if(err){
+                done(err);
+              }else{
+                expect(obj.key).to.be.eql([1,2,3]);
+                done();
+              }
+            });
           }
         });
       });
       it("keyとobjectsを指定した場合、keyのプロパティにオペレーションを設定できる (In Case update() )", function(done){
+        add_id = "add_id"
         adds.objectId = add_id;
         adds.add("key", [1,2,3,4]);
         adds.update()
@@ -355,6 +421,7 @@ describe("NCMB Operation", function(){
       });
 
       it("objectsに配列以外を指定した場合、要素数1の配列に変換してプロパティにオペレーションを設定できる(In case update() )", function(done){
+        add_id2 = "add_id2"
         adds.objectId = add_id2;
         adds.add("key", 1);
         adds.update()
@@ -373,6 +440,7 @@ describe("NCMB Operation", function(){
             });
       });
       it("複数回実行した場合、objectsが各入力を連結した配列のオペレーションを設定できる(In case update())", function(done){
+        add_id3 = "add_id3"
         adds.objectId = add_id3;
         adds.add("key", [1,2,3]);
         adds.add("key", [4,5,6]);
@@ -392,6 +460,7 @@ describe("NCMB Operation", function(){
             });
       });
       it("メソッドチェインで連続実行できる(In case update())", function(done){
+        add_id4 = "add_id4"
         adds.objectId = add_id4;
         adds.add("key", [4,2,3]).add("key", [4,5,6]);
         adds.update()
@@ -410,6 +479,7 @@ describe("NCMB Operation", function(){
             });
       });
       it("他のオペレーションメソッドを上書きできる(In case update())", function(done){
+        add_id5 = "add_id5"
         adds.objectId = add_id5;
         adds.remove("key", ["apple"]).add("key", [1,2,4]);
         adds.update()

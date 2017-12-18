@@ -160,6 +160,7 @@
   response:
     status: 200
     file: 2013-09-01_classes_food_get_acl_success.json
+
 -
   request:
     url: /2013-09-01/classes/food/object_id
@@ -167,6 +168,7 @@
   response:
     status: 200
     file: 2013-09-01_classes_TestClass_fetch_success.json
+
 -
   request:
     url: /2013-09-01/classes/food
@@ -1595,3 +1597,352 @@
   response:
     status: 200
     body: get_with_lower_case
+
+#operation
+-
+  request:
+    url: /2013-09-01/classes/increment
+    method: POST
+    body:
+      increment: 2
+  response:
+    status: 201
+    file: 2013-09-01_classes_increment_save_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/increment
+    method: POST
+    body:
+      increment: 1
+  response:
+    status: 201
+    file: 2013-09-01_classes_increment_save_no_amount_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/increment
+    method: POST
+    body:
+      increment: 5
+  response:
+    status: 201
+    file: 2013-09-01_classes_increment_save_multiple_increment_operation_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/increment
+    method: POST
+    body:
+      increment: 4
+  response:
+    status: 201
+    file: 2013-09-01_classes_increment_save_multiple_increment_operation_with_method_chain_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/increment
+    method: POST
+    body:
+      increment: 6
+  response:
+    status: 201
+    file: 2013-09-01_classes_increment_save_override_amount_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/increment/validObjIdThatIsSetIncrementWithAmount
+    method: PUT
+    body:
+      increment: { __op: 'Increment', amount: 1 }
+  response:
+    status: 200
+    file: 2013-09-01_classes_increment_update_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/increment/validObjIdThatIsSetIncrementWithAmount
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_increment_get_validObjIdThatIsSetIncrementWithAmount.json
+-
+  request:
+    url: /2013-09-01/classes/increment/validObjIdThatIsSetIncrementWithAmountSave
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_increment_get_validObjIdThatIsSetIncrementWithAmountSave.json
+-
+  request:
+    url: /2013-09-01/classes/increment/validObjIdThatIsSetIncrementWithoutAmount
+    method: PUT
+    body:
+      increment: { __op: 'Increment', amount: 1 }
+  response:
+    status: 200
+    file: 2013-09-01_classes_increment_update_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/increment/validObjIdThatIsSetIncrementWithoutAmount
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_increment_get_validObjIdThatIsSetIncrementWithoutAmount.json
+
+-
+  request:
+    url: /2013-09-01/classes/increment/validObjIdThatIsSetIncrementWithoutAmountSave
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_increment_get_validObjIdThatIsSetIncrementWithoutAmountSave.json
+
+-
+  request:
+    url: /2013-09-01/classes/increment/validObjIdThatIsSetIncrementMultiple
+    method: PUT
+    body:
+      increment: { __op: 'Increment', amount: 5 }
+  response:
+    status: 200
+    file: 2013-09-01_classes_increment_update_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/increment/validObjIdThatIsSetIncrementMultiple
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_increment_get_validObjIdThatIsSetIncrementMultiple.json
+-
+  request:
+    url: /2013-09-01/classes/increment/validObjIdThatIsSetIncrementMultipleSave
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_increment_get_validObjIdThatIsSetIncrementMultipleSave.json
+
+-
+  request:
+    url: /2013-09-01/classes/increment/validObjIdThatIsSetIncrementWithMethodChain
+    method: PUT
+    body:
+      increment: { __op: 'Increment', amount: 4 }
+  response:
+    status: 200
+    file: 2013-09-01_classes_increment_update_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/increment/validObjIdThatIsSetIncrementWithMethodChain
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_increment_get_validObjIdThatIsSetIncrementWithMethodChain.json
+-
+  request:
+    url: /2013-09-01/classes/increment/validObjIdThatIsSetIncrementWithMethodChainSave
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_increment_get_validObjIdThatIsSetIncrementWithMethodChainSave.json
+-
+  request:
+    url: /2013-09-01/classes/increment/validObjIdThatIsOverrideOperation
+    method: PUT
+    body:
+      increment: { __op: 'Increment', amount: 6 }
+  response:
+    status: 200
+    file: 2013-09-01_classes_increment_update_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/increment/validObjIdThatIsOverrideOperation
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_increment_get_validObjIdThatIsOverrideOperation.json
+-
+  request:
+    url: /2013-09-01/classes/increment/validObjIdThatIsOverrideOperationSave
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_increment_get_validObjIdThatIsOverrideOperationSave.json
+
+-
+  request:
+    url: /2013-09-01/classes/adds
+    method: POST
+    body:
+      key: [1,2,3,4]
+  response:
+    status: 201
+    file: 2013-09-01_classes_add_save_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/adds
+    method: POST
+    body:
+      key: [1]
+  response:
+    status: 201
+    file: 2013-09-01_classes_add_one_value_save_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/adds
+    method: POST
+    body:
+      key: [1,2,3,4,5,6]
+  response:
+    status: 201
+    file: 2013-09-01_classes_add_multi_value_save_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/adds
+    method: POST
+    body:
+      key: [1,2,3,4,5]
+  response:
+    status: 201
+    file: 2013-09-01_classes_add_multi2_value_save_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/adds
+    method: POST
+    body:
+      key: [1,2,3]
+  response:
+    status: 201
+    file: 2013-09-01_classes_add_override_value_save_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/adds/add_id
+    method: PUT
+    body:
+      key: { __op: 'Add', objects: [1,2,3,4] }
+  response:
+    status: 200
+    file: 2013-09-01_classes_add_update_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/adds/add_id
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_add_get_id.json
+-
+  request:
+    url: /2013-09-01/classes/adds/add_id_save
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_add_get_id_save.json
+
+-
+  request:
+    url: /2013-09-01/classes/adds/add_id2
+    method: PUT
+    body:
+      key: { __op: 'Add', objects: [1] }
+  response:
+    status: 200
+    file: 2013-09-01_classes_add_update_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/adds/add_id2
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_add_get_id2.json
+-
+  request:
+    url: /2013-09-01/classes/adds/add_id2_save
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_add_get_id2_save.json
+
+-
+  request:
+    url: /2013-09-01/classes/adds/add_id3
+    method: PUT
+    body:
+      key: { __op: 'Add', objects: [1,2,3,4,5,6] }
+  response:
+    status: 200
+    file: 2013-09-01_classes_add_update_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/adds/add_id3
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_add_get_id3.json
+-
+  request:
+    url: /2013-09-01/classes/adds/add_id3_save
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_add_get_id3_save.json
+
+-
+  request:
+    url: /2013-09-01/classes/adds/add_id4
+    method: PUT
+    body:
+      key: { __op: 'Add', objects: [4,2,3,4,5,6] }
+  response:
+    status: 200
+    file: 2013-09-01_classes_add_update_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/adds/add_id4
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_add_get_id4.json
+-
+  request:
+    url: /2013-09-01/classes/adds/add_id4_save
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_add_get_id4_save.json
+-
+  request:
+    url: /2013-09-01/classes/adds/add_id5
+    method: PUT
+    body:
+      key: { __op: 'Add', objects: [1,2,4] }
+  response:
+    status: 200
+    file: 2013-09-01_classes_add_update_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/adds/add_id5
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_add_get_id5.json
+-
+  request:
+    url: /2013-09-01/classes/adds/add_id5_save
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_classes_add_get_id5_save.json

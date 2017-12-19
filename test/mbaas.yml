@@ -1,25 +1,3 @@
-# request_test
--
-  request:
-    url: /2013-09-01/classes/TestClassError
-    method: POST
-    body:
-      key: "value"
-  response:
-    status: 404
-    file: 2013-09-01_classes_TestClassError_post_error.json
-
--
-  request:
-    url: '/2013-09-01/login'
-    method: GET
-    query:
-      userName: wronguser
-      password: wrongpassword
-  response:
-    status: 401
-    file: 2013-09-01_user_login_namepw_error.json
-
 # core_test
 -
   request:
@@ -1617,3 +1595,25 @@
   response:
     status: 200
     body: get_with_lower_case
+
+# response_error_test
+-
+  request:
+    url: /2013-09-01/login
+    method: GET
+    query:
+      userName: wronguser
+      password: wrongpassword
+  response:
+    status: 401
+    file: 2013-09-01_responseErrorTest_authenticationWithIdPwdIncorrect_error.json
+
+-
+  request:
+    url: /2013-09-01/classes/WrongAppKeyAndClientKey
+    method: POST
+    body:
+      key: value
+  response:
+    status: 404
+    file: 2013-09-01_responseErrorTest_noSuchApplication_error.json

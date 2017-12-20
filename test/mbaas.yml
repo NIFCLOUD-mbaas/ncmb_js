@@ -1946,3 +1946,25 @@
   response:
     status: 200
     file: 2013-09-01_classes_add_get_id5_save.json
+
+# response_error_test
+-
+  request:
+    url: /2013-09-01/login
+    method: GET
+    query:
+      userName: wronguser
+      password: wrongpassword
+  response:
+    status: 401
+    file: 2013-09-01_responseErrorTest_authenticationWithIdPwdIncorrect_error.json
+
+-
+  request:
+    url: /2013-09-01/classes/WrongAppKeyAndClientKey
+    method: POST
+    body:
+      key: value
+  response:
+    status: 404
+    file: 2013-09-01_responseErrorTest_noSuchApplication_error.json

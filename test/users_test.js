@@ -137,6 +137,34 @@ describe("NCMB Users", function(){
         });
       });
     });
+    context("nullが含まれるユーザを登録に成功した場合", function(){
+      var name_user = null;
+      beforeEach(function(){
+        name_user = new ncmb.User({userName: "Yamada Tarou", password:"password",test: null});
+      });
+
+      it("callback でレスポンスを取得できる", function(done){
+        name_user.signUpByAccount(function(err, obj){
+          if(err){
+            done(err);
+          }else{
+            expect(obj.objectId).to.exist;
+            done();
+          }
+        });
+      });
+
+      it("promise でレスポンスを取得できる", function(done){
+        name_user.signUpByAccount()
+        .then(function(obj){
+          expect(obj.objectId).to.exist;
+          done();
+        })
+        .catch(function(err){
+          done(err);
+        });
+      });
+    });
   });
 
   describe("ID/PWユーザでログイン", function(){

@@ -57,6 +57,19 @@
 -
   request:
     url: /2013-09-01/classes/food
+    method: POST
+    body:
+      name: "orange"
+      type: "fruit"
+      status: "success"
+      test: null
+  response:
+    status: 201
+    file: 2013-09-01_classes_food_post_success.json
+
+-
+  request:
+    url: /2013-09-01/classes/food
     method: GET
     query:
       where: '{"objectId":"date_object_id"}'
@@ -302,6 +315,20 @@
     status: 201
     file: 2013-09-01_classes_users_post_idpw_success.json
 
+-
+  request:
+    url: /2013-09-01/users
+    method: POST
+    body:
+      "userName": "Yamada Tarou"
+      "password": "password"
+      "test": null
+  response:
+    headers:
+      x-ncmb-response-signature: c8mzeCvMdRDK5BgI9vC37d2CsngCYnse2Mxqnr/uF2I=
+    status: 201
+    file: 2013-09-01_classes_users_post_idpw_success.json
+    
 -
   request:
     url: /2013-09-01/users

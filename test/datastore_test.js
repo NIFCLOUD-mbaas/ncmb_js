@@ -310,8 +310,7 @@ describe("NCMB DataStore", function(){
               });
         });
       });
-      //test case
-      context("datnh", function(){
+      context("nullが含まれるデータを保存する際、登録に成功し", function(){
         var Food = null;
         var food = null;
         beforeEach(function(){

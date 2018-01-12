@@ -137,13 +137,13 @@ describe("NCMB Users", function(){
         });
       });
     });
-    context("datnh signup", function(){
+    context("nullが含まれるユーザを登録に成功した場合", function(){
       var name_user = null;
       beforeEach(function(){
         name_user = new ncmb.User({userName: "Yamada Tarou", password:"password",test: null});
       });
 
-      it("callback datnh", function(done){
+      it("callback でレスポンスを取得できる", function(done){
         name_user.signUpByAccount(function(err, obj){
           if(err){
             done(err);
@@ -154,7 +154,7 @@ describe("NCMB Users", function(){
         });
       });
 
-      it("promise datnh", function(done){
+      it("promise でレスポンスを取得できる", function(done){
         name_user.signUpByAccount()
         .then(function(obj){
           expect(obj.objectId).to.exist;

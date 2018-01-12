@@ -316,7 +316,7 @@ describe("NCMB DataStore", function(){
         var food = null;
         beforeEach(function(){
           Food = ncmb.DataStore("food");
-          food = new Food({name: "orange", type: "fruit", status: "success", test: null});
+          food = new Food({name: "orange", type: "fruit", test: null});
         });
         it("callback で取得できる", function(done){
           food.save(function(err, obj){
@@ -324,7 +324,6 @@ describe("NCMB DataStore", function(){
               done(err);
             }else{
               expect(obj.objectId).to.exist;
-              data_callback_id = obj.objectId;
               done();
             }
           });
@@ -333,7 +332,6 @@ describe("NCMB DataStore", function(){
           food.save()
               .then(function(obj){
                 expect(obj.objectId).to.exist;
-                data_promise_id = obj.objectId;
                 done();
               })
               .catch(function(err){

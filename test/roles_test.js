@@ -178,7 +178,7 @@ describe("NCMB Role", function(){
         it("callback で取得できる", function(done){
           noExistRole.update(function(err, obj){
             if(err){
-              expect(err.status).to.be.eql(404);
+              expect(err.code).to.be.eql('E404001');
               done();
             }else{
               done(new Error("error が返されなければならない"));

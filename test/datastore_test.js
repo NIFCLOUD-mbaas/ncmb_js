@@ -310,6 +310,34 @@ describe("NCMB DataStore", function(){
               });
         });
       });
+      context("nullが含まれるデータを保存する際、登録に成功し", function(){
+        var Food = null;
+        var food = null;
+        beforeEach(function(){
+          Food = ncmb.DataStore("food");
+          food = new Food({name: "orange", type: "fruit", test: null});
+        });
+        it("callback で取得できる", function(done){
+          food.save(function(err, obj){
+            if(err){
+              done(err);
+            }else{
+              expect(obj.objectId).to.exist;
+              done();
+            }
+          });
+        });
+        it("promise で取得できる", function(done){
+          food.save()
+              .then(function(obj){
+                expect(obj.objectId).to.exist;
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+        });
+      });
     });
   });
 

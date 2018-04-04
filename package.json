@@ -60,7 +60,7 @@
     "superagent-proxy": false
   },
   "scripts": {
-    "test": "nohup npm run stub:start & sleep 5 && npm run stub:stop",
+    "test": "nohup npm run stub:start & sleep 5 && NODE_ENV=test mocha -R list test/**_test.js && npm run cov:80 && npm run stub:stop",
     "test:frontend:modules": "lodash -o test/frontend/lodash.js && cat node_modules/mocha/mocha.js node_modules/chai/chai.js test/frontend/lodash.min.js > test/frontend/test_modules.js",
     "test:frontend:testfile": "cat test/frontend/header.js test/**_test.js test/frontend/footer.js |sed -e '/require(.*)/d' -e '/use strict/d' > test/frontend/ncmb_test.js",
     "test:frontend:build": "npm run test:frontend:testfile && cat test/frontend/test_modules.js test/frontend/module_setup.js test/frontend/ncmb_test.js test/frontend/test_run.js > test/frontend/www/ncmb_test.full.js",

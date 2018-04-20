@@ -1,9 +1,8 @@
 language : "node_js"
 node_js:
-  - "0.12"
-  - "iojs"
-  - "4.0.0"
-  - "4.2.1"
+  - "6"
+  - "8"
+  - "lts/*"
 env:
   - PATH=./node_modules/.bin:$PATH
 script:

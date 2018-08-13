@@ -12,6 +12,12 @@ JavaScript SDK for NIF Cloud mobile backend
 | Mozilla Firefox      | Latest version     |
 | Google Chrome        | Latest version     |
 
+## Support desk coverage version
+
+Please read [Developer guidelines](https://mbaas.nifcloud.com/doc/current/common/dev_guide.html#SDK%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6).
+
+- v2.1.5 ～ (※as of August, 2018)
+
 ## Install
 
 ```shell
@@ -307,4 +313,4 @@ Run `npm run document:generate` command, then documents has created in `jsdoc` d
 
 ## License
 
-Please read [LICENSE](git://github.com/NIFCloud-mbaas/ncmb_js/blob/master/LICENSE).
+Please read [LICENSE](https://github.com/NIFCloud-mbaas/ncmb_js/blob/master/LICENSE).

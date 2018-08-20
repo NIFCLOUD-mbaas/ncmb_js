@@ -75,7 +75,7 @@ describe("NCMB core", function(){
         {where: {testKey: "testValue"}},
         "2013-12-02T02:44:35.452Z"
       );
-      expect(sig).to.be.equal("/mQAJJfMHx2XN9mPZ9bDWR9VIeftZ97ntzDIRw0MQ4M=");
+      expect(sig).to.be.equal("AltGkQgXurEV7u0qMd+87ud7BKuueldoCjaMgVc9Bes=");
     });
   });
 

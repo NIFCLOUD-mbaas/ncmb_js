@@ -814,7 +814,7 @@ describe("NCMB Users", function(){
             access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD",
             expiration_date: {"__type":"Date","iso":"2013-08-31T07:41:11.906Z"}
           };
-          provider = "nifty";
+          provider = "Ncmb";
         });
         it("callback で登録時エラーを取得できる", function(done){
           user.signUpWith(provider, providerData, function(err, data){
@@ -1337,7 +1337,7 @@ describe("NCMB Users", function(){
 
         context("providerが不正だった場合", function(){
           beforeEach(function(){
-            provider = "nifty";
+            provider = "Ncmb";
             providerData = {
               id: "100002415159782",
               access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD",
@@ -1394,7 +1394,7 @@ describe("NCMB Users", function(){
 
         context("authDataプロパティのproviderが不正だった場合", function(){
           beforeEach(function(){
-            provider = "nifty";
+            provider = "Ncmb";
             providerData = {
               id: "100002415159782",
               access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD",
@@ -1810,7 +1810,7 @@ describe("NCMB Users", function(){
 
           context("authDataプロパティのproviderが不正だった場合", function(){
             beforeEach(function(){
-              provider = "nifty";
+              provider = "Ncmb";
               providerData = {
                 id: "100002415159782",
                 access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD",
@@ -2117,7 +2117,7 @@ describe("NCMB Users", function(){
 
           context("providerが不正だった場合", function(){
             beforeEach(function(){
-              provider = "nifty";
+              provider = "Ncmb";
               providerData = {
                 id: "100002415159782",
                 access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD",

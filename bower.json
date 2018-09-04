@@ -1,7 +1,7 @@
 {
   "name": "ncmb",
-  "version": "2.2.2",
-  "homepage": "http://mb.cloud.nifty.com/",
+  "version": "3.0.0",
+  "homepage": "https://mbaas.nifcloud.com/",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/NIFCloud-mbaas/ncmb_js"

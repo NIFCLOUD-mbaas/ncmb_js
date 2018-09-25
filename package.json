@@ -31,6 +31,7 @@
   "license": "Apache License Version 2.0",
   "dependencies": {
     "babel": "^5.1.8",
+    "babel-polyfill": "^6.26.0",
     "create-error": "^0.3.1",
     "localforage": "^1.2.3",
     "lodash.flatten": "^4.1.1",

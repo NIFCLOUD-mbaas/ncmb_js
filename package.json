@@ -33,6 +33,7 @@
     "babel": "^5.1.8",
     "babel-polyfill": "^6.26.0",
     "create-error": "^0.3.1",
+    "idempotent-babel-polyfill": "^7.0.0",
     "localforage": "^1.2.3",
     "lodash.flatten": "^4.1.1",
     "node-localstorage": "^0.5.1",

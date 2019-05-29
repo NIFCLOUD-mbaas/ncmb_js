@@ -40,7 +40,7 @@
     "object-assign": "^3.0.0",
     "qs": "^2.4.1",
     "superagent": "^5.0.5",
-    "superagent-proxy": "^0.3.1",
+    "superagent-proxy": "^2.0.0",
     "url": "^0.10.3"
   },
   "devDependencies": {

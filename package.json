@@ -30,7 +30,7 @@
   "author": "",
   "license": "Apache License Version 2.0",
   "dependencies": {
-    "babel": "^5.1.8",
+    "babel": "^6.23.0",
     "babel-polyfill": "^6.26.0",
     "create-error": "^0.3.1",
     "idempotent-babel-polyfill": "^7.0.0",

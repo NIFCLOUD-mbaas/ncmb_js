@@ -12,6 +12,8 @@ JavaScript SDK for NIF Cloud mobile backend
 | Mozilla Firefox      | Latest version     |
 | Google Chrome        | Latest version     |
 
+Remember to turn on Allow Cookies on your browsers.
+
 ## Support desk coverage version
 
 Please read [Developer guidelines](https://mbaas.nifcloud.com/doc/current/common/dev_guide.html#SDK%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6).

@@ -8,9 +8,11 @@ JavaScript SDK for NIF Cloud mobile backend
 
 | Environment              | Supported version |
 |:---                  |:---        |
-| Node.js              | 6.x, 8.x |
+| Node.js              | 6.x, 8.x, 10.x |
 | Mozilla Firefox      | Latest version     |
 | Google Chrome        | Latest version     |
+
+Remember to turn on Allow Cookies on your browsers.
 
 ## Support desk coverage version
 

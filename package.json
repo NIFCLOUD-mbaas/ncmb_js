@@ -1,7 +1,7 @@
 {
   "name": "ncmb",
   "description": "JavaScript SDK for NIFCloud mobile backend",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "homepage": "https://mbaas.nifcloud.com/",
   "repository": {
     "type": "git",
@@ -30,15 +30,17 @@
   "author": "",
   "license": "Apache License Version 2.0",
   "dependencies": {
-    "babel": "^5.1.8",
+    "babel": "^6.23.0",
+    "babel-polyfill": "^6.26.0",
     "create-error": "^0.3.1",
+    "idempotent-babel-polyfill": "^7.0.0",
     "localforage": "^1.2.3",
     "lodash.flatten": "^4.1.1",
     "node-localstorage": "^0.5.1",
     "object-assign": "^3.0.0",
     "qs": "^2.4.1",
-    "superagent": "^1.8.2",
-    "superagent-proxy": "^0.3.1",
+    "superagent": "^5.0.5",
+    "superagent-proxy": "^2.0.0",
     "url": "^0.10.3"
   },
   "devDependencies": {

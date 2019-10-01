@@ -355,6 +355,17 @@
     url: '/2013-09-01/login'
     method: GET
     query:
+      "userName": "test"
+      "password": "test!$()*;"
+  response:
+    status: 200
+    file: 2013-09-01_user_login_namepw_success.json
+
+-
+  request:
+    url: '/2013-09-01/login'
+    method: GET
+    query:
       "userName": "Yamada Tarou"
       "password": "password"
   response:

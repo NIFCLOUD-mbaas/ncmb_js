@@ -176,7 +176,7 @@ describe("NCMB Users", function(){
       context("If the property has userName, password with special character: !$()*;", function(){
         beforeEach(function(){
           userName = "test";
-          password = "test!$()*;";
+          password = "test!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~test";
           user = new ncmb.User({userName: userName, password: password});
         });
         it("callback でレスポンスを取得できる", function(done){

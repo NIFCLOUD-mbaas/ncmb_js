@@ -356,7 +356,7 @@
     method: GET
     query:
       "userName": "test"
-      "password": "test!$()*;"
+      "password": "test!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~test"
   response:
     status: 200
     file: 2013-09-01_user_login_namepw_success.json

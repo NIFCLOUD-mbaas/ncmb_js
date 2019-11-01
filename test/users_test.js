@@ -3869,5 +3869,1245 @@ describe("NCMB Users", function(){
       });
     });
   });
+  // =============================================
+  describe("Fetch when sessionToken error", function(){
+    var currentName = null;
+    var currentPassword = null;
+    context("Current User", function(){
+      it("fetch currentUser when token error", function(done){
+        if(!ncmb.stub){
+          currentName = callback_name;
+          currentPassword = callback_password;
+        }else{
+          currentName = "name";
+          currentPassword = "passwd";
+        }
+        var user = new ncmb.User({userName:currentName,password:currentPassword});
+        ncmb.User.login(user, function(err, data){
+          try{
+            expect(data).to.be.an.instanceof(ncmb.User);
+            expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+            ncmb.sessionToken = null;
+            user = ncmb.User.getCurrentUser();
+
+            ncmb.User.fetchById(user.objectId)
+            .then(function(data){
+              expect(data.code).eql("E401003");
+              expect(data.error).eql("Invalid session token.");
+            })
+            .catch(function(err){
+              expect(err).to.be.an.instanceof(Error);
+              done();
+            });
+          }catch(err){
+            done(err);
+          }
+        });
+      });
+    });
+    context("Datastore", function(){
+      var Drink = null;
+      before(function(){
+        Drink = ncmb.DataStore("drink");
+      });
+      it("fetch dataStore when token error", function(done){
+        if(!ncmb.stub){
+          currentName = callback_name;
+          currentPassword = callback_password;
+        }else{
+          currentName = "name";
+          currentPassword = "passwd";
+        }
+        var user = new ncmb.User({userName:currentName,password:currentPassword});
+        ncmb.User.login(user, function(err, data){
+          try{
+            expect(data).to.be.an.instanceof(ncmb.User);
+            expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+            ncmb.sessionToken = null;
+
+            Drink.fetch()
+            .then(function(obj){
+              expect(data.code).eql("E401003");
+              expect(data.error).eql("Invalid session token.");
+            })
+            .catch(function(err){
+              expect(err).to.be.an.instanceof(Error);
+              done();
+            });
+
+          }catch(err){
+            done(err);
+          }
+        });
+      });
+    });
+    context("AllowUser", function(){
+      it("fetch user when token error", function(done){
+        if(!ncmb.stub){
+          currentName = callback_name;
+          currentPassword = callback_password;
+        }else{
+          currentName = "name";
+          currentPassword = "passwd";
+        }
+        var user = new ncmb.User({userName:currentName,password:currentPassword});
+        ncmb.User.login(user, function(err, data){
+          try{
+            expect(data).to.be.an.instanceof(ncmb.User);
+            expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+            ncmb.sessionToken = null;
+
+            ncmb.User.fetchById("dummyAllowUserId")
+            .then(function(data){
+              expect(data.code).eql("E401003");
+              expect(data.error).eql("Invalid session token.");
+            })
+            .catch(function(err){
+              expect(err).to.be.an.instanceof(Error);
+              done();
+            });
+
+          }catch(err){
+            done(err);
+          }
+        });
+      });
+    });
+  });
+  describe("Fetch when object Not found", function(){
+    var currentName = null;
+    var currentPassword = null;
+    context("Current User", function(){
+      it("fetch current user non exist after login", function(done){
+        if(!ncmb.stub){
+          currentName = callback_name;
+          currentPassword = callback_password;
+        }else{
+          currentName = "name";
+          currentPassword = "passwd";
+        }
+        var user = new ncmb.User({userName:currentName,password:currentPassword});
+        ncmb.User.login(user, function(err, data){
+          try{
+            expect(data).to.be.an.instanceof(ncmb.User);
+            expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+
+            ncmb.User.fetchById("usernotfound")
+            .then(function(data){
+              expect(data.code).eql("E404001");
+              expect(data.error).eql("No data available.");
+            })
+            .catch(function(err){
+              expect(err).to.be.an.instanceof(Error);
+              done();
+            });
+          }catch(err){
+            done(err);
+          }
+        });
+      });
+    });
+    context("Datastore", function(){
+      var Drink = null;
+      before(function(){
+        Drink = ncmb.DataStore("drinknotfound");
+      });
+      it("fetch object non exist after login", function(done){
+        if(!ncmb.stub){
+          currentName = callback_name;
+          currentPassword = callback_password;
+        }else{
+          currentName = "name";
+          currentPassword = "passwd";
+        }
+        var user = new ncmb.User({userName:currentName,password:currentPassword});
+        ncmb.User.login(user, function(err, data){
+          try{
+            expect(data).to.be.an.instanceof(ncmb.User);
+            expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+
+            Drink.fetch()
+            .then(function(obj){
+              expect(data.code).eql("E404001");
+              expect(data.error).eql("No data available.");
+            })
+            .catch(function(err){
+              expect(err).to.be.an.instanceof(Error);
+              done();
+            });
+
+          }catch(err){
+            done(err);
+          }
+        });
+      });
+    });
+    context("AllowUser", function(){
+      it("fetch user non exist after login", function(done){
+        if(!ncmb.stub){
+          currentName = callback_name;
+          currentPassword = callback_password;
+        }else{
+          currentName = "name";
+          currentPassword = "passwd";
+        }
+        var user = new ncmb.User({userName:currentName,password:currentPassword});
+        ncmb.User.login(user, function(err, data){
+          try{
+            expect(data).to.be.an.instanceof(ncmb.User);
+            expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+            ncmb.sessionToken = null;
+
+            ncmb.User.fetchById("dummyAllowUserIdnotfound")
+            .then(function(data){
+              expect(data.code).eql("E404001");
+              expect(data.error).eql("No data available.");
+            })
+            .catch(function(err){
+              expect(err).to.be.an.instanceof(Error);
+              done();
+            });
+
+          }catch(err){
+            done(err);
+          }
+        });
+      });
+    });
+  });
+  var data_promise_id  = null;
+  describe("Login", function(){
+    var currentName = null;
+    var currentPassword = null;
+    context("Current User", function(){
+      it("fetch currentUser after login", function(done){
+        if(!ncmb.stub){
+          currentName = callback_name;
+          currentPassword = callback_password;
+        }else{
+          currentName = "userLoginName";
+          currentPassword = "userPasswd";
+        }
+        var user = new ncmb.User({userName:currentName,password:currentPassword});
+        ncmb.User.login(user, function(err, data){
+          try{
+            expect(data).to.be.an.instanceof(ncmb.User);
+            expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+            expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+            expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+            user = ncmb.User.getCurrentUser();
+
+            ncmb.User.fetchById(user.objectId)
+            .then(function(data){
+              expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+              expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+              expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+              done();
+            })
+            .catch(function(err){
+              done(err);
+            });
+          }catch(err){
+            done(err);
+          }
+        });
+      });
+
+      it("update currentUser after login", function(done){
+        if(!ncmb.stub){
+          currentName = callback_name;
+          currentPassword = callback_password;
+        }else{
+          currentName = "userLoginName";
+          currentPassword = "userPasswd";
+        }
+        var user = new ncmb.User({userName:currentName,password:currentPassword});
+        ncmb.User.login(user, function(err, data){
+          try{
+            expect(data).to.be.an.instanceof(ncmb.User);
+            expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+            expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+            expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+            user = ncmb.User.getCurrentUser();
+            
+            user.set("updatefield", "updated")
+              .update()
+              .then(function(data){
+                expect(data.updateDate).to.exist;
+                expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+                expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+                expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+                expect(user.updatefield).to.be.eql("updated");
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+          }catch(err){
+            done(err);
+          }
+        });
+      });
+
+      it("add currentUser after login", function(done){
+        if(!ncmb.stub){
+          currentName = callback_name;
+          currentPassword = callback_password;
+        }else{
+          currentName = "userLoginName";
+          currentPassword = "userPasswd";
+        }
+        var user = new ncmb.User({userName:currentName,password:currentPassword});
+        ncmb.User.login(user, function(err, data){
+          try{
+            expect(data).to.be.an.instanceof(ncmb.User);
+            expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+            expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+            expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+            user = ncmb.User.getCurrentUser();
+            user.userName = "Yamada Tarou";
+            user.password = "password";
+
+            user.signUpByAccount()
+            .then(function(obj){
+              expect(obj.objectId).to.exist;
+              expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+              expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+              expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+              done();
+            })
+            .catch(function(err){
+              done(err);
+            });
+          }catch(err){
+            done(err);
+          }
+        });
+      });
+
+      it("delete current user", function(done){
+        if(!ncmb.stub){
+          currentName = callback_name;
+          currentPassword = callback_password;
+        }else{
+          currentName = "userLoginName";
+          currentPassword = "userPasswd";
+        }
+        var user = new ncmb.User({userName:currentName,password:currentPassword});
+        ncmb.User.login(user, function(err, data){
+          try{
+            expect(data).to.be.an.instanceof(ncmb.User);
+            expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+            expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+            expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+            user = ncmb.User.getCurrentUser();
+            user.delete()
+            .then(function(){
+              expect(ncmb.User.getCurrentUser().objectId).to.be.null;
+              expect(ncmb.User.getCurrentUser().userName).to.be.null;
+              expect(ncmb.User.getCurrentUser().sessionToken).to.be.null;
+              expect(ncmb.User.getCurrentUser()).to.be.eql(null);
+              done();
+            })
+            .catch(function(err){
+              done(err);
+            });
+          }catch(err){
+            done(err);
+          }
+        });
+      });
+
+    });
+
+    context("Datastore", function(){
+      var Food = null;
+      var food = null;
+      before(function(){
+        Food = ncmb.DataStore("food");
+        food = new Food({key: "value_new"});
+      });
+
+      it("fetch data store after login", function(done){
+        if(!ncmb.stub){
+          currentName = callback_name;
+          currentPassword = callback_password;
+        }else{
+          currentName = "userLoginName";
+          currentPassword = "userPasswd";
+        }
+        var user = new ncmb.User({userName:currentName,password:currentPassword});
+        ncmb.User.login(user, function(err, data){
+          try{
+            expect(data).to.be.an.instanceof(ncmb.User);
+            expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+            expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+            expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+            Food.fetch()
+              .then(function(obj){
+                expect(obj.objectId).to.exist;
+                expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+                expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+                expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+
+          }catch(err){
+            done(err);
+          }
+        });
+      });
+
+      it("update data store after login", function(done){
+        if(!ncmb.stub){
+          currentName = callback_name;
+          currentPassword = callback_password;
+        }else{
+          currentName = "userLoginName";
+          currentPassword = "userPasswd";
+        }
+        var user = new ncmb.User({userName:currentName,password:currentPassword});
+        ncmb.User.login(user, function(err, data){
+          try{
+            expect(data).to.be.an.instanceof(ncmb.User);
+            expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+            expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+            expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+            food = new Food({key: "value_new"});
+            food.objectId = "object_id";
+            food.update(function(err, obj){
+              if(err){
+                done(err);
+              }else{
+                expect(obj.updateDate).to.exist;
+                expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+                expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+                expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+                done();
+              }
+            });
+          }catch(err){
+            done(err);
+          }
+        });
+      });
+
+      it("add data store after login", function(done){
+        if(!ncmb.stub){
+          currentName = callback_name;
+          currentPassword = callback_password;
+        }else{
+          currentName = "userLoginName";
+          currentPassword = "userPasswd";
+        }
+        var user = new ncmb.User({userName:currentName,password:currentPassword});
+        ncmb.User.login(user, function(err, data){
+          try{
+            expect(data).to.be.an.instanceof(ncmb.User);
+            expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+            expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+            expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+            food = new Food({name: "orange", type: "fruit", status: "success"});
+            food.save()
+            .then(function(obj){
+              expect(obj.objectId).to.exist;
+              data_promise_id = obj.objectId;
+              expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+              expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+              expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+              done();
+            })
+            .catch(function(err){
+              done(err);
+            });
+          }catch(err){
+            done(err);
+          }
+        });
+      });
+
+      it("delete data store after login", function(done){
+        if(!ncmb.stub){
+          currentName = callback_name;
+          currentPassword = callback_password;
+        }else{
+          currentName = "userLoginName";
+          currentPassword = "userPasswd";
+        }
+        var user = new ncmb.User({userName:currentName,password:currentPassword});
+        ncmb.User.login(user, function(err, data){
+          try{
+            expect(data).to.be.an.instanceof(ncmb.User);
+            expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+            expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+            expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+
+            food = new Food();
+            food.objectId = data_promise_id;
+            food.delete()
+            .then(function(){
+              expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+              expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+              expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+              done();
+            })
+            .catch(function(err){
+              done(err);
+            });
+          }catch(err){
+            done(err);
+          }
+        });
+      });
+    });
+
+    context("AllowUser", function(){
+      var name_user = null;
+      beforeEach(function(){
+        name_user = new ncmb.User({userName: "Yamada Tarou", password:"password"});
+      });
+
+      it("fetch allow user after login", function(done){
+        if(!ncmb.stub){
+          currentName = callback_name;
+          currentPassword = callback_password;
+        }else{
+          currentName = "userLoginName";
+          currentPassword = "userPasswd";
+        }
+        var user = new ncmb.User({userName:currentName,password:currentPassword});
+        ncmb.User.login(user, function(err, data){
+          try{
+            expect(data).to.be.an.instanceof(ncmb.User);
+            expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+            expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+            expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+
+            ncmb.User.fetchById("allowUser")
+            .then(function(data){
+              expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+              expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+              expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+              done();
+            })
+            .catch(function(err){
+              done(err);
+            });
+
+          }catch(err){
+            done(err);
+          }
+        });
+      });
+
+      it("update allow user after login", function(done){
+        if(!ncmb.stub){
+          currentName = callback_name;
+          currentPassword = callback_password;
+        }else{
+          currentName = "userLoginName";
+          currentPassword = "userPasswd";
+        }
+        var user = new ncmb.User({userName:currentName,password:currentPassword});
+        ncmb.User.login(user, function(err, data){
+          try{
+            expect(data).to.be.an.instanceof(ncmb.User);
+            expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+            expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+            expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+
+            name_user = new ncmb.User({ objectId:"objectid", updatefield: "updated"});
+            name_user.update()
+            .then(function(data){
+              expect(data.updateDate).to.exist;
+              expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+              expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+              expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+              done();
+            })
+            .catch(function(err){
+              done(err);
+            });
+          }catch(err){
+            done(err);
+          }
+        });
+      });
+
+      it("add allow user after login", function(done){
+        if(!ncmb.stub){
+          currentName = callback_name;
+          currentPassword = callback_password;
+        }else{
+          currentName = "userLoginName";
+          currentPassword = "userPasswd";
+        }
+        var user = new ncmb.User({userName:currentName,password:currentPassword});
+        ncmb.User.login(user, function(err, data){
+          try{
+            expect(data).to.be.an.instanceof(ncmb.User);
+            expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+            expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+            expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+
+            name_user.signUpByAccount()
+            .then(function(obj){
+              expect(obj.objectId).to.exist;
+              expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+              expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+              expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+              done();
+            })
+            .catch(function(err){
+              done(err);
+            });
+
+          }catch(err){
+            done(err);
+          }
+        });
+      });
+
+      it("delete not current user", function(done){
+        if(!ncmb.stub){
+          currentName = callback_name;
+          currentPassword = callback_password;
+        }else{
+          currentName = "userLoginName";
+          currentPassword = "userPasswd";
+        }
+        var user = new ncmb.User({userName:currentName,password:currentPassword});
+        ncmb.User.login(user, function(err, data){
+          try{
+            expect(data).to.be.an.instanceof(ncmb.User);
+            expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+            expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+            expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+
+            var del_user = null;
+            del_user = new ncmb.User({objectId: "object_id"});
+            del_user.delete()
+            .then(function(data){
+              expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+              expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+              expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+              done();
+            })
+            .catch(function(err){
+              done(err);
+            });
+          }catch(err){
+            done(err);
+          }
+        });
+      });
+    });
+  });
+
+  describe("Login logout after that login agaiin.", function(){
+    var currentName = null;
+    var currentPassword = null;
+    context("Current User", function(){
+      it("fetch currentUser after login again", function(done){
+        if(!ncmb.stub){
+          currentName = callback_name;
+          currentPassword = callback_password;
+        }else{
+          currentName = "userLoginName";
+          currentPassword = "userPasswd";
+        }
+        var user = new ncmb.User({userName:currentName,password:currentPassword});
+        // Login first time.
+        ncmb.User.login(user)
+        .then(function(){
+          return ncmb.User.logout();
+        })
+        .then(function(res){
+          expect(ncmb.User.getCurrentUser()).to.be.eql(null);
+
+          // Login second time.
+          user = new ncmb.User({userName:currentName,password:currentPassword});
+          ncmb.User.login(user, function(err, data){
+            try{
+              expect(data).to.be.an.instanceof(ncmb.User);
+              expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+              expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+              expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+              user = ncmb.User.getCurrentUser();
+
+              ncmb.User.fetchById(user.objectId)
+              .then(function(data){
+                expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+                expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+                expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+            }catch(err){
+              done(err);
+            }
+          });
+        })
+        .catch(function(err){
+          done(err);
+        });
+      });
+
+      it("update currentUser after login again", function(done){
+        if(!ncmb.stub){
+          currentName = callback_name;
+          currentPassword = callback_password;
+        }else{
+          currentName = "userLoginName";
+          currentPassword = "userPasswd";
+        }
+        var user = new ncmb.User({userName:currentName,password:currentPassword});
+        // Login first time.
+        ncmb.User.login(user)
+        .then(function(){
+          return ncmb.User.logout();
+        })
+        .then(function(res){
+          expect(ncmb.User.getCurrentUser()).to.be.eql(null);
+          // Login second time.
+          user = new ncmb.User({userName:currentName,password:currentPassword});
+          ncmb.User.login(user, function(err, data){
+            try{
+              expect(data).to.be.an.instanceof(ncmb.User);
+              expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+              expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+              expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+              user = ncmb.User.getCurrentUser();
+              
+              user.set("updatefield", "updated")
+                .update()
+                .then(function(data){
+                  expect(data.updateDate).to.exist;
+                  expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+                  expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+                  expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+                  expect(user.updatefield).to.be.eql("updated");
+                  done();
+                })
+                .catch(function(err){
+                  done(err);
+                });
+            }catch(err){
+              done(err);
+            }
+          });
+        })
+        .catch(function(err){
+          done(err);
+        });
+      });
+
+      it("add currentUser after login again", function(done){
+        if(!ncmb.stub){
+          currentName = callback_name;
+          currentPassword = callback_password;
+        }else{
+          currentName = "userLoginName";
+          currentPassword = "userPasswd";
+        }
+        var user = new ncmb.User({userName:currentName,password:currentPassword});
+        // Login first time.
+        ncmb.User.login(user)
+        .then(function(){
+          return ncmb.User.logout();
+        })
+        .then(function(res){
+          expect(ncmb.User.getCurrentUser()).to.be.eql(null);
+          // Login second time.
+          user = new ncmb.User({userName:currentName,password:currentPassword});
+          ncmb.User.login(user, function(err, data){
+            try{
+              expect(data).to.be.an.instanceof(ncmb.User);
+              expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+              expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+              expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+              user = ncmb.User.getCurrentUser();
+              user.userName = "Yamada Tarou";
+              user.password = "password";
+  
+              user.signUpByAccount()
+              .then(function(obj){
+                expect(obj.objectId).to.exist;
+                expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+                expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+                expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+            }catch(err){
+              done(err);
+            }
+          });
+        })
+        .catch(function(err){
+          done(err);
+        });
+        
+      });
+
+      it("delete current user login again", function(done){
+        if(!ncmb.stub){
+          currentName = callback_name;
+          currentPassword = callback_password;
+        }else{
+          currentName = "userLoginName";
+          currentPassword = "userPasswd";
+        }
+        var user = new ncmb.User({userName:currentName,password:currentPassword});
+        // Login first time.
+        ncmb.User.login(user)
+        .then(function(){
+          return ncmb.User.logout();
+        })
+        .then(function(res){
+          expect(ncmb.User.getCurrentUser()).to.be.eql(null);
+          // Login second time.
+          user = new ncmb.User({userName:currentName,password:currentPassword});
+          ncmb.User.login(user, function(err, data){
+            try{
+              expect(data).to.be.an.instanceof(ncmb.User);
+              expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+              expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+              expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+              user = ncmb.User.getCurrentUser();
+              user.delete()
+              .then(function(){
+                expect(ncmb.User.getCurrentUser().objectId).to.be.null;
+                expect(ncmb.User.getCurrentUser().userName).to.be.null;
+                expect(ncmb.User.getCurrentUser().sessionToken).to.be.null;
+                expect(ncmb.User.getCurrentUser()).to.be.eql(null);
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+            }catch(err){
+              done(err);
+            }
+          });
+        })
+        .catch(function(err){
+          done(err);
+        });
+        
+      });
+
+    });
+
+    context("Datastore", function(){
+      var Food = null;
+      var food = null;
+      before(function(){
+        Food = ncmb.DataStore("food");
+        food = new Food({key: "value_new"});
+      });
+
+      it("ffetch data store after login again", function(done){
+        if(!ncmb.stub){
+          currentName = callback_name;
+          currentPassword = callback_password;
+        }else{
+          currentName = "userLoginName";
+          currentPassword = "userPasswd";
+        }
+        var user = new ncmb.User({userName:currentName,password:currentPassword});
+        // Login first time.
+        ncmb.User.login(user)
+        .then(function(){
+          return ncmb.User.logout();
+        })
+        .then(function(res){
+          expect(ncmb.User.getCurrentUser()).to.be.eql(null);
+          // Login second time.
+          user = new ncmb.User({userName:currentName,password:currentPassword});
+          ncmb.User.login(user, function(err, data){
+            try{
+              expect(data).to.be.an.instanceof(ncmb.User);
+              expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+              expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+              expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+              Food.fetch()
+                .then(function(obj){
+                  expect(obj.objectId).to.exist;
+                  expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+                  expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+                  expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+                  done();
+                })
+                .catch(function(err){
+                  done(err);
+                });
+  
+            }catch(err){
+              done(err);
+            }
+          });
+        })
+        .catch(function(err){
+          done(err);
+        });
+        
+      });
+
+      it("update data store after login again", function(done){
+        if(!ncmb.stub){
+          currentName = callback_name;
+          currentPassword = callback_password;
+        }else{
+          currentName = "userLoginName";
+          currentPassword = "userPasswd";
+        }
+        var user = new ncmb.User({userName:currentName,password:currentPassword});
+        // Login first time.
+        ncmb.User.login(user)
+        .then(function(){
+          return ncmb.User.logout();
+        })
+        .then(function(res){
+          expect(ncmb.User.getCurrentUser()).to.be.eql(null);
+          // Login second time.
+          user = new ncmb.User({userName:currentName,password:currentPassword});
+          ncmb.User.login(user, function(err, data){
+            try{
+              expect(data).to.be.an.instanceof(ncmb.User);
+              expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+              expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+              expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+              food = new Food({key: "value_new"});
+              food.objectId = "object_id";
+              food.update(function(err, obj){
+                if(err){
+                  done(err);
+                }else{
+                  expect(obj.updateDate).to.exist;
+                  expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+                  expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+                  expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+                  done();
+                }
+              });
+  
+            }catch(err){
+              done(err);
+            }
+          });
+        })
+        .catch(function(err){
+          done(err);
+        });
+        
+      });
+
+      it("add data store after login again", function(done){
+        if(!ncmb.stub){
+          currentName = callback_name;
+          currentPassword = callback_password;
+        }else{
+          currentName = "userLoginName";
+          currentPassword = "userPasswd";
+        }
+        var user = new ncmb.User({userName:currentName,password:currentPassword});
+        // Login first time.
+        ncmb.User.login(user)
+        .then(function(){
+          return ncmb.User.logout();
+        })
+        .then(function(res){
+          expect(ncmb.User.getCurrentUser()).to.be.eql(null);
+          // Login second time.
+          user = new ncmb.User({userName:currentName,password:currentPassword});
+          ncmb.User.login(user, function(err, data){
+            try{
+              expect(data).to.be.an.instanceof(ncmb.User);
+              expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+              expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+              expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+              food = new Food({name: "orange", type: "fruit", status: "success"});
+              food.save()
+              .then(function(obj){
+                expect(obj.objectId).to.exist;
+                data_promise_id = obj.objectId;
+                expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+                expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+                expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+            }catch(err){
+              done(err);
+            }
+          });
+        })
+        .catch(function(err){
+          done(err);
+        });
+        
+      });
+
+      it("delete data store after login again", function(done){
+        if(!ncmb.stub){
+          currentName = callback_name;
+          currentPassword = callback_password;
+        }else{
+          currentName = "userLoginName";
+          currentPassword = "userPasswd";
+        }
+        var user = new ncmb.User({userName:currentName,password:currentPassword});
+        // Login first time.
+        ncmb.User.login(user)
+        .then(function(){
+          return ncmb.User.logout();
+        })
+        .then(function(res){
+          expect(ncmb.User.getCurrentUser()).to.be.eql(null);
+          // Login second time.
+          user = new ncmb.User({userName:currentName,password:currentPassword});
+          ncmb.User.login(user, function(err, data){
+            try{
+              expect(data).to.be.an.instanceof(ncmb.User);
+              expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+              expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+              expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+  
+              food = new Food();
+              food.objectId = data_promise_id;
+              food.delete()
+              .then(function(){
+                expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+                expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+                expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+  
+            }catch(err){
+              done(err);
+            }
+          });
+        })
+        .catch(function(err){
+          done(err);
+        });
+        
+      });
+
+    });
+
+    context("AllowUser", function(){
+      var name_user = null;
+      beforeEach(function(){
+        name_user = new ncmb.User({userName: "Yamada Tarou", password:"password"});
+      });
+
+      it("fetch allow user after login again", function(done){
+        if(!ncmb.stub){
+          currentName = callback_name;
+          currentPassword = callback_password;
+        }else{
+          currentName = "userLoginName";
+          currentPassword = "userPasswd";
+        }
+        var user = new ncmb.User({userName:currentName,password:currentPassword});
+        // Login first time.
+        ncmb.User.login(user)
+        .then(function(){
+          return ncmb.User.logout();
+        })
+        .then(function(res){
+          expect(ncmb.User.getCurrentUser()).to.be.eql(null);
+          // Login second time.
+          user = new ncmb.User({userName:currentName,password:currentPassword});
+          ncmb.User.login(user, function(err, data){
+            try{
+              expect(data).to.be.an.instanceof(ncmb.User);
+              expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+              expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+              expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+  
+              ncmb.User.fetchById("allowUser")
+              .then(function(data){
+                expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+                expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+                expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+  
+            }catch(err){
+              done(err);
+            }
+          });
+        })
+        .catch(function(err){
+          done(err);
+        });
+        
+      });
+
+      it("update allow user after login again", function(done){
+        if(!ncmb.stub){
+          currentName = callback_name;
+          currentPassword = callback_password;
+        }else{
+          currentName = "userLoginName";
+          currentPassword = "userPasswd";
+        }
+        var user = new ncmb.User({userName:currentName,password:currentPassword});
+        // Login first time.
+        ncmb.User.login(user)
+        .then(function(){
+          return ncmb.User.logout();
+        })
+        .then(function(res){
+          expect(ncmb.User.getCurrentUser()).to.be.eql(null);
+          // Login second time.
+          user = new ncmb.User({userName:currentName,password:currentPassword});
+          ncmb.User.login(user, function(err, data){
+            try{
+              expect(data).to.be.an.instanceof(ncmb.User);
+              expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+              expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+              expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+  
+              name_user = new ncmb.User({ objectId:"objectid", updatefield: "updated"});
+              name_user.update()
+              .then(function(data){
+                expect(data.updateDate).to.exist;
+                expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+                expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+                expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+            }catch(err){
+              done(err);
+            }
+          });
+        })
+        .catch(function(err){
+          done(err);
+        });
+        
+      });
+
+      it("add allow user after login again", function(done){
+        if(!ncmb.stub){
+          currentName = callback_name;
+          currentPassword = callback_password;
+        }else{
+          currentName = "userLoginName";
+          currentPassword = "userPasswd";
+        }
+        var user = new ncmb.User({userName:currentName,password:currentPassword});
+        // Login first time.
+        ncmb.User.login(user)
+        .then(function(){
+          return ncmb.User.logout();
+        })
+        .then(function(res){
+          expect(ncmb.User.getCurrentUser()).to.be.eql(null);
+          // Login second time.
+          user = new ncmb.User({userName:currentName,password:currentPassword});
+          ncmb.User.login(user, function(err, data){
+            try{
+              expect(data).to.be.an.instanceof(ncmb.User);
+              expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+              expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+              expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+  
+              name_user.signUpByAccount()
+              .then(function(obj){
+                expect(obj.objectId).to.exist;
+                expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+                expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+                expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+  
+            }catch(err){
+              done(err);
+            }
+          });
+        })
+        .catch(function(err){
+          done(err);
+        });
+        
+      });
+
+      it("delete not current user login again", function(done){
+        if(!ncmb.stub){
+          currentName = callback_name;
+          currentPassword = callback_password;
+        }else{
+          currentName = "userLoginName";
+          currentPassword = "userPasswd";
+        }
+        var user = new ncmb.User({userName:currentName,password:currentPassword});
+        // Login first time.
+        ncmb.User.login(user)
+        .then(function(){
+          return ncmb.User.logout();
+        })
+        .then(function(res){
+          expect(ncmb.User.getCurrentUser()).to.be.eql(null);
+          // Login second time.
+          user = new ncmb.User({userName:currentName,password:currentPassword});
+          ncmb.User.login(user, function(err, data){
+            try{
+              expect(data).to.be.an.instanceof(ncmb.User);
+              expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+              expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+              expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+  
+              var del_user = null;
+              del_user = new ncmb.User({objectId: "object_id"});
+              del_user.delete()
+              .then(function(data){
+                expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+                expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+                expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+            }catch(err){
+              done(err);
+            }
+          });
+        })
+        .catch(function(err){
+          done(err);
+        });
+        
+      });
+
+    });
+
+  });
 
 });

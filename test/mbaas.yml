@@ -1992,3 +1992,102 @@
   response:
     status: 404
     file: 2013-09-01_responseErrorTest_noSuchApplication_error.json
+-
+  request:
+    url: /2013-09-01/users/HwwaZ60AOTdKRWyC
+    method: GET
+  response:
+    status: 401
+    file: 2013-09-01_authentication_error_user.json
+-
+  request:
+    url: /2013-09-01/classes/drink
+    method: GET
+  response:
+    status: 401
+    file: 2013-09-01_authentication_error_user.json
+-
+  request:
+    url: /2013-09-01/users/dummyAllowUserId
+    method: GET
+  response:
+    status: 401
+    file: 2013-09-01_authentication_error_user.json
+-
+  request:
+    url: /2013-09-01/users/usernotfound
+    method: GET
+  response:
+    status: 404
+    file: 2013-09-01_no_data_error.json
+-
+  request:
+    url: /2013-09-01/classes/drinknotfound
+    method: GET
+  response:
+    status: 404
+    file: 2013-09-01_no_data_error.json
+-
+  request:
+    url: /2013-09-01/users/dummyAllowUserIdnotfound
+    method: GET
+  response:
+    status: 404
+    file: 2013-09-01_no_data_error.json
+
+-
+  request:
+    url: '/2013-09-01/login'
+    method: GET
+    query:
+      userName: userLoginName
+      password: userPasswd
+  response:
+    status: 200
+    file: 2013-09-01_user_login_name_password_success.json
+-
+  request:
+    url: /2013-09-01/users/dummyCurrentUserId
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_user_login_name_password_success.json
+-
+  request:
+    url: /2013-09-01/users/dummyCurrentUserId
+    method: PUT
+    body: {"userName":"userLoginName","authData":null,"updatefield":"updated"}
+  response:
+    status: 201
+    file: 2013-09-01_users_update_success.json
+-
+  request:
+    url: /2013-09-01/users
+    method: POST
+    body:
+      "userName": "Yamada Tarou"
+      "password": "password"
+      "objectId": "dummyCurrentUserId"
+      "mailAddress": null
+      "mailAddressConfirm": null
+      "sessionToken": "dummySessionToken"
+      "createDate": "2015-05-28T05:55:57.027Z"
+      "updateDate": "2015-05-28T05:56:55.119Z"
+      "authData": null
+  response:
+    status: 201
+    file: 2013-09-01_classes_users_post_idpw_success.json
+-
+  request:
+    url: /2013-09-01/users/dummyCurrentUserId
+    method: DELETE
+  response:
+    status: 200
+    body: '{}'
+-
+  request:
+    url: /2013-09-01/users/allowUser
+    method: GET
+  response:
+    status: 200
+    file: 2013-09-01_user_allow_fetch_success copy.json

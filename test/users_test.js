@@ -173,6 +173,36 @@ describe("NCMB Users", function(){
     var password = null;
     var sessionToken = null;
     describe("login", function(){
+      context("If the property has userName, password with special character: !$()*;", function(){
+        beforeEach(function(){
+          userName = "test";
+          password = "test!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~test";
+          user = new ncmb.User({userName: userName, password: password});
+        });
+        it("callback でレスポンスを取得できる", function(done){
+          if(!ncmb.stub){
+            user.userName = callback_name;
+            user.password = callback_password;
+          }
+          user.login(function(err, data){
+            if(err){
+              done(err);
+            }else{
+              expect(data).to.have.property("sessionToken");
+              done();
+            }
+          });
+        });
+      });
+    });
+  });
+
+  describe("ID/PWユーザでログイン", function(){
+    var user = null;
+    var userName = null;
+    var password = null;
+    var sessionToken = null;
+    describe("login", function(){
       context("プロパティにuserName, passwordがあればログインに成功して", function(){
         beforeEach(function(){
           userName = "name";

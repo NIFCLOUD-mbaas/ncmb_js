@@ -3869,7 +3869,7 @@ describe("NCMB Users", function(){
       });
     });
   });
-  // =============================================
+
   describe("Fetch when sessionToken error", function(){
     var currentName = null;
     var currentPassword = null;
@@ -4203,9 +4203,6 @@ describe("NCMB Users", function(){
             user = ncmb.User.getCurrentUser();
             user.delete()
             .then(function(){
-              expect(ncmb.User.getCurrentUser().objectId).to.be.null;
-              expect(ncmb.User.getCurrentUser().userName).to.be.null;
-              expect(ncmb.User.getCurrentUser().sessionToken).to.be.null;
               expect(ncmb.User.getCurrentUser()).to.be.eql(null);
               done();
             })
@@ -4507,7 +4504,7 @@ describe("NCMB Users", function(){
     });
   });
 
-  describe("Login logout after that login agaiin.", function(){
+  describe("Login logout after that login again.", function(){
     var currentName = null;
     var currentPassword = null;
     context("Current User", function(){
@@ -4684,9 +4681,6 @@ describe("NCMB Users", function(){
               user = ncmb.User.getCurrentUser();
               user.delete()
               .then(function(){
-                expect(ncmb.User.getCurrentUser().objectId).to.be.null;
-                expect(ncmb.User.getCurrentUser().userName).to.be.null;
-                expect(ncmb.User.getCurrentUser().sessionToken).to.be.null;
                 expect(ncmb.User.getCurrentUser()).to.be.eql(null);
                 done();
               })

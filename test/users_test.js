@@ -4574,7 +4574,7 @@ describe("NCMB Users", function(){
         });
       });
 
-      it("delete current user login again", function(done){
+      it("add currentUser after login again", function(done){
         if(!ncmb.stub){
           currentName = callback_name;
           currentPassword = callback_password;
@@ -4599,9 +4599,15 @@ describe("NCMB Users", function(){
               expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
               expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
               user = ncmb.User.getCurrentUser();
-              user.delete()
-              .then(function(){
-                expect(ncmb.User.getCurrentUser()).to.be.eql(null);
+              user.userName = "Yamada Tarou";
+              user.password = "password";
+  
+              user.signUpByAccount()
+              .then(function(obj){
+                expect(obj.objectId).to.exist;
+                expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+                expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+                expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
                 done();
               })
               .catch(function(err){

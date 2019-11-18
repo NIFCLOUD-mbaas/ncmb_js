@@ -1994,7 +1994,7 @@
     file: 2013-09-01_responseErrorTest_noSuchApplication_error.json
 -
   request:
-    url: /2013-09-01/users/HwwaZ60AOTdKRWyC
+    url: /2013-09-01/users/userlogindummyid
     method: GET
   response:
     status: 401
@@ -2091,3 +2091,13 @@
   response:
     status: 200
     file: 2013-09-01_user_allow_fetch_success copy.json
+-
+  request:
+    url: '/2013-09-01/login'
+    method: GET
+    query:
+      userName: userDummyLogin
+      password: userPasswd
+  response:
+    status: 200
+    file: 2013-09-01_user_login_name_password_dummyid_success.json

@@ -3879,8 +3879,8 @@ describe("NCMB Users", function(){
           currentName = callback_name;
           currentPassword = callback_password;
         }else{
-          currentName = "name";
-          currentPassword = "passwd";
+          currentName = "userDummyLogin";
+          currentPassword = "userPasswd";
         }
         var user = new ncmb.User({userName:currentName,password:currentPassword});
         ncmb.User.login(user, function(err, data){
@@ -3892,8 +3892,8 @@ describe("NCMB Users", function(){
 
             ncmb.User.fetchById(user.objectId)
             .then(function(data){
-              expect(data.code).eql("E401003");
-              expect(data.error).eql("Invalid session token.");
+              expect(data.code).eql("E401001");
+              expect(data.error).eql("Authentication error by header incorrect");
             })
             .catch(function(err){
               expect(err).to.be.an.instanceof(Error);
@@ -3927,8 +3927,8 @@ describe("NCMB Users", function(){
 
             Drink.fetch()
             .then(function(obj){
-              expect(data.code).eql("E401003");
-              expect(data.error).eql("Invalid session token.");
+              expect(data.code).eql("E401001");
+              expect(data.error).eql("Authentication error by header incorrect");
             })
             .catch(function(err){
               expect(err).to.be.an.instanceof(Error);
@@ -3959,8 +3959,8 @@ describe("NCMB Users", function(){
 
             ncmb.User.fetchById("dummyAllowUserId")
             .then(function(data){
-              expect(data.code).eql("E401003");
-              expect(data.error).eql("Invalid session token.");
+              expect(data.code).eql("E401001");
+              expect(data.error).eql("Authentication error by header incorrect");
             })
             .catch(function(err){
               expect(err).to.be.an.instanceof(Error);
@@ -3993,9 +3993,8 @@ describe("NCMB Users", function(){
             expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
 
             ncmb.User.fetchById("usernotfound")
-            .then(function(data){
-              expect(data.code).eql("E404001");
-              expect(data.error).eql("No data available.");
+            .then(function(obj){
+              done(new Error("error が返されなければならない"));
             })
             .catch(function(err){
               expect(err).to.be.an.instanceof(Error);
@@ -4028,8 +4027,7 @@ describe("NCMB Users", function(){
 
             Drink.fetch()
             .then(function(obj){
-              expect(data.code).eql("E404001");
-              expect(data.error).eql("No data available.");
+              done(new Error("error が返されなければならない"));
             })
             .catch(function(err){
               expect(err).to.be.an.instanceof(Error);
@@ -4059,9 +4057,8 @@ describe("NCMB Users", function(){
             ncmb.sessionToken = null;
 
             ncmb.User.fetchById("dummyAllowUserIdnotfound")
-            .then(function(data){
-              expect(data.code).eql("E404001");
-              expect(data.error).eql("No data available.");
+            .then(function(obj){
+              done(new Error("error が返されなければならない"));
             })
             .catch(function(err){
               expect(err).to.be.an.instanceof(Error);
@@ -4634,7 +4631,7 @@ describe("NCMB Users", function(){
         food = new Food({key: "value_new"});
       });
 
-      it("ffetch data store after login again", function(done){
+      it("fetch data store after login again", function(done){
         if(!ncmb.stub){
           currentName = callback_name;
           currentPassword = callback_password;

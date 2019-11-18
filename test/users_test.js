@@ -173,6 +173,36 @@ describe("NCMB Users", function(){
     var password = null;
     var sessionToken = null;
     describe("login", function(){
+      context("If the property has userName, password with special character: !$()*;", function(){
+        beforeEach(function(){
+          userName = "test";
+          password = "test!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~test";
+          user = new ncmb.User({userName: userName, password: password});
+        });
+        it("callback でレスポンスを取得できる", function(done){
+          if(!ncmb.stub){
+            user.userName = callback_name;
+            user.password = callback_password;
+          }
+          user.login(function(err, data){
+            if(err){
+              done(err);
+            }else{
+              expect(data).to.have.property("sessionToken");
+              done();
+            }
+          });
+        });
+      });
+    });
+  });
+
+  describe("ID/PWユーザでログイン", function(){
+    var user = null;
+    var userName = null;
+    var password = null;
+    var sessionToken = null;
+    describe("login", function(){
       context("プロパティにuserName, passwordがあればログインに成功して", function(){
         beforeEach(function(){
           userName = "name";
@@ -5027,4 +5057,92 @@ describe("NCMB Users", function(){
 
   });
 
+  describe("Login", function () {
+    var currentName = null;
+    var currentPassword = null;
+    context("Current User", function(){
+      it("delete current user", function(done){
+        if(!ncmb.stub){
+          currentName = callback_name;
+          currentPassword = callback_password;
+        }else{
+          currentName = "name";
+          currentPassword = "passwd";
+        }
+        var user = new ncmb.User({userName:currentName,password:currentPassword});
+        ncmb.User.login(user, function(err, data){
+          try{
+            expect(data).to.be.an.instanceof(ncmb.User);
+            expect(ncmb.User.getCurrentUser().objectId).to.be.eql("HwwaZ60AOTdKRWyC");
+            expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+            expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("ojUDAfEBgGadVsyQE3XO0yraa");
+            user = ncmb.User.getCurrentUser();
+            user.delete()
+            .then(function(){
+              expect(ncmb.User.getCurrentUser()).to.be.eql(null);
+              done();
+            })
+            .catch(function(err){
+              done(err);
+            });
+          }catch(err){
+            done(err);
+          }
+        });
+      });
+    });
+  });
+
+  describe("Login logout after that login again.", function(){
+    var currentName = null;
+    var currentPassword = null;
+    context("Current User", function(){
+      it("delete current user login again", function(done){
+        if(!ncmb.stub){
+          currentName = callback_name;
+          currentPassword = callback_password;
+        }else{
+          currentName = "name";
+          currentPassword = "passwd";
+        }
+        var user = new ncmb.User({userName:currentName,password:currentPassword});
+        // Login first time.
+        ncmb.User.login(user)
+        .then(function(){
+          return ncmb.User.logout();
+        })
+        .then(function(res){
+          expect(ncmb.User.getCurrentUser()).to.be.eql(null);
+          // Login second time.
+          user = new ncmb.User({userName:currentName,password:currentPassword});
+          ncmb.User.login(user, function(err, data){
+            try{
+              expect(data).to.be.an.instanceof(ncmb.User);
+              expect(ncmb.User.getCurrentUser().objectId).to.be.eql("HwwaZ60AOTdKRWyC");
+              expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+              expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("ojUDAfEBgGadVsyQE3XO0yraa");
+              user = ncmb.User.getCurrentUser();
+              user.delete()
+              .then(function(){
+                expect(ncmb.User.getCurrentUser()).to.be.eql(null);
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+            }catch(err){
+              done(err);
+            }
+          });
+        })
+        .catch(function(err){
+          done(err);
+        });
+
+      });
+    });
+  });
+
 });
+
+

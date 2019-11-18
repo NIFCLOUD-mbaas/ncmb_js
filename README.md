@@ -1,8 +1,6 @@
 JavaScript SDK for NIF Cloud mobile backend
 ------------------------------------------------------------
 [![Build Status](https://travis-ci.org/NIFCloud-mbaas/ncmb_js.png)](https://travis-ci.org/NIFCloud-mbaas/ncmb_js)
-[![Coverage Status](https://coveralls.io/repos/NIFCloud-mbaas/ncmb_js/badge.svg?branch=apply_coveralls&service=github)](https://coveralls.io/github/NIFCloud-mbaas/ncmb_js?branch=apply_coveralls)
-[![Code Climate](https://codeclimate.com/github/NIFCloud-mbaas/ncmb_js/badges/gpa.svg)](https://codeclimate.com/github/NIFCloud-mbaas/ncmb_js)
 
 ## Supported environment
 

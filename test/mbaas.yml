@@ -355,6 +355,17 @@
     url: '/2013-09-01/login'
     method: GET
     query:
+      "userName": "test"
+      "password": "test!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~test"
+  response:
+    status: 200
+    file: 2013-09-01_user_login_namepw_success.json
+
+-
+  request:
+    url: '/2013-09-01/login'
+    method: GET
+    query:
       "userName": "Yamada Tarou"
       "password": "password"
   response:
@@ -1992,6 +2003,13 @@
   response:
     status: 404
     file: 2013-09-01_responseErrorTest_noSuchApplication_error.json
+-
+  request:
+    url: /2013-09-01/users/HwwaZ60AOTdKRWyC
+    method: DELETE
+  response:
+    status: 200
+    body: '{}'
 -
   request:
     url: /2013-09-01/users/userlogindummyid

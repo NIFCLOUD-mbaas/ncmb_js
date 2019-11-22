@@ -3921,12 +3921,12 @@ describe("NCMB Users", function(){
             user = ncmb.User.getCurrentUser();
 
             ncmb.User.fetchById(user.objectId)
-            .then(function(data){
-              expect(data.code).eql("E401001");
-              expect(data.error).eql("Authentication error by header incorrect");
+            .then(function(obj){
+              done(new Error("失敗すべき"));
             })
             .catch(function(err){
-              expect(err).to.be.an.instanceof(Error);
+              expect(err.code).eql("E401001");
+              expect(err.error).eql("Authentication error by header incorrect");
               done();
             });
           }catch(err){
@@ -3957,11 +3957,11 @@ describe("NCMB Users", function(){
 
             Drink.fetch()
             .then(function(obj){
-              expect(data.code).eql("E401001");
-              expect(data.error).eql("Authentication error by header incorrect");
+              done(new Error("失敗すべき"));
             })
             .catch(function(err){
-              expect(err).to.be.an.instanceof(Error);
+              expect(err.code).eql("E401001");
+              expect(err.error).eql("Authentication error by header incorrect");
               done();
             });
 
@@ -3988,12 +3988,12 @@ describe("NCMB Users", function(){
             ncmb.sessionToken = null;
 
             ncmb.User.fetchById("dummyAllowUserId")
-            .then(function(data){
-              expect(data.code).eql("E401001");
-              expect(data.error).eql("Authentication error by header incorrect");
+            .then(function(obj){
+              done(new Error("失敗すべき"));
             })
             .catch(function(err){
-              expect(err).to.be.an.instanceof(Error);
+              expect(err.code).eql("E401001");
+              expect(err.error).eql("Authentication error by header incorrect");
               done();
             });
 
@@ -4024,10 +4024,11 @@ describe("NCMB Users", function(){
 
             ncmb.User.fetchById("usernotfound")
             .then(function(obj){
-              done(new Error("error が返されなければならない"));
+              done(new Error("失敗すべき"));
             })
             .catch(function(err){
-              expect(err).to.be.an.instanceof(Error);
+              expect(err.code).eql("E404001");
+              expect(err.error).eql("No data available.");
               done();
             });
           }catch(err){
@@ -4057,10 +4058,11 @@ describe("NCMB Users", function(){
 
             Drink.fetch()
             .then(function(obj){
-              done(new Error("error が返されなければならない"));
+              done(new Error("失敗すべき"));
             })
             .catch(function(err){
-              expect(err).to.be.an.instanceof(Error);
+              expect(err.code).eql("E404001");
+              expect(err.error).eql("No data available.");
               done();
             });
 
@@ -4088,10 +4090,11 @@ describe("NCMB Users", function(){
 
             ncmb.User.fetchById("dummyAllowUserIdnotfound")
             .then(function(obj){
-              done(new Error("error が返されなければならない"));
+              done(new Error("失敗すべき"));
             })
             .catch(function(err){
-              expect(err).to.be.an.instanceof(Error);
+              expect(err.code).eql("E404001");
+              expect(err.error).eql("No data available.");
               done();
             });
 

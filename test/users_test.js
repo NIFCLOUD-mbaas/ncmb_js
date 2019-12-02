@@ -3901,6 +3901,10 @@ describe("NCMB Users", function(){
   });
 
   describe("Login", function () {
+    var name_user = null;
+    beforeEach(function(){
+      name_user = new ncmb.User({userName: "Yamada Tarou", password:"password"});
+    });
     var currentName = null;
     var currentPassword = null;
     context("Current User", function(){
@@ -3933,6 +3937,80 @@ describe("NCMB Users", function(){
           }
         });
       });
+
+      it("update currentUser after login", function(done){
+        if(!ncmb.stub){
+          currentName = callback_name;
+          currentPassword = callback_password;
+        }else{
+          currentName = "userLoginName";
+          currentPassword = "userPasswd";
+        }
+        var user = new ncmb.User({userName:currentName,password:currentPassword});
+        ncmb.User.login(user, function(err, data){
+          try{
+            console.log(err);
+            expect(data).to.be.an.instanceof(ncmb.User);
+            expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+            expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+            expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+            user = ncmb.User.getCurrentUser();
+            
+            user.set("updatefield", "updated")
+              .update()
+              .then(function(data){
+                expect(data.updateDate).to.exist;
+                expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+                expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+                expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+                expect(ncmb.User.getCurrentUser()).to.have.property("updatefield");
+                expect(ncmb.User.getCurrentUser().updatefield).to.be.eql("updated");
+                done();
+              })
+              .catch(function(err){
+                done(err);
+              });
+          }catch(err){
+            done(err);
+          }
+        });
+      });
+
+      it("update allow user after login", function(done){
+        if(!ncmb.stub){
+          currentName = callback_name;
+          currentPassword = callback_password;
+        }else{
+          currentName = "userLoginName";
+          currentPassword = "userPasswd";
+        }
+        var user = new ncmb.User({userName:currentName,password:currentPassword});
+        ncmb.User.login(user, function(err, data){
+          try{
+            expect(data).to.be.an.instanceof(ncmb.User);
+            expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+            expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+            expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+
+            name_user = new ncmb.User({ objectId:"objectid", updatefield: "updated"});
+            name_user.update()
+            .then(function(data){
+              expect(data.updateDate).to.exist;
+              expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
+              expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
+              expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
+              expect(ncmb.User.getCurrentUser()).to.not.have.property("updatefield");
+              done();
+            })
+            .catch(function(err){
+              done(err);
+            });
+          }catch(err){
+            done(err);
+          }
+        });
+      });
+
     });
   });
 

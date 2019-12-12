@@ -1,15 +1,15 @@
 {
   "name": "ncmb",
-  "description": "JavaScript SDK for NIFCloud mobile backend",
-  "version": "3.0.1",
+  "description": "JavaScript SDK for NIFCLOUD mobile backend",
+  "version": "3.0.2",
   "homepage": "https://mbaas.nifcloud.com/",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NIFCloud-mbaas/ncmb_js"
+    "url": "git+https://github.com/NIFCLOUD-mbaas/ncmb_js"
   },
   "maintainers": [
     {
-      "name": "NIFCloud mobile backend Team",
+      "name": "NIFCLOUD mobile backend Team",
       "url": "https://mbaas.nifcloud.com/support.htm"
     }
   ],

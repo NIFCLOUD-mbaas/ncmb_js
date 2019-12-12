@@ -1,6 +1,6 @@
-JavaScript SDK for NIF Cloud mobile backend
+JavaScript SDK for NIFCLOUD mobile backend
 ------------------------------------------------------------
-[![Build Status](https://travis-ci.org/NIFCloud-mbaas/ncmb_js.png)](https://travis-ci.org/NIFCloud-mbaas/ncmb_js)
+[![Build Status](https://travis-ci.org/NIFCLOUD-mbaas/ncmb_js.png)](https://travis-ci.org/NIFCLOUD-mbaas/ncmb_js)
 
 ## Supported environment
 
@@ -16,7 +16,7 @@ Remember to turn on Allow Cookies on your browsers.
 
 Please read [Developer guidelines](https://mbaas.nifcloud.com/doc/current/common/dev_guide.html#SDK%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6).
 
-- v2.2.2 ～ (※as of August, 2019)
+- v3.0.0 ～ (※as of December, 2019)
 
 ## Install
 
@@ -262,7 +262,7 @@ $ browserify -r -p licensify -t [ uglifyify -x .js ] -o ncmb.min.js lib/ncmb.js
 ## For Developer
 
 ```shell
-$ git clone https://github.com/NIFCloud-mbaas/ncmb_js
+$ git clone https://github.com/NIFCLOUD-mbaas/ncmb_js
 $ cd ncmb_js
 $ npm install
 $ npm test
@@ -313,4 +313,4 @@ Run `npm run document:generate` command, then documents has created in `jsdoc` d
 
 ## License
 
-Please read [LICENSE](https://github.com/NIFCloud-mbaas/ncmb_js/blob/master/LICENSE).
+Please read [LICENSE](https://github.com/NIFCLOUD-mbaas/ncmb_js/blob/master/LICENSE).

@@ -1,0 +1,8 @@
+{ "objectId": "allowUser",
+  "userName": "allowUser",
+  "mailAddress": null,
+  "mailAddressConfirm": null,
+  "sessionToken": "dummySessionTokenAllowUser",
+  "createDate": "2015-05-28T05:55:57.027Z",
+  "updateDate": "2015-05-28T05:56:55.119Z",
+  "authData": null }

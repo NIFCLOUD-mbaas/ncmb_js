@@ -1,0 +1,16 @@
+{
+  "createDate":"2013-08-15T15:04:36.314Z",
+  "objectId":"ilxN1s7foH2X4b5h",
+  "userName":"cmEFG4qlkA",
+  "authData":{
+    "apple":{
+      "id":"100002415159782",
+      "access_token":"CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD",
+      "client_id":"com.apple.signin-apple"
+    }
+  },
+  "mailAddress":null,
+  "mailAddressConfirm":false,
+  "sessionToken":"h6dx5pQIwc0jEDt1oTtPjemPe",
+  "updateDate":"2013-08-15T15:16:06.036Z"
+}

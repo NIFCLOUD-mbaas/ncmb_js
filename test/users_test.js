@@ -977,6 +977,36 @@ describe("NCMB Users", function(){
           });
         });
       });
+
+      context("User.linkWith", function(){
+        beforeEach(function(){
+          user = new ncmb.User({objectId:"objectid", sessionToken:"h6dx5pQIwc0jEDt1oTtPjemPe"});
+          providerData = {
+            id : "100002415159782",
+            access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD",
+            client_id: "com.apple.signin-apple"
+          };
+          provider = "apple";
+        });
+        it("callback linkWith apple id", function(done){
+          user.linkWith(provider, providerData, function(err, data){
+            expect(data).to.have.property("sessionToken", "h6dx5pQIwc0jEDt1oTtPjemPe");
+            done(err ? err : null);
+          });
+        });
+
+        it("promise linkWith apple id", function(done){
+          user.linkWith(provider, providerData)
+          .then(function(data){
+            expect(data).to.have.property("sessionToken", "h6dx5pQIwc0jEDt1oTtPjemPe");
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
+        });
+      });
+
     });
   });
 

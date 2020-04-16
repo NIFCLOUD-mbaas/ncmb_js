@@ -991,7 +991,10 @@ describe("NCMB Users", function(){
         it("callback linkWith apple id", function(done){
           user.linkWith(provider, providerData, function(err, data){
             expect(data).to.have.property("sessionToken", "h6dx5pQIwc0jEDt1oTtPjemPe");
-            done(err ? err : null);
+            var expectedAuthData = {"apple":providerData};
+            var authDataResponse = data["authData"];
+            expect(authDataResponse).to.deep.include(expectedAuthData);
+            done();
           });
         });
 
@@ -999,6 +1002,45 @@ describe("NCMB Users", function(){
           user.linkWith(provider, providerData)
           .then(function(data){
             expect(data).to.have.property("sessionToken", "h6dx5pQIwc0jEDt1oTtPjemPe");
+            var expectedAuthData = {"apple":providerData};
+            var authDataResponse = data["authData"];
+            expect(authDataResponse).to.deep.include(expectedAuthData);
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
+        });
+      });
+
+      context("User.unLinkWith", function(){
+        beforeEach(function(){
+          providerData = {
+            id : "100002415159782",
+            access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD",
+            client_id: "com.apple.signin-apple"
+          };
+          provider = "apple";
+          var authData = {"apple":providerData};
+          user = new ncmb.User({objectId:"objectid", sessionToken:"h6dx5pQIwc0jEDt1oTtPjemPe", authData:authData});
+        });
+        it("callback unLinkWith apple id", function(done){
+          user.unLinkWith(provider, function(err, data){
+            expect(data).to.have.property("sessionToken", "h6dx5pQIwc0jEDt1oTtPjemPe");
+            var expectedAuthData = {"apple": null};
+            var authDataResponse = data["authData"];
+            expect(authDataResponse).to.deep.include(expectedAuthData);
+            done();
+          });
+        });
+
+        it("promise unLinkWith apple id", function(done){
+          user.unLinkWith(provider)
+          .then(function(data){
+            expect(data).to.have.property("sessionToken", "h6dx5pQIwc0jEDt1oTtPjemPe");
+            var expectedAuthData = {"apple": null};
+            var authDataResponse = data["authData"];
+            expect(authDataResponse).to.deep.include(expectedAuthData);
             done();
           })
           .catch(function(err){

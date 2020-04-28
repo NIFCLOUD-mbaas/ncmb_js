@@ -430,6 +430,33 @@
 
 -
   request:
+    url: /2013-09-01/users
+    method: POST
+    body: {"authData":{"apple":{"id":"apple_duplicate_error","access_token":"apple_access_token_duplicate","client_id":"com.apple.signin-apple"}}}
+  response:
+    status: 409
+    file: 2013-09-01_authData_duplicate_error.json
+
+-
+  request:
+    url: /2013-09-01/users
+    method: POST
+    body: {"authData":{"apple":{"id":"apple_authentication_error","access_token":"apple_access_token_authentication","client_id":"com.apple.signin-apple"}}}
+  response:
+    status: 401
+    file: 2013-09-01_authentication_error_apple.json
+
+-
+  request:
+    url: /2013-09-01/users
+    method: POST
+    body: {"authData":{"apple":{"id":"apple_item_settings_error","access_token":"apple_access_token_item_settings","client_id":"com.apple.signin-apple"}}}
+  response:
+    status: 403
+    file: 2013-09-01_item_settings_error_apple.json
+
+-
+  request:
     url: /2013-09-01/users/objectid
     method: PUT
     body: {"updatefield": "updated"}
@@ -445,6 +472,33 @@
   response:
     status: 201
     file: 2013-09-01_users_update_success.json
+
+-
+  request:
+    url: /2013-09-01/users/objectid
+    method: PUT
+    body: {"authData":{"apple":{"id":"apple_duplicate_error","access_token":"apple_access_token_duplicate","client_id":"com.apple.signin-apple"}}}
+  response:
+    status: 409
+    file: 2013-09-01_authData_duplicate_error.json
+
+-
+  request:
+    url: /2013-09-01/users/objectid
+    method: PUT
+    body: {"authData":{"apple":{"id":"apple_authentication_error","access_token":"apple_access_token_authentication","client_id":"com.apple.signin-apple"}}}
+  response:
+    status: 401
+    file: 2013-09-01_authentication_error_apple.json
+
+-
+  request:
+    url: /2013-09-01/users/objectid
+    method: PUT
+    body: {"authData":{"apple":{"id":"apple_item_settings_error","access_token":"apple_access_token_item_settings","client_id":"com.apple.signin-apple"}}}
+  response:
+    status: 403
+    file: 2013-09-01_item_settings_error_apple.json
 
 -
   request:

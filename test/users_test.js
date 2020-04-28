@@ -948,6 +948,68 @@ describe("NCMB Users", function(){
           });
         });
       });
+
+      context("Signupwith apple id error", function(){
+
+        beforeEach(function(){
+          user = new ncmb.User({});
+          provider = "apple";
+        });
+
+        it("promise signUpWith apple id duplicate error", function(done){
+          providerData = {
+            id : "apple_duplicate_error",
+            access_token: "apple_access_token_duplicate",
+            client_id: "com.apple.signin-apple"
+          };
+          user.signUpWith(provider, providerData)
+          .then(function(data){
+            console.log(data);
+            done(new Error("失敗すべき"));
+          })
+          .catch(function(err){
+            expect(err.code).eql("E409001");
+            expect(err.error).eql("authData is duplication.");
+            done();
+          });
+        });
+
+        it("promise signUpWith apple id authentication error", function(done){
+          providerData = {
+            id : "apple_authentication_error",
+            access_token: "apple_access_token_authentication",
+            client_id: "com.apple.signin-apple"
+          };
+          user.signUpWith(provider, providerData)
+          .then(function(data){
+            done(new Error("失敗すべき"));
+          })
+          .catch(function(err){
+            expect(err.code).eql("E401003");
+            expect(err.error).eql("OAuth apple authentication error.");
+            done();
+          });
+        });
+
+        it("promise signUpWith apple id item settings error", function(done){
+          providerData = {
+            id : "apple_item_settings_error",
+            access_token: "apple_access_token_item_settings",
+            client_id: "com.apple.signin-apple"
+          };
+          user.signUpWith(provider, providerData)
+          .then(function(data){
+            done(new Error("失敗すべき"));
+          })
+          .catch(function(err){
+            expect(err.code).eql("E403005");
+            expect(err.error).eql("apple must not be entered.");
+            done();
+          });
+        });
+
+      });
+
       context("ID/PWログインと競合した場合", function(){
         beforeEach(function(){
           user = new ncmb.User({userName:"username"});
@@ -1011,6 +1073,65 @@ describe("NCMB Users", function(){
             done(err);
           });
         });
+      });
+
+      context("User.linkWith.error", function(){
+        beforeEach(function(){
+          user = new ncmb.User({objectId:"objectid", sessionToken:"h6dx5pQIwc0jEDt1oTtPjemPe"});
+          provider = "apple";
+        });
+
+        it("promise linkWith apple id duplicate error", function(done){
+          providerData = {
+            id : "apple_duplicate_error",
+            access_token: "apple_access_token_duplicate",
+            client_id: "com.apple.signin-apple"
+          };
+          user.linkWith(provider, providerData)
+          .then(function(data){
+            done(new Error("失敗すべき"));
+          })
+          .catch(function(err){
+            expect(err.code).eql("E409001");
+            expect(err.error).eql("authData is duplication.");
+            done();
+          });
+        });
+
+        it("promise linkWith apple id authentication error", function(done){
+          providerData = {
+            id : "apple_authentication_error",
+            access_token: "apple_access_token_authentication",
+            client_id: "com.apple.signin-apple"
+          };
+          user.linkWith(provider, providerData)
+          .then(function(data){
+            done(new Error("失敗すべき"));
+          })
+          .catch(function(err){
+            expect(err.code).eql("E401003");
+            expect(err.error).eql("OAuth apple authentication error.");
+            done();
+          });
+        });
+
+        it("promise linkWith apple id item settings error", function(done){
+          providerData = {
+            id : "apple_item_settings_error",
+            access_token: "apple_access_token_item_settings",
+            client_id: "com.apple.signin-apple"
+          };
+          user.linkWith(provider, providerData)
+          .then(function(data){
+            done(new Error("失敗すべき"));
+          })
+          .catch(function(err){
+            expect(err.code).eql("E403005");
+            expect(err.error).eql("apple must not be entered.");
+            done();
+          });
+        });
+
       });
 
       context("User.unLinkWith", function(){
@@ -2378,14 +2499,24 @@ describe("NCMB Users", function(){
           });
           it("callback でレスポンスを取得できる", function(done){
             ncmb.User.loginWith(provider, providerData, function(err, data){
-              expect(data).to.have.property("sessionToken", "h6dx5pQIwc0jEDt1oTtPjemPe");
+              var currentUser = ncmb.User.getCurrentUser();
+              expect(currentUser).to.have.property("objectId", "ilxN1s7foH2X4b5h");
+              expect(currentUser).to.have.property("userName", "cmEFG4qlkA");
+              expect(currentUser).to.have.property("sessionToken", "h6dx5pQIwc0jEDt1oTtPjemPe");
+              var authDataResponse = currentUser.authData["apple"];
+              expect(authDataResponse).to.deep.include(providerData);
               done(err ? err : null);
             });
           });
           it("promise でレスポンスを取得できる", function(done){
             ncmb.User.loginWith(provider, providerData)
             .then(function(data){
-              expect(data).to.have.property("sessionToken", "h6dx5pQIwc0jEDt1oTtPjemPe");
+              var currentUser = ncmb.User.getCurrentUser();
+              expect(currentUser).to.have.property("objectId", "ilxN1s7foH2X4b5h");
+              expect(currentUser).to.have.property("userName", "cmEFG4qlkA");
+              expect(currentUser).to.have.property("sessionToken", "h6dx5pQIwc0jEDt1oTtPjemPe");
+              var authDataResponse = currentUser.authData["apple"];
+              expect(authDataResponse).to.deep.include(providerData);
               done();
             })
             .catch(function(err){

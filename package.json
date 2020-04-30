@@ -38,7 +38,7 @@
     "lodash.flatten": "^4.1.1",
     "node-localstorage": "^0.5.1",
     "object-assign": "^3.0.0",
-    "qs": "^2.4.1",
+    "qs": "^6.9.3",
     "superagent": "^5.0.5",
     "superagent-proxy": "^2.0.0",
     "url": "^0.10.3"

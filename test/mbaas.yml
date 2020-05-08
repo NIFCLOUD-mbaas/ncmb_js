@@ -421,6 +421,42 @@
 
 -
   request:
+    url: /2013-09-01/users
+    method: POST
+    body: {"authData":{"apple":{"id":"100002415159782","access_token":"CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD","client_id":"com.apple.signin-apple"}}}
+  response:
+    status: 200
+    file: 2013-09-01_classes_users_post_apple_success.json
+
+-
+  request:
+    url: /2013-09-01/users
+    method: POST
+    body: {"authData":{"apple":{"id":"apple_duplicate_error","access_token":"apple_access_token_duplicate","client_id":"com.apple.signin-apple"}}}
+  response:
+    status: 409
+    file: 2013-09-01_authData_duplicate_error.json
+
+-
+  request:
+    url: /2013-09-01/users
+    method: POST
+    body: {"authData":{"apple":{"id":"apple_authentication_error","access_token":"apple_access_token_authentication","client_id":"com.apple.signin-apple"}}}
+  response:
+    status: 401
+    file: 2013-09-01_authentication_error_apple.json
+
+-
+  request:
+    url: /2013-09-01/users
+    method: POST
+    body: {"authData":{"apple":{"id":"apple_item_settings_error","access_token":"apple_access_token_item_settings","client_id":"com.apple.signin-apple"}}}
+  response:
+    status: 403
+    file: 2013-09-01_item_settings_error_apple.json
+
+-
+  request:
     url: /2013-09-01/users/objectid
     method: PUT
     body: {"updatefield": "updated"}
@@ -433,6 +469,54 @@
     url: /2013-09-01/users/objectid
     method: PUT
     body: {"mailAddress": "test@example.com"}
+  response:
+    status: 201
+    file: 2013-09-01_users_update_success.json
+
+-
+  request:
+    url: /2013-09-01/users/objectid
+    method: PUT
+    body: {"authData":{"apple":{"id":"apple_duplicate_error","access_token":"apple_access_token_duplicate","client_id":"com.apple.signin-apple"}}}
+  response:
+    status: 409
+    file: 2013-09-01_authData_duplicate_error.json
+
+-
+  request:
+    url: /2013-09-01/users/objectid
+    method: PUT
+    body: {"authData":{"apple":{"id":"apple_authentication_error","access_token":"apple_access_token_authentication","client_id":"com.apple.signin-apple"}}}
+  response:
+    status: 401
+    file: 2013-09-01_authentication_error_apple.json
+
+-
+  request:
+    url: /2013-09-01/users/objectid
+    method: PUT
+    body: {"authData":{"apple":{"id":"apple_item_settings_error","access_token":"apple_access_token_item_settings","client_id":"com.apple.signin-apple"}}}
+  response:
+    status: 403
+    file: 2013-09-01_item_settings_error_apple.json
+
+-
+  request:
+    url: /2013-09-01/users/objectid
+    method: PUT
+    body: {"authData":{"apple":{"id":"100002415159782","access_token":"CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD","client_id":"com.apple.signin-apple"}}}
+  response:
+    status: 201
+    file: 2013-09-01_users_update_success.json
+
+-
+  request:
+    url: /2013-09-01/users/objectid
+    method: PUT
+    body: 
+      authData:
+        apple: null
+      
   response:
     status: 201
     file: 2013-09-01_users_update_success.json
@@ -507,6 +591,15 @@
   response:
     status: 200
     file: 2013-09-01_classes_users_post_google_success.json
+
+-
+  request:
+    url: /2013-09-01/users
+    method: POST
+    body: {"authData":{"apple":{"id":"100002415159782","access_token":"CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD","client_id":"com.apple.signin-apple"}}}
+  response:
+    status: 200
+    file: 2013-09-01_classes_users_post_apple_success.json
 
 -
   request:

@@ -778,6 +778,35 @@ describe("NCMB Users", function(){
       });
     });
 
+    context("appleアカウントで登録に成功した場合", function(){
+      beforeEach(function(){
+        user = new ncmb.User({});
+        providerData = {
+          id : "100002415159782",
+          access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD",
+          client_id: "com.apple.signin-apple"
+        };
+        provider = "apple";
+      });
+      it("callback でレスポンスを取得できる", function(done){
+        user.signUpWith(provider, providerData, function(err, data){
+          expect(data).to.have.property("objectId", "ilxN1s7foH2X4b5h");
+          done(err ? err : null);
+        });
+      });
+
+      it("promise でレスポンスを取得できる", function(done){
+        user.signUpWith(provider, providerData)
+        .then(function(data){
+          expect(data).to.have.property("objectId", "ilxN1s7foH2X4b5h");
+          done();
+        })
+        .catch(function(err){
+          done(err);
+        });
+      });
+    });
+
     context("authDataプロパティを直接設定した場合ログインに成功して", function(){
       beforeEach(function(){
         providerData = {
@@ -919,6 +948,68 @@ describe("NCMB Users", function(){
           });
         });
       });
+
+      context("Signupwith apple id error", function(){
+
+        beforeEach(function(){
+          user = new ncmb.User({});
+          provider = "apple";
+        });
+
+        it("promise signUpWith apple id duplicate error", function(done){
+          providerData = {
+            id : "apple_duplicate_error",
+            access_token: "apple_access_token_duplicate",
+            client_id: "com.apple.signin-apple"
+          };
+          user.signUpWith(provider, providerData)
+          .then(function(data){
+            console.log(data);
+            done(new Error("失敗すべき"));
+          })
+          .catch(function(err){
+            expect(err.code).eql("E409001");
+            expect(err.error).eql("authData is duplication.");
+            done();
+          });
+        });
+
+        it("promise signUpWith apple id authentication error", function(done){
+          providerData = {
+            id : "apple_authentication_error",
+            access_token: "apple_access_token_authentication",
+            client_id: "com.apple.signin-apple"
+          };
+          user.signUpWith(provider, providerData)
+          .then(function(data){
+            done(new Error("失敗すべき"));
+          })
+          .catch(function(err){
+            expect(err.code).eql("E401003");
+            expect(err.error).eql("OAuth apple authentication error.");
+            done();
+          });
+        });
+
+        it("promise signUpWith apple id item settings error", function(done){
+          providerData = {
+            id : "apple_item_settings_error",
+            access_token: "apple_access_token_item_settings",
+            client_id: "com.apple.signin-apple"
+          };
+          user.signUpWith(provider, providerData)
+          .then(function(data){
+            done(new Error("失敗すべき"));
+          })
+          .catch(function(err){
+            expect(err.code).eql("E403005");
+            expect(err.error).eql("apple must not be entered.");
+            done();
+          });
+        });
+
+      });
+
       context("ID/PWログインと競合した場合", function(){
         beforeEach(function(){
           user = new ncmb.User({userName:"username"});
@@ -948,6 +1039,137 @@ describe("NCMB Users", function(){
           });
         });
       });
+
+      context("User.linkWith", function(){
+        beforeEach(function(){
+          user = new ncmb.User({objectId:"objectid", sessionToken:"h6dx5pQIwc0jEDt1oTtPjemPe"});
+          providerData = {
+            id : "100002415159782",
+            access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD",
+            client_id: "com.apple.signin-apple"
+          };
+          provider = "apple";
+        });
+        it("callback linkWith apple id", function(done){
+          user.linkWith(provider, providerData, function(err, data){
+            expect(data).to.have.property("sessionToken", "h6dx5pQIwc0jEDt1oTtPjemPe");
+            var expectedAuthData = {"apple":providerData};
+            var authDataResponse = data["authData"];
+            expect(authDataResponse).to.deep.include(expectedAuthData);
+            done();
+          });
+        });
+
+        it("promise linkWith apple id", function(done){
+          user.linkWith(provider, providerData)
+          .then(function(data){
+            expect(data).to.have.property("sessionToken", "h6dx5pQIwc0jEDt1oTtPjemPe");
+            var expectedAuthData = {"apple":providerData};
+            var authDataResponse = data["authData"];
+            expect(authDataResponse).to.deep.include(expectedAuthData);
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
+        });
+      });
+
+      context("User.linkWith.error", function(){
+        beforeEach(function(){
+          user = new ncmb.User({objectId:"objectid", sessionToken:"h6dx5pQIwc0jEDt1oTtPjemPe"});
+          provider = "apple";
+        });
+
+        it("promise linkWith apple id duplicate error", function(done){
+          providerData = {
+            id : "apple_duplicate_error",
+            access_token: "apple_access_token_duplicate",
+            client_id: "com.apple.signin-apple"
+          };
+          user.linkWith(provider, providerData)
+          .then(function(data){
+            done(new Error("失敗すべき"));
+          })
+          .catch(function(err){
+            expect(err.code).eql("E409001");
+            expect(err.error).eql("authData is duplication.");
+            done();
+          });
+        });
+
+        it("promise linkWith apple id authentication error", function(done){
+          providerData = {
+            id : "apple_authentication_error",
+            access_token: "apple_access_token_authentication",
+            client_id: "com.apple.signin-apple"
+          };
+          user.linkWith(provider, providerData)
+          .then(function(data){
+            done(new Error("失敗すべき"));
+          })
+          .catch(function(err){
+            expect(err.code).eql("E401003");
+            expect(err.error).eql("OAuth apple authentication error.");
+            done();
+          });
+        });
+
+        it("promise linkWith apple id item settings error", function(done){
+          providerData = {
+            id : "apple_item_settings_error",
+            access_token: "apple_access_token_item_settings",
+            client_id: "com.apple.signin-apple"
+          };
+          user.linkWith(provider, providerData)
+          .then(function(data){
+            done(new Error("失敗すべき"));
+          })
+          .catch(function(err){
+            expect(err.code).eql("E403005");
+            expect(err.error).eql("apple must not be entered.");
+            done();
+          });
+        });
+
+      });
+
+      context("User.unLinkWith", function(){
+        beforeEach(function(){
+          providerData = {
+            id : "100002415159782",
+            access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD",
+            client_id: "com.apple.signin-apple"
+          };
+          provider = "apple";
+          var authData = {"apple":providerData};
+          user = new ncmb.User({objectId:"objectid", sessionToken:"h6dx5pQIwc0jEDt1oTtPjemPe", authData:authData});
+        });
+        it("callback unLinkWith apple id", function(done){
+          user.unLinkWith(provider, function(err, data){
+            expect(data).to.have.property("sessionToken", "h6dx5pQIwc0jEDt1oTtPjemPe");
+            var expectedAuthData = {"apple": null};
+            var authDataResponse = data["authData"];
+            expect(authDataResponse).to.deep.include(expectedAuthData);
+            done();
+          });
+        });
+
+        it("promise unLinkWith apple id", function(done){
+          user.unLinkWith(provider)
+          .then(function(data){
+            expect(data).to.have.property("sessionToken", "h6dx5pQIwc0jEDt1oTtPjemPe");
+            var expectedAuthData = {"apple": null};
+            var authDataResponse = data["authData"];
+            expect(authDataResponse).to.deep.include(expectedAuthData);
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
+        });
+      });
+
     });
   });
 
@@ -1045,6 +1267,34 @@ describe("NCMB Users", function(){
         });
       });
 
+      context("provider, providerDataを入力した場合appleログインに成功して", function(){
+        beforeEach(function(){
+          provider = "apple";
+          providerData = {
+            id: "100002415159782",
+            access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD",
+            client_id: "com.apple.signin-apple"
+          };
+          user = new ncmb.User();
+        });
+        it("callback でレスポンスを取得できる", function(done){
+          user.loginWith(provider, providerData, function(err, data){
+            expect(data).to.have.property("sessionToken", "h6dx5pQIwc0jEDt1oTtPjemPe");
+            done(err ? err : null);
+          });
+        });
+        it("promise でレスポンスを取得できる", function(done){
+          user.loginWith(provider, providerData)
+          .then(function(data){
+            expect(data).to.have.property("sessionToken", "h6dx5pQIwc0jEDt1oTtPjemPe");
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
+        });
+      });
+
       context("authDataプロパティにfacebookの認証情報があればログインに成功して", function(){
         beforeEach(function(){
           provider = "facebook";
@@ -1129,6 +1379,36 @@ describe("NCMB Users", function(){
           user.loginWith()
           .then(function(data){
             expect(data).to.have.property("sessionToken", "bfHuZvZ9vXZaCfMZ7fBrRnvru");
+            done();
+          })
+          .catch(function(err){
+            done(err);
+          });
+        });
+      });
+
+      context("authDataプロパティにappleの認証情報があればログインに成功して", function(){
+        beforeEach(function(){
+          provider = "apple";
+          providerData = {
+            id: "100002415159782",
+            access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD",
+            client_id: "com.apple.signin-apple"
+          };
+          user = new ncmb.User();
+          user.authData = {};
+          user.authData[provider] = providerData;
+        });
+        it("callback でレスポンスを取得できる", function(done){
+          user.loginWith(function(err, data){
+            expect(data).to.have.property("sessionToken", "h6dx5pQIwc0jEDt1oTtPjemPe");
+            done(err ? err : null);
+          });
+        });
+        it("promise でレスポンスを取得できる", function(done){
+          user.loginWith()
+          .then(function(data){
+            expect(data).to.have.property("sessionToken", "h6dx5pQIwc0jEDt1oTtPjemPe");
             done();
           })
           .catch(function(err){
@@ -1539,6 +1819,34 @@ describe("NCMB Users", function(){
           });
         });
 
+        context("appleログインでproviderDataが不正だった場合", function(){
+          beforeEach(function(){
+            provider = "apple";
+            providerData = {
+              id: "100002415159782",
+              access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD"
+            };
+            user = new ncmb.User();
+          });
+          it("callback でログインエラーを取得できる", function(done){
+            user.loginWith(provider, providerData, function(err, data){
+              if(!err) done(new Error("失敗すべき"));
+              expect(err).to.be.an.instanceof(Error);
+              done();
+            });
+          });
+          it("promise でログインエラーを取得できる", function(done){
+            user.loginWith(provider, providerData)
+            .then(function(data){
+              done(new Error("失敗すべき"));
+            })
+            .catch(function(err){
+              expect(err).to.be.an.instanceof(Error);
+              done();
+            });
+          });
+        });
+
         context("facebookログインでauthDataプロパティのproviderDataが不正だった場合", function(){
           beforeEach(function(){
             provider = "facebook";
@@ -1607,6 +1915,36 @@ describe("NCMB Users", function(){
             provider = "google";
             providerData = {
               access_token:"ya29.bAoBfwXmAnEqIVVICriUsrV1BDC1BHJJj1G0-CaasIYvKs-_zFBRvnVYQ4n3NC6bFkNIYbw6vf1eXM" 
+            };
+            user = new ncmb.User();
+            user.authData = {};
+            user.authData[provider] = providerData;
+          });
+          it("callback でログインエラーを取得できる", function(done){
+            user.loginWith(function(err, data){
+              if(!err) done(new Error("失敗すべき"));
+              expect(err).to.be.an.instanceof(Error);
+              done();
+            });
+          });
+          it("promise でログインエラーを取得できる", function(done){
+            user.loginWith()
+            .then(function(data){
+              done(new Error("失敗すべき"));
+            })
+            .catch(function(err){
+              expect(err).to.be.an.instanceof(Error);
+              done();
+            });
+          });
+        });
+
+        context("appleログインでauthDataプロパティのproviderDataが不正だった場合", function(){
+          beforeEach(function(){
+            provider = "apple";
+            providerData = {
+              id: "100002415159782",
+              access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD"
             };
             user = new ncmb.User();
             user.authData = {};
@@ -1759,6 +2097,36 @@ describe("NCMB Users", function(){
             ncmb.User.loginWith(user)
             .then(function(data){
               expect(data).to.have.property("sessionToken", "bfHuZvZ9vXZaCfMZ7fBrRnvru");
+              done();
+            })
+            .catch(function(err){
+              done(err);
+            });
+          });
+        });
+
+        context("authDataプロパティにappleの認証情報があればログインに成功して", function(){
+          beforeEach(function(){
+            provider = "apple";
+            providerData = {
+              id: "100002415159782",
+              access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD",
+              client_id: "com.apple.signin-apple"
+            };
+            user = new ncmb.User();
+            user.authData = {};
+            user.authData[provider] = providerData;
+          });
+          it("callback でレスポンスを取得できる", function(done){
+            ncmb.User.loginWith(user, function(err, data){
+              expect(data).to.have.property("sessionToken", "h6dx5pQIwc0jEDt1oTtPjemPe");
+              done(err ? err : null);
+            });
+          });
+          it("promise でレスポンスを取得できる", function(done){
+            ncmb.User.loginWith(user)
+            .then(function(data){
+              expect(data).to.have.property("sessionToken", "h6dx5pQIwc0jEDt1oTtPjemPe");
               done();
             })
             .catch(function(err){
@@ -1961,6 +2329,36 @@ describe("NCMB Users", function(){
             });
           });
 
+          context("appleログインでauthDataプロパティのproviderDataが不正だった場合", function(){
+            beforeEach(function(){
+              provider = "apple";
+              providerData = {
+                id: "100002415159782",
+                access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD"
+              };
+              user = new ncmb.User();
+              user.authData = {};
+              user.authData[provider] = providerData;
+            });
+            it("callback でログインエラーを取得できる", function(done){
+              ncmb.User.loginWith(user, function(err, data){
+                if(!err) done(new Error("失敗すべき"));
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+            it("promise でログインエラーを取得できる", function(done){
+              ncmb.User.loginWith(user)
+              .then(function(data){
+                done(new Error("失敗すべき"));
+              })
+              .catch(function(err){
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+          });
+
           context("authDataプロパティに複数の認証情報があり、providerが指定されなかった場合", function(){
             var secondProvider = null;
             var secondProviderData = null;
@@ -2081,6 +2479,44 @@ describe("NCMB Users", function(){
             ncmb.User.loginWith(provider, providerData)
             .then(function(data){
               expect(data).to.have.property("sessionToken", "bfHuZvZ9vXZaCfMZ7fBrRnvru");
+              done();
+            })
+            .catch(function(err){
+              done(err);
+            });
+          });
+        });
+
+        context("provider, providerDataを入力した場合appleログインに成功して", function(){
+          beforeEach(function(){
+            provider = "apple";
+            providerData = {
+              id: "100002415159782",
+              access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD",
+              client_id: "com.apple.signin-apple"
+            };
+            user = new ncmb.User();
+          });
+          it("callback でレスポンスを取得できる", function(done){
+            ncmb.User.loginWith(provider, providerData, function(err, data){
+              var currentUser = ncmb.User.getCurrentUser();
+              expect(currentUser).to.have.property("objectId", "ilxN1s7foH2X4b5h");
+              expect(currentUser).to.have.property("userName", "cmEFG4qlkA");
+              expect(currentUser).to.have.property("sessionToken", "h6dx5pQIwc0jEDt1oTtPjemPe");
+              var authDataResponse = currentUser.authData["apple"];
+              expect(authDataResponse).to.deep.include(providerData);
+              done(err ? err : null);
+            });
+          });
+          it("promise でレスポンスを取得できる", function(done){
+            ncmb.User.loginWith(provider, providerData)
+            .then(function(data){
+              var currentUser = ncmb.User.getCurrentUser();
+              expect(currentUser).to.have.property("objectId", "ilxN1s7foH2X4b5h");
+              expect(currentUser).to.have.property("userName", "cmEFG4qlkA");
+              expect(currentUser).to.have.property("sessionToken", "h6dx5pQIwc0jEDt1oTtPjemPe");
+              var authDataResponse = currentUser.authData["apple"];
+              expect(authDataResponse).to.deep.include(providerData);
               done();
             })
             .catch(function(err){
@@ -2266,6 +2702,34 @@ describe("NCMB Users", function(){
               provider = "google";
               providerData = {
                 access_token:"ya29.bAoBfwXmAnEqIVVICriUsrV1BDC1BHJJj1G0-CaasIYvKs-_zFBRvnVYQ4n3NC6bFkNIYbw6vf1eXM" 
+              };
+              user = new ncmb.User();
+            });
+            it("callback でログインエラーを取得できる", function(done){
+              ncmb.User.loginWith(provider, providerData, function(err, data){
+                if(!err) done(new Error("失敗すべき"));
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+            it("promise でログインエラーを取得できる", function(done){
+              ncmb.User.loginWith(provider, providerData)
+              .then(function(data){
+                done(new Error("失敗すべき"));
+              })
+              .catch(function(err){
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+          });
+
+          context("appleログインでproviderDataが不正だった場合", function(){
+            beforeEach(function(){
+              provider = "apple";
+              providerData = {
+                id: "100002415159782",
+                access_token: "CAACEdEose0cBAMHWz6HxQSeXJexFhxmfC3rUswuC4G5rcKiTnzdNIRZBJnmnbjVxSAbAZBP6MXKy6gTuPZBVmUEUJ6TgdwY4sCoNNZCIuXJb4EbrJvAPrAvi1KmHXbkiArmC1pro30Eqdbt94YnNz5WsvlAeYKZCZC0ApDuKJpg41ykMuhAO6kvsudbiFkMjNRotp0yLGf1AZDZD"
               };
               user = new ncmb.User();
             });

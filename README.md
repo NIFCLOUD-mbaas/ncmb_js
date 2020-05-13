@@ -9,8 +9,9 @@ By introducing SDK, the following functions can be used from the application.
 - [SNS link](https://mbaas.nifcloud.com/doc/current/sns/facebook_javascript.html)
 - [Data store](https://mbaas.nifcloud.com/doc/current/datastore/basic_usage_javascript.html)
 - [File store](https://mbaas.nifcloud.com/doc/current/filestore/basic_usage_javascript.html)
-- [Location] information search (link to document)
-- [Script] (https://mbaas.nifcloud.com/doc/current/script/basic_usage_javascript.html)
+- [Location](https://mbaas.nifcloud.com/doc/current/geopoint/basic_usage_javascript.html)
+- [Script](https://mbaas.nifcloud.com/doc/current/script/basic_usage_javascript.html)  
+
 To use the API through the SDK, you need to register as a member of NIFCLOUD mobile backend.
 For the SDK installation procedure, see [Quick Start](https://mbaas.nifcloud.com/doc/current/introduction/quickstart_javascript.html).
 

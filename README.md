@@ -2,18 +2,18 @@ JavaScript SDK for NIFCLOUD mobile backend
 ------------------------------------------------------------
 [![Build Status](https://travis-ci.org/NIFCLOUD-mbaas/ncmb_js.png)](https://travis-ci.org/NIFCLOUD-mbaas/ncmb_js)
 
-JavaScript SDK for [NIFCLOUD mobile backend](https://mbaas.nifcloud.com/), a cloud service for smartphone applications.
-By introducing SDK, the following functions can be used from the application.
+This is JavaScript SDK for [NIFCLOUD mobile backend](https://mbaas.nifcloud.com/), a cloud based backend service for smartphone applications.
+By importing SDK, the following functions can be used from the application.
 - [Push notification](https://mbaas.nifcloud.com/doc/current/push/basic_usage_javascript.html)
-- [Member management / authentication](https://mbaas.nifcloud.com/doc/current/user/basic_usage_javascript.html)
+- [User management](https://mbaas.nifcloud.com/doc/current/user/basic_usage_javascript.html)
 - [SNS link](https://mbaas.nifcloud.com/doc/current/sns/facebook_javascript.html)
-- [Data store](https://mbaas.nifcloud.com/doc/current/datastore/basic_usage_javascript.html)
-- [File store](https://mbaas.nifcloud.com/doc/current/filestore/basic_usage_javascript.html)
-- [Location](https://mbaas.nifcloud.com/doc/current/geopoint/basic_usage_javascript.html)
+- [Datastore](https://mbaas.nifcloud.com/doc/current/datastore/basic_usage_javascript.html)
+- [Filestore](https://mbaas.nifcloud.com/doc/current/filestore/basic_usage_javascript.html)
+- [Geo Location](https://mbaas.nifcloud.com/doc/current/geopoint/basic_usage_javascript.html)
 - [Script](https://mbaas.nifcloud.com/doc/current/script/basic_usage_javascript.html)  
 
-To use the API through the SDK, you need to register as a member of NIFCLOUD mobile backend.
-For the SDK installation procedure, see [Quick Start](https://mbaas.nifcloud.com/doc/current/introduction/quickstart_javascript.html).
+To use the API through SDK, you need to register to NIFCLOUD mobile backend.
+For  SDK installation steps, see [Quick Start](https://mbaas.nifcloud.com/doc/current/introduction/quickstart_javascript.html).
 
 ## Supported environment
 
@@ -325,12 +325,10 @@ www/
 
 Run `npm run document:generate` command, then documents has created in `jsdoc` directory.
 
+* Dependency
+  Please refer to Dependencies part in package.json for details.
 
-
-
-
-
-## Reference URL collection
+## References
 - [NIFCLOUD mobile backend](https://mbaas.nifcloud.com)
 - [Document](https://mbaas.nifcloud.com/doc/current)
 - [User Community](https://github.com/NIFCLOUD-mbaas/UserCommunity)

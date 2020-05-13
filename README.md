@@ -2,6 +2,18 @@ JavaScript SDK for NIFCLOUD mobile backend
 ------------------------------------------------------------
 [![Build Status](https://travis-ci.org/NIFCLOUD-mbaas/ncmb_js.png)](https://travis-ci.org/NIFCLOUD-mbaas/ncmb_js)
 
+JavaScript SDK for [NIFCLOUD mobile backend](https://mbaas.nifcloud.com/), a cloud service for smartphone applications.
+By introducing SDK, the following functions can be used from the application.
+- [Push notification](https://mbaas.nifcloud.com/doc/current/push/basic_usage_javascript.html)
+- [Member management / authentication](https://mbaas.nifcloud.com/doc/current/user/basic_usage_javascript.html)
+- [SNS link](https://mbaas.nifcloud.com/doc/current/sns/facebook_javascript.html)
+- [Data store](https://mbaas.nifcloud.com/doc/current/datastore/basic_usage_javascript.html)
+- [File store](https://mbaas.nifcloud.com/doc/current/filestore/basic_usage_javascript.html)
+- [Location] information search (link to document)
+- [Script] (https://mbaas.nifcloud.com/doc/current/script/basic_usage_javascript.html)
+To use the API through the SDK, you need to register as a member of NIFCLOUD mobile backend.
+For the SDK installation procedure, see [Quick Start](https://mbaas.nifcloud.com/doc/current/introduction/quickstart_javascript.html).
+
 ## Supported environment
 
 | Environment              | Supported version |
@@ -311,6 +323,16 @@ www/
 ## Create SDK Document
 
 Run `npm run document:generate` command, then documents has created in `jsdoc` directory.
+
+
+
+
+
+
+## Reference URL collection
+- [NIFCLOUD mobile backend](https://mbaas.nifcloud.com)
+- [Document](https://mbaas.nifcloud.com/doc/current)
+- [User Community](https://github.com/NIFCLOUD-mbaas/UserCommunity)
 
 ## License
 

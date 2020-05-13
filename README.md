@@ -6,7 +6,7 @@ This is JavaScript SDK for [NIFCLOUD mobile backend](https://mbaas.nifcloud.com/
 By importing SDK, the following functions can be used from the application.
 - [Push notification](https://mbaas.nifcloud.com/doc/current/push/basic_usage_javascript.html)
 - [User management](https://mbaas.nifcloud.com/doc/current/user/basic_usage_javascript.html)
-- [SNS link](https://mbaas.nifcloud.com/doc/current/sns/facebook_javascript.html)
+- [SNS](https://mbaas.nifcloud.com/doc/current/sns/facebook_javascript.html)
 - [Datastore](https://mbaas.nifcloud.com/doc/current/datastore/basic_usage_javascript.html)
 - [Filestore](https://mbaas.nifcloud.com/doc/current/filestore/basic_usage_javascript.html)
 - [Geo Location](https://mbaas.nifcloud.com/doc/current/geopoint/basic_usage_javascript.html)
@@ -325,7 +325,7 @@ www/
 
 Run `npm run document:generate` command, then documents has created in `jsdoc` directory.
 
-* Dependency
+## Dependency
   Please refer to Dependencies part in package.json for details.
 
 ## References

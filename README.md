@@ -2,6 +2,19 @@ JavaScript SDK for NIFCLOUD mobile backend
 ------------------------------------------------------------
 [![Build Status](https://travis-ci.org/NIFCLOUD-mbaas/ncmb_js.png)](https://travis-ci.org/NIFCLOUD-mbaas/ncmb_js)
 
+This is JavaScript SDK for [NIFCLOUD mobile backend](https://mbaas.nifcloud.com/), a cloud based backend service for smartphone applications.
+By importing SDK, the following functions can be used from the application.
+- [Push notification](https://mbaas.nifcloud.com/doc/current/push/basic_usage_javascript.html)
+- [User management](https://mbaas.nifcloud.com/doc/current/user/basic_usage_javascript.html)
+- [SNS](https://mbaas.nifcloud.com/doc/current/sns/facebook_javascript.html)
+- [Datastore](https://mbaas.nifcloud.com/doc/current/datastore/basic_usage_javascript.html)
+- [Filestore](https://mbaas.nifcloud.com/doc/current/filestore/basic_usage_javascript.html)
+- [Geo Location](https://mbaas.nifcloud.com/doc/current/geopoint/basic_usage_javascript.html)
+- [Script](https://mbaas.nifcloud.com/doc/current/script/basic_usage_javascript.html)  
+
+To use the API through SDK, you need to register to NIFCLOUD mobile backend.
+For  SDK installation steps, see [Quick Start](https://mbaas.nifcloud.com/doc/current/introduction/quickstart_javascript.html).
+
 ## Supported environment
 
 | Environment              | Supported version |
@@ -9,7 +22,7 @@ JavaScript SDK for NIFCLOUD mobile backend
 | Node.js              | 8.x, 10.x, latest |
 | Mozilla Firefox      | Latest version     |
 | Google Chrome        | Latest version     |
- (※as of December, 2019)
+ (※as of May, 2020)
 
 Remember to turn on Allow Cookies on your browsers.
 
@@ -17,7 +30,7 @@ Remember to turn on Allow Cookies on your browsers.
 
 Please read [Developer guidelines](https://mbaas.nifcloud.com/doc/current/common/dev_guide.html#SDK%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6).
 
-- v3.0.0 ～ (※as of December, 2019)
+- v3.0.1 ～ (※as of May, 2020)
 
 ## Install
 
@@ -311,6 +324,14 @@ www/
 ## Create SDK Document
 
 Run `npm run document:generate` command, then documents has created in `jsdoc` directory.
+
+## Dependency
+  Please refer to Dependencies part in package.json for details.
+
+## References
+- [NIFCLOUD mobile backend](https://mbaas.nifcloud.com)
+- [Document](https://mbaas.nifcloud.com/doc/current)
+- [User Community](https://github.com/NIFCLOUD-mbaas/UserCommunity)
 
 ## License
 

@@ -2950,8 +2950,8 @@ describe("NCMB Users", function(){
           });
           context("2 区切り以外の記号が含まれる場合（g-z）", function(){
             beforeEach(function(){
-              //uuid = "3dc72085-911b-4798-9707-d69e879a61c5";
-              uuid = "testuuid"
+              uuid = "3dc72085-911b-4798-9707-d69e879a61c5";
+              //uuid = "testuuid"
               user = new ncmb.User();
             });
             it("callback でログイン時エラーを取得できる", function(done){

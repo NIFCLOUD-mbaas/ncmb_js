@@ -2922,7 +2922,7 @@ describe("NCMB Users", function(){
               });
             });
           });
-          context("1 区切り以外の記号が含まれる場合", function(){
+          context("区切り以外の記号が含まれる場合（記号）", function(){
             beforeEach(function(){
               uuid = "3dc72085-911b-4798-9707-d69e879a61.5";
               user = new ncmb.User();
@@ -2948,15 +2948,13 @@ describe("NCMB Users", function(){
               });
             });
           });
-          context("2 区切り以外の記号が含まれる場合（g-z）", function(){
+          context("区切り以外の記号が含まれる場合（g-z）", function(){
             beforeEach(function(){
-              uuid = "3dc72085-911b-4798-9707-d69e879a61c5";
-              //uuid = "testuuid"
+              uuid = "3dc72085-911b-4798-9707-d69e879g6185";
               user = new ncmb.User();
             });
             it("callback でログイン時エラーを取得できる", function(done){
               user.loginAsAnonymous( uuid, function(err, data){
-                console.log(uuid);
                 if(!err){
                   done(new Error("失敗すべき"));
                 }else{
@@ -3193,9 +3191,34 @@ describe("NCMB Users", function(){
               });
             });
           });
-          context("区切り以外の記号が含まれる場合", function(){
+          context("区切り以外の記号が含まれる場合（記号）", function(){
             beforeEach(function(){
               uuid = "3dc72085-911b-4798-9707-d69e879a61.5";
+            });
+            it("callback でログイン時エラーを取得できる", function(done){
+              ncmb.User.loginAsAnonymous( uuid, function(err, data){
+                if(!err){
+                  done(new Error("失敗すべき"));
+                }else{
+                  expect(err).to.be.an.instanceof(Error);
+                  done();
+                }
+              });
+            });
+            it("promise でログイン時エラーを取得できる", function(done){
+              ncmb.User.loginAsAnonymous(uuid)
+              .then(function(data){
+                done(new Error("失敗すべき"));
+              })
+              .catch(function(err){
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+          });
+          context("区切り以外の記号が含まれる場合（a-g）", function(){
+            beforeEach(function(){
+              uuid = "3dc72085-911b-4798-9707-d69e879a61g5";
             });
             it("callback でログイン時エラーを取得できる", function(done){
               ncmb.User.loginAsAnonymous( uuid, function(err, data){

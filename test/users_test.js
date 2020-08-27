@@ -270,7 +270,7 @@ describe("NCMB Users", function(){
             password = "passwd";
             user = new ncmb.User({password: password});
           });
-         
+
           it("callback でログインエラーを取得できる", function(done){
             user.login(function(err, data){
               if(!err){
@@ -298,7 +298,7 @@ describe("NCMB Users", function(){
             userName = "name";
             user = new ncmb.User({userName: userName});
           });
-         
+
           it("callback でログインエラーを取得できる", function(done){
             user.login(function(err, data){
               if(!err){
@@ -325,9 +325,9 @@ describe("NCMB Users", function(){
           beforeEach(function(){
             userName  = null;
             password = "passwd";
-            user = new ncmb.User({userName: userName, password: password}); 
+            user = new ncmb.User({userName: userName, password: password});
           });
-         
+
           it("callback でログインエラーを取得できる", function(done){
             user.login(function(err, data){
               if(!err){
@@ -354,9 +354,9 @@ describe("NCMB Users", function(){
           beforeEach(function(){
             userName  = "name";
             password = null;
-            user = new ncmb.User({userName: userName, password: password}); 
+            user = new ncmb.User({userName: userName, password: password});
           });
-         
+
           it("callback でログインエラーを取得できる", function(done){
             user.login(function(err, data){
               if(!err){
@@ -453,7 +453,7 @@ describe("NCMB Users", function(){
               password = "passwd";
               user = new ncmb.User({password: password});
             });
-           
+
             it("callback でログインエラーを取得できる", function(done){
               ncmb.User.login(user, function(err, data){
                 if(!err){
@@ -481,7 +481,7 @@ describe("NCMB Users", function(){
               userName = "name";
               user = new ncmb.User({userName: userName});
             });
-           
+
             it("callback でログインエラーを取得できる", function(done){
               ncmb.User.login(user, function(err, data){
                 if(!err){
@@ -508,9 +508,9 @@ describe("NCMB Users", function(){
             beforeEach(function(){
               userName  = null;
               password = "passwd";
-              user = new ncmb.User({userName: userName, password: password}); 
+              user = new ncmb.User({userName: userName, password: password});
             });
-           
+
             it("callback でログインエラーを取得できる", function(done){
               ncmb.User.login(user, function(err, data){
                 if(!err){
@@ -537,9 +537,9 @@ describe("NCMB Users", function(){
             beforeEach(function(){
               userName  = "name";
               password = null;
-              user = new ncmb.User({userName: userName, password: password}); 
+              user = new ncmb.User({userName: userName, password: password});
             });
-           
+
             it("callback でログインエラーを取得できる", function(done){
               ncmb.User.login(user, function(err, data){
                 if(!err){
@@ -564,7 +564,7 @@ describe("NCMB Users", function(){
           });
         });
       });
-      
+
       context("userName, password でログインした場合", function(){
         context("userName, passwordが存在すればログインに成功して", function(){
           beforeEach(function(){
@@ -1429,8 +1429,8 @@ describe("NCMB Users", function(){
           };
           secondProvider = "google";
           secondProviderData = {
-            id:"342304547393343184783", 
-            access_token:"ya29.bAoBfwXmAnEqIVVICriUsrV1BDC1BHJJj1G0-CaasIYvKs-_zFBRvnVYQ4n3NC6bFkNIYbw6vf1eXM" 
+            id:"342304547393343184783",
+            access_token:"ya29.bAoBfwXmAnEqIVVICriUsrV1BDC1BHJJj1G0-CaasIYvKs-_zFBRvnVYQ4n3NC6bFkNIYbw6vf1eXM"
           };
           user = new ncmb.User();
           user.authData = {};
@@ -1765,10 +1765,10 @@ describe("NCMB Users", function(){
           beforeEach(function(){
             provider = "twitter";
             providerData = {
-              id: "887423302", 
-              screen_name: "mobileBackend", 
-              oauth_consumer_key: "ZoL16IzyCEEik4nNTEN9RW", 
-              consumer_secret: "ubFWbG0wL7bub7gnWSkAKAmXj6VZ97DpmK2ZSCc5Opk", 
+              id: "887423302",
+              screen_name: "mobileBackend",
+              oauth_consumer_key: "ZoL16IzyCEEik4nNTEN9RW",
+              consumer_secret: "ubFWbG0wL7bub7gnWSkAKAmXj6VZ97DpmK2ZSCc5Opk",
               oauth_token: "887423106-VxW8foViKjNDOyCLcC0WhTIyxUo2r3eXLLeogUtB"
             };
             user = new ncmb.User();
@@ -1796,7 +1796,7 @@ describe("NCMB Users", function(){
           beforeEach(function(){
             provider = "google";
             providerData = {
-              access_token:"ya29.bAoBfwXmAnEqIVVICriUsrV1BDC1BHJJj1G0-CaasIYvKs-_zFBRvnVYQ4n3NC6bFkNIYbw6vf1eXM" 
+              access_token:"ya29.bAoBfwXmAnEqIVVICriUsrV1BDC1BHJJj1G0-CaasIYvKs-_zFBRvnVYQ4n3NC6bFkNIYbw6vf1eXM"
             };
             user = new ncmb.User();
           });
@@ -1881,10 +1881,10 @@ describe("NCMB Users", function(){
           beforeEach(function(){
             provider = "twitter";
             providerData = {
-              id: "887423302", 
-              screen_name: "mobileBackend", 
-              oauth_consumer_key: "ZoL16IzyCEEik4nNTEN9RW", 
-              consumer_secret: "ubFWbG0wL7bub7gnWSkAKAmXj6VZ97DpmK2ZSCc5Opk", 
+              id: "887423302",
+              screen_name: "mobileBackend",
+              oauth_consumer_key: "ZoL16IzyCEEik4nNTEN9RW",
+              consumer_secret: "ubFWbG0wL7bub7gnWSkAKAmXj6VZ97DpmK2ZSCc5Opk",
               oauth_token: "887423106-VxW8foViKjNDOyCLcC0WhTIyxUo2r3eXLLeogUtB"
             };
             user = new ncmb.User();
@@ -1914,7 +1914,7 @@ describe("NCMB Users", function(){
           beforeEach(function(){
             provider = "google";
             providerData = {
-              access_token:"ya29.bAoBfwXmAnEqIVVICriUsrV1BDC1BHJJj1G0-CaasIYvKs-_zFBRvnVYQ4n3NC6bFkNIYbw6vf1eXM" 
+              access_token:"ya29.bAoBfwXmAnEqIVVICriUsrV1BDC1BHJJj1G0-CaasIYvKs-_zFBRvnVYQ4n3NC6bFkNIYbw6vf1eXM"
             };
             user = new ncmb.User();
             user.authData = {};
@@ -1981,8 +1981,8 @@ describe("NCMB Users", function(){
             };
             secondProvider = "google";
             secondProviderData = {
-              id:"342304547393343184783", 
-              access_token:"ya29.bAoBfwXmAnEqIVVICriUsrV1BDC1BHJJj1G0-CaasIYvKs-_zFBRvnVYQ4n3NC6bFkNIYbw6vf1eXM" 
+              id:"342304547393343184783",
+              access_token:"ya29.bAoBfwXmAnEqIVVICriUsrV1BDC1BHJJj1G0-CaasIYvKs-_zFBRvnVYQ4n3NC6bFkNIYbw6vf1eXM"
             };
             user = new ncmb.User();
             user.authData = {};
@@ -2047,10 +2047,10 @@ describe("NCMB Users", function(){
           beforeEach(function(){
             provider = "twitter";
             providerData = {
-              id: "887423302", 
-              screen_name: "mobileBackend", 
-              oauth_consumer_key: "ZoL16IzyCEEik4nNTEN9RW", 
-              consumer_secret: "ubFWbG0wL7bub7gnWSkAKAmXj6VZ97DpmK2ZSCc5Opk", 
+              id: "887423302",
+              screen_name: "mobileBackend",
+              oauth_consumer_key: "ZoL16IzyCEEik4nNTEN9RW",
+              consumer_secret: "ubFWbG0wL7bub7gnWSkAKAmXj6VZ97DpmK2ZSCc5Opk",
               oauth_token: "887423106-VxW8foViKjNDOyCLcC0WhTIyxUo2r3eXLLeogUtB",
               oauth_token_secret: "gye4VHfEHHBCH34cEJGiAWlukGAEJ6DCixYNU6Mg"
             };
@@ -2080,8 +2080,8 @@ describe("NCMB Users", function(){
           beforeEach(function(){
             provider = "google";
             providerData = {
-              id:"342304547393343184783", 
-              access_token:"ya29.bAoBfwXmAnEqIVVICriUsrV1BDC1BHJJj1G0-CaasIYvKs-_zFBRvnVYQ4n3NC6bFkNIYbw6vf1eXM" 
+              id:"342304547393343184783",
+              access_token:"ya29.bAoBfwXmAnEqIVVICriUsrV1BDC1BHJJj1G0-CaasIYvKs-_zFBRvnVYQ4n3NC6bFkNIYbw6vf1eXM"
             };
             user = new ncmb.User();
             user.authData = {};
@@ -2147,8 +2147,8 @@ describe("NCMB Users", function(){
             };
             secondProvider = "google";
             secondProviderData = {
-              id:"342304547393343184783", 
-              access_token:"ya29.bAoBfwXmAnEqIVVICriUsrV1BDC1BHJJj1G0-CaasIYvKs-_zFBRvnVYQ4n3NC6bFkNIYbw6vf1eXM" 
+              id:"342304547393343184783",
+              access_token:"ya29.bAoBfwXmAnEqIVVICriUsrV1BDC1BHJJj1G0-CaasIYvKs-_zFBRvnVYQ4n3NC6bFkNIYbw6vf1eXM"
             };
             user = new ncmb.User();
             user.authData = {};
@@ -2271,10 +2271,10 @@ describe("NCMB Users", function(){
             beforeEach(function(){
               provider = "twitter";
               providerData = {
-                id: "887423302", 
-                screen_name: "mobileBackend", 
-                oauth_consumer_key: "ZoL16IzyCEEik4nNTEN9RW", 
-                consumer_secret: "ubFWbG0wL7bub7gnWSkAKAmXj6VZ97DpmK2ZSCc5Opk", 
+                id: "887423302",
+                screen_name: "mobileBackend",
+                oauth_consumer_key: "ZoL16IzyCEEik4nNTEN9RW",
+                consumer_secret: "ubFWbG0wL7bub7gnWSkAKAmXj6VZ97DpmK2ZSCc5Opk",
                 oauth_token: "887423106-VxW8foViKjNDOyCLcC0WhTIyxUo2r3eXLLeogUtB"
               };
               user = new ncmb.User();
@@ -2304,7 +2304,7 @@ describe("NCMB Users", function(){
             beforeEach(function(){
               provider = "google";
               providerData = {
-                access_token:"ya29.bAoBfwXmAnEqIVVICriUsrV1BDC1BHJJj1G0-CaasIYvKs-_zFBRvnVYQ4n3NC6bFkNIYbw6vf1eXM" 
+                access_token:"ya29.bAoBfwXmAnEqIVVICriUsrV1BDC1BHJJj1G0-CaasIYvKs-_zFBRvnVYQ4n3NC6bFkNIYbw6vf1eXM"
               };
               user = new ncmb.User();
               user.authData = {};
@@ -2371,8 +2371,8 @@ describe("NCMB Users", function(){
               };
               secondProvider = "google";
               secondProviderData = {
-                id:"342304547393343184783", 
-                access_token:"ya29.bAoBfwXmAnEqIVVICriUsrV1BDC1BHJJj1G0-CaasIYvKs-_zFBRvnVYQ4n3NC6bFkNIYbw6vf1eXM" 
+                id:"342304547393343184783",
+                access_token:"ya29.bAoBfwXmAnEqIVVICriUsrV1BDC1BHJJj1G0-CaasIYvKs-_zFBRvnVYQ4n3NC6bFkNIYbw6vf1eXM"
               };
               user = new ncmb.User();
               user.authData = {};
@@ -2433,10 +2433,10 @@ describe("NCMB Users", function(){
           beforeEach(function(){
             provider = "twitter";
             providerData = {
-              id: "887423302", 
-              screen_name: "mobileBackend", 
-              oauth_consumer_key: "ZoL16IzyCEEik4nNTEN9RW", 
-              consumer_secret: "ubFWbG0wL7bub7gnWSkAKAmXj6VZ97DpmK2ZSCc5Opk", 
+              id: "887423302",
+              screen_name: "mobileBackend",
+              oauth_consumer_key: "ZoL16IzyCEEik4nNTEN9RW",
+              consumer_secret: "ubFWbG0wL7bub7gnWSkAKAmXj6VZ97DpmK2ZSCc5Opk",
               oauth_token: "887423106-VxW8foViKjNDOyCLcC0WhTIyxUo2r3eXLLeogUtB",
               oauth_token_secret: "gye4VHfEHHBCH34cEJGiAWlukGAEJ6DCixYNU6Mg"
             };
@@ -2464,8 +2464,8 @@ describe("NCMB Users", function(){
           beforeEach(function(){
             provider = "google";
             providerData = {
-              id:"342304547393343184783", 
-              access_token:"ya29.bAoBfwXmAnEqIVVICriUsrV1BDC1BHJJj1G0-CaasIYvKs-_zFBRvnVYQ4n3NC6bFkNIYbw6vf1eXM" 
+              id:"342304547393343184783",
+              access_token:"ya29.bAoBfwXmAnEqIVVICriUsrV1BDC1BHJJj1G0-CaasIYvKs-_zFBRvnVYQ4n3NC6bFkNIYbw6vf1eXM"
             };
             user = new ncmb.User();
           });
@@ -2670,10 +2670,10 @@ describe("NCMB Users", function(){
             beforeEach(function(){
               provider = "twitter";
               providerData = {
-                id: "887423302", 
-                screen_name: "mobileBackend", 
-                oauth_consumer_key: "ZoL16IzyCEEik4nNTEN9RW", 
-                consumer_secret: "ubFWbG0wL7bub7gnWSkAKAmXj6VZ97DpmK2ZSCc5Opk", 
+                id: "887423302",
+                screen_name: "mobileBackend",
+                oauth_consumer_key: "ZoL16IzyCEEik4nNTEN9RW",
+                consumer_secret: "ubFWbG0wL7bub7gnWSkAKAmXj6VZ97DpmK2ZSCc5Opk",
                 oauth_token: "887423106-VxW8foViKjNDOyCLcC0WhTIyxUo2r3eXLLeogUtB"
               };
               user = new ncmb.User();
@@ -2701,7 +2701,7 @@ describe("NCMB Users", function(){
             beforeEach(function(){
               provider = "google";
               providerData = {
-                access_token:"ya29.bAoBfwXmAnEqIVVICriUsrV1BDC1BHJJj1G0-CaasIYvKs-_zFBRvnVYQ4n3NC6bFkNIYbw6vf1eXM" 
+                access_token:"ya29.bAoBfwXmAnEqIVVICriUsrV1BDC1BHJJj1G0-CaasIYvKs-_zFBRvnVYQ4n3NC6bFkNIYbw6vf1eXM"
               };
               user = new ncmb.User();
             });
@@ -2870,7 +2870,7 @@ describe("NCMB Users", function(){
       });
       context("失敗した理由が", function(){
         context("uuidについて", function(){
-          context("フォーマットが不正な場合", function(){
+          context("フォーマットが不正な場合(文字列の文字数が不正)", function(){
             before(function(){
               uuid = "3dc72085-911b-4798-9707";
               user = new ncmb.User();
@@ -2922,9 +2922,35 @@ describe("NCMB Users", function(){
               });
             });
           });
-          context("区切り以外の記号が含まれる場合", function(){
+          context("区切り以外の記号が含まれる場合（記号）", function(){
             beforeEach(function(){
               uuid = "3dc72085-911b-4798-9707-d69e879a61.5";
+              user = new ncmb.User();
+            });
+            it("callback でログイン時エラーを取得できる", function(done){
+              user.loginAsAnonymous( uuid, function(err, data){
+                if(!err){
+                  done(new Error("失敗すべき"));
+                }else{
+                  expect(err).to.be.an.instanceof(Error);
+                  done();
+                }
+              });
+            });
+            it("promise でログイン時エラーを取得できる", function(done){
+              user.loginAsAnonymous(uuid)
+              .then(function(data){
+                done(new Error("失敗すべき"));
+              })
+              .catch(function(err){
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+          });
+          context("区切り以外の記号が含まれる場合（g-z）", function(){
+            beforeEach(function(){
+              uuid = "3dc72085-911b-4798-9707-d69e879g6185";
               user = new ncmb.User();
             });
             it("callback でログイン時エラーを取得できる", function(done){
@@ -3165,9 +3191,34 @@ describe("NCMB Users", function(){
               });
             });
           });
-          context("区切り以外の記号が含まれる場合", function(){
+          context("区切り以外の記号が含まれる場合（記号）", function(){
             beforeEach(function(){
               uuid = "3dc72085-911b-4798-9707-d69e879a61.5";
+            });
+            it("callback でログイン時エラーを取得できる", function(done){
+              ncmb.User.loginAsAnonymous( uuid, function(err, data){
+                if(!err){
+                  done(new Error("失敗すべき"));
+                }else{
+                  expect(err).to.be.an.instanceof(Error);
+                  done();
+                }
+              });
+            });
+            it("promise でログイン時エラーを取得できる", function(done){
+              ncmb.User.loginAsAnonymous(uuid)
+              .then(function(data){
+                done(new Error("失敗すべき"));
+              })
+              .catch(function(err){
+                expect(err).to.be.an.instanceof(Error);
+                done();
+              });
+            });
+          });
+          context("区切り以外の記号が含まれる場合（a-g）", function(){
+            beforeEach(function(){
+              uuid = "3dc72085-911b-4798-9707-d69e879a61g5";
             });
             it("callback でログイン時エラーを取得できる", function(done){
               ncmb.User.loginAsAnonymous( uuid, function(err, data){
@@ -3371,7 +3422,7 @@ describe("NCMB Users", function(){
             password = "passwd";
             user = new ncmb.User({password: password});
           });
-         
+
           it("callback でログインエラーを取得できる", function(done){
             user.loginWithMailAddress(function(err, data){
               if(!err) done(new Error("失敗すべき"));
@@ -3396,7 +3447,7 @@ describe("NCMB Users", function(){
             mailAddress = "mail@example.com";
             user = new ncmb.User({mailAddress: mailAddress});
           });
-         
+
           it("callback でログインエラーを取得できる", function(done){
             user.loginWithMailAddress(function(err, data){
               if(!err) done(new Error("失敗すべき"));
@@ -3420,9 +3471,9 @@ describe("NCMB Users", function(){
           beforeEach(function(){
             mailAddress  = null;
             password = "passwd";
-            user = new ncmb.User({mailAddress: mailAddress, password: password}); 
+            user = new ncmb.User({mailAddress: mailAddress, password: password});
           });
-         
+
           it("callback でログインエラーを取得できる", function(done){
             user.loginWithMailAddress(function(err, data){
               if(!err) done(new Error("失敗すべき"));
@@ -3446,9 +3497,9 @@ describe("NCMB Users", function(){
           beforeEach(function(){
             mailAddress  = "mail@example.com";
             password = null;
-            user = new ncmb.User({mailAddress: mailAddress, password: password}); 
+            user = new ncmb.User({mailAddress: mailAddress, password: password});
           });
-         
+
           it("callback でログインエラーを取得できる", function(done){
             user.loginWithMailAddress(function(err, data){
               if(!err) done(new Error("失敗すべき"));
@@ -3526,7 +3577,7 @@ describe("NCMB Users", function(){
               password = "passwd";
               user = new ncmb.User({password: password});
             });
-           
+
             it("callback でログインエラーを取得できる", function(done){
               ncmb.User.loginWithMailAddress(user, function(err, data){
                 if(!err) done(new Error("失敗すべき"));
@@ -3551,7 +3602,7 @@ describe("NCMB Users", function(){
               mailAddress = "mail@example.com";
               user = new ncmb.User({mailAddress: mailAddress});
             });
-           
+
             it("callback でログインエラーを取得できる", function(done){
               ncmb.User.loginWithMailAddress(user, function(err, data){
                 if(!err) done(new Error("失敗すべき"));
@@ -3575,9 +3626,9 @@ describe("NCMB Users", function(){
             beforeEach(function(){
               mailAddress  = null;
               password = "passwd";
-              user = new ncmb.User({mailAddress: mailAddress, password: password}); 
+              user = new ncmb.User({mailAddress: mailAddress, password: password});
             });
-           
+
             it("callback でログインエラーを取得できる", function(done){
               ncmb.User.loginWithMailAddress(user, function(err, data){
                 if(!err) done(new Error("失敗すべき"));
@@ -3601,9 +3652,9 @@ describe("NCMB Users", function(){
             beforeEach(function(){
               mailAddress  = "mail@example.com";
               password = null;
-              user = new ncmb.User({mailAddress: mailAddress, password: password}); 
+              user = new ncmb.User({mailAddress: mailAddress, password: password});
             });
-           
+
             it("callback でログインエラーを取得できる", function(done){
               ncmb.User.loginWithMailAddress(user, function(err, data){
                 if(!err) done(new Error("失敗すべき"));
@@ -3625,7 +3676,7 @@ describe("NCMB Users", function(){
           });
         });
       });
-      
+
       context("mailAddress, password でログインした場合", function(){
         context("mailAddress, passwordが存在すればログインに成功して", function(){
           beforeEach(function(){
@@ -4992,7 +5043,7 @@ describe("NCMB Users", function(){
                 .catch(function(err){
                   done(err);
                 });
-  
+
             }catch(err){
               done(err);
             }
@@ -5001,7 +5052,7 @@ describe("NCMB Users", function(){
         .catch(function(err){
           done(err);
         });
-        
+
       });
 
       it("update data store after login again", function(done){
@@ -5041,7 +5092,7 @@ describe("NCMB Users", function(){
                   done();
                 }
               });
-  
+
             }catch(err){
               done(err);
             }
@@ -5050,7 +5101,7 @@ describe("NCMB Users", function(){
         .catch(function(err){
           done(err);
         });
-        
+
       });
 
       it("add data store after login again", function(done){
@@ -5098,7 +5149,7 @@ describe("NCMB Users", function(){
         .catch(function(err){
           done(err);
         });
-        
+
       });
 
       it("delete data store after login again", function(done){
@@ -5125,7 +5176,7 @@ describe("NCMB Users", function(){
               expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
               expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
               expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
-  
+
               food = new Food();
               food.objectId = data_promise_id;
               food.delete()
@@ -5138,7 +5189,7 @@ describe("NCMB Users", function(){
               .catch(function(err){
                 done(err);
               });
-  
+
             }catch(err){
               done(err);
             }
@@ -5147,7 +5198,7 @@ describe("NCMB Users", function(){
         .catch(function(err){
           done(err);
         });
-        
+
       });
 
     });
@@ -5182,7 +5233,7 @@ describe("NCMB Users", function(){
               expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
               expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
               expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
-  
+
               ncmb.User.fetchById("allowUser")
               .then(function(data){
                 expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
@@ -5193,7 +5244,7 @@ describe("NCMB Users", function(){
               .catch(function(err){
                 done(err);
               });
-  
+
             }catch(err){
               done(err);
             }
@@ -5202,7 +5253,7 @@ describe("NCMB Users", function(){
         .catch(function(err){
           done(err);
         });
-        
+
       });
 
       it("update allow user after login again", function(done){
@@ -5229,7 +5280,7 @@ describe("NCMB Users", function(){
               expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
               expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
               expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
-  
+
               name_user = new ncmb.User({ objectId:"objectid", updatefield: "updated"});
               name_user.update()
               .then(function(data){
@@ -5250,7 +5301,7 @@ describe("NCMB Users", function(){
         .catch(function(err){
           done(err);
         });
-        
+
       });
 
       it("add allow user after login again", function(done){
@@ -5277,7 +5328,7 @@ describe("NCMB Users", function(){
               expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
               expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
               expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
-  
+
               name_user.signUpByAccount()
               .then(function(obj){
                 expect(obj.objectId).to.exist;
@@ -5289,7 +5340,7 @@ describe("NCMB Users", function(){
               .catch(function(err){
                 done(err);
               });
-  
+
             }catch(err){
               done(err);
             }
@@ -5298,7 +5349,7 @@ describe("NCMB Users", function(){
         .catch(function(err){
           done(err);
         });
-        
+
       });
 
       it("delete not current user login again", function(done){
@@ -5325,7 +5376,7 @@ describe("NCMB Users", function(){
               expect(ncmb.User.getCurrentUser().objectId).to.be.eql("dummyCurrentUserId");
               expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
               expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
-  
+
               var del_user = null;
               del_user = new ncmb.User({objectId: "object_id"});
               del_user.delete()
@@ -5346,7 +5397,7 @@ describe("NCMB Users", function(){
         .catch(function(err){
           done(err);
         });
-        
+
       });
 
     });
@@ -5408,7 +5459,7 @@ describe("NCMB Users", function(){
             expect(ncmb.User.getCurrentUser().userName).to.be.eql(currentName);
             expect(ncmb.User.getCurrentUser().sessionToken).to.be.eql("dummySessionToken");
             user = ncmb.User.getCurrentUser();
-            
+
             user.set("updatefield", "updated")
               .update()
               .then(function(data){
@@ -5463,7 +5514,6 @@ describe("NCMB Users", function(){
           }
         });
       });
-
     });
   });
 
@@ -5518,5 +5568,3 @@ describe("NCMB Users", function(){
   });
 
 });
-
-

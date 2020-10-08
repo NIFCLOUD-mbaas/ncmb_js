@@ -475,6 +475,15 @@
 
 -
   request:
+    url: /2013-09-01/users/aTAe6VXd3ZElDtlG
+    method: PUT
+    body: {"authData":{ "anonymous":{"id":"3dc72085-911b-4798-9707-d69e879a6185"}},"userName":"ljmuJgf4ri","updatefield":"updated"}
+  response:
+    status: 201
+    file: 2013-09-01_users_update_success.json
+
+-
+  request:
     url: /2013-09-01/users/objectid
     method: PUT
     body: {"authData":{"apple":{"id":"apple_duplicate_error","access_token":"apple_access_token_duplicate","client_id":"com.apple.signin-apple"}}}
@@ -628,6 +637,13 @@
 -
   request:
     url: /2013-09-01/users/object_id
+    method: DELETE
+  response:
+    status: 200
+    body: '{}'
+-
+  request:
+    url: /2013-09-01/users/aTAe6VXd3ZElDtlG
     method: DELETE
   response:
     status: 200

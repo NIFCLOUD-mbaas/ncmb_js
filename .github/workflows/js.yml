@@ -1,8 +1,6 @@
 name: js
 
-on:
-  push:
-    branches: verification_github_ci
+on: [push, pull_request]
 
 jobs:
   build:

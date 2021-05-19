@@ -325,13 +325,19 @@ www/
 
 Run `npm run document:generate` command, then documents has created in `jsdoc` directory.
 
+## Create type.d.ts
+
+Run `npm install --save-dev tsd-jsdoc && npx jsdoc -t node_modules/tsd-jsdoc/dist -r ./lib` command, then type.d.ts has created in current directory.
+
 ## Dependency
   Please refer to Dependencies part in package.json for details.
 
 ## References
-- [NIFCLOUD mobile backend](https://mbaas.nifcloud.com)
-- [Document](https://mbaas.nifcloud.com/doc/current)
-- [User Community](https://github.com/NIFCLOUD-mbaas/UserCommunity)
+
+- [ニフクラ mobile backend](https://mbaas.nifcloud.com/)
+- [SDKの詳細な使い方](https://mbaas.nifcloud.com/doc/current/)
+- [サンプル＆チュートリアル](https://mbaas.nifcloud.com/doc/current/tutorial/tutorial_javascript.html)
+- [ユーザーコミュニティ](https://github.com/NIFCLOUD-mbaas/UserCommunity)
 
 ## License
 

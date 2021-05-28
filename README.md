@@ -325,10 +325,6 @@ www/
 
 Run `npm run document:generate` command, then documents has created in `jsdoc` directory.
 
-## Create type.d.ts
-
-Run `npm install --save-dev tsd-jsdoc && npx jsdoc -t node_modules/tsd-jsdoc/dist -r ./lib` command, then type.d.ts has created in current directory.
-
 ## Dependency
   Please refer to Dependencies part in package.json for details.
 

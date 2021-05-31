@@ -329,9 +329,11 @@ Run `npm run document:generate` command, then documents has created in `jsdoc` d
   Please refer to Dependencies part in package.json for details.
 
 ## References
-- [NIFCLOUD mobile backend](https://mbaas.nifcloud.com)
-- [Document](https://mbaas.nifcloud.com/doc/current)
-- [User Community](https://github.com/NIFCLOUD-mbaas/UserCommunity)
+
+- [ニフクラ mobile backend](https://mbaas.nifcloud.com/)
+- [SDKの詳細な使い方](https://mbaas.nifcloud.com/doc/current/)
+- [サンプル＆チュートリアル](https://mbaas.nifcloud.com/doc/current/tutorial/tutorial_javascript.html)
+- [ユーザーコミュニティ](https://github.com/NIFCLOUD-mbaas/UserCommunity)
 
 ## License
 

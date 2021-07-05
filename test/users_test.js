@@ -5431,6 +5431,7 @@ describe("NCMB Users", function(){
             user.delete()
             .then(function(){
               expect(ncmb.User.getCurrentUser()).to.be.eql(null);
+              expect(ncmb.sessionToken).to.be.eql(null);
               done();
             })
             .catch(function(err){

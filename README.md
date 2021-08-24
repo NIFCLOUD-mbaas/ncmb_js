@@ -30,7 +30,7 @@ Remember to turn on Allow Cookies on your browsers.
 
 Please read [Developer guidelines](https://mbaas.nifcloud.com/doc/current/common/dev_guide.html#SDK%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6).
 
-- v3.0.2 ～ (※as of August, 2021)
+- v3.1.0 ～ (※as of May, 2020)
 
 ## Install
 

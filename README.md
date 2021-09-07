@@ -22,7 +22,7 @@ For  SDK installation steps, see [Quick Start](https://mbaas.nifcloud.com/doc/cu
 | Node.js              | 10.x, 12.x, 14.x |
 | Mozilla Firefox      | Latest version     |
 | Google Chrome        | Latest version     |
- (※as of November, 2020)
+ (※as of August, 2021)
 
 Remember to turn on Allow Cookies on your browsers.
 
@@ -30,7 +30,7 @@ Remember to turn on Allow Cookies on your browsers.
 
 Please read [Developer guidelines](https://mbaas.nifcloud.com/doc/current/common/dev_guide.html#SDK%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6).
 
-- v3.0.1 ～ (※as of November, 2020)
+- v3.1.0 ～ (※as of May, 2020)
 
 ## Install
 
@@ -329,9 +329,11 @@ Run `npm run document:generate` command, then documents has created in `jsdoc` d
   Please refer to Dependencies part in package.json for details.
 
 ## References
-- [NIFCLOUD mobile backend](https://mbaas.nifcloud.com)
-- [Document](https://mbaas.nifcloud.com/doc/current)
-- [User Community](https://github.com/NIFCLOUD-mbaas/UserCommunity)
+
+- [ニフクラ mobile backend](https://mbaas.nifcloud.com/)
+- [SDKの詳細な使い方](https://mbaas.nifcloud.com/doc/current/)
+- [サンプル＆チュートリアル](https://mbaas.nifcloud.com/doc/current/tutorial/tutorial_javascript.html)
+- [ユーザーコミュニティ](https://github.com/NIFCLOUD-mbaas/UserCommunity)
 
 ## License
 

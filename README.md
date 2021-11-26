@@ -22,7 +22,7 @@ For  SDK installation steps, see [Quick Start](https://mbaas.nifcloud.com/doc/cu
 | Node.js              | 10.x, 12.x, 14.x, 16.x|
 | Mozilla Firefox      | Latest version     |
 | Google Chrome        | Latest version     |
- (※as of August, 2021)
+ (※as of November, 2021)
 
 Remember to turn on Allow Cookies on your browsers.
 
@@ -30,7 +30,7 @@ Remember to turn on Allow Cookies on your browsers.
 
 Please read [Developer guidelines](https://mbaas.nifcloud.com/doc/current/common/dev_guide.html#SDK%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6).
 
-- v3.1.0 ～ (※as of September, 2021)
+- v3.1.1 ～ (※as of November, 2021)
 
 ## Install
 

@@ -9,7 +9,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x]
+        node-version: [10.x, 12.x, 14.x, 16.x]
 
     steps:
     - uses: actions/checkout@v2
@@ -22,3 +22,8 @@ jobs:
     - run: npm test
       env:
         CI: true
+    - name: Archive production artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: ncmb_min_js
+        path: ncmb.min.js

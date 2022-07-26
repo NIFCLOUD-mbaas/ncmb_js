@@ -3777,13 +3777,13 @@ describe("NCMB Users", function(){
         });
       });
 
-      it("NEW: callback でレスポンスを取得できる", function(done){
+      it("ncmb.User.requestPasswordReset: callback でレスポンスを取得できる", function(done){
         ncmb.User.requestPasswordReset("test@example.com", function(err, data){
           done(err ? err : null);
         });
       });
 
-      it("NEW: promise でレスポンスを取得できる", function(done){
+      it("ncmb.User.requestPasswordReset: promise でレスポンスを取得できる", function(done){
         ncmb.User.requestPasswordReset("test@example.com")
         .then(function(data){
           done();

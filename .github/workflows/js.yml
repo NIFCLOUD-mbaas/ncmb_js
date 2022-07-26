@@ -12,22 +12,13 @@ jobs:
         node-version: [14.x, 16.x, 18.x]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
-    - name: 'change version'
-      uses: reedyuk/npm-version@1.1.1
-      with:
-        version: '8.11.0'
-        package: 'subproject-directory/'
-        git-tag-version: 'true'
-    - run: npm install
-    - run: npm run build --if-present
+    - run: npm ci
     - run: npm test
-      env:
-        CI: true
     - name: Archive production artifacts
       uses: actions/upload-artifact@v2
       with:

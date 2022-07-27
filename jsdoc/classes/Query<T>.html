@@ -1,0 +1,2652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Query&lt;T&gt;</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+                <h1><img src="../assets/css/logo.png" title="" width="117" height="52"></h1>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/NCMB.html">NCMB</a></li>
+                                <li><a href="../classes/NCMB.Acl.html">NCMB.Acl</a></li>
+                                <li><a href="../classes/NCMB.DataStore.html">NCMB.DataStore</a></li>
+                                <li><a href="../classes/NCMB.File.html">NCMB.File</a></li>
+                                <li><a href="../classes/NCMB.GeoPoint.html">NCMB.GeoPoint</a></li>
+                                <li><a href="../classes/NCMB.Installation.html">NCMB.Installation</a></li>
+                                <li><a href="../classes/NCMB.Push.html">NCMB.Push</a></li>
+                                <li><a href="../classes/NCMB.Relation.html">NCMB.Relation</a></li>
+                                <li><a href="../classes/NCMB.Role.html">NCMB.Role</a></li>
+                                <li><a href="../classes/NCMB.Script.html">NCMB.Script</a></li>
+                                <li><a href="../classes/NCMB.User.html">NCMB.User</a></li>
+                                <li><a href="../classes/Operation.html">Operation</a></li>
+                                <li><a href="../classes/Query&lt;T&gt;.html">Query&lt;T&gt;</a></li>
+                            </ul>
+                
+                
+                            <ul id="api-modules" class="apis modules">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1>Query&lt;T&gt; Class</h1>
+<div class="box meta">
+
+
+        <div class="foundat">
+            Defined in: <a href="../files/lib_query.js.html#l6"><code>lib&#x2F;query.js:6</code></a>
+        </div>
+
+
+</div>
+
+
+<div class="box intro">
+    <p>オブジェクトの検索を行うモジュールです。</p>
+<p>DataStore, User, Role, Fileクラスから呼び出し、それぞれのクラスメソッドとして利用します。
+検索条件を設定するメソッドに続けてfetch/fetchAllをメソッドチェーンで実行して利用します。</p>
+
+</div>
+
+
+<div id="classdocs" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#index">Index</a></li>
+
+            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+    </ul>
+
+    <div>
+        <div id="index" class="api-class-tabpanel index">
+            <h2 class="off-left">Item Index</h2>
+
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods">
+                            <li class="index-item method">
+                                <a href="#method_Query&lt;T&gt;#allInArray">Query&lt;T&gt;#allInArray</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Query&lt;T&gt;#count">Query&lt;T&gt;#count</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Query&lt;T&gt;#equalTo">Query&lt;T&gt;#equalTo</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Query&lt;T&gt;#exists">Query&lt;T&gt;#exists</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Query&lt;T&gt;#fetch">Query&lt;T&gt;#fetch</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Query&lt;T&gt;#fetchAll">Query&lt;T&gt;#fetchAll</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Query&lt;T&gt;#fetchById">Query&lt;T&gt;#fetchById</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Query&lt;T&gt;#greaterThan">Query&lt;T&gt;#greaterThan</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Query&lt;T&gt;#greaterThanOrEqualTo">Query&lt;T&gt;#greaterThanOrEqualTo</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Query&lt;T&gt;#in">Query&lt;T&gt;#in</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Query&lt;T&gt;#inArray">Query&lt;T&gt;#inArray</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Query&lt;T&gt;#include">Query&lt;T&gt;#include</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Query&lt;T&gt;#inQuery">Query&lt;T&gt;#inQuery</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Query&lt;T&gt;#lessThan">Query&lt;T&gt;#lessThan</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Query&lt;T&gt;#lessThanOrEqualTo">Query&lt;T&gt;#lessThanOrEqualTo</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Query&lt;T&gt;#limit">Query&lt;T&gt;#limit</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Query&lt;T&gt;#near">Query&lt;T&gt;#near</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Query&lt;T&gt;#notEqualTo">Query&lt;T&gt;#notEqualTo</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Query&lt;T&gt;#notIn">Query&lt;T&gt;#notIn</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Query&lt;T&gt;#notInArray">Query&lt;T&gt;#notInArray</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Query&lt;T&gt;#or">Query&lt;T&gt;#or</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Query&lt;T&gt;#order">Query&lt;T&gt;#order</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Query&lt;T&gt;#regularExpressionTo">Query&lt;T&gt;#regularExpressionTo</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Query&lt;T&gt;#relatedTo">Query&lt;T&gt;#relatedTo</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Query&lt;T&gt;#select">Query&lt;T&gt;#select</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Query&lt;T&gt;#skip">Query&lt;T&gt;#skip</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Query&lt;T&gt;#where">Query&lt;T&gt;#where</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Query&lt;T&gt;#withinKilometers">Query&lt;T&gt;#withinKilometers</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Query&lt;T&gt;#withinMiles">Query&lt;T&gt;#withinMiles</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Query&lt;T&gt;#withinRadians">Query&lt;T&gt;#withinRadians</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Query&lt;T&gt;#withinSquare">Query&lt;T&gt;#withinSquare</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+
+
+        </div>
+
+            <div id="methods" class="api-class-tabpanel">
+                <h2 class="off-left">Methods</h2>
+
+<div id="method_Query&lt;T&gt;#allInArray" class="method item">
+    <h3 class="name"><code>Query&lt;T&gt;#allInArray</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>key</code>
+                </li>
+                <li class="arg">
+                        <code>values</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">This</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_query.js.html#l194"><code>lib&#x2F;query.js:194</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>指定したkeyの値が、配列values内のすべての値を含むオブジェクトを検索します。</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">key</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>値を比較するキー</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">values</code>
+                        <span class="type">Array</span>
+
+
+                    <div class="param-description">
+                        <p>比較する値</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">This</span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Query&lt;T&gt;#count" class="method item">
+    <h3 class="name"><code>Query&lt;T&gt;#count</code></h3>
+
+        <span class="paren">()</span>
+
+        <span class="returns-inline">
+            <span class="type">This</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_query.js.html#l437"><code>lib&#x2F;query.js:437</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>検索結果の配列と共に、検索結果の総件数を取得するよう設定します。
+検索結果の配列は最大100件までしか取得しませんが、countは検索結果の総件数を表示します。
+検索結果配列にcountプロパティとして付加されます。</p>
+
+    </div>
+
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">This</span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Query&lt;T&gt;#equalTo" class="method item">
+    <h3 class="name"><code>Query&lt;T&gt;#equalTo</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>key</code>
+                </li>
+                <li class="arg">
+                        <code>value</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">This</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_query.js.html#l41"><code>lib&#x2F;query.js:41</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>指定したkeyの値がvalueと等しいオブジェクトを検索します。</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">key</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>値を比較するキー</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">value</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>比較する値</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">This</span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Query&lt;T&gt;#exists" class="method item">
+    <h3 class="name"><code>Query&lt;T&gt;#exists</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>key</code>
+                </li>
+                <li class="arg">
+                        <code>exist</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">This</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_query.js.html#l139"><code>lib&#x2F;query.js:139</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>指定したキーに値が存在するオブジェクトを検索します。
+existがtrue(false)の場合、指定したkeyに値が存在する(しない)オブジェクトを検索します。
+第二引数は省略可。省略時はtrueを指定した場合と同意となります。</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">key</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>値を比較するキー</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">exist</code>
+                        <span class="type">Boolean</span>
+
+
+                    <div class="param-description">
+                        <p>true(false)を設定した場合、値が存在する（しない）オブジェクトを検索する。省略可能。</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">This</span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Query&lt;T&gt;#fetch" class="method item">
+    <h3 class="name"><code>Query&lt;T&gt;#fetch</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code class="optional">[callback]</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Promise<T></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_query.js.html#l542"><code>lib&#x2F;query.js:542</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>検索条件に合致するオブジェクトのうち、先頭の一つだけを取得します。</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name optional">[callback]</code>
+                        <span class="type">Function</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+
+
+                    <div class="param-description">
+                        <p>コールバック関数</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Promise<T></span>:
+                    <p>検索結果に合致したオブジェクト</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Query&lt;T&gt;#fetchAll" class="method item">
+    <h3 class="name"><code>Query&lt;T&gt;#fetchAll</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code class="optional">[callback]</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Promise<Array<T>></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_query.js.html#l564"><code>lib&#x2F;query.js:564</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>検索条件に合致するオブジェクトをすべて取得します。</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name optional">[callback]</code>
+                        <span class="type">Function</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+
+
+                    <div class="param-description">
+                        <p>コールバック関数</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Promise<Array<T>></span>:
+                    <p>検索結果に合致したオブジェクトの配列</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Query&lt;T&gt;#fetchById" class="method item">
+    <h3 class="name"><code>Query&lt;T&gt;#fetchById</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>id</code>
+                </li>
+                <li class="arg">
+                        <code class="optional">[callback]</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Promise<T></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_query.js.html#l507"><code>lib&#x2F;query.js:507</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>objectIdから一意のオブジェクトを取得します。</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">id</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>取得したいオブジェクトのobjectId</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name optional">[callback]</code>
+                        <span class="type">Function</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+
+
+                    <div class="param-description">
+                        <p>コールバック関数</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Promise<T></span>:
+                    <p>オブジェクト</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Query&lt;T&gt;#greaterThan" class="method item">
+    <h3 class="name"><code>Query&lt;T&gt;#greaterThan</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>key</code>
+                </li>
+                <li class="arg">
+                        <code>value</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">This</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_query.js.html#l89"><code>lib&#x2F;query.js:89</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>指定したkeyの値がvalueより大きいオブジェクトを検索します。</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">key</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>値を比較するキー</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">value</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>比較する値</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">This</span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Query&lt;T&gt;#greaterThanOrEqualTo" class="method item">
+    <h3 class="name"><code>Query&lt;T&gt;#greaterThanOrEqualTo</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>key</code>
+                </li>
+                <li class="arg">
+                        <code>value</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">This</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_query.js.html#l101"><code>lib&#x2F;query.js:101</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>指定したkeyの値がvalue以上のオブジェクトを検索します。</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">key</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>値を比較するキー</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">value</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>比較する値</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">This</span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Query&lt;T&gt;#in" class="method item">
+    <h3 class="name"><code>Query&lt;T&gt;#in</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>key</code>
+                </li>
+                <li class="arg">
+                        <code>values</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">This</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_query.js.html#l113"><code>lib&#x2F;query.js:113</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>指定したkeyの値が、配列values内のいずれかと等しいオブジェクトを検索します</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">key</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>値を比較するキー</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">values</code>
+                        <span class="type">Array</span>
+
+
+                    <div class="param-description">
+                        <p>比較する値</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">This</span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Query&lt;T&gt;#inArray" class="method item">
+    <h3 class="name"><code>Query&lt;T&gt;#inArray</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>key</code>
+                </li>
+                <li class="arg">
+                        <code>values</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">This</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_query.js.html#l168"><code>lib&#x2F;query.js:168</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>指定したkeyの値が、配列values内のいずれかと等しいオブジェクトを検索します</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">key</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>値を比較するキー</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">values</code>
+                        <span class="type">Array</span>
+
+
+                    <div class="param-description">
+                        <p>比較する値</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">This</span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Query&lt;T&gt;#include" class="method item">
+    <h3 class="name"><code>Query&lt;T&gt;#include</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>key</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">This</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_query.js.html#l423"><code>lib&#x2F;query.js:423</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>指定したkeyに設定されているポインタの実態（オブジェクト）を検索し、返却値として返します。
+複数回実行した場合、最後に設定したキーが反映されます。複数のキーを指定することはできません。</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">key</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>ポインタの中身を取得するキー</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">This</span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Query&lt;T&gt;#inQuery" class="method item">
+    <h3 class="name"><code>Query&lt;T&gt;#inQuery</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>key</code>
+                </li>
+                <li class="arg">
+                        <code>subquery</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">This</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_query.js.html#l385"><code>lib&#x2F;query.js:385</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>subqueriesの検索結果のうち、指定したkeyに設定されているポインタの実態（オブジェクト）を検索します。
+objectはmobile backend に保存済みである必要がある。</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">key</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>ポインタを保存したキー</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">subquery</code>
+                        <span class="type"><a href="../classes/Query<T>.html" class="crosslink">Query<T></a></span>
+
+
+                    <div class="param-description">
+                        <p>検索条件</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">This</span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Query&lt;T&gt;#lessThan" class="method item">
+    <h3 class="name"><code>Query&lt;T&gt;#lessThan</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>key</code>
+                </li>
+                <li class="arg">
+                        <code>value</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">This</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_query.js.html#l65"><code>lib&#x2F;query.js:65</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>指定したkeyの値がvalueより小さいオブジェクトを検索します。</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">key</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>値を比較するキー</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">value</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>比較する値</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">This</span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Query&lt;T&gt;#lessThanOrEqualTo" class="method item">
+    <h3 class="name"><code>Query&lt;T&gt;#lessThanOrEqualTo</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>key</code>
+                </li>
+                <li class="arg">
+                        <code>value</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">This</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_query.js.html#l77"><code>lib&#x2F;query.js:77</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>指定したkeyの値がvalue以下のオブジェクトを検索します。</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">key</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>値を比較するキー</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">value</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>比較する値</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">This</span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Query&lt;T&gt;#limit" class="method item">
+    <h3 class="name"><code>Query&lt;T&gt;#limit</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>limit</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">This</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_query.js.html#l475"><code>lib&#x2F;query.js:475</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>検索結果の最大取得数を設定します。設定値は1から1000まで、デフォルト値は100です。</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">limit</code>
+                        <span class="type">Number</span>
+
+
+                    <div class="param-description">
+                        <p>最大取得件数</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">This</span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Query&lt;T&gt;#near" class="method item">
+    <h3 class="name"><code>Query&lt;T&gt;#near</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>key</code>
+                </li>
+                <li class="arg">
+                        <code>location</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">This</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_query.js.html#l207"><code>lib&#x2F;query.js:207</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>指定したキーの位置情報が指定した位置に近い順でオブジェクトを検索します。</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">key</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>値を比較するキー</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">location</code>
+                        <span class="type"><a href="../classes/NCMB.GeoPoint.html" class="crosslink">NCMB.GeoPoint</a></span>
+
+
+                    <div class="param-description">
+                        <p>原点とする位置情報</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">This</span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Query&lt;T&gt;#notEqualTo" class="method item">
+    <h3 class="name"><code>Query&lt;T&gt;#notEqualTo</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>key</code>
+                </li>
+                <li class="arg">
+                        <code>value</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">This</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_query.js.html#l53"><code>lib&#x2F;query.js:53</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>指定したkeyの値がvalueと等しくないオブジェクトを検索します。</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">key</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>値を比較するキー</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">value</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>比較する値</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">This</span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Query&lt;T&gt;#notIn" class="method item">
+    <h3 class="name"><code>Query&lt;T&gt;#notIn</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>key</code>
+                </li>
+                <li class="arg">
+                        <code>values</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">This</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_query.js.html#l126"><code>lib&#x2F;query.js:126</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>指定したkeyの値が、配列values内のいずれとも等しくないオブジェクトを検索します。</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">key</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>値を比較するキー</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">values</code>
+                        <span class="type">Array</span>
+
+
+                    <div class="param-description">
+                        <p>比較する値</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">This</span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Query&lt;T&gt;#notInArray" class="method item">
+    <h3 class="name"><code>Query&lt;T&gt;#notInArray</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>key</code>
+                </li>
+                <li class="arg">
+                        <code>values</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">This</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_query.js.html#l181"><code>lib&#x2F;query.js:181</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>指定したkeyの値が、配列values内のいずれとも等しくないオブジェクトを検索します。</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">key</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>値を比較するキー</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">values</code>
+                        <span class="type">Array</span>
+
+
+                    <div class="param-description">
+                        <p>比較する値</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">This</span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Query&lt;T&gt;#or" class="method item">
+    <h3 class="name"><code>Query&lt;T&gt;#or</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>subqueries</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">This</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_query.js.html#l294"><code>lib&#x2F;query.js:294</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>複数の検索条件subqueriesを設定し、その検索結果のいずれかに合致するオブジェクトを検索します
+配列で複数の条件を一度に設定でき、複数回実行することで検索条件を追加できます。</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">subqueries</code>
+                        <span class="type">Array<Query<T>> | <a href="../classes/Query<T>.html" class="crosslink">Query<T></a></span>
+
+
+                    <div class="param-description">
+                        <p>検索条件</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">This</span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Query&lt;T&gt;#order" class="method item">
+    <h3 class="name"><code>Query&lt;T&gt;#order</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>key</code>
+                </li>
+                <li class="arg">
+                        <code>descending</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">This</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_query.js.html#l450"><code>lib&#x2F;query.js:450</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>指定したkeyをソートして検索結果を取得するよう設定します。
+（複数設定可能。先に指定したkeyが優先ソートされる。）
+フラグによって降順ソートも可能です。降順フラグはキーごとに設定できます。</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">key</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>ソートするキー</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">descending</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>trueを指定した場合、降順でソートされる。省略可能。</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">This</span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Query&lt;T&gt;#regularExpressionTo" class="method item">
+    <h3 class="name"><code>Query&lt;T&gt;#regularExpressionTo</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>key</code>
+                </li>
+                <li class="arg">
+                        <code>regex</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">This</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_query.js.html#l155"><code>lib&#x2F;query.js:155</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>指定したkeyの値が正規表現regexに合致するオブジェクトを検索します。</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">key</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>値を比較するキー</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">regex</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>検索する正規表現</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">This</span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Query&lt;T&gt;#relatedTo" class="method item">
+    <h3 class="name"><code>Query&lt;T&gt;#relatedTo</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>object</code>
+                </li>
+                <li class="arg">
+                        <code>key</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">This</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_query.js.html#l355"><code>lib&#x2F;query.js:355</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>objectのkeyのプロパティに関連づけられているリレーションの実態（オブジェクト）を検索します。
+objectはmobile backend に保存済みである必要があります。</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">object</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">key</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>オブジェクトが関連づけられているキー</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">This</span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Query&lt;T&gt;#select" class="method item">
+    <h3 class="name"><code>Query&lt;T&gt;#select</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>key</code>
+                </li>
+                <li class="arg">
+                        <code>subkey</code>
+                </li>
+                <li class="arg">
+                        <code>subquery</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">This</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_query.js.html#l315"><code>lib&#x2F;query.js:315</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>subqueriesの検索結果のうち、指定したsubkeyとkeyの値が一致するオブジェクトを検索します。</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">key</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>メインクエリのクラスで値を比較するキー</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">subkey</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>サブクエリの検索結果で値を比較するキー</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">subquery</code>
+                        <span class="type">Query</span>
+
+
+                    <div class="param-description">
+                        <p>検索条件</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">This</span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Query&lt;T&gt;#skip" class="method item">
+    <h3 class="name"><code>Query&lt;T&gt;#skip</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>skip</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">This</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_query.js.html#l493"><code>lib&#x2F;query.js:493</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>指定したskipの件数だけ頭から除いた検索結果を取得するよう設定します。</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">skip</code>
+                        <span class="type">Number</span>
+
+
+                    <div class="param-description">
+                        <p>検索結果から除く件数</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">This</span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Query&lt;T&gt;#where" class="method item">
+    <h3 class="name"><code>Query&lt;T&gt;#where</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>where</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">This</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_query.js.html#l23"><code>lib&#x2F;query.js:23</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>クエリを直接記述して設定します。</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">where</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>JSON形式のクエリオブジェクト</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">This</span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Query&lt;T&gt;#withinKilometers" class="method item">
+    <h3 class="name"><code>Query&lt;T&gt;#withinKilometers</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>key</code>
+                </li>
+                <li class="arg">
+                        <code>location</code>
+                </li>
+                <li class="arg">
+                        <code>maxDistance</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">This</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_query.js.html#l222"><code>lib&#x2F;query.js:222</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>検索範囲内(Km)で、指定したキーの位置情報が指定した位置に近い順でオブジェクトを検索します。</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">key</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>値を比較するキー</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">location</code>
+                        <span class="type"><a href="../classes/NCMB.GeoPoint.html" class="crosslink">NCMB.GeoPoint</a></span>
+
+
+                    <div class="param-description">
+                        <p>原点とする位置情報</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">maxDistance</code>
+                        <span class="type">Number</span>
+
+
+                    <div class="param-description">
+                        <p>原点からの検索範囲(Km)</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">This</span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Query&lt;T&gt;#withinMiles" class="method item">
+    <h3 class="name"><code>Query&lt;T&gt;#withinMiles</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>key</code>
+                </li>
+                <li class="arg">
+                        <code>location</code>
+                </li>
+                <li class="arg">
+                        <code>maxDistance</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">This</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_query.js.html#l240"><code>lib&#x2F;query.js:240</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>検索範囲内(ml)で、指定したキーの位置情報が指定した位置に近い順でオブジェクトを検索します。</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">key</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>値を比較するキー</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">location</code>
+                        <span class="type"><a href="../classes/NCMB.GeoPoint.html" class="crosslink">NCMB.GeoPoint</a></span>
+
+
+                    <div class="param-description">
+                        <p>原点とする位置情報</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">maxDistance</code>
+                        <span class="type">Number</span>
+
+
+                    <div class="param-description">
+                        <p>原点からの検索範囲(ml)</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">This</span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Query&lt;T&gt;#withinRadians" class="method item">
+    <h3 class="name"><code>Query&lt;T&gt;#withinRadians</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>key</code>
+                </li>
+                <li class="arg">
+                        <code>location</code>
+                </li>
+                <li class="arg">
+                        <code>maxDistance</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">This</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_query.js.html#l258"><code>lib&#x2F;query.js:258</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>検索範囲内(rad)で、指定したキーの位置情報が指定した位置に近い順でオブジェクトを検索します。</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">key</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>値を比較するキー</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">location</code>
+                        <span class="type"><a href="../classes/NCMB.GeoPoint.html" class="crosslink">NCMB.GeoPoint</a></span>
+
+
+                    <div class="param-description">
+                        <p>原点とする位置情報</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">maxDistance</code>
+                        <span class="type">Number</span>
+
+
+                    <div class="param-description">
+                        <p>原点からの検索範囲(rad)</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">This</span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Query&lt;T&gt;#withinSquare" class="method item">
+    <h3 class="name"><code>Query&lt;T&gt;#withinSquare</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>key</code>
+                </li>
+                <li class="arg">
+                        <code>southWestVertex</code>
+                </li>
+                <li class="arg">
+                        <code>northEastVertex</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">This</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_query.js.html#l276"><code>lib&#x2F;query.js:276</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>指定したキーの位置情報で、左下（southWestVertex）と右上（northEastVertex）の2地点からなる矩形（長方形）で設定された検索範囲の内部にあるオブジェクトを検索します。</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">key</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>値を比較するキー</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">southWestVertex</code>
+                        <span class="type"><a href="../classes/NCMB.GeoPoint.html" class="crosslink">NCMB.GeoPoint</a></span>
+
+
+                    <div class="param-description">
+                        <p>検索矩形の左下の頂点</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">northEastVertex</code>
+                        <span class="type"><a href="../classes/NCMB.GeoPoint.html" class="crosslink">NCMB.GeoPoint</a></span>
+
+
+                    <div class="param-description">
+                        <p>検索矩形の右下の頂点</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">This</span>:
+            </div>
+        </div>
+
+
+</div>
+            </div>
+
+
+
+    </div>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

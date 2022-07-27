@@ -1,19 +1,113 @@
-"use strict";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>lib/user.js</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
 
-var Query        = require("./query");
-var Operation    = require("./operation");
-var Errors       = require("./errors");
-var objectAssign = require("object-assign");
-var ProviderUtil = require("./provider-util");
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+                <h1><img src="../assets/css/logo.png" title="" width="117" height="52"></h1>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/NCMB.html">NCMB</a></li>
+                                <li><a href="../classes/NCMB.Acl.html">NCMB.Acl</a></li>
+                                <li><a href="../classes/NCMB.DataStore.html">NCMB.DataStore</a></li>
+                                <li><a href="../classes/NCMB.File.html">NCMB.File</a></li>
+                                <li><a href="../classes/NCMB.GeoPoint.html">NCMB.GeoPoint</a></li>
+                                <li><a href="../classes/NCMB.Installation.html">NCMB.Installation</a></li>
+                                <li><a href="../classes/NCMB.Push.html">NCMB.Push</a></li>
+                                <li><a href="../classes/NCMB.Relation.html">NCMB.Relation</a></li>
+                                <li><a href="../classes/NCMB.Role.html">NCMB.Role</a></li>
+                                <li><a href="../classes/NCMB.Script.html">NCMB.Script</a></li>
+                                <li><a href="../classes/NCMB.User.html">NCMB.User</a></li>
+                                <li><a href="../classes/Operation.html">Operation</a></li>
+                                <li><a href="../classes/Query&lt;T&gt;.html">Query&lt;T&gt;</a></li>
+                            </ul>
+                
+                
+                            <ul id="api-modules" class="apis modules">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1 class="file-heading">File: lib/user.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&quot;use strict&quot;;
+
+var Query        = require(&quot;./query&quot;);
+var Operation    = require(&quot;./operation&quot;);
+var Errors       = require(&quot;./errors&quot;);
+var objectAssign = require(&quot;object-assign&quot;);
+var ProviderUtil = require(&quot;./provider-util&quot;);
 var localStorage = null;
-if(typeof window !== "undefined"){
+if(typeof window !== &quot;undefined&quot;){
   if(window.localStorage){
     localStorage = window.localStorage;
   }else{
-    localStorage = require("localforage");
+    localStorage = require(&quot;localforage&quot;);
   }
 }else{
-  localStorage = new require("node-localstorage").LocalStorage("./scratch");
+  localStorage = new require(&quot;node-localstorage&quot;).LocalStorage(&quot;./scratch&quot;);
 }
 
 /**
@@ -30,17 +124,17 @@ if(typeof window !== "undefined"){
 * 以下のリンク記載とメソッドの種類をご確認してから、メソッドの詳細をご確認ください。
 *   - NCMB.クラス名#メソッド名: インスタンス用メソッド Instance method
 *      - 例：NCMB.User#login の利用例
-*        ```
+*        &#x60;&#x60;&#x60;
 *         var user = new ncmb.User();
-*         user.set("userName", "Yamada Tarou")
-*             .set("password", "password");
+*         user.set(&quot;userName&quot;, &quot;Yamada Tarou&quot;)
+*             .set(&quot;password&quot;, &quot;password&quot;);
 *        user.login();
-*        ```
+*        &#x60;&#x60;&#x60;
 *   - NCMB.クラス名Constructor#メソッド名: クラスのStatic methodスタティックメソッド
 *      - 例：NCMB.UserConstructor#login　の利用例
-*        ```
-*        ncmb.User.login("Yamada Tarou", "password");
-*        ```
+*        &#x60;&#x60;&#x60;
+*        ncmb.User.login(&quot;Yamada Tarou&quot;, &quot;password&quot;);
+*        &#x60;&#x60;&#x60;
 *
 * @class NCMB.User
 * @extends {Operation}
@@ -48,20 +142,20 @@ if(typeof window !== "undefined"){
 */
 var User = module.exports = function(ncmb){
   var reserved = [
-    "className", "save",
-    "update", "delete", "logout", "requestPasswordReset",
-    "signUpByAccount", "signUpWith", "requestSignUpEmail",
-    "login", "loginAsAnonymous", "loginWithMailAddress", "loginWith",
-    "getCurrentUser", "isCurrentUser", "_mailAddressChanged",
-    "setIncrement", "add", "addUnique", "remove", "isMailAddressConfirmed",
-    "linkWith", "unLinkWith"];
+    &quot;className&quot;, &quot;save&quot;,
+    &quot;update&quot;, &quot;delete&quot;, &quot;logout&quot;, &quot;requestPasswordReset&quot;,
+    &quot;signUpByAccount&quot;, &quot;signUpWith&quot;, &quot;requestSignUpEmail&quot;,
+    &quot;login&quot;, &quot;loginAsAnonymous&quot;, &quot;loginWithMailAddress&quot;, &quot;loginWith&quot;,
+    &quot;getCurrentUser&quot;, &quot;isCurrentUser&quot;, &quot;_mailAddressChanged&quot;,
+    &quot;setIncrement&quot;, &quot;add&quot;, &quot;addUnique&quot;, &quot;remove&quot;, &quot;isMailAddressConfirmed&quot;,
+    &quot;linkWith&quot;, &quot;unLinkWith&quot;];
 
   var isReserved = function(key){
-    return reserved.indexOf(key) > -1;
+    return reserved.indexOf(key) &gt; -1;
   };
 
   var unreplaceable =[
-    "objectId", "password", "createDate", "updateDate", "mailAddressConfirm", "_id", "sessionToken", "_mailAddressChanged"
+    &quot;objectId&quot;, &quot;password&quot;, &quot;createDate&quot;, &quot;updateDate&quot;, &quot;mailAddressConfirm&quot;, &quot;_id&quot;, &quot;sessionToken&quot;, &quot;_mailAddressChanged&quot;
   ];
 
   var isReplaceable = function(key){
@@ -69,7 +163,7 @@ var User = module.exports = function(ncmb){
     return false;
   };
 
-  var CURRENT_USER_PATH  = "currentUser";
+  var CURRENT_USER_PATH  = &quot;currentUser&quot;;
 
   function User(attrs){
     for(var attr in attrs){
@@ -80,10 +174,10 @@ var User = module.exports = function(ncmb){
       }
     }
   }
-  var className = User.prototype.className = "/users";
+  var className = User.prototype.className = &quot;/users&quot;;
 
   Object.keys(Query.prototype).forEach(function(attr){
-    if(typeof Query.prototype[attr] === "function"){
+    if(typeof Query.prototype[attr] === &quot;function&quot;){
       User[attr] = function(){
         var query = new Query(ncmb, className);
         return query[attr].apply(query, [].slice.apply(arguments));
@@ -91,7 +185,7 @@ var User = module.exports = function(ncmb){
     }
   });
   Object.keys(Operation.prototype).forEach(function(attr){
-    if(attr !== "set" && typeof Operation.prototype[attr] === "function"){
+    if(attr !== &quot;set&quot; &amp;&amp; typeof Operation.prototype[attr] === &quot;function&quot;){
       User.prototype[attr] = function(){
         var operation = new Operation(reserved);
         return operation[attr].apply(this, [].slice.apply(arguments));
@@ -100,9 +194,9 @@ var User = module.exports = function(ncmb){
   });
 
   User.prototype.set = function(key, value){
-    if(typeof key !== "string") throw new Errors.InvalidArgumentError("Key must be string.");
-    if(isReserved(key))         throw new Errors.UnReplaceableKeyError(key + " cannot be set, it is reserved.");
-    if(key == "mailAddress") this._mailAddressChanged = true;
+    if(typeof key !== &quot;string&quot;) throw new Errors.InvalidArgumentError(&quot;Key must be string.&quot;);
+    if(isReserved(key))         throw new Errors.UnReplaceableKeyError(key + &quot; cannot be set, it is reserved.&quot;);
+    if(key == &quot;mailAddress&quot;) this._mailAddressChanged = true;
     this[key] = value;
     return this;
   };
@@ -149,19 +243,19 @@ var User = module.exports = function(ncmb){
   *
   * @method NCMB.User#signUpByAccount
   * @param {function} [callback] コールバック関数
-  * @return {Promise<this>}
+  * @return {Promise&lt;this&gt;}
   */
   User.prototype.signUpByAccount = User.prototype.save = function(callback){
     if (!this.userName){
-      return ( callback || Promise.reject.bind(Promise))(new Errors.NoUserNameError("To login By Account, userName is necessary."));
+      return ( callback || Promise.reject.bind(Promise))(new Errors.NoUserNameError(&quot;To login By Account, userName is necessary.&quot;));
     }
     if (!this.password){
-      return ( callback || Promise.reject.bind(Promise))(new Errors.NoPasswordError("To login By Account, password is necessary."));
+      return ( callback || Promise.reject.bind(Promise))(new Errors.NoPasswordError(&quot;To login By Account, password is necessary.&quot;));
     }
 
     return ncmb.request({
-      path: "/" + ncmb.version + this.className,
-      method: "POST",
+      path: &quot;/&quot; + ncmb.version + this.className,
+      method: &quot;POST&quot;,
       data: this
     }).then(function(data){
       var obj = null;
@@ -172,7 +266,7 @@ var User = module.exports = function(ncmb){
       }
       objectAssign(this, obj);
       Object.keys(this).forEach(function (key) {
-        if(this[key] && this[key].__op) delete this[key];
+        if(this[key] &amp;&amp; this[key].__op) delete this[key];
       }.bind(this));
 
       if(callback) return callback(null, this);
@@ -193,23 +287,23 @@ var User = module.exports = function(ncmb){
   * @param {string} provider 連携するサービスプロバイダ名 Facebook/Twitter/Google/Apple
   * @param {Object} data 認証に必要な情報を保持したJSON形式のオブジェクト
   * @param {function} [callback] コールバック関数
-  * @return {Promise<this>}
+  * @return {Promise&lt;this&gt;}
   */
   User.prototype.signUpWith = function(provider, data, callback){
     if(this.userName){
-      return ( callback || Promise.reject.bind(Promise))(new Errors.ContentsConflictError("To sign up with SNS account, user cannot have arbitrary userName."));
+      return ( callback || Promise.reject.bind(Promise))(new Errors.ContentsConflictError(&quot;To sign up with SNS account, user cannot have arbitrary userName.&quot;));
     }
-    if(typeof provider === "function"){
+    if(typeof provider === &quot;function&quot;){
       callback = provider;
       provider = null;
       data = null;
     }
-    if(typeof data === "function"){
+    if(typeof data === &quot;function&quot;){
       callback = data;
       data = null;
     }
-    if (!data && (!this.authData || Object.keys(this.authData).length !== 1)){
-      return ( callback || Promise.reject.bind(Promise))(new Errors.InvalidAuthInfoError("If provider and its data are not set, user must have an authData."));
+    if (!data &amp;&amp; (!this.authData || Object.keys(this.authData).length !== 1)){
+      return ( callback || Promise.reject.bind(Promise))(new Errors.InvalidAuthInfoError(&quot;If provider and its data are not set, user must have an authData.&quot;));
     }
     try {
       if(provider){ data = (function(){var _data = {}; _data[provider] = data; return _data;}());}
@@ -220,8 +314,8 @@ var User = module.exports = function(ncmb){
     this.authData = this.authData || {};
     this.authData[provider.getName()] = this.authData[provider.getName()] || provider.getAuthData();
     return ncmb.request({
-      path: "/" + ncmb.version + this.className,
-      method: "POST",
+      path: &quot;/&quot; + ncmb.version + this.className,
+      method: &quot;POST&quot;,
       data: this
     }).then(function(data){
       var obj = null;
@@ -232,7 +326,7 @@ var User = module.exports = function(ncmb){
       }
       objectAssign(this, obj);
       Object.keys(this).forEach(function (key) {
-        if(this[key] && this[key].__op) delete this[key];
+        if(this[key] &amp;&amp; this[key].__op) delete this[key];
       }.bind(this));
 
       if(callback) return callback(null, this);
@@ -248,16 +342,16 @@ var User = module.exports = function(ncmb){
   *
   * @method NCMB.User#requestPasswordReset
   * @param {function} [callback] コールバック関数
-  * @return {Promise<any>} APIレスポンス
+  * @return {Promise&lt;any&gt;} APIレスポンス
   */
   User.prototype.requestPasswordReset = function(callback){
     if (! this.mailAddress) {
-      return ( callback || Promise.reject.bind(Promise))(new Errors.NoMailAddressError("MailAddress must be set."));
+      return ( callback || Promise.reject.bind(Promise))(new Errors.NoMailAddressError(&quot;MailAddress must be set.&quot;));
     }
     return ncmb.request({
-      path: "/" + ncmb.version + "/requestPasswordReset",
-      method: "POST",
-      data: {'mailAddress': this.mailAddress }
+      path: &quot;/&quot; + ncmb.version + &quot;/requestPasswordReset&quot;,
+      method: &quot;POST&quot;,
+      data: {&#x27;mailAddress&#x27;: this.mailAddress }
     }).then(function(data){
       var obj = null;
       try{
@@ -280,16 +374,16 @@ var User = module.exports = function(ncmb){
   * @method NCMB.UserConstructor#requestSignUpEmail
   * @param {string} mailAddress 登録するメールアドレス
   * @param {function} [callback] コールバック関数
-  * @return {Promise<any>} APIレスポンス
+  * @return {Promise&lt;any&gt;} APIレスポンス
   */
   User.requestSignUpEmail = function(mailAddress,callback){
     if (! mailAddress) {
-       return ( callback || Promise.reject.bind(Promise))(new Errors.NoMailAddressError("MailAddress must be set."));
+       return ( callback || Promise.reject.bind(Promise))(new Errors.NoMailAddressError(&quot;MailAddress must be set.&quot;));
     }
     return ncmb.request({
-      path: "/" + ncmb.version + "/requestMailAddressUserEntry",
-      method: "POST",
-      data: {'mailAddress': mailAddress }
+      path: &quot;/&quot; + ncmb.version + &quot;/requestMailAddressUserEntry&quot;,
+      method: &quot;POST&quot;,
+      data: {&#x27;mailAddress&#x27;: mailAddress }
     }).then(function(data){
       if(callback) return callback(null, data);
       return data;
@@ -304,22 +398,22 @@ var User = module.exports = function(ncmb){
   *
   * @method NCMB.User#update
   * @param {function} [callback] コールバック関数
-  * @return {Promise<this>}
+  * @return {Promise&lt;this&gt;}
   */
   User.prototype.update = function(callback){
     if (!this.objectId) {
-      return ( callback || Promise.reject.bind(Promise))(new Errors.NoObjectIdError("Updated object must be saved before."));
+      return ( callback || Promise.reject.bind(Promise))(new Errors.NoObjectIdError(&quot;Updated object must be saved before.&quot;));
     }
 
     var replaceProperties = {};
     Object.keys(this).forEach(function(key){
       if(!isReplaceable(key)) return;
-      if(key == "mailAddress" && !this._mailAddressChanged) return;
+      if(key == &quot;mailAddress&quot; &amp;&amp; !this._mailAddressChanged) return;
       replaceProperties[key] = this[key];
     }.bind(this));
     return ncmb.request({
-      path: "/" + ncmb.version + this.className + "/" + this.objectId,
-      method: "PUT",
+      path: &quot;/&quot; + ncmb.version + this.className + &quot;/&quot; + this.objectId,
+      method: &quot;PUT&quot;,
       data: replaceProperties
     }).then(function(data){
       var obj = null;
@@ -330,10 +424,10 @@ var User = module.exports = function(ncmb){
       }
       this.updateDate = obj.updateDate;
       Object.keys(this).forEach(function (key) {
-        if(this[key] && this[key].__op) delete this[key];
+        if(this[key] &amp;&amp; this[key].__op) delete this[key];
       }.bind(this));
       if(this._mailAddressChanged) delete this._mailAddressChanged;
-      if(User.getCurrentUser() && User.getCurrentUser().objectId) {
+      if(User.getCurrentUser() &amp;&amp; User.getCurrentUser().objectId) {
         if(this.objectId == User.getCurrentUser().objectId) {
           setItem(CURRENT_USER_PATH, JSON.stringify(this));
         }
@@ -351,18 +445,18 @@ var User = module.exports = function(ncmb){
   *
   * @method NCMB.User#delete
   * @param {function} [callback] コールバック関数
-  * @return {Promise<true>}
+  * @return {Promise&lt;true&gt;}
   */
   User.prototype.delete = function(callback){
     if (!this.objectId) {
-      return ( callback || Promise.reject.bind(Promise))(new Errors.NoObjectIdError("Deleted object must be saved before."));
+      return ( callback || Promise.reject.bind(Promise))(new Errors.NoObjectIdError(&quot;Deleted object must be saved before.&quot;));
     }
     var deleteId = this.objectId;
     return ncmb.request({
-      path: "/" + ncmb.version + this.className + "/" + this.objectId,
-      method: "DEL"
+      path: &quot;/&quot; + ncmb.version + this.className + &quot;/&quot; + this.objectId,
+      method: &quot;DEL&quot;
     }).then(function(){
-      if(User.getCurrentUser() && User.getCurrentUser().objectId) {
+      if(User.getCurrentUser() &amp;&amp; User.getCurrentUser().objectId) {
         if(deleteId == User.getCurrentUser().objectId) {
           removeItem(CURRENT_USER_PATH);
           ncmb.sessionToken = null;
@@ -388,7 +482,7 @@ var User = module.exports = function(ncmb){
   * @param {string | NCMB.User} userName ユーザ名
   * @param {string | function} [password] パスワード
   * @param {function} [callback] コールバック関数
-  * @return {Promise<User>} ログインしたUserインスタンス
+  * @return {Promise&lt;User&gt;} ログインしたUserインスタンス
   */
   User.login = function(userName, password, callback){
     var user = null;
@@ -398,12 +492,12 @@ var User = module.exports = function(ncmb){
       userName = user.userName;
       password = user.password;
     }
-    if(typeof password === "function"){
+    if(typeof password === &quot;function&quot;){
       callback = password;
       password = null;
     }
     if(!userName || !password ){
-      return (callback || Promise.reject.bind(Promise))(new Errors.NoAuthInfoError("To login by account, userName and password are necessary."));
+      return (callback || Promise.reject.bind(Promise))(new Errors.NoAuthInfoError(&quot;To login by account, userName and password are necessary.&quot;));
     }
     if(!user){
       user = new User({userName: userName, password: password});
@@ -431,7 +525,7 @@ var User = module.exports = function(ncmb){
   *
   * @method NCMB.User#login
   * @param {function} [callback] コールバック関数
-  * @return {Promise<this>}
+  * @return {Promise&lt;this&gt;}
   */
   User.prototype.login = function(callback){
     if(this.sessionToken){
@@ -439,12 +533,12 @@ var User = module.exports = function(ncmb){
       return Promise.resolve(this);
     }
     if(!this.userName || !this.password ){
-      return (callback || Promise.reject.bind(Promise))(new Errors.NoAuthInfoError("To login by account, userName and password are necessary."));
+      return (callback || Promise.reject.bind(Promise))(new Errors.NoAuthInfoError(&quot;To login by account, userName and password are necessary.&quot;));
     }
 
     return ncmb.request({
-      path: "/" + ncmb.version + "/login",
-      method: "GET",
+      path: &quot;/&quot; + ncmb.version + &quot;/login&quot;,
+      method: &quot;GET&quot;,
       query: {
         userName: this.userName,
         password: this.password
@@ -458,7 +552,7 @@ var User = module.exports = function(ncmb){
       }
       Object.keys(obj).forEach(function (key) {
         this[key] = obj[key];
-        if(this[key] && this[key].__op) delete this[key];
+        if(this[key] &amp;&amp; this[key].__op) delete this[key];
       }.bind(this));
 
       if(callback) return callback(null, this);
@@ -480,7 +574,7 @@ var User = module.exports = function(ncmb){
   * @param {string|NCMB.User} mailAddress メールアドレス
   * @param {string|function} [password] パスワード
   * @param {function} [callback] コールバック関数
-  * @return {Promise<User>} ログインしたUserインスタンス
+  * @return {Promise&lt;User&gt;} ログインしたUserインスタンス
   */
   User.loginWithMailAddress = function(mailAddress, password, callback){
     var user = null;
@@ -492,7 +586,7 @@ var User = module.exports = function(ncmb){
     }
 
     if(!mailAddress || !password ){
-      return (callback || Promise.reject.bind(Promise))(new Errors.NoAuthInfoError("To login by account with mail address, mailAddress and password are necessary."));
+      return (callback || Promise.reject.bind(Promise))(new Errors.NoAuthInfoError(&quot;To login by account with mail address, mailAddress and password are necessary.&quot;));
     }
     if(!user){
       user = new User({mailAddress: mailAddress, password: password});
@@ -520,7 +614,7 @@ var User = module.exports = function(ncmb){
   *
   * @method NCMB.User#loginWithMailAddress
   * @param {function} [callback] コールバック関数
-  * @return {Promise<this>}
+  * @return {Promise&lt;this&gt;}
   */
   User.prototype.loginWithMailAddress = function(callback){
     if(this.sessionToken){
@@ -528,12 +622,12 @@ var User = module.exports = function(ncmb){
       return Promise.resolve(this);
     }
     if(!this.mailAddress || !this.password ){
-      return (callback || Promise.reject.bind(Promise))(new Errors.NoAuthInfoError("To login by account with mail address, mailAddress and password are necessary."));
+      return (callback || Promise.reject.bind(Promise))(new Errors.NoAuthInfoError(&quot;To login by account with mail address, mailAddress and password are necessary.&quot;));
     }
 
     return ncmb.request({
-      path: "/" + ncmb.version + "/login",
-      method: "GET",
+      path: &quot;/&quot; + ncmb.version + &quot;/login&quot;,
+      method: &quot;GET&quot;,
       query: {
         mailAddress: this.mailAddress,
         password: this.password
@@ -547,7 +641,7 @@ var User = module.exports = function(ncmb){
       }
       Object.keys(obj).forEach(function (key) {
         this[key] = obj[key];
-        if(this[key] && this[key].__op) delete this[key];
+        if(this[key] &amp;&amp; this[key].__op) delete this[key];
       }.bind(this));
 
       if(callback) return callback(null, this);
@@ -568,11 +662,11 @@ var User = module.exports = function(ncmb){
   * @method NCMB.UserConstructor#loginAsAnonymous
   * @param {string} uuid 端末固有のUUID
   * @param {function} [callback] コールバック関数
-  * @return {Promise<User>} ログインしたUserインスタンス
+  * @return {Promise&lt;User&gt;} ログインしたUserインスタンス
   */
   User.loginAsAnonymous = function(uuid, callback){
     var user = null;
-    if(typeof uuid === "function"){
+    if(typeof uuid === &quot;function&quot;){
       callback = uuid;
       uuid = null;
     }
@@ -606,10 +700,10 @@ var User = module.exports = function(ncmb){
   * @method NCMB.User#loginAsAnonymous
   * @param {string} uuid 端末固有のUUID
   * @param {function} [callback] コールバック関数
-  * @return {Promise<this>}
+  * @return {Promise&lt;this&gt;}
   */
   User.prototype.loginAsAnonymous = function(uuid, callback){
-    if(typeof uuid === "function"){
+    if(typeof uuid === &quot;function&quot;){
       callback = uuid;
       uuid = null;
     }
@@ -618,13 +712,13 @@ var User = module.exports = function(ncmb){
       return Promise.resolve.bind(Promise)(this);
     }
     if(this.userName){
-      return ( callback || Promise.reject.bind(Promise))(new Errors.ContentsConflictError("To login as anonymous, user cannot have arbitrary userName."));
+      return ( callback || Promise.reject.bind(Promise))(new Errors.ContentsConflictError(&quot;To login as anonymous, user cannot have arbitrary userName.&quot;));
     }
-    if(this.authData && !this.authData.anonymous){
-      return ( callback || Promise.reject.bind(Promise))(new Errors.InvalidAuthInfoError("To login as anonymous, user cannot have other SNS authData."));
+    if(this.authData &amp;&amp; !this.authData.anonymous){
+      return ( callback || Promise.reject.bind(Promise))(new Errors.InvalidAuthInfoError(&quot;To login as anonymous, user cannot have other SNS authData.&quot;));
     }
     if(!uuid){
-      if(this.authData && this.authData.anonymous && this.authData.anonymous.id){
+      if(this.authData &amp;&amp; this.authData.anonymous &amp;&amp; this.authData.anonymous.id){
         uuid = this.authData.anonymous.id;
       } else if (this.uuid){
         uuid = this.uuid;
@@ -634,13 +728,13 @@ var User = module.exports = function(ncmb){
     }
     var regexp = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/;
     if(!regexp.test(uuid)){
-      return ( callback || Promise.reject.bind(Promise))(new Errors.InvalidFormatError("Uuid format is invalid."));
+      return ( callback || Promise.reject.bind(Promise))(new Errors.InvalidFormatError(&quot;Uuid format is invalid.&quot;));
     };
     this.authData = {anonymous: {id: uuid}};
 
     return ncmb.request({
-      path: "/" + ncmb.version + this.className,
-      method: "POST",
+      path: &quot;/&quot; + ncmb.version + this.className,
+      method: &quot;POST&quot;,
       data: this
     }).then(function(data){
       var obj = null;
@@ -651,7 +745,7 @@ var User = module.exports = function(ncmb){
       }
       Object.keys(obj).forEach(function (key) {
         this[key] = obj[key]
-        if(this[key] && this[key].__op) delete this[key];
+        if(this[key] &amp;&amp; this[key].__op) delete this[key];
       }.bind(this));
 
       if(callback) return callback(null, this);
@@ -675,23 +769,23 @@ var User = module.exports = function(ncmb){
   * @param {string|NCMB.User} provider 連携するサービスプロバイダ名 Facebook/Twitter/Google/Apple
   * @param {Object|function} [data] 認証に必要な情報を保持したJSON形式のオブジェクト
   * @param {function} [callback] コールバック関数
-  * @return {Promise<User>} ログインしたUserインスタンス
+  * @return {Promise&lt;User&gt;} ログインしたUserインスタンス
   */
   User.loginWith = function(provider, data, callback){
     var user = null;
     if(provider instanceof ncmb.User){
       user = provider;
       if(!user.authData){
-        return (callback || Promise.reject.bind(Promise))(new Errors.NoOAuthDataError("If user instance is set as first argument, it must have an authData."));
+        return (callback || Promise.reject.bind(Promise))(new Errors.NoOAuthDataError(&quot;If user instance is set as first argument, it must have an authData.&quot;));
       }
       if(Object.keys(user.authData).length === 1){
-        if(typeof data === "function") callback = data;
+        if(typeof data === &quot;function&quot;) callback = data;
         provider = null;
         data = null;
       }else{
-        if(typeof data === "function"){
+        if(typeof data === &quot;function&quot;){
           callback = data;
-          return (callback || Promise.reject.bind(Promise))(new Errors.NoProviderInfoError("If User that have multiple SNS authData is set as first argument, provider must be specified as second argument."));
+          return (callback || Promise.reject.bind(Promise))(new Errors.NoProviderInfoError(&quot;If User that have multiple SNS authData is set as first argument, provider must be specified as second argument.&quot;));
         }else{
           provider = data;
           data = null;
@@ -727,15 +821,15 @@ var User = module.exports = function(ncmb){
   * @param {string} [provider] 連携するサービスプロバイダ名 Facebook/Twitter/Google/Apple
   * @param {Object} [data] 認証に必要な情報を保持したJSON形式のオブジェクト
   * @param {function} [callback] コールバック関数
-  * @return {Promise<this>}
+  * @return {Promise&lt;this&gt;}
   */
   User.prototype.loginWith = function(provider, data, callback){
-    if(typeof provider === "function"){
+    if(typeof provider === &quot;function&quot;){
       callback = provider;
       provider = null;
       data = null;
     }
-    if(typeof data === "function"){
+    if(typeof data === &quot;function&quot;){
       callback = data;
       data = null;
     }
@@ -754,13 +848,13 @@ var User = module.exports = function(ncmb){
       }
       provider = ProviderUtil.getProvider(data || this.authData, provider);
       if(Object.keys(this.authData || data).indexOf(provider.getName()) === -1){
-        throw new Errors.InvalidProviderError("This provider cannot be used to login.");
+        throw new Errors.InvalidProviderError(&quot;This provider cannot be used to login.&quot;);
       }
-      if(data && data[provider.getName()]){
+      if(data &amp;&amp; data[provider.getName()]){
         _data = this.authData || data;
         Object.keys(_data[provider.getName()]).forEach(function(key){
           if(_data[provider.getName()][key] !== data[provider.getName()][key]){
-            throw new Errors.InvalidOAuthDataError("This OAuth data is invalid.");
+            throw new Errors.InvalidOAuthDataError(&quot;This OAuth data is invalid.&quot;);
           }
         }.bind(this));
       }
@@ -771,8 +865,8 @@ var User = module.exports = function(ncmb){
     var oauthData = { authData: {}};
     oauthData.authData[provider.getName()] = provider.getAuthData();
     return ncmb.request({
-      path: "/" + ncmb.version + "/users",
-      method: "POST",
+      path: &quot;/&quot; + ncmb.version + &quot;/users&quot;,
+      method: &quot;POST&quot;,
       data: oauthData
     }).then(function(data){
       var obj = null;
@@ -783,7 +877,7 @@ var User = module.exports = function(ncmb){
       }
       Object.keys(obj).forEach(function (key) {
         this[key] = obj[key];
-        if(this[key] && this[key].__op) delete this[key];
+        if(this[key] &amp;&amp; this[key].__op) delete this[key];
       }.bind(this));
 
       if(callback) return callback(null, this);
@@ -801,7 +895,7 @@ var User = module.exports = function(ncmb){
   *
   * @method NCMB.UserConstructor#logout
   * @param {function} [callback] コールバック関数
-  * @return {Promise<User>} ログアウトしたユーザインスタンス
+  * @return {Promise&lt;User&gt;} ログアウトしたユーザインスタンス
   */
   User.logout = function(callback){
     var user = new ncmb.User({sessionToken:ncmb.sessionToken});
@@ -815,11 +909,11 @@ var User = module.exports = function(ncmb){
   *
   * @method NCMB.User#logout
   * @param {function} [callback] コールバック関数
-  * @return {Promise<this>}
+  * @return {Promise&lt;this&gt;}
   */
   User.prototype.logout = function(callback){
     if(!this.sessionToken){
-      return (callback || Promise.reject.bind(Promise))(new Errors.NoSessionTokenError("This user doesn't login."));
+      return (callback || Promise.reject.bind(Promise))(new Errors.NoSessionTokenError(&quot;This user doesn&#x27;t login.&quot;));
     }
     var currentSessionToken = ncmb.sessionToken;
     if(currentSessionToken !== this.sessionToken) ncmb.sessionToken = this.sessionToken;
@@ -828,8 +922,8 @@ var User = module.exports = function(ncmb){
     var bk_this = this;
 
     return ncmb.request({
-      path: "/" + ncmb.version + "/logout",
-      method: "GET"
+      path: &quot;/&quot; + ncmb.version + &quot;/logout&quot;,
+      method: &quot;GET&quot;
     }).then(function(){
       if(currentSessionToken === this.sessionToken){
         removeItem(CURRENT_USER_PATH);
@@ -876,10 +970,10 @@ var User = module.exports = function(ncmb){
    */
   User.prototype.linkWith = function(provider, data, callback){
     if (!provider) {
-      return ( callback || Promise.reject.bind(Promise))(new Errors.InvalidAuthInfoError("Provider is missing."));
+      return ( callback || Promise.reject.bind(Promise))(new Errors.InvalidAuthInfoError(&quot;Provider is missing.&quot;));
     }
     if (!data){
-      return ( callback || Promise.reject.bind(Promise))(new Errors.InvalidAuthInfoError("If provider and its data are not set, user can not link."));
+      return ( callback || Promise.reject.bind(Promise))(new Errors.InvalidAuthInfoError(&quot;If provider and its data are not set, user can not link.&quot;));
     }
     try {
       if(provider){ data = (function(){var _data = {}; _data[provider] = data; return _data;}());}
@@ -903,13 +997,13 @@ var User = module.exports = function(ncmb){
    */
   User.prototype.unLinkWith = function(provider, callback){
     if (!provider) {
-      return ( callback || Promise.reject.bind(Promise))(new Errors.InvalidAuthInfoError("Provider is missing."));
+      return ( callback || Promise.reject.bind(Promise))(new Errors.InvalidAuthInfoError(&quot;Provider is missing.&quot;));
     }
     if (!this.authData){
-      return ( callback || Promise.reject.bind(Promise))(new Errors.InvalidAuthInfoError("User doesn't have authData, so can not unlink."));
+      return ( callback || Promise.reject.bind(Promise))(new Errors.InvalidAuthInfoError(&quot;User doesn&#x27;t have authData, so can not unlink.&quot;));
     }
     if (!this.authData[provider]) {
-      return ( callback || Promise.reject.bind(Promise))(new Errors.InvalidAuthInfoError("User doesn't exist " + provider + " to unlink."));
+      return ( callback || Promise.reject.bind(Promise))(new Errors.InvalidAuthInfoError(&quot;User doesn&#x27;t exist &quot; + provider + &quot; to unlink.&quot;));
     }
     try {
       provider = ProviderUtil.getProvider(this.authData, provider);
@@ -923,17 +1017,17 @@ var User = module.exports = function(ncmb){
 
   var monaca = null;
   var getDeviceId = function(){
-    if(monaca && monaca.getDeviceId){
+    if(monaca &amp;&amp; monaca.getDeviceId){
       return monaca.getDeviceId();
     }
     var S4 = function(){
         return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
     };
-    return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+    return (S4()+S4()+&quot;-&quot;+S4()+&quot;-&quot;+S4()+&quot;-&quot;+S4()+&quot;-&quot;+S4()+S4()+S4());
   };
 
   var makeStoragePath = function(key, apikey){
-    var path = "NCMB/" + apikey + "/" + key;
+    var path = &quot;NCMB/&quot; + apikey + &quot;/&quot; + key;
     return path;
   };
 
@@ -965,7 +1059,7 @@ var User = module.exports = function(ncmb){
 
 /**
  * @interface NCMB.UserConstructor
- * @extends Query<User>
+ * @extends Query&lt;User&gt;
  */
 
 /**
@@ -974,3 +1068,22 @@ var User = module.exports = function(ncmb){
  * @param {Object} [attrs] インスタンス生成時に設定するプロパティ
  * @return {NCMB.User}
  */
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

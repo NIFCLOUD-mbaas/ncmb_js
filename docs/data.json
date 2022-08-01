@@ -150,7 +150,7 @@
             "extension_for": [],
             "file": "lib/datastore.js",
             "line": 9,
-            "description": "データストアへの入出力について扱うクラスです。",
+            "description": "データストアへの入出力について扱うクラスです。\n※注意：\n２種類のメソッド（インスタンスメソッド Instance method とスタティックメソッド Static method）があります。\nそれぞれリファレンス上の表記と利用時のメソッドが異なりますので、下記を参考にご利用ください。\n\n  - リファレンス上の表記が「NCMB.DataStore#メソッド名」: インスタンスメソッド Instance method\n     - 利用例）NCMB.DataStore#save\n       ```\n       var GameScore = ncmb.DataStore(\"GameScore\");\n       var gameScore = new GameScore();\n       gameScore.set(\"score\", 1337)\n                .save()\n       ```\n  - リファレンス上の表記が「NCMB.DataStoreConstructor#メソッド名」: スタティックメソッド Static method\n     - DataStoreの場合は、お客様に提供するスタティックメソッドはありません",
             "extends": "{Operation}",
             "params": [
                 {
@@ -355,7 +355,7 @@
             "extension_for": [],
             "file": "lib/user.js",
             "line": 19,
-            "description": "会員および会員権限によるオブジェクトへのアクセスの管理を扱うクラスです。\n\nサインアップで登録の後、ログインすることでセッショントークンを取得します。\nセッショントークンを保持しているユーザをカレントユーザに設定することで、そのユーザの権限でオブジェクトにアクセスできるようになります。\nセッショントークンの有効期限はデフォルトで24時間です。期限切れの場合は一度ログアウトした後再度ログインを行ってください。（有効期限はダッシュボードで変更できます。）\n\nサインアップできるユーザ種別は、ユーザ名/パスワードでの認証、メールアドレス/パスワードでの認証、SNS連携(Facebook/Twitter/Google/Apple)での認証があります。\n認証方法によって登録時・ログイン時に使用するメソッドが変わります。\n\n※注意：以下のItem Indexには対応しているメソッド一覧が記載されています。\nメソッドにはンスタンス用メソッドとスタティックメソッドの２種類があります。\n種類によってメソッドの表記が違いますので、下記を参考にした上、メソッドをご利用ください。\n\n  - NCMB.User#メソッド名: インスタンス用メソッド Instance method\n     - 例：NCMB.User#login の利用例\n       ```\n        var user = new ncmb.User({userName:\"Yamada Tarou\", password:\"password\"});\n       user.login();\n       ```\n  - NCMB.UserConstructor#メソッド名: クラスのStatic methodスタティックメソッド\n     - 例：NCMB.UserConstructor#login　の利用例\n       ```\n       ncmb.User.login(\"Yamada Tarou\", \"password\");\n       ```",
+            "description": "会員および会員権限によるオブジェクトへのアクセスの管理を扱うクラスです。\n\nサインアップで登録の後、ログインすることでセッショントークンを取得します。\nセッショントークンを保持しているユーザをカレントユーザに設定することで、そのユーザの権限でオブジェクトにアクセスできるようになります。\nセッショントークンの有効期限はデフォルトで24時間です。期限切れの場合は一度ログアウトした後再度ログインを行ってください。（有効期限はダッシュボードで変更できます。）\n\nサインアップできるユーザ種別は、ユーザ名/パスワードでの認証、メールアドレス/パスワードでの認証、SNS連携(Facebook/Twitter/Google/Apple)での認証があります。\n認証方法によって登録時・ログイン時に使用するメソッドが変わります。\n\n※注意：\n２種類のメソッド（インスタンスメソッド Instance method とスタティックメソッド Static method）があります。\nそれぞれリファレンス上の表記と利用時のメソッドが異なりますので、下記を参考にご利用ください。\n\n  - リファレンス上の表記が「NCMB.User#メソッド名」: インスタンスメソッド Instance method\n     - 利用例）NCMB.User#login\n       ```\n       var user = new ncmb.User({userName:\"Yamada Tarou\", password:\"password\"});\n       user.login();\n       ```\n  - リファレンス上の表記が「NCMB.UserConstructor#メソッド名」: スタティックメソッド Static method\n     - 利用例）NCMB.UserConstructor#login\n       ```\n       ncmb.User.login(\"Yamada Tarou\", \"password\");\n       ```",
             "extends": "{Operation}",
             "params": [
                 {
@@ -553,7 +553,7 @@
         },
         {
             "file": "lib/datastore.js",
-            "line": 69,
+            "line": 84,
             "description": "オブジェクトを保存します。",
             "itemtype": "method",
             "name": "NCMB.DataStore#save",
@@ -572,7 +572,7 @@
         },
         {
             "file": "lib/datastore.js",
-            "line": 101,
+            "line": 116,
             "description": "オブジェクトを更新します。",
             "itemtype": "method",
             "name": "NCMB.DataStore#update",
@@ -591,7 +591,7 @@
         },
         {
             "file": "lib/datastore.js",
-            "line": 142,
+            "line": 157,
             "description": "オブジェクトを削除します。",
             "itemtype": "method",
             "name": "NCMB.DataStore#delete",
@@ -610,14 +610,14 @@
         },
         {
             "file": "lib/datastore.js",
-            "line": 173,
+            "line": 188,
             "interface": "NCMB.DataStoreConstructor",
             "extends": "Query<DataStore>",
             "class": "NCMB.DataStore"
         },
         {
             "file": "lib/datastore.js",
-            "line": 178,
+            "line": 193,
             "itemtype": "method",
             "name": "NCMB.DataStoreConstructor#new",
             "params": [
@@ -2821,7 +2821,7 @@
         },
         {
             "message": "unknown tag: name",
-            "line": " lib/datastore.js:178"
+            "line": " lib/datastore.js:193"
         },
         {
             "message": "unknown tag: name",
@@ -2857,7 +2857,7 @@
         },
         {
             "message": "Missing item type",
-            "line": " lib/datastore.js:173"
+            "line": " lib/datastore.js:188"
         },
         {
             "message": "Missing item type",

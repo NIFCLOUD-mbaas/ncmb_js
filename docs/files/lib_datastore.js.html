@@ -102,7 +102,22 @@ var objectAssign = require(&#x27;object-assign&#x27;);
 
 /**
 * データストアへの入出力について扱うクラスです。
-* 
+* ※注意：
+* ２種類のメソッド（インスタンスメソッド Instance method とスタティックメソッド Static method）があります。
+* それぞれリファレンス上の表記と利用時のメソッドが異なりますので、下記を参考にご利用ください。
+*
+*   - リファレンス上の表記が「NCMB.DataStore#メソッド名」: インスタンスメソッド Instance method
+*      - 利用例）NCMB.DataStore#save
+*        &#x60;&#x60;&#x60;
+*        var GameScore = ncmb.DataStore(&quot;GameScore&quot;);
+*        var gameScore = new GameScore();
+*        gameScore.set(&quot;score&quot;, 1337)
+*                 .save()
+*        &#x60;&#x60;&#x60;
+*   - リファレンス上の表記が「NCMB.DataStoreConstructor#メソッド名」: スタティックメソッド Static method
+*      - DataStoreの場合は、お客様に提供するスタティックメソッドはありません
+*
+*
 * @class NCMB.DataStore
 * @extends {Operation}
 * @param {string} name mobile backend にインスタンスを保存するクラス名。
@@ -275,6 +290,7 @@ var DataStore = module.exports = (function(){
  * @param {object} [attrs]
  * @return {NCMB.DataStore}
  */
+
     </pre>
 </div>
                     </div>

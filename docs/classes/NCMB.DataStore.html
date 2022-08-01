@@ -104,7 +104,27 @@
 
 
 <div class="box intro">
-    <p>データストアへの入出力について扱うクラスです。</p>
+    <p>データストアへの入出力について扱うクラスです。
+※注意：
+２種類のメソッド（インスタンスメソッド Instance method とスタティックメソッド Static method）があります。
+それぞれリファレンス上の表記と利用時のメソッドが異なりますので、下記を参考にご利用ください。</p>
+<ul>
+<li>リファレンス上の表記が「NCMB.DataStore#メソッド名」: インスタンスメソッド Instance method
+<ul>
+<li>利用例）NCMB.DataStore#save<pre class="code prettyprint"><code>var GameScore = ncmb.DataStore(&quot;GameScore&quot;);
+var gameScore = new GameScore();
+gameScore.set(&quot;score&quot;, 1337)
+         .save()
+</code></pre>
+</li>
+</ul>
+</li>
+<li>リファレンス上の表記が「NCMB.DataStoreConstructor#メソッド名」: スタティックメソッド Static method
+<ul>
+<li>DataStoreの場合は、お客様に提供するスタティックメソッドはありません</li>
+</ul>
+</li>
+</ul>
 
 </div>
 
@@ -174,7 +194,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_datastore.js.html#l142"><code>lib&#x2F;datastore.js:142</code></a>
+        <a href="../files/lib_datastore.js.html#l157"><code>lib&#x2F;datastore.js:157</code></a>
         </p>
 
 
@@ -238,7 +258,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_datastore.js.html#l69"><code>lib&#x2F;datastore.js:69</code></a>
+        <a href="../files/lib_datastore.js.html#l84"><code>lib&#x2F;datastore.js:84</code></a>
         </p>
 
 
@@ -302,7 +322,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_datastore.js.html#l101"><code>lib&#x2F;datastore.js:101</code></a>
+        <a href="../files/lib_datastore.js.html#l116"><code>lib&#x2F;datastore.js:116</code></a>
         </p>
 
 
@@ -366,7 +386,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_datastore.js.html#l178"><code>lib&#x2F;datastore.js:178</code></a>
+        <a href="../files/lib_datastore.js.html#l193"><code>lib&#x2F;datastore.js:193</code></a>
         </p>
 
 

@@ -106,6 +106,24 @@
 関連づけるオブジェクトがすべて同一クラスであれば、関連づけられるオブジェクトとは別クラスでも指定可能です。</p>
 <p>インスタンス生成時に関連づけるクラス名を指定可能です。指定しなかった場合、最初に追加したオブジェクトのクラスが指定されます。
 指定した以外のクラスのインスタンスを入力した場合、エラーが返ります。</p>
+<p>※注意：
+２種類のメソッド（インスタンスメソッド Instance method とスタティックメソッド Static method）があります。
+それぞれリファレンス上の表記と利用時のメソッドが異なりますので、下記を参考にご利用ください。</p>
+<ul>
+<li>リファレンス上の表記が「NCMB.Relation#メソッド名」: インスタンスメソッド Instance method
+<ul>
+<li>利用例）NCMB.Relation#add<pre class="code prettyprint"><code></code></pre>
+</li>
+</ul>
+var relation = new ncmb.Relation();
+relation.add(food1).add(food2);<pre class="code prettyprint"><code></code></pre>
+</li>
+<li>リファレンス上の表記が「NCMB.RelationConstructor#メソッド名」: スタティックメソッド Static method
+<ul>
+<li>Relationの場合は、お客様に提供するスタティックメソッドはありません。</li>
+</ul>
+</li>
+</ul>
 
 </div>
 
@@ -171,7 +189,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_relation.js.html#l29"><code>lib&#x2F;relation.js:29</code></a>
+        <a href="../files/lib_relation.js.html#l42"><code>lib&#x2F;relation.js:42</code></a>
         </p>
 
 
@@ -235,7 +253,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_relation.js.html#l37"><code>lib&#x2F;relation.js:37</code></a>
+        <a href="../files/lib_relation.js.html#l50"><code>lib&#x2F;relation.js:50</code></a>
         </p>
 
 
@@ -299,7 +317,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_relation.js.html#l80"><code>lib&#x2F;relation.js:80</code></a>
+        <a href="../files/lib_relation.js.html#l93"><code>lib&#x2F;relation.js:93</code></a>
         </p>
 
 

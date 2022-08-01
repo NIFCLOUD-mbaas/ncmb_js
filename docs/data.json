@@ -150,7 +150,7 @@
             "extension_for": [],
             "file": "lib/datastore.js",
             "line": 9,
-            "description": "データストアへの入出力について扱うクラスです。\n※注意：\n２種類のメソッド（インスタンスメソッド Instance method とスタティックメソッド Static method）があります。\nそれぞれリファレンス上の表記と利用時のメソッドが異なりますので、下記を参考にご利用ください。\n\n  - リファレンス上の表記が「NCMB.DataStore#メソッド名」: インスタンスメソッド Instance method\n     - 利用例）NCMB.DataStore#save\n       ```\n       var GameScore = ncmb.DataStore(\"GameScore\");\n       var gameScore = new GameScore();\n       gameScore.set(\"score\", 1337)\n                .save()\n       ```\n  - リファレンス上の表記が「NCMB.DataStoreConstructor#メソッド名」: スタティックメソッド Static method\n     - DataStoreの場合は、お客様に提供するスタティックメソッドはありません",
+            "description": "データストアへの入出力について扱うクラスです。\n※注意：\n２種類のメソッド（インスタンスメソッド Instance method とスタティックメソッド Static method）があります。\nそれぞれリファレンス上の表記と利用時のメソッドが異なりますので、下記を参考にご利用ください。\n\n  - リファレンス上の表記が「NCMB.DataStore#メソッド名」: インスタンスメソッド Instance method\n     - 利用例）NCMB.DataStore#save\n       ```\n       var GameScore = ncmb.DataStore(\"GameScore\");\n       var gameScore = new GameScore();\n       gameScore.set(\"score\", 1337)\n                .save()\n       ```\n  - リファレンス上の表記が「NCMB.DataStoreConstructor#メソッド名」: スタティックメソッド Static method\n     - DataStoreの場合は、お客様に提供するスタティックメソッドはクエリQueryのみになります。",
             "extends": "{Operation}",
             "params": [
                 {
@@ -170,7 +170,7 @@
             "extension_for": [],
             "file": "lib/file.js",
             "line": 6,
-            "description": "ファイルストアへの入出力を扱うクラスです。\n\nこのクラスはすべてクラスメソッドで構成されており、インスタンスを生成せずに利用します。\nQueryではファイルの付加情報（ファイル名、更新日時など）のみを検索・取得し、ファイルのバイナリデータそのものは取得しません。\nバイナリデータを取得したい場合はdownloadメソッドを利用してください。"
+            "description": "ファイルストアへの入出力を扱うクラスです。\n\nこのクラスはすべてクラスメソッドで構成されており、インスタンスを生成せずに利用します。\nQueryではファイルの付加情報（ファイル名、更新日時など）のみを検索・取得し、ファイルのバイナリデータそのものは取得しません。\nバイナリデータを取得したい場合はdownloadメソッドを利用してください。\n\n※注意：\n２種類のメソッド（インスタンスメソッド Instance method とスタティックメソッド Static method）があります。\nそれぞれリファレンス上の表記と利用時のメソッドが異なりますので、下記を参考にご利用ください。\n\n  - リファレンス上の表記が「NCMB.File#メソッド名」: インスタンスメソッド Instance method\n     - Fileの場合は、お客様に提供するインスタンスメソッドはありません\n  - リファレンス上の表記が「NCMB.FileConstructor#メソッド名」: スタティックメソッド Static method\n     - 利用例）NCMB.FileConstructor#download\n       ```\n       ncmb.File.download(\"abc.txt\")\n       .then(function(fileData){\n       // ファイル取得後処理\n       })\n       .catch(function(err){\n       // エラー処理\n       });\n       ```"
         },
         "NCMB.GeoPoint": {
             "name": "NCMB.GeoPoint",
@@ -206,7 +206,7 @@
             "extension_for": [],
             "file": "lib/installation.js",
             "line": 7,
-            "description": "プッシュ配信端末の操作を扱うクラスです。",
+            "description": "プッシュ配信端末の操作を扱うクラスです。\n\n※注意：\n２種類のメソッド（インスタンスメソッド Instance method とスタティックメソッド Static method）があります。\nそれぞれリファレンス上の表記と利用時のメソッドが異なりますので、下記を参考にご利用ください。\n\n  - リファレンス上の表記が「NCMB.Installation#メソッド名」: インスタンスメソッド Instance method\n     - 利用例）NCMB.Installation#update\n       ```\n       var installation = ncmb.Installation()\n       installation.objectId = \"xxxxxxx\";\n       installation.set(\"region\", \"Asia\");\n       installation.update();\n       ```\n  - リファレンス上の表記が「NCMB.InstallationConstructor#メソッド名」: スタティックメソッド Static method\n     - Installationの場合は、お客様に提供するスタティックメソッドはクエリQueryのみになります。",
             "extends": "{Operation}",
             "params": [
                 {
@@ -268,7 +268,7 @@
             "extension_for": [],
             "file": "lib/push.js",
             "line": 6,
-            "description": "プッシュ通知の操作を扱うクラスです。",
+            "description": "プッシュ通知の操作を扱うクラスです。\n※注意：\n２種類のメソッド（インスタンスメソッド Instance method とスタティックメソッド Static method）があります。\nそれぞれリファレンス上の表記と利用時のメソッドが異なりますので、下記を参考にご利用ください。\n\n  - リファレンス上の表記が「NCMB.Push#メソッド名」: インスタンスメソッド Instance method\n     - 利用例）NCMB.Push#send\n    ```\n    var push = new ncmb.Push();\n    push.set(\"immediateDeliveryFlag\", true)\n         .set(\"message\", \"Hello, World!\")\n         .set(\"target\", [\"ios\", \"android\"]);\n    push.send()\n    ```\n  - リファレンス上の表記が「NCMB.PushConstructor#メソッド名」: スタティックメソッド Static method\n     - Pushの場合は、お客様に提供するスタティックメソッドはクエリQueryのみになります。",
             "params": [
                 {
                     "name": "attrs",
@@ -299,7 +299,7 @@
             "extension_for": [],
             "file": "lib/relation.js",
             "line": 4,
-            "description": "リレーションについて扱うクラスです。\n\nオブジェクトのプロパティに対してインスタンスを設定することで、同一クラスに限り複数のオブジェクトを関連づけることができます。\n関連づけるオブジェクトがすべて同一クラスであれば、関連づけられるオブジェクトとは別クラスでも指定可能です。\n\nインスタンス生成時に関連づけるクラス名を指定可能です。指定しなかった場合、最初に追加したオブジェクトのクラスが指定されます。\n指定した以外のクラスのインスタンスを入力した場合、エラーが返ります。",
+            "description": "リレーションについて扱うクラスです。\n\nオブジェクトのプロパティに対してインスタンスを設定することで、同一クラスに限り複数のオブジェクトを関連づけることができます。\n関連づけるオブジェクトがすべて同一クラスであれば、関連づけられるオブジェクトとは別クラスでも指定可能です。\n\nインスタンス生成時に関連づけるクラス名を指定可能です。指定しなかった場合、最初に追加したオブジェクトのクラスが指定されます。\n指定した以外のクラスのインスタンスを入力した場合、エラーが返ります。\n\n※注意：\n２種類のメソッド（インスタンスメソッド Instance method とスタティックメソッド Static method）があります。\nそれぞれリファレンス上の表記と利用時のメソッドが異なりますので、下記を参考にご利用ください。\n\n  - リファレンス上の表記が「NCMB.Relation#メソッド名」: インスタンスメソッド Instance method\n     - 利用例）NCMB.Relation#add\n       ```\n      var relation = new ncmb.Relation();\n      relation.add(food1).add(food2);\n       ```\n  - リファレンス上の表記が「NCMB.RelationConstructor#メソッド名」: スタティックメソッド Static method\n     - Relationの場合は、お客様に提供するスタティックメソッドはありません。",
             "params": [
                 {
                     "name": "relatingClass",
@@ -318,7 +318,7 @@
             "extension_for": [],
             "file": "lib/role.js",
             "line": 7,
-            "description": "ロールについて扱うクラスです。\n\nユーザや他のロール（子ロール）をまとめて権限管理を行うことができます。\nユーザおよび子ロールの追加・削除はsave/update完了時に反映されます。\n\nロールへのユーザもしくは子ロールの追加と削除を同時に行うことはできません。\n追加・削除の設定を行い、保存前に他方を設定した場合、後に行った処理が上書きされます。",
+            "description": "ロールについて扱うクラスです。\n\nユーザや他のロール（子ロール）をまとめて権限管理を行うことができます。\nユーザおよび子ロールの追加・削除はsave/update完了時に反映されます。\n\nロールへのユーザもしくは子ロールの追加と削除を同時に行うことはできません。\n追加・削除の設定を行い、保存前に他方を設定した場合、後に行った処理が上書きされます。\n\n※注意：\n２種類のメソッド（インスタンスメソッド Instance method とスタティックメソッド Static method）があります。\nそれぞれリファレンス上の表記と利用時のメソッドが異なりますので、下記を参考にご利用ください。\n\n  - リファレンス上の表記が「NCMB.Role#メソッド名」: インスタンスメソッド Instance method\n     - 利用例）NCMB.Role#addUser\n      ```\n     var freePlanRole = new ncmb.Role(\"freePlan\");\n     freePlanRole.addUser(user);\n     ```\n  - リファレンス上の表記が「NCMB.RoleConstructor#メソッド名」: スタティックメソッド Static method\n     - Roleの場合は、お客様に提供するスタティックメソッドはありません。",
             "extends": "{Operation}",
             "params": [
                 {
@@ -636,10 +636,10 @@
         },
         {
             "file": "lib/file.js",
-            "line": 27,
+            "line": 46,
             "description": "ファイルストアにファイルを保存します。",
             "itemtype": "method",
-            "name": "NCMB.File#upload",
+            "name": "NCMB.FileConstructor#upload",
             "params": [
                 {
                     "name": "fileName",
@@ -671,10 +671,10 @@
         },
         {
             "file": "lib/file.js",
-            "line": 71,
+            "line": 90,
             "description": "指定したファイルのバイナリデータを取得します。",
             "itemtype": "method",
-            "name": "NCMB.File#download",
+            "name": "NCMB.FileConstructor#download",
             "params": [
                 {
                     "name": "fileName",
@@ -702,10 +702,10 @@
         },
         {
             "file": "lib/file.js",
-            "line": 107,
+            "line": 126,
             "description": "指定したファイルのACL情報を更新します。",
             "itemtype": "method",
-            "name": "NCMB.File#updateACL",
+            "name": "NCMB.FileConstructor#updateACL",
             "params": [
                 {
                     "name": "fileName",
@@ -732,10 +732,10 @@
         },
         {
             "file": "lib/file.js",
-            "line": 143,
+            "line": 162,
             "description": "指定したファイルを削除します。",
             "itemtype": "method",
-            "name": "NCMB.File#delete",
+            "name": "NCMB.FileConstructor#delete",
             "params": [
                 {
                     "name": "fileName",
@@ -786,7 +786,7 @@
         },
         {
             "file": "lib/installation.js",
-            "line": 62,
+            "line": 78,
             "description": "配信端末情報を削除します。",
             "itemtype": "method",
             "name": "NCMB.Installation#delete",
@@ -806,7 +806,7 @@
         },
         {
             "file": "lib/installation.js",
-            "line": 86,
+            "line": 102,
             "description": "配信端末情報を更新します。",
             "itemtype": "method",
             "name": "NCMB.Installation#update",
@@ -826,14 +826,14 @@
         },
         {
             "file": "lib/installation.js",
-            "line": 130,
+            "line": 146,
             "interface": "NCMB.InstallationConstructor",
             "extends": "Query<Installation>",
             "class": "NCMB.Installation"
         },
         {
             "file": "lib/installation.js",
-            "line": 135,
+            "line": 151,
             "itemtype": "method",
             "name": "NCMB.InstallationConstructor#new",
             "params": [
@@ -1119,7 +1119,7 @@
         },
         {
             "file": "lib/push.js",
-            "line": 60,
+            "line": 75,
             "description": "プッシュ通知をmobile backendに登録します。\n即時配信フラグがtrueの場合はすぐに配信されます。",
             "itemtype": "method",
             "name": "NCMB.Push#send",
@@ -1139,7 +1139,7 @@
         },
         {
             "file": "lib/push.js",
-            "line": 92,
+            "line": 107,
             "description": "未送信のプッシュ通知を削除します。",
             "itemtype": "method",
             "name": "NCMB.Push#delete",
@@ -1159,7 +1159,7 @@
         },
         {
             "file": "lib/push.js",
-            "line": 116,
+            "line": 131,
             "description": "未送信のプッシュ通知の内容を更新します。",
             "itemtype": "method",
             "name": "NCMB.Push#update",
@@ -1179,7 +1179,7 @@
         },
         {
             "file": "lib/push.js",
-            "line": 166,
+            "line": 181,
             "description": "指定したキーに値を設定します。\n設定可能なキーはREST APIリファレンスを参照してください。",
             "itemtype": "method",
             "name": "NCMB.Push#set",
@@ -1202,14 +1202,14 @@
         },
         {
             "file": "lib/push.js",
-            "line": 195,
+            "line": 210,
             "interface": "NCMB.PushConstructor",
             "extends": "Query<Push>",
             "class": "NCMB.Push"
         },
         {
             "file": "lib/push.js",
-            "line": 200,
+            "line": 215,
             "itemtype": "method",
             "name": "NCMB.PushConstructor#new",
             "params": [
@@ -1945,7 +1945,7 @@
         },
         {
             "file": "lib/relation.js",
-            "line": 29,
+            "line": 42,
             "description": "関連オブジェクトに追加するオブジェクトを設定します。",
             "itemtype": "method",
             "name": "NCMB.Relation#add",
@@ -1963,7 +1963,7 @@
         },
         {
             "file": "lib/relation.js",
-            "line": 37,
+            "line": 50,
             "description": "関連オブジェクトから削除するオブジェクトを設定します。",
             "itemtype": "method",
             "name": "NCMB.Relation#remove",
@@ -1981,14 +1981,14 @@
         },
         {
             "file": "lib/relation.js",
-            "line": 75,
+            "line": 88,
             "interface": "NCMB.RelationConstructor",
             "extends": "Query<Relation>",
             "class": "NCMB.Relation"
         },
         {
             "file": "lib/relation.js",
-            "line": 80,
+            "line": 93,
             "itemtype": "method",
             "name": "NCMB.RelationConstructor#new",
             "params": [
@@ -2007,7 +2007,7 @@
         },
         {
             "file": "lib/role.js",
-            "line": 78,
+            "line": 91,
             "description": "ロールを保存します。",
             "itemtype": "method",
             "name": "NCMB.Role#save",
@@ -2027,7 +2027,7 @@
         },
         {
             "file": "lib/role.js",
-            "line": 110,
+            "line": 123,
             "description": "ロールを更新します。",
             "itemtype": "method",
             "name": "NCMB.Role#update",
@@ -2047,7 +2047,7 @@
         },
         {
             "file": "lib/role.js",
-            "line": 151,
+            "line": 164,
             "description": "ロールを削除します。",
             "itemtype": "method",
             "name": "NCMB.Role#delete",
@@ -2067,7 +2067,7 @@
         },
         {
             "file": "lib/role.js",
-            "line": 175,
+            "line": 188,
             "description": "ロールにユーザを追加します。",
             "itemtype": "method",
             "name": "NCMB.Role#addUser",
@@ -2086,7 +2086,7 @@
         },
         {
             "file": "lib/role.js",
-            "line": 183,
+            "line": 196,
             "description": "ロールに子ロールを追加します。",
             "itemtype": "method",
             "name": "NCMB.Role#addRole",
@@ -2105,7 +2105,7 @@
         },
         {
             "file": "lib/role.js",
-            "line": 191,
+            "line": 204,
             "description": "ロールからユーザを削除します。",
             "itemtype": "method",
             "name": "NCMB.Role#removeUser",
@@ -2124,7 +2124,7 @@
         },
         {
             "file": "lib/role.js",
-            "line": 199,
+            "line": 212,
             "description": "ロールから子ロールを削除します。",
             "itemtype": "method",
             "name": "NCMB.Role#removeRole",
@@ -2143,7 +2143,7 @@
         },
         {
             "file": "lib/role.js",
-            "line": 207,
+            "line": 220,
             "description": "ロールに登録されているユーザの一覧を取得します。",
             "itemtype": "method",
             "name": "NCMB.Role#fetchUser",
@@ -2163,7 +2163,7 @@
         },
         {
             "file": "lib/role.js",
-            "line": 215,
+            "line": 228,
             "description": "ロールに登録されている子ロールの一覧を取得します。",
             "itemtype": "method",
             "name": "NCMB.Role#fetchRole",
@@ -2183,14 +2183,14 @@
         },
         {
             "file": "lib/role.js",
-            "line": 247,
+            "line": 260,
             "interface": "NCMB.RoleConstructor",
             "extends": "Query<Role>",
             "class": "NCMB.Role"
         },
         {
             "file": "lib/role.js",
-            "line": 252,
+            "line": 265,
             "itemtype": "method",
             "name": "NCMB.RoleConstructor#new",
             "params": [
@@ -2214,7 +2214,7 @@
         },
         {
             "file": "lib/script.js",
-            "line": 34,
+            "line": 35,
             "description": "インスタンスに対してチェインしてリクエストヘッダを付与するメソッドです。",
             "itemtype": "method",
             "name": "NCMB.Script#set",
@@ -2233,7 +2233,7 @@
         },
         {
             "file": "lib/script.js",
-            "line": 55,
+            "line": 56,
             "description": "インスタンスに対してチェインしてリクエストボディを付与するメソッドです。",
             "itemtype": "method",
             "name": "NCMB.Script#data",
@@ -2252,7 +2252,7 @@
         },
         {
             "file": "lib/script.js",
-            "line": 73,
+            "line": 74,
             "description": "インスタンスに対してチェインしてクエリストリングを付与するメソッドです。",
             "itemtype": "method",
             "name": "NCMB.Script#query",
@@ -2271,7 +2271,7 @@
         },
         {
             "file": "lib/script.js",
-            "line": 91,
+            "line": 92,
             "description": "Scriptを実行するメソッドです。",
             "itemtype": "method",
             "name": "NCMB.Script#exec",
@@ -2295,13 +2295,13 @@
         },
         {
             "file": "lib/script.js",
-            "line": 152,
+            "line": 153,
             "interface": "NCMB.ScriptConstructor",
             "class": "NCMB.Script"
         },
         {
             "file": "lib/script.js",
-            "line": 156,
+            "line": 157,
             "itemtype": "method",
             "name": "NCMB.ScriptConstructor#new",
             "return": {
@@ -2829,23 +2829,23 @@
         },
         {
             "message": "unknown tag: name",
-            "line": " lib/installation.js:135"
+            "line": " lib/installation.js:151"
         },
         {
             "message": "unknown tag: name",
-            "line": " lib/push.js:200"
+            "line": " lib/push.js:215"
         },
         {
             "message": "unknown tag: name",
-            "line": " lib/relation.js:80"
+            "line": " lib/relation.js:93"
         },
         {
             "message": "unknown tag: name",
-            "line": " lib/role.js:252"
+            "line": " lib/role.js:265"
         },
         {
             "message": "unknown tag: name",
-            "line": " lib/script.js:156"
+            "line": " lib/script.js:157"
         },
         {
             "message": "unknown tag: name",
@@ -2865,7 +2865,7 @@
         },
         {
             "message": "Missing item type",
-            "line": " lib/installation.js:130"
+            "line": " lib/installation.js:146"
         },
         {
             "message": "Missing item type",
@@ -2905,19 +2905,19 @@
         },
         {
             "message": "Missing item type",
-            "line": " lib/push.js:195"
+            "line": " lib/push.js:210"
         },
         {
             "message": "Missing item type",
-            "line": " lib/relation.js:75"
+            "line": " lib/relation.js:88"
         },
         {
             "message": "Missing item type",
-            "line": " lib/role.js:247"
+            "line": " lib/role.js:260"
         },
         {
             "message": "Missing item type",
-            "line": " lib/script.js:152"
+            "line": " lib/script.js:153"
         },
         {
             "message": "Missing item type",

@@ -106,7 +106,20 @@ var objectAssign = require(&#x27;object-assign&#x27;);
 *
 * ロールへのユーザもしくは子ロールの追加と削除を同時に行うことはできません。
 * 追加・削除の設定を行い、保存前に他方を設定した場合、後に行った処理が上書きされます。
-* 
+*
+* ※注意：
+* ２種類のメソッド（インスタンスメソッド Instance method とスタティックメソッド Static method）があります。
+* それぞれリファレンス上の表記と利用時のメソッドが異なりますので、下記を参考にご利用ください。
+*
+*   - リファレンス上の表記が「NCMB.Role#メソッド名」: インスタンスメソッド Instance method
+*      - 利用例）NCMB.Role#addUser
+*       &#x60;&#x60;&#x60;
+*      var freePlanRole = new ncmb.Role(&quot;freePlan&quot;);
+*      freePlanRole.addUser(user);
+*      &#x60;&#x60;&#x60;
+*   - リファレンス上の表記が「NCMB.RoleConstructor#メソッド名」: スタティックメソッド Static method
+*      - Roleの場合は、お客様に提供するスタティックメソッドはありません。
+*
 * @class NCMB.Role
 * @extends {Operation}
 * @param {string} roleName ロール名。インスタンス生成時に必須
@@ -350,6 +363,7 @@ var Role = module.exports = function(ncmb){
  * @param {Object} [attrs] インスタンス生成時に設定するプロパティ
  * @return {NCMB.Role}
  */
+
     </pre>
 </div>
                     </div>

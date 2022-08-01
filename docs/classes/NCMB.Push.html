@@ -101,7 +101,28 @@
 
 
 <div class="box intro">
-    <p>プッシュ通知の操作を扱うクラスです。</p>
+    <p>プッシュ通知の操作を扱うクラスです。
+※注意：
+２種類のメソッド（インスタンスメソッド Instance method とスタティックメソッド Static method）があります。
+それぞれリファレンス上の表記と利用時のメソッドが異なりますので、下記を参考にご利用ください。</p>
+<ul>
+<li>リファレンス上の表記が「NCMB.Push#メソッド名」: インスタンスメソッド Instance method
+<ul>
+<li>利用例）NCMB.Push#send</li>
+</ul>
+<pre class="code prettyprint"><code>var push = new ncmb.Push();
+push.set(&quot;immediateDeliveryFlag&quot;, true)
+     .set(&quot;message&quot;, &quot;Hello, World!&quot;)
+     .set(&quot;target&quot;, [&quot;ios&quot;, &quot;android&quot;]);
+push.send()
+</code></pre>
+</li>
+<li>リファレンス上の表記が「NCMB.PushConstructor#メソッド名」: スタティックメソッド Static method
+<ul>
+<li>Pushの場合は、お客様に提供するスタティックメソッドはクエリQueryのみになります。</li>
+</ul>
+</li>
+</ul>
 
 </div>
 
@@ -175,7 +196,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_push.js.html#l92"><code>lib&#x2F;push.js:92</code></a>
+        <a href="../files/lib_push.js.html#l107"><code>lib&#x2F;push.js:107</code></a>
         </p>
 
 
@@ -240,7 +261,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_push.js.html#l60"><code>lib&#x2F;push.js:60</code></a>
+        <a href="../files/lib_push.js.html#l75"><code>lib&#x2F;push.js:75</code></a>
         </p>
 
 
@@ -309,7 +330,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_push.js.html#l166"><code>lib&#x2F;push.js:166</code></a>
+        <a href="../files/lib_push.js.html#l181"><code>lib&#x2F;push.js:181</code></a>
         </p>
 
 
@@ -385,7 +406,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_push.js.html#l116"><code>lib&#x2F;push.js:116</code></a>
+        <a href="../files/lib_push.js.html#l131"><code>lib&#x2F;push.js:131</code></a>
         </p>
 
 
@@ -450,7 +471,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_push.js.html#l200"><code>lib&#x2F;push.js:200</code></a>
+        <a href="../files/lib_push.js.html#l215"><code>lib&#x2F;push.js:215</code></a>
         </p>
 
 

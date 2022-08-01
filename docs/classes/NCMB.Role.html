@@ -109,6 +109,24 @@
 ユーザおよび子ロールの追加・削除はsave/update完了時に反映されます。</p>
 <p>ロールへのユーザもしくは子ロールの追加と削除を同時に行うことはできません。
 追加・削除の設定を行い、保存前に他方を設定した場合、後に行った処理が上書きされます。</p>
+<p>※注意：
+２種類のメソッド（インスタンスメソッド Instance method とスタティックメソッド Static method）があります。
+それぞれリファレンス上の表記と利用時のメソッドが異なりますので、下記を参考にご利用ください。</p>
+<ul>
+<li>リファレンス上の表記が「NCMB.Role#メソッド名」: インスタンスメソッド Instance method
+<ul>
+<li>利用例）NCMB.Role#addUser</li>
+</ul>
+<pre class="code prettyprint"><code>var freePlanRole = new ncmb.Role(&quot;freePlan&quot;);
+freePlanRole.addUser(user);
+</code></pre>
+</li>
+<li>リファレンス上の表記が「NCMB.RoleConstructor#メソッド名」: スタティックメソッド Static method
+<ul>
+<li>Roleの場合は、お客様に提供するスタティックメソッドはありません。</li>
+</ul>
+</li>
+</ul>
 
 </div>
 
@@ -202,7 +220,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_role.js.html#l183"><code>lib&#x2F;role.js:183</code></a>
+        <a href="../files/lib_role.js.html#l196"><code>lib&#x2F;role.js:196</code></a>
         </p>
 
 
@@ -266,7 +284,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_role.js.html#l175"><code>lib&#x2F;role.js:175</code></a>
+        <a href="../files/lib_role.js.html#l188"><code>lib&#x2F;role.js:188</code></a>
         </p>
 
 
@@ -330,7 +348,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_role.js.html#l151"><code>lib&#x2F;role.js:151</code></a>
+        <a href="../files/lib_role.js.html#l164"><code>lib&#x2F;role.js:164</code></a>
         </p>
 
 
@@ -395,7 +413,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_role.js.html#l215"><code>lib&#x2F;role.js:215</code></a>
+        <a href="../files/lib_role.js.html#l228"><code>lib&#x2F;role.js:228</code></a>
         </p>
 
 
@@ -462,7 +480,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_role.js.html#l207"><code>lib&#x2F;role.js:207</code></a>
+        <a href="../files/lib_role.js.html#l220"><code>lib&#x2F;role.js:220</code></a>
         </p>
 
 
@@ -529,7 +547,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_role.js.html#l199"><code>lib&#x2F;role.js:199</code></a>
+        <a href="../files/lib_role.js.html#l212"><code>lib&#x2F;role.js:212</code></a>
         </p>
 
 
@@ -593,7 +611,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_role.js.html#l191"><code>lib&#x2F;role.js:191</code></a>
+        <a href="../files/lib_role.js.html#l204"><code>lib&#x2F;role.js:204</code></a>
         </p>
 
 
@@ -657,7 +675,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_role.js.html#l78"><code>lib&#x2F;role.js:78</code></a>
+        <a href="../files/lib_role.js.html#l91"><code>lib&#x2F;role.js:91</code></a>
         </p>
 
 
@@ -722,7 +740,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_role.js.html#l110"><code>lib&#x2F;role.js:110</code></a>
+        <a href="../files/lib_role.js.html#l123"><code>lib&#x2F;role.js:123</code></a>
         </p>
 
 
@@ -790,7 +808,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_role.js.html#l252"><code>lib&#x2F;role.js:252</code></a>
+        <a href="../files/lib_role.js.html#l265"><code>lib&#x2F;role.js:265</code></a>
         </p>
 
 

@@ -99,7 +99,22 @@ var Query        = require(&quot;./query&quot;);
 
 /**
 * プッシュ通知の操作を扱うクラスです。
-* 
+* ※注意：
+* ２種類のメソッド（インスタンスメソッド Instance method とスタティックメソッド Static method）があります。
+* それぞれリファレンス上の表記と利用時のメソッドが異なりますので、下記を参考にご利用ください。
+*
+*   - リファレンス上の表記が「NCMB.Push#メソッド名」: インスタンスメソッド Instance method
+*      - 利用例）NCMB.Push#send
+*     &#x60;&#x60;&#x60;
+*     var push = new ncmb.Push();
+*     push.set(&quot;immediateDeliveryFlag&quot;, true)
+*          .set(&quot;message&quot;, &quot;Hello, World!&quot;)
+*          .set(&quot;target&quot;, [&quot;ios&quot;, &quot;android&quot;]);
+*     push.send()
+*     &#x60;&#x60;&#x60;
+*   - リファレンス上の表記が「NCMB.PushConstructor#メソッド名」: スタティックメソッド Static method
+*      - Pushの場合は、お客様に提供するスタティックメソッドはクエリQueryのみになります。
+*
 * @class NCMB.Push
 * @param {Object} attrs インスタンス生成時に設定するプロパティ
 */
@@ -297,6 +312,7 @@ var Push = module.exports = function(ncmb){
  * @param {Object} [attrs] インスタンス生成時に設定するプロパティ
  * @return {NCMB.Push}
  */
+
     </pre>
 </div>
                     </div>

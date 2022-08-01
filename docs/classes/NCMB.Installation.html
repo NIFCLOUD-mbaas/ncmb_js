@@ -105,6 +105,26 @@
 
 <div class="box intro">
     <p>プッシュ配信端末の操作を扱うクラスです。</p>
+<p>※注意：
+２種類のメソッド（インスタンスメソッド Instance method とスタティックメソッド Static method）があります。
+それぞれリファレンス上の表記と利用時のメソッドが異なりますので、下記を参考にご利用ください。</p>
+<ul>
+<li>リファレンス上の表記が「NCMB.Installation#メソッド名」: インスタンスメソッド Instance method
+<ul>
+<li>利用例）NCMB.Installation#update<pre class="code prettyprint"><code>var installation = ncmb.Installation()
+installation.objectId = &quot;xxxxxxx&quot;;
+installation.set(&quot;region&quot;, &quot;Asia&quot;);
+installation.update();
+</code></pre>
+</li>
+</ul>
+</li>
+<li>リファレンス上の表記が「NCMB.InstallationConstructor#メソッド名」: スタティックメソッド Static method
+<ul>
+<li>Installationの場合は、お客様に提供するスタティックメソッドはクエリQueryのみになります。</li>
+</ul>
+</li>
+</ul>
 
 </div>
 
@@ -170,7 +190,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_installation.js.html#l62"><code>lib&#x2F;installation.js:62</code></a>
+        <a href="../files/lib_installation.js.html#l78"><code>lib&#x2F;installation.js:78</code></a>
         </p>
 
 
@@ -235,7 +255,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_installation.js.html#l86"><code>lib&#x2F;installation.js:86</code></a>
+        <a href="../files/lib_installation.js.html#l102"><code>lib&#x2F;installation.js:102</code></a>
         </p>
 
 
@@ -300,7 +320,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_installation.js.html#l135"><code>lib&#x2F;installation.js:135</code></a>
+        <a href="../files/lib_installation.js.html#l151"><code>lib&#x2F;installation.js:151</code></a>
         </p>
 
 

@@ -100,7 +100,23 @@ var Operation    = require(&quot;./operation&quot;);
 
 /**
 * プッシュ配信端末の操作を扱うクラスです。
-* 
+*
+* ※注意：
+* ２種類のメソッド（インスタンスメソッド Instance method とスタティックメソッド Static method）があります。
+* それぞれリファレンス上の表記と利用時のメソッドが異なりますので、下記を参考にご利用ください。
+*
+*   - リファレンス上の表記が「NCMB.Installation#メソッド名」: インスタンスメソッド Instance method
+*      - 利用例）NCMB.Installation#update
+*        &#x60;&#x60;&#x60;
+*        var installation = ncmb.Installation()
+*        installation.objectId = &quot;xxxxxxx&quot;;
+*        installation.set(&quot;region&quot;, &quot;Asia&quot;);
+*        installation.update();
+*        &#x60;&#x60;&#x60;
+*   - リファレンス上の表記が「NCMB.InstallationConstructor#メソッド名」: スタティックメソッド Static method
+*      - Installationの場合は、お客様に提供するスタティックメソッドはクエリQueryのみになります。
+*
+*
 * @class NCMB.Installation
 * @extends {Operation}
 * @param {Object} attrs インスタンス生成時に設定するプロパティ
@@ -232,6 +248,7 @@ var Installation = module.exports = function(ncmb){
  * @param {Object} [attrs] インスタンス生成時に設定するプロパティ
  * @return {NCMB.Installation}
  */
+
     </pre>
 </div>
                     </div>

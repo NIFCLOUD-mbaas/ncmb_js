@@ -105,6 +105,29 @@
 <p>このクラスはすべてクラスメソッドで構成されており、インスタンスを生成せずに利用します。
 Queryではファイルの付加情報（ファイル名、更新日時など）のみを検索・取得し、ファイルのバイナリデータそのものは取得しません。
 バイナリデータを取得したい場合はdownloadメソッドを利用してください。</p>
+<p>※注意：
+２種類のメソッド（インスタンスメソッド Instance method とスタティックメソッド Static method）があります。
+それぞれリファレンス上の表記と利用時のメソッドが異なりますので、下記を参考にご利用ください。</p>
+<ul>
+<li>リファレンス上の表記が「NCMB.File#メソッド名」: インスタンスメソッド Instance method
+<ul>
+<li>Fileの場合は、お客様に提供するインスタンスメソッドはありません</li>
+</ul>
+</li>
+<li>リファレンス上の表記が「NCMB.FileConstructor#メソッド名」: スタティックメソッド Static method
+<ul>
+<li>利用例）NCMB.FileConstructor#download<pre class="code prettyprint"><code>ncmb.File.download(&quot;abc.txt&quot;)
+.then(function(fileData){
+// ファイル取得後処理
+})
+.catch(function(err){
+// エラー処理
+});
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
 
 </div>
 
@@ -125,19 +148,19 @@ Queryではファイルの付加情報（ファイル名、更新日時など）
 
                     <ul class="index-list methods">
                             <li class="index-item method">
-                                <a href="#method_NCMB.File#delete">NCMB.File#delete</a>
+                                <a href="#method_NCMB.FileConstructor#delete">NCMB.FileConstructor#delete</a>
 
                             </li>
                             <li class="index-item method">
-                                <a href="#method_NCMB.File#download">NCMB.File#download</a>
+                                <a href="#method_NCMB.FileConstructor#download">NCMB.FileConstructor#download</a>
 
                             </li>
                             <li class="index-item method">
-                                <a href="#method_NCMB.File#updateACL">NCMB.File#updateACL</a>
+                                <a href="#method_NCMB.FileConstructor#updateACL">NCMB.FileConstructor#updateACL</a>
 
                             </li>
                             <li class="index-item method">
-                                <a href="#method_NCMB.File#upload">NCMB.File#upload</a>
+                                <a href="#method_NCMB.FileConstructor#upload">NCMB.FileConstructor#upload</a>
 
                             </li>
                     </ul>
@@ -150,8 +173,8 @@ Queryではファイルの付加情報（ファイル名、更新日時など）
             <div id="methods" class="api-class-tabpanel">
                 <h2 class="off-left">Methods</h2>
 
-<div id="method_NCMB.File#delete" class="method item">
-    <h3 class="name"><code>NCMB.File#delete</code></h3>
+<div id="method_NCMB.FileConstructor#delete" class="method item">
+    <h3 class="name"><code>NCMB.FileConstructor#delete</code></h3>
 
         <div class="args">
             <span class="paren">(</span><ul class="args-list inline commas">
@@ -177,7 +200,7 @@ Queryではファイルの付加情報（ファイル名、更新日時など）
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_file.js.html#l143"><code>lib&#x2F;file.js:143</code></a>
+        <a href="../files/lib_file.js.html#l162"><code>lib&#x2F;file.js:162</code></a>
         </p>
 
 
@@ -229,8 +252,8 @@ Queryではファイルの付加情報（ファイル名、更新日時など）
 
 
 </div>
-<div id="method_NCMB.File#download" class="method item">
-    <h3 class="name"><code>NCMB.File#download</code></h3>
+<div id="method_NCMB.FileConstructor#download" class="method item">
+    <h3 class="name"><code>NCMB.FileConstructor#download</code></h3>
 
         <div class="args">
             <span class="paren">(</span><ul class="args-list inline commas">
@@ -259,7 +282,7 @@ Queryではファイルの付加情報（ファイル名、更新日時など）
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_file.js.html#l71"><code>lib&#x2F;file.js:71</code></a>
+        <a href="../files/lib_file.js.html#l90"><code>lib&#x2F;file.js:90</code></a>
         </p>
 
 
@@ -325,8 +348,8 @@ Queryではファイルの付加情報（ファイル名、更新日時など）
 
 
 </div>
-<div id="method_NCMB.File#updateACL" class="method item">
-    <h3 class="name"><code>NCMB.File#updateACL</code></h3>
+<div id="method_NCMB.FileConstructor#updateACL" class="method item">
+    <h3 class="name"><code>NCMB.FileConstructor#updateACL</code></h3>
 
         <div class="args">
             <span class="paren">(</span><ul class="args-list inline commas">
@@ -355,7 +378,7 @@ Queryではファイルの付加情報（ファイル名、更新日時など）
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_file.js.html#l107"><code>lib&#x2F;file.js:107</code></a>
+        <a href="../files/lib_file.js.html#l126"><code>lib&#x2F;file.js:126</code></a>
         </p>
 
 
@@ -420,8 +443,8 @@ Queryではファイルの付加情報（ファイル名、更新日時など）
 
 
 </div>
-<div id="method_NCMB.File#upload" class="method item">
-    <h3 class="name"><code>NCMB.File#upload</code></h3>
+<div id="method_NCMB.FileConstructor#upload" class="method item">
+    <h3 class="name"><code>NCMB.FileConstructor#upload</code></h3>
 
         <div class="args">
             <span class="paren">(</span><ul class="args-list inline commas">
@@ -453,7 +476,7 @@ Queryではファイルの付加情報（ファイル名、更新日時など）
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_file.js.html#l27"><code>lib&#x2F;file.js:27</code></a>
+        <a href="../files/lib_file.js.html#l46"><code>lib&#x2F;file.js:46</code></a>
         </p>
 
 

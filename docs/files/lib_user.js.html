@@ -368,6 +368,37 @@ var User = module.exports = function(ncmb){
   };
 
   /**
+  * パスワードをリセットするために指定したmailAddressメールアドレスにメールを送信します。
+  *
+  * @method NCMB.UserConstructor#requestPasswordReset
+  * @param {string} mailAddress 登録するメールアドレス
+  * @param {function} [callback] コールバック関数
+  * @return {Promise&lt;any&gt;} APIレスポンス
+  */
+  User.requestPasswordReset = function(mailAddress,callback){
+    if (! mailAddress) {
+       return ( callback || Promise.reject.bind(Promise))(new Errors.NoMailAddressError(&quot;MailAddress must be set.&quot;));
+    }
+    return ncmb.request({
+      path: &quot;/&quot; + ncmb.version + &quot;/requestPasswordReset&quot;,
+      method: &quot;POST&quot;,
+      data: {&#x27;mailAddress&#x27;: mailAddress }
+    }).then(function(data){
+      var obj = null;
+      try{
+        obj = JSON.parse(data);
+      }catch(err){
+        throw err;
+      }
+      if(callback) return callback(null, obj);
+      return obj;
+    }).catch(function(err){
+      if(callback) return callback(err, null);
+      throw err;
+    });
+  };
+
+  /**
   * メールアドレス認証の登録メールを送信します。
   * メール内でパスワード入力を行い、登録が完了した時点で認証が可能となります。
   *

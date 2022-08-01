@@ -2407,6 +2407,31 @@
         {
             "file": "lib/user.js",
             "line": 276,
+            "description": "パスワードをリセットするために指定したmailAddressメールアドレスにメールを送信します。",
+            "itemtype": "method",
+            "name": "NCMB.UserConstructor#requestPasswordReset",
+            "params": [
+                {
+                    "name": "mailAddress",
+                    "description": "登録するメールアドレス",
+                    "type": "String"
+                },
+                {
+                    "name": "callback",
+                    "description": "コールバック関数",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "APIレスポンス",
+                "type": "Promise<any>"
+            },
+            "class": "NCMB.User"
+        },
+        {
+            "file": "lib/user.js",
+            "line": 307,
             "description": "メールアドレス認証の登録メールを送信します。\nメール内でパスワード入力を行い、登録が完了した時点で認証が可能となります。",
             "itemtype": "method",
             "name": "NCMB.UserConstructor#requestSignUpEmail",
@@ -2431,7 +2456,7 @@
         },
         {
             "file": "lib/user.js",
-            "line": 302,
+            "line": 333,
             "description": "ユーザ情報の更新を行います。",
             "itemtype": "method",
             "name": "NCMB.User#update",
@@ -2451,7 +2476,7 @@
         },
         {
             "file": "lib/user.js",
-            "line": 349,
+            "line": 380,
             "description": "ユーザ情報の削除を行います。",
             "itemtype": "method",
             "name": "NCMB.User#delete",
@@ -2471,7 +2496,7 @@
         },
         {
             "file": "lib/user.js",
-            "line": 380,
+            "line": 411,
             "description": "ログイン（セッショントークンの取得）およびカレントユーザへの設定を行います。\nuserNameおよびpasswordプロパティをもつUserインスタンスを第一引数に設定しそのユーザでログイン可能です。\nその場合、第二引数を省略可能です。\nすでにセッショントークンを保持している場合、更新処理は行いません。\nセッショントークンの期限切れが発生している場合、一度ログアウトしてから再度ログインしてください。",
             "itemtype": "method",
             "name": "NCMB.UserConstructor#login",
@@ -2502,7 +2527,7 @@
         },
         {
             "file": "lib/user.js",
-            "line": 425,
+            "line": 456,
             "description": "ログイン（セッショントークンの取得）を行います。\nカレントユーザへの設定は行いません。\nuserNameおよびpasswordプロパティを保持している必要があります。\nすでにセッショントークンを保持している場合、更新処理は行いません。\nセッショントークンの期限切れが発生している場合、一度ログアウトしてから再度ログインしてください。",
             "itemtype": "method",
             "name": "NCMB.User#login",
@@ -2522,7 +2547,7 @@
         },
         {
             "file": "lib/user.js",
-            "line": 472,
+            "line": 503,
             "description": "ログイン（セッショントークンの取得）およびカレントユーザへの設定を行います。\nmailAddressおよびpasswordプロパティをもつUserインスタンスを第一引数に設定し、そのユーザでログイン可能です。\nその場合、第二引数を省略可能です。\nすでにセッショントークンを保持している場合、更新処理は行いません。\nセッショントークンの期限切れが発生している場合、一度ログアウトしてから再度ログインしてください。",
             "itemtype": "method",
             "name": "NCMB.UserConstructor#loginWithMailAddress",
@@ -2553,7 +2578,7 @@
         },
         {
             "file": "lib/user.js",
-            "line": 514,
+            "line": 545,
             "description": "ログイン（セッショントークンの取得）を行います。\nカレントユーザへの設定は行いません。\nmailAddressおよびpasswordプロパティを保持している必要があります。\nすでにセッショントークンを保持している場合、更新処理は行いません。\nセッショントークンの期限切れが発生している場合、一度ログアウトしてから再度ログインしてください。",
             "itemtype": "method",
             "name": "NCMB.User#loginWithMailAddress",
@@ -2573,7 +2598,7 @@
         },
         {
             "file": "lib/user.js",
-            "line": 561,
+            "line": 592,
             "description": "匿名ユーザとしてログイン（セッショントークンの取得）を行います。\nすでにセッショントークンを保持している場合、更新処理は行いません。\nUUIDは省略可能です。省略した場合、UUIDを乱数で自動生成します。\nUUIDにUserのインスタンスを入力し、そのインスタンスでログイン可能です。\nその場合、userNameもしくはauthDataプロパティを持つインスタンスではログインできません。",
             "itemtype": "method",
             "name": "NCMB.UserConstructor#loginAsAnonymous",
@@ -2598,7 +2623,7 @@
         },
         {
             "file": "lib/user.js",
-            "line": 600,
+            "line": 631,
             "description": "匿名ユーザとしてログイン（セッショントークンの取得）を行います。\nすでにセッショントークンを保持している場合、更新処理は行いません。\nUUIDは省略可能です。省略した場合、UUIDを乱数で自動生成します。\nuserNameもしくはauthDataプロパティを持つインスタンスではログインできません。",
             "itemtype": "method",
             "name": "NCMB.User#loginAsAnonymous",
@@ -2623,7 +2648,7 @@
         },
         {
             "file": "lib/user.js",
-            "line": 665,
+            "line": 696,
             "description": "SNS連携認証ユーザとしてログイン（セッショントークンの取得）およびカレントユーザへの設定を行います。\nauthDataプロパティをもつUserインスタンスを第一引数に設定し、そのユーザでログイン可能です。\nその場合、第二引数を省略可能です。\nまた、authDataに複数のSNS連携情報を持つインスタンスを設定する場合、第二引数で認証に使用するプロバイダを指定する必要があります。\nすでにセッショントークンを保持している場合、更新処理は行いません。\nセッショントークンの期限切れが発生している場合、一度ログアウトしてから再度ログインしてください。\nメソッドの返却値はログインしているユーザの情報です。",
             "itemtype": "method",
             "name": "NCMB.UserConstructor#loginWith",
@@ -2654,7 +2679,7 @@
         },
         {
             "file": "lib/user.js",
-            "line": 717,
+            "line": 748,
             "description": "SNS連携認証ユーザとしてログイン（セッショントークンの取得）を行います。\nauthDataプロパティをもつ場合、第一・第二引数を省略可能です。\nまた、authDataに複数のSNS連携情報を持つ場合、第一引数で認証に使用するプロバイダを指定する必要があります。\nauthDataプロパティをもち、かつprovide, dataを入力した場合、入力された情報で認証を行います。\nすでにセッショントークンを保持している場合、更新処理は行いません。\nセッショントークンの期限切れが発生している場合、一度ログアウトしてから再度ログインしてください。\nログインのみ実施しますが、カレントユーザへの反映を行いません。カレントユーザを反映したい場合、ncmb.User.loginWith(user)を行ってください。",
             "itemtype": "method",
             "name": "NCMB.User#loginWith",
@@ -2686,7 +2711,7 @@
         },
         {
             "file": "lib/user.js",
-            "line": 797,
+            "line": 828,
             "description": "カレントユーザ情報およびセッショントークンの破棄を行います。\nカレントユーザに設定されていたインスタンス自体のセッショントークン情報は保持され続けます。\n別途プロトタイプメソッドでインスタンスのログアウトを実行してください。",
             "itemtype": "method",
             "name": "NCMB.UserConstructor#logout",
@@ -2706,7 +2731,7 @@
         },
         {
             "file": "lib/user.js",
-            "line": 811,
+            "line": 842,
             "description": "インスタンスのセッショントークンの破棄を行います。\nカレントユーザに設定されているユーザをこのメソッドでログアウトした場合でもカレントユーザ情報は破棄されません。\nそのままAPIリクエストを行った場合、不正なセッショントークン利用でエラーが返ります。",
             "itemtype": "method",
             "name": "NCMB.User#logout",
@@ -2726,7 +2751,7 @@
         },
         {
             "file": "lib/user.js",
-            "line": 856,
+            "line": 887,
             "description": "メールアドレスの確認を行っているかどうかを判別します。",
             "itemtype": "method",
             "name": "NCMB.User#isMailAddressConfirmed",
@@ -2738,7 +2763,7 @@
         },
         {
             "file": "lib/user.js",
-            "line": 868,
+            "line": 899,
             "description": "Facebook/Google/Twiter/Apple等のSNSアカウントと連絡を行います。",
             "itemtype": "method",
             "name": "linkWith",
@@ -2766,7 +2791,7 @@
         },
         {
             "file": "lib/user.js",
-            "line": 896,
+            "line": 927,
             "description": "Facebook/Twitter/Google/Apple等のSNSアカウントの連携を削除します。",
             "itemtype": "method",
             "name": "unLinkWith",
@@ -2789,14 +2814,14 @@
         },
         {
             "file": "lib/user.js",
-            "line": 966,
+            "line": 997,
             "interface": "NCMB.UserConstructor",
             "extends": "Query<User>",
             "class": "NCMB.User"
         },
         {
             "file": "lib/user.js",
-            "line": 971,
+            "line": 1002,
             "itemtype": "method",
             "name": "NCMB.UserConstructor#new",
             "params": [
@@ -2849,7 +2874,7 @@
         },
         {
             "message": "unknown tag: name",
-            "line": " lib/user.js:971"
+            "line": " lib/user.js:1002"
         },
         {
             "message": "Missing item type",
@@ -2921,7 +2946,7 @@
         },
         {
             "message": "Missing item type",
-            "line": " lib/user.js:966"
+            "line": " lib/user.js:997"
         }
     ]
 }

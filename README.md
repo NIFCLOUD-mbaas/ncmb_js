@@ -19,10 +19,10 @@ For  SDK installation steps, see [Quick Start](https://mbaas.nifcloud.com/doc/cu
 
 | Environment              | Supported version |
 |:---                  |:---        |
-| Node.js              | 10.x, 12.x, 14.x, 16.x|
+| Node.js              | 14.x, 16.x, 18.x |
 | Mozilla Firefox      | Latest version     |
 | Google Chrome        | Latest version     |
- (※as of November, 2021)
+ (※as of August, 2022)
 
 Remember to turn on Allow Cookies on your browsers.
 

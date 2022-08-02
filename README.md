@@ -323,8 +323,7 @@ www/
 
 ## Create SDK Document
 
-Run `npm run document:generate` command, then documents has created in 
-`docs/` directory.
+Run `npm run document:generate` command, then documents has created in `docs/` directory.
 
 ## Dependency
   Please refer to Dependencies part in package.json for details.

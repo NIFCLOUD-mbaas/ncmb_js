@@ -1,0 +1,2952 @@
+{
+    "project": {},
+    "files": {
+        "lib/acl.js": {
+            "name": "lib/acl.js",
+            "modules": {},
+            "classes": {
+                "NCMB.Acl": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/datastore.js": {
+            "name": "lib/datastore.js",
+            "modules": {},
+            "classes": {
+                "NCMB.DataStore": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/file.js": {
+            "name": "lib/file.js",
+            "modules": {},
+            "classes": {
+                "NCMB.File": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/geopoint.js": {
+            "name": "lib/geopoint.js",
+            "modules": {},
+            "classes": {
+                "NCMB.GeoPoint": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/installation.js": {
+            "name": "lib/installation.js",
+            "modules": {},
+            "classes": {
+                "NCMB.Installation": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/ncmb.js": {
+            "name": "lib/ncmb.js",
+            "modules": {},
+            "classes": {
+                "NCMB": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/operation.js": {
+            "name": "lib/operation.js",
+            "modules": {},
+            "classes": {
+                "Operation": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/push.js": {
+            "name": "lib/push.js",
+            "modules": {},
+            "classes": {
+                "NCMB.Push": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/query.js": {
+            "name": "lib/query.js",
+            "modules": {},
+            "classes": {
+                "Query<T>": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/relation.js": {
+            "name": "lib/relation.js",
+            "modules": {},
+            "classes": {
+                "NCMB.Relation": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/role.js": {
+            "name": "lib/role.js",
+            "modules": {},
+            "classes": {
+                "NCMB.Role": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/script.js": {
+            "name": "lib/script.js",
+            "modules": {},
+            "classes": {
+                "NCMB.Script": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/user.js": {
+            "name": "lib/user.js",
+            "modules": {},
+            "classes": {
+                "NCMB.User": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {},
+    "classes": {
+        "NCMB.Acl": {
+            "name": "NCMB.Acl",
+            "shortname": "NCMB.Acl",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "lib/acl.js",
+            "line": 5,
+            "description": "オブジェクトへのアクセス権限を設定するクラスです。\n\nDataStoreやUserクラスのインスタンスに付加して利用します。<br>\n指定するユーザおよびロールはmobile backendに保存済みである必要があります。",
+            "params": [
+                {
+                    "name": "permissions",
+                    "description": "Acl情報のJSONオブジェクト",
+                    "type": "Object"
+                }
+            ]
+        },
+        "NCMB.DataStore": {
+            "name": "NCMB.DataStore",
+            "shortname": "NCMB.DataStore",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "lib/datastore.js",
+            "line": 9,
+            "description": "データストアへの入出力について扱うクラスです。\n※注意：\n２種類のメソッド（インスタンスメソッド Instance method とスタティックメソッド Static method）があります。\nそれぞれリファレンス上の表記と利用時のメソッドが異なりますので、下記を参考にご利用ください。\n\n  - リファレンス上の表記が「NCMB.DataStore#メソッド名」: インスタンスメソッド Instance method\n     - 利用例）NCMB.DataStore#save\n       ```\n       var GameScore = ncmb.DataStore(\"GameScore\");\n       var gameScore = new GameScore();\n       gameScore.set(\"score\", 1337)\n                .save()\n       ```\n  - リファレンス上の表記が「NCMB.DataStoreConstructor#メソッド名」: スタティックメソッド Static method\n     - DataStoreの場合は、お客様に提供するスタティックメソッドはクエリQueryのみになります。",
+            "extends": "{Operation}",
+            "params": [
+                {
+                    "name": "name",
+                    "description": "mobile backend にインスタンスを保存するクラス名。",
+                    "type": "String"
+                }
+            ]
+        },
+        "NCMB.File": {
+            "name": "NCMB.File",
+            "shortname": "NCMB.File",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "lib/file.js",
+            "line": 6,
+            "description": "ファイルストアへの入出力を扱うクラスです。\n\nこのクラスはすべてクラスメソッドで構成されており、インスタンスを生成せずに利用します。\nQueryではファイルの付加情報（ファイル名、更新日時など）のみを検索・取得し、ファイルのバイナリデータそのものは取得しません。\nバイナリデータを取得したい場合はdownloadメソッドを利用してください。\n\n※注意：\n２種類のメソッド（インスタンスメソッド Instance method とスタティックメソッド Static method）があります。\nそれぞれリファレンス上の表記と利用時のメソッドが異なりますので、下記を参考にご利用ください。\n\n  - リファレンス上の表記が「NCMB.File#メソッド名」: インスタンスメソッド Instance method\n     - Fileの場合は、お客様に提供するインスタンスメソッドはありません\n  - リファレンス上の表記が「NCMB.FileConstructor#メソッド名」: スタティックメソッド Static method\n     - 利用例）NCMB.FileConstructor#download\n       ```\n       ncmb.File.download(\"abc.txt\")\n       .then(function(fileData){\n       // ファイル取得後処理\n       })\n       .catch(function(err){\n       // エラー処理\n       });\n       ```"
+        },
+        "NCMB.GeoPoint": {
+            "name": "NCMB.GeoPoint",
+            "shortname": "NCMB.GeoPoint",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "lib/geopoint.js",
+            "line": 5,
+            "description": "位置情報を扱うクラスです。\n\nncmbオブジェクトのプロパティに設定して利用します。",
+            "params": [
+                {
+                    "name": "lat",
+                    "description": "緯度 -90~90の範囲で指定する",
+                    "type": "Number"
+                },
+                {
+                    "name": "lng",
+                    "description": "経度 -180~180の範囲で指定する",
+                    "type": "Number"
+                }
+            ]
+        },
+        "NCMB.Installation": {
+            "name": "NCMB.Installation",
+            "shortname": "NCMB.Installation",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "lib/installation.js",
+            "line": 7,
+            "description": "プッシュ配信端末の操作を扱うクラスです。\n\n※注意：\n２種類のメソッド（インスタンスメソッド Instance method とスタティックメソッド Static method）があります。\nそれぞれリファレンス上の表記と利用時のメソッドが異なりますので、下記を参考にご利用ください。\n\n  - リファレンス上の表記が「NCMB.Installation#メソッド名」: インスタンスメソッド Instance method\n     - 利用例）NCMB.Installation#update\n       ```\n       var installation = ncmb.Installation()\n       installation.objectId = \"xxxxxxx\";\n       installation.set(\"region\", \"Asia\");\n       installation.update();\n       ```\n  - リファレンス上の表記が「NCMB.InstallationConstructor#メソッド名」: スタティックメソッド Static method\n     - Installationの場合は、お客様に提供するスタティックメソッドはクエリQueryのみになります。",
+            "extends": "{Operation}",
+            "params": [
+                {
+                    "name": "attrs",
+                    "description": "インスタンス生成時に設定するプロパティ",
+                    "type": "Object"
+                }
+            ]
+        },
+        "NCMB": {
+            "name": "NCMB",
+            "shortname": "NCMB",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "lib/ncmb.js",
+            "line": 14,
+            "description": "すべてのNCMBクラスおよびメソッドを定義します。",
+            "params": [
+                {
+                    "name": "apikey",
+                    "description": "アプリケーションキー。必須",
+                    "type": "String"
+                },
+                {
+                    "name": "clientkey",
+                    "description": "クライアントキー。必須",
+                    "type": "String"
+                },
+                {
+                    "name": "config",
+                    "description": "通信設定。省略可能",
+                    "type": "Object",
+                    "optional": true
+                }
+            ]
+        },
+        "Operation": {
+            "name": "Operation",
+            "shortname": "Operation",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "lib/operation.js",
+            "line": 5,
+            "description": "更新時に、既に保存されている値に対して操作を行うオペランドを扱うモジュールです。（set, getは更新時以外も利用可能。）\n\nDataStore, User, Role, Installation クラスから呼び出し、それぞれのプロトタイプメソッドとして利用します。"
+        },
+        "NCMB.Push": {
+            "name": "NCMB.Push",
+            "shortname": "NCMB.Push",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "lib/push.js",
+            "line": 6,
+            "description": "プッシュ通知の操作を扱うクラスです。\n※注意：\n２種類のメソッド（インスタンスメソッド Instance method とスタティックメソッド Static method）があります。\nそれぞれリファレンス上の表記と利用時のメソッドが異なりますので、下記を参考にご利用ください。\n\n  - リファレンス上の表記が「NCMB.Push#メソッド名」: インスタンスメソッド Instance method\n     - 利用例）NCMB.Push#send\n    ```\n    var push = new ncmb.Push();\n    push.set(\"immediateDeliveryFlag\", true)\n         .set(\"message\", \"Hello, World!\")\n         .set(\"target\", [\"ios\", \"android\"]);\n    push.send()\n    ```\n  - リファレンス上の表記が「NCMB.PushConstructor#メソッド名」: スタティックメソッド Static method\n     - Pushの場合は、お客様に提供するスタティックメソッドはクエリQueryのみになります。",
+            "params": [
+                {
+                    "name": "attrs",
+                    "description": "インスタンス生成時に設定するプロパティ",
+                    "type": "Object"
+                }
+            ]
+        },
+        "Query<T>": {
+            "name": "Query<T>",
+            "shortname": "Query<T>",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "lib/query.js",
+            "line": 6,
+            "description": "オブジェクトの検索を行うモジュールです。\n\nDataStore, User, Role, Fileクラスから呼び出し、それぞれのクラスメソッドとして利用します。\n検索条件を設定するメソッドに続けてfetch/fetchAllをメソッドチェーンで実行して利用します。"
+        },
+        "NCMB.Relation": {
+            "name": "NCMB.Relation",
+            "shortname": "NCMB.Relation",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "lib/relation.js",
+            "line": 4,
+            "description": "リレーションについて扱うクラスです。\n\nオブジェクトのプロパティに対してインスタンスを設定することで、同一クラスに限り複数のオブジェクトを関連づけることができます。\n関連づけるオブジェクトがすべて同一クラスであれば、関連づけられるオブジェクトとは別クラスでも指定可能です。\n\nインスタンス生成時に関連づけるクラス名を指定可能です。指定しなかった場合、最初に追加したオブジェクトのクラスが指定されます。\n指定した以外のクラスのインスタンスを入力した場合、エラーが返ります。\n\n※注意：\n２種類のメソッド（インスタンスメソッド Instance method とスタティックメソッド Static method）があります。\nそれぞれリファレンス上の表記と利用時のメソッドが異なりますので、下記を参考にご利用ください。\n\n  - リファレンス上の表記が「NCMB.Relation#メソッド名」: インスタンスメソッド Instance method\n     - 利用例）NCMB.Relation#add\n       ```\n      var relation = new ncmb.Relation();\n      relation.add(food1).add(food2);\n       ```\n  - リファレンス上の表記が「NCMB.RelationConstructor#メソッド名」: スタティックメソッド Static method\n     - Relationの場合は、お客様に提供するスタティックメソッドはありません。",
+            "params": [
+                {
+                    "name": "relatingClass",
+                    "description": "関連づけるクラス名。省略可能",
+                    "type": "String"
+                }
+            ]
+        },
+        "NCMB.Role": {
+            "name": "NCMB.Role",
+            "shortname": "NCMB.Role",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "lib/role.js",
+            "line": 7,
+            "description": "ロールについて扱うクラスです。\n\nユーザや他のロール（子ロール）をまとめて権限管理を行うことができます。\nユーザおよび子ロールの追加・削除はsave/update完了時に反映されます。\n\nロールへのユーザもしくは子ロールの追加と削除を同時に行うことはできません。\n追加・削除の設定を行い、保存前に他方を設定した場合、後に行った処理が上書きされます。\n\n※注意：\n２種類のメソッド（インスタンスメソッド Instance method とスタティックメソッド Static method）があります。\nそれぞれリファレンス上の表記と利用時のメソッドが異なりますので、下記を参考にご利用ください。\n\n  - リファレンス上の表記が「NCMB.Role#メソッド名」: インスタンスメソッド Instance method\n     - 利用例）NCMB.Role#addUser\n      ```\n     var freePlanRole = new ncmb.Role(\"freePlan\");\n     freePlanRole.addUser(user);\n     ```\n  - リファレンス上の表記が「NCMB.RoleConstructor#メソッド名」: スタティックメソッド Static method\n     - Roleの場合は、お客様に提供するスタティックメソッドはありません。",
+            "extends": "{Operation}",
+            "params": [
+                {
+                    "name": "roleName",
+                    "description": "ロール名。インスタンス生成時に必須",
+                    "type": "String"
+                },
+                {
+                    "name": "attrs",
+                    "description": "インスタンス生成時に設定するプロパティ",
+                    "type": "Object"
+                }
+            ]
+        },
+        "NCMB.Script": {
+            "name": "NCMB.Script",
+            "shortname": "NCMB.Script",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "lib/script.js",
+            "line": 6,
+            "description": "Scriptの実行を扱うクラスです。\n\nメソッドは全て実行可能なインスタンスを生成し、状態を付与して返すファクトリメソッドです。\nメソッドチェインでヘッダ、ボディ、クエリを付与し、execメソッドで実行します。\n\nScript機能からのresponseは型が固定でないため、bodyキーにレスポンスを格納したObjectを返却します。"
+        },
+        "NCMB.User": {
+            "name": "NCMB.User",
+            "shortname": "NCMB.User",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "lib/user.js",
+            "line": 19,
+            "description": "会員および会員権限によるオブジェクトへのアクセスの管理を扱うクラスです。\n\nサインアップで登録の後、ログインすることでセッショントークンを取得します。\nセッショントークンを保持しているユーザをカレントユーザに設定することで、そのユーザの権限でオブジェクトにアクセスできるようになります。\nセッショントークンの有効期限はデフォルトで24時間です。期限切れの場合は一度ログアウトした後再度ログインを行ってください。（有効期限はダッシュボードで変更できます。）\n\nサインアップできるユーザ種別は、ユーザ名/パスワードでの認証、メールアドレス/パスワードでの認証、SNS連携(Facebook/Twitter/Google/Apple)での認証があります。\n認証方法によって登録時・ログイン時に使用するメソッドが変わります。\n\n※注意：\n２種類のメソッド（インスタンスメソッド Instance method とスタティックメソッド Static method）があります。\nそれぞれリファレンス上の表記と利用時のメソッドが異なりますので、下記を参考にご利用ください。\n\n  - リファレンス上の表記が「NCMB.User#メソッド名」: インスタンスメソッド Instance method\n     - 利用例）NCMB.User#login\n       ```\n       var user = new ncmb.User({userName:\"Yamada Tarou\", password:\"password\"});\n       user.login();\n       ```\n  - リファレンス上の表記が「NCMB.UserConstructor#メソッド名」: スタティックメソッド Static method\n     - 利用例）NCMB.UserConstructor#login\n       ```\n       ncmb.User.login(\"Yamada Tarou\", \"password\");\n       ```",
+            "extends": "{Operation}",
+            "params": [
+                {
+                    "name": "attrs",
+                    "description": "インスタンス生成時に設定するプロパティ",
+                    "type": "Object"
+                }
+            ]
+        }
+    },
+    "elements": {},
+    "classitems": [
+        {
+            "file": "lib/acl.js",
+            "line": 66,
+            "description": "全体への読み込み権限を設定します。",
+            "itemtype": "method",
+            "name": "NCMB.Acl#setPublicReadAccess",
+            "params": [
+                {
+                    "name": "allowed",
+                    "description": "true/false",
+                    "type": "Boolean"
+                }
+            ],
+            "return": {
+                "description": "権限追加後のインスタンス",
+                "type": "NCMB.Acl"
+            },
+            "class": "NCMB.Acl"
+        },
+        {
+            "file": "lib/acl.js",
+            "line": 77,
+            "description": "全体への書き込み権限を設定します。",
+            "itemtype": "method",
+            "name": "NCMB.Acl#setPublicWriteAccess",
+            "params": [
+                {
+                    "name": "allowed",
+                    "description": "true/false",
+                    "type": "Boolean"
+                }
+            ],
+            "return": {
+                "description": "権限追加後のインスタンス",
+                "type": "NCMB.Acl"
+            },
+            "class": "NCMB.Acl"
+        },
+        {
+            "file": "lib/acl.js",
+            "line": 88,
+            "description": "特定ユーザへの読み込み権限を設定します。",
+            "itemtype": "method",
+            "name": "NCMB.Acl#setUserReadAccess",
+            "params": [
+                {
+                    "name": "user",
+                    "description": "Userのインスタンス",
+                    "type": "NCMB.User"
+                },
+                {
+                    "name": "allowed",
+                    "description": "true/false",
+                    "type": "Boolean"
+                }
+            ],
+            "return": {
+                "description": "権限追加後のインスタンス",
+                "type": "NCMB.Acl"
+            },
+            "class": "NCMB.Acl"
+        },
+        {
+            "file": "lib/acl.js",
+            "line": 106,
+            "description": "特定ユーザへの書き込み権限を設定します。",
+            "itemtype": "method",
+            "name": "NCMB.Acl#setUserWriteAccess",
+            "params": [
+                {
+                    "name": "user",
+                    "description": "Userのインスタンス",
+                    "type": "NCMB.User"
+                },
+                {
+                    "name": "allowed",
+                    "description": "true/false",
+                    "type": "Boolean"
+                }
+            ],
+            "return": {
+                "description": "権限追加後のインスタンス",
+                "type": "NCMB.Acl"
+            },
+            "class": "NCMB.Acl"
+        },
+        {
+            "file": "lib/acl.js",
+            "line": 124,
+            "description": "特定ロールへの読み込み権限を設定します。\nroleNameにロールのインスタンスを入力することもできます。",
+            "itemtype": "method",
+            "name": "NCMB.Acl#setRoleReadAccess",
+            "params": [
+                {
+                    "name": "roleName",
+                    "description": "ロール名",
+                    "type": "String"
+                },
+                {
+                    "name": "allowed",
+                    "description": "true/false",
+                    "type": "Boolean"
+                }
+            ],
+            "return": {
+                "description": "権限追加後のインスタンス",
+                "type": "NCMB.Role"
+            },
+            "class": "NCMB.Acl"
+        },
+        {
+            "file": "lib/acl.js",
+            "line": 144,
+            "description": "特定ロールへの書き込み権限を設定します。\nroleNameにロールのインスタンスを入力することもできます。",
+            "itemtype": "method",
+            "name": "NCMB.Acl#setRoleWriteAccess",
+            "params": [
+                {
+                    "name": "roleName",
+                    "description": "ロール名",
+                    "type": "String"
+                },
+                {
+                    "name": "allowed",
+                    "description": "true/false",
+                    "type": "Boolean"
+                }
+            ],
+            "return": {
+                "description": "権限追加後のインスタンス",
+                "type": "NCMB.Role"
+            },
+            "class": "NCMB.Acl"
+        },
+        {
+            "file": "lib/acl.js",
+            "line": 164,
+            "description": "指定したユーザもしくはロールに設定されている権限を取得します。",
+            "itemtype": "method",
+            "name": "NCMB.Acl#get",
+            "params": [
+                {
+                    "name": "target",
+                    "description": "権限を取得するユーザもしくはロールのインスタンス。全体の権限を取得する場合は\"public\"を入力",
+                    "type": "NCMB.User|NCMB.Role|string"
+                },
+                {
+                    "name": "type",
+                    "description": "read/write",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "true/false",
+                "type": "NCMB.Role"
+            },
+            "class": "NCMB.Acl"
+        },
+        {
+            "file": "lib/acl.js",
+            "line": 205,
+            "interface": "NCMB.AclConstructor",
+            "class": "NCMB.Acl"
+        },
+        {
+            "file": "lib/acl.js",
+            "line": 209,
+            "itemtype": "method",
+            "name": "NCMB.AclConstructor#new",
+            "params": [
+                {
+                    "name": "permissions",
+                    "description": "Acl情報のJSONオブジェクト",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "NCMB.Acl"
+            },
+            "class": "NCMB.Acl"
+        },
+        {
+            "file": "lib/datastore.js",
+            "line": 84,
+            "description": "オブジェクトを保存します。",
+            "itemtype": "method",
+            "name": "NCMB.DataStore#save",
+            "params": [
+                {
+                    "name": "callback?",
+                    "description": "コールバック関数",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Promise<this>"
+            },
+            "class": "NCMB.DataStore"
+        },
+        {
+            "file": "lib/datastore.js",
+            "line": 116,
+            "description": "オブジェクトを更新します。",
+            "itemtype": "method",
+            "name": "NCMB.DataStore#update",
+            "params": [
+                {
+                    "name": "callback?",
+                    "description": "コールバック関数",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Promise<this>"
+            },
+            "class": "NCMB.DataStore"
+        },
+        {
+            "file": "lib/datastore.js",
+            "line": 157,
+            "description": "オブジェクトを削除します。",
+            "itemtype": "method",
+            "name": "NCMB.DataStore#delete",
+            "params": [
+                {
+                    "name": "callback?",
+                    "description": "コールバック関数",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Promise<void>"
+            },
+            "class": "NCMB.DataStore"
+        },
+        {
+            "file": "lib/datastore.js",
+            "line": 188,
+            "interface": "NCMB.DataStoreConstructor",
+            "extends": "Query<DataStore>",
+            "class": "NCMB.DataStore"
+        },
+        {
+            "file": "lib/datastore.js",
+            "line": 193,
+            "itemtype": "method",
+            "name": "NCMB.DataStoreConstructor#new",
+            "params": [
+                {
+                    "name": "attrs",
+                    "description": "",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "NCMB.DataStore"
+            },
+            "class": "NCMB.DataStore"
+        },
+        {
+            "file": "lib/file.js",
+            "line": 46,
+            "description": "ファイルストアにファイルを保存します。",
+            "itemtype": "method",
+            "name": "NCMB.FileConstructor#upload",
+            "params": [
+                {
+                    "name": "fileName",
+                    "description": "取得するバイナリデータのファイル名",
+                    "type": "String"
+                },
+                {
+                    "name": "fileData",
+                    "description": "保存するファイルデータ"
+                },
+                {
+                    "name": "acl",
+                    "description": "ファイルに対するアクセス権減",
+                    "type": "NCMB.Acl|function",
+                    "optional": true
+                },
+                {
+                    "name": "callback",
+                    "description": "",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "APIレスポンス",
+                "type": "Promise<any>"
+            },
+            "class": "NCMB.File"
+        },
+        {
+            "file": "lib/file.js",
+            "line": 90,
+            "description": "指定したファイルのバイナリデータを取得します。",
+            "itemtype": "method",
+            "name": "NCMB.FileConstructor#download",
+            "params": [
+                {
+                    "name": "fileName",
+                    "description": "取得するバイナリデータのファイル名",
+                    "type": "String"
+                },
+                {
+                    "name": "responseType",
+                    "description": "レスポンスバイナリのデータ形式 arraybuffer/blob (ブラウザ/Monaca利用時のみ必要)",
+                    "type": "String",
+                    "optional": true
+                },
+                {
+                    "name": "callback",
+                    "description": "コールバック関数",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "ファイルのバイナリデータ（付加情報は取得しません）",
+                "type": "Promise<any>"
+            },
+            "class": "NCMB.File"
+        },
+        {
+            "file": "lib/file.js",
+            "line": 126,
+            "description": "指定したファイルのACL情報を更新します。",
+            "itemtype": "method",
+            "name": "NCMB.FileConstructor#updateACL",
+            "params": [
+                {
+                    "name": "fileName",
+                    "description": "更新するファイル名",
+                    "type": "String"
+                },
+                {
+                    "name": "acl",
+                    "description": "更新後のacl情報を設定したncmb.ACLインスタンス",
+                    "type": "NCMB.Acl"
+                },
+                {
+                    "name": "callback",
+                    "description": "コールバック関数",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "APIレスポンス",
+                "type": "Promise<any>"
+            },
+            "class": "NCMB.File"
+        },
+        {
+            "file": "lib/file.js",
+            "line": 162,
+            "description": "指定したファイルを削除します。",
+            "itemtype": "method",
+            "name": "NCMB.FileConstructor#delete",
+            "params": [
+                {
+                    "name": "fileName",
+                    "description": "削除するファイル名",
+                    "type": "String"
+                },
+                {
+                    "name": "callback",
+                    "description": "コールバック関数",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Promise<void>"
+            },
+            "class": "NCMB.File"
+        },
+        {
+            "file": "lib/geopoint.js",
+            "line": 62,
+            "interface": "NCMB.GeoPointConstructor",
+            "class": "NCMB.GeoPoint"
+        },
+        {
+            "file": "lib/geopoint.js",
+            "line": 66,
+            "itemtype": "method",
+            "name": "NCMB.GeoPointConstructor#new",
+            "params": [
+                {
+                    "name": "lat",
+                    "description": "緯度 -90~90の範囲で指定する",
+                    "type": "Number"
+                },
+                {
+                    "name": "lng",
+                    "description": "経度 -180~180の範囲で指定する",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "NCMB.GeoPoint"
+            },
+            "class": "NCMB.GeoPoint"
+        },
+        {
+            "file": "lib/installation.js",
+            "line": 78,
+            "description": "配信端末情報を削除します。",
+            "itemtype": "method",
+            "name": "NCMB.Installation#delete",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "コールバック関数",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Promise<true>"
+            },
+            "class": "NCMB.Installation"
+        },
+        {
+            "file": "lib/installation.js",
+            "line": 102,
+            "description": "配信端末情報を更新します。",
+            "itemtype": "method",
+            "name": "NCMB.Installation#update",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "コールバック関数",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Promise<this>"
+            },
+            "class": "NCMB.Installation"
+        },
+        {
+            "file": "lib/installation.js",
+            "line": 146,
+            "interface": "NCMB.InstallationConstructor",
+            "extends": "Query<Installation>",
+            "class": "NCMB.Installation"
+        },
+        {
+            "file": "lib/installation.js",
+            "line": 151,
+            "itemtype": "method",
+            "name": "NCMB.InstallationConstructor#new",
+            "params": [
+                {
+                    "name": "attrs",
+                    "description": "インスタンス生成時に設定するプロパティ",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "NCMB.Installation"
+            },
+            "class": "NCMB.Installation"
+        },
+        {
+            "file": "lib/ncmb.js",
+            "line": 51,
+            "class": "NCMB"
+        },
+        {
+            "file": "lib/ncmb.js",
+            "line": 52,
+            "class": "NCMB"
+        },
+        {
+            "file": "lib/ncmb.js",
+            "line": 53,
+            "class": "NCMB"
+        },
+        {
+            "file": "lib/ncmb.js",
+            "line": 54,
+            "class": "NCMB"
+        },
+        {
+            "file": "lib/ncmb.js",
+            "line": 55,
+            "class": "NCMB"
+        },
+        {
+            "file": "lib/ncmb.js",
+            "line": 56,
+            "class": "NCMB"
+        },
+        {
+            "file": "lib/ncmb.js",
+            "line": 57,
+            "class": "NCMB"
+        },
+        {
+            "file": "lib/ncmb.js",
+            "line": 58,
+            "class": "NCMB"
+        },
+        {
+            "file": "lib/ncmb.js",
+            "line": 59,
+            "class": "NCMB"
+        },
+        {
+            "file": "lib/ncmb.js",
+            "line": 72,
+            "description": "指定したキーに値を設定します。",
+            "itemtype": "method",
+            "name": "NCMB#set",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "値を設定したいキー",
+                    "type": "String"
+                },
+                {
+                    "name": "value",
+                    "description": "キーに設定する値"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "NCMB"
+        },
+        {
+            "file": "lib/ncmb.js",
+            "line": 87,
+            "description": "指定したキー設定されている値を取得します。",
+            "itemtype": "method",
+            "name": "NCMB#get",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "値を取得したいキー",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "this[key] keyに対応する値",
+                "type": "Any"
+            },
+            "class": "NCMB"
+        },
+        {
+            "file": "lib/ncmb.js",
+            "line": 98,
+            "description": "レスポンスシグネチャーをチェック許可を設定します。",
+            "itemtype": "method",
+            "name": "NCMB#enableResponseValidation",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "true/falseでチェック可否設定する値",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "NCMB"
+        },
+        {
+            "file": "lib/ncmb.js",
+            "line": 110,
+            "description": "レスポンスシグネチャーをチェック許可設定を取得します",
+            "itemtype": "method",
+            "name": "NCMB#getResponseValidation",
+            "return": {
+                "description": "sResponseValidation　レスポンスシグネチャーをチェック可否設定する値",
+                "type": "Object"
+            },
+            "class": "NCMB"
+        },
+        {
+            "file": "lib/ncmb.js",
+            "line": 126,
+            "itemtype": "method",
+            "name": "NCMB#DataStore",
+            "params": [
+                {
+                    "name": "name",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "NCMB.DataStoreConstructor"
+            },
+            "class": "NCMB"
+        },
+        {
+            "file": "lib/operation.js",
+            "line": 21,
+            "description": "指定したキー設定されている値を取得します。",
+            "itemtype": "method",
+            "name": "Operation#get",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "値を取得したいキー",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "keyに対応する値",
+                "type": "Object"
+            },
+            "class": "Operation"
+        },
+        {
+            "file": "lib/operation.js",
+            "line": 33,
+            "description": "指定したキーに値を設定します。",
+            "itemtype": "method",
+            "name": "Operation#set",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "値を設定したいキー",
+                    "type": "String"
+                },
+                {
+                    "name": "value",
+                    "description": "キーに設定する値"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "Operation"
+        },
+        {
+            "file": "lib/operation.js",
+            "line": 48,
+            "description": "更新時に、指定したキーの値を指定分だけ増加させる設定をします。",
+            "itemtype": "method",
+            "name": "Operation#setIncrement",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "処理を設定したいキー",
+                    "type": "String"
+                },
+                {
+                    "name": "amount",
+                    "description": "更新時の増加量。省略可能で、その場合は1が設定される",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "Operation"
+        },
+        {
+            "file": "lib/operation.js",
+            "line": 80,
+            "description": "更新時に、指定したキーの配列末尾にオブジェクトを追加する設定をします。\nobjectsは単一オブジェクトおよび配列での複数指定が共に可能。\n複数回実行することで、objects末尾にさらにオブジェクトを追加することも可能。",
+            "itemtype": "method",
+            "name": "Operation#add",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "処理を設定したいキー",
+                    "type": "String"
+                },
+                {
+                    "name": "objects",
+                    "description": "更新時に配列に追加する値もしくは値の配列"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "Operation"
+        },
+        {
+            "file": "lib/operation.js",
+            "line": 122,
+            "description": "更新時に、指定したキーの配列末尾に、重複したデータを避けてオブジェクトを追加する設定をします。\nobjectsは単一オブジェクトおよび配列での複数指定が共に可能。\n複数回実行することで、objects末尾にさらにオブジェクトを追加することも可能。",
+            "itemtype": "method",
+            "name": "Operation#addUnique",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "処理を設定したいキー",
+                    "type": "String"
+                },
+                {
+                    "name": "objects",
+                    "description": "配列に追加する値もしくは値の配列。既にobjectsにある値を追加しようとした場合エラーが返る"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "Operation"
+        },
+        {
+            "file": "lib/operation.js",
+            "line": 161,
+            "description": "更新時に、指定したキーの配列からオブジェクトを削除する設定をします。\nobjectsは単一オブジェクトおよび配列での複数指定が共に可能。\n複数回実行することで、objects末尾にさらにオブジェクトを追加することも可能。",
+            "itemtype": "method",
+            "name": "Operation#remove",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "処理を設定したいキー",
+                    "type": "String"
+                },
+                {
+                    "name": "objects",
+                    "description": "配列から削除する値もしくは値の配列"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "Operation"
+        },
+        {
+            "file": "lib/push.js",
+            "line": 75,
+            "description": "プッシュ通知をmobile backendに登録します。\n即時配信フラグがtrueの場合はすぐに配信されます。",
+            "itemtype": "method",
+            "name": "NCMB.Push#send",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "コールバック関数",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Promise<this>"
+            },
+            "class": "NCMB.Push"
+        },
+        {
+            "file": "lib/push.js",
+            "line": 107,
+            "description": "未送信のプッシュ通知を削除します。",
+            "itemtype": "method",
+            "name": "NCMB.Push#delete",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "コールバック関数",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Promise<any>"
+            },
+            "class": "NCMB.Push"
+        },
+        {
+            "file": "lib/push.js",
+            "line": 131,
+            "description": "未送信のプッシュ通知の内容を更新します。",
+            "itemtype": "method",
+            "name": "NCMB.Push#update",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "コールバック関数",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Promise<this>"
+            },
+            "class": "NCMB.Push"
+        },
+        {
+            "file": "lib/push.js",
+            "line": 181,
+            "description": "指定したキーに値を設定します。\n設定可能なキーはREST APIリファレンスを参照してください。",
+            "itemtype": "method",
+            "name": "NCMB.Push#set",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "値を設定するキー。",
+                    "type": "String"
+                },
+                {
+                    "name": "value",
+                    "description": "キーに設定する値"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "NCMB.Push"
+        },
+        {
+            "file": "lib/push.js",
+            "line": 210,
+            "interface": "NCMB.PushConstructor",
+            "extends": "Query<Push>",
+            "class": "NCMB.Push"
+        },
+        {
+            "file": "lib/push.js",
+            "line": 215,
+            "itemtype": "method",
+            "name": "NCMB.PushConstructor#new",
+            "params": [
+                {
+                    "name": "attrs",
+                    "description": "インスタンス生成時に設定するプロパティ",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "NCMB.Push"
+            },
+            "class": "NCMB.Push"
+        },
+        {
+            "file": "lib/query.js",
+            "line": 23,
+            "description": "クエリを直接記述して設定します。",
+            "itemtype": "method",
+            "name": "Query<T>#where",
+            "params": [
+                {
+                    "name": "where",
+                    "description": "JSON形式のクエリオブジェクト",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "Query<T>"
+        },
+        {
+            "file": "lib/query.js",
+            "line": 41,
+            "description": "指定したkeyの値がvalueと等しいオブジェクトを検索します。",
+            "itemtype": "method",
+            "name": "Query<T>#equalTo",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "値を比較するキー",
+                    "type": "String"
+                },
+                {
+                    "name": "value",
+                    "description": "比較する値"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "Query<T>"
+        },
+        {
+            "file": "lib/query.js",
+            "line": 53,
+            "description": "指定したkeyの値がvalueと等しくないオブジェクトを検索します。",
+            "itemtype": "method",
+            "name": "Query<T>#notEqualTo",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "値を比較するキー",
+                    "type": "String"
+                },
+                {
+                    "name": "value",
+                    "description": "比較する値"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "Query<T>"
+        },
+        {
+            "file": "lib/query.js",
+            "line": 65,
+            "description": "指定したkeyの値がvalueより小さいオブジェクトを検索します。",
+            "itemtype": "method",
+            "name": "Query<T>#lessThan",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "値を比較するキー",
+                    "type": "String"
+                },
+                {
+                    "name": "value",
+                    "description": "比較する値"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "Query<T>"
+        },
+        {
+            "file": "lib/query.js",
+            "line": 77,
+            "description": "指定したkeyの値がvalue以下のオブジェクトを検索します。",
+            "itemtype": "method",
+            "name": "Query<T>#lessThanOrEqualTo",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "値を比較するキー",
+                    "type": "String"
+                },
+                {
+                    "name": "value",
+                    "description": "比較する値"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "Query<T>"
+        },
+        {
+            "file": "lib/query.js",
+            "line": 89,
+            "description": "指定したkeyの値がvalueより大きいオブジェクトを検索します。",
+            "itemtype": "method",
+            "name": "Query<T>#greaterThan",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "値を比較するキー",
+                    "type": "String"
+                },
+                {
+                    "name": "value",
+                    "description": "比較する値"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "Query<T>"
+        },
+        {
+            "file": "lib/query.js",
+            "line": 101,
+            "description": "指定したkeyの値がvalue以上のオブジェクトを検索します。",
+            "itemtype": "method",
+            "name": "Query<T>#greaterThanOrEqualTo",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "値を比較するキー",
+                    "type": "String"
+                },
+                {
+                    "name": "value",
+                    "description": "比較する値"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "Query<T>"
+        },
+        {
+            "file": "lib/query.js",
+            "line": 113,
+            "description": "指定したkeyの値が、配列values内のいずれかと等しいオブジェクトを検索します",
+            "itemtype": "method",
+            "name": "Query<T>#in",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "値を比較するキー",
+                    "type": "String"
+                },
+                {
+                    "name": "values",
+                    "description": "比較する値",
+                    "type": "Array"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "Query<T>"
+        },
+        {
+            "file": "lib/query.js",
+            "line": 126,
+            "description": "指定したkeyの値が、配列values内のいずれとも等しくないオブジェクトを検索します。",
+            "itemtype": "method",
+            "name": "Query<T>#notIn",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "値を比較するキー",
+                    "type": "String"
+                },
+                {
+                    "name": "values",
+                    "description": "比較する値",
+                    "type": "Array"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "Query<T>"
+        },
+        {
+            "file": "lib/query.js",
+            "line": 139,
+            "description": "指定したキーに値が存在するオブジェクトを検索します。\nexistがtrue(false)の場合、指定したkeyに値が存在する(しない)オブジェクトを検索します。\n第二引数は省略可。省略時はtrueを指定した場合と同意となります。",
+            "itemtype": "method",
+            "name": "Query<T>#exists",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "値を比較するキー",
+                    "type": "String"
+                },
+                {
+                    "name": "exist",
+                    "description": "true(false)を設定した場合、値が存在する（しない）オブジェクトを検索する。省略可能。",
+                    "type": "Boolean"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "Query<T>"
+        },
+        {
+            "file": "lib/query.js",
+            "line": 155,
+            "description": "指定したkeyの値が正規表現regexに合致するオブジェクトを検索します。",
+            "itemtype": "method",
+            "name": "Query<T>#regularExpressionTo",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "値を比較するキー",
+                    "type": "String"
+                },
+                {
+                    "name": "regex",
+                    "description": "検索する正規表現",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "Query<T>"
+        },
+        {
+            "file": "lib/query.js",
+            "line": 168,
+            "description": "指定したkeyの値が、配列values内のいずれかと等しいオブジェクトを検索します",
+            "itemtype": "method",
+            "name": "Query<T>#inArray",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "値を比較するキー",
+                    "type": "String"
+                },
+                {
+                    "name": "values",
+                    "description": "比較する値",
+                    "type": "Array"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "Query<T>"
+        },
+        {
+            "file": "lib/query.js",
+            "line": 181,
+            "description": "指定したkeyの値が、配列values内のいずれとも等しくないオブジェクトを検索します。",
+            "itemtype": "method",
+            "name": "Query<T>#notInArray",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "値を比較するキー",
+                    "type": "String"
+                },
+                {
+                    "name": "values",
+                    "description": "比較する値",
+                    "type": "Array"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "Query<T>"
+        },
+        {
+            "file": "lib/query.js",
+            "line": 194,
+            "description": "指定したkeyの値が、配列values内のすべての値を含むオブジェクトを検索します。",
+            "itemtype": "method",
+            "name": "Query<T>#allInArray",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "値を比較するキー",
+                    "type": "String"
+                },
+                {
+                    "name": "values",
+                    "description": "比較する値",
+                    "type": "Array"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "Query<T>"
+        },
+        {
+            "file": "lib/query.js",
+            "line": 207,
+            "description": "指定したキーの位置情報が指定した位置に近い順でオブジェクトを検索します。",
+            "itemtype": "method",
+            "name": "Query<T>#near",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "値を比較するキー",
+                    "type": "String"
+                },
+                {
+                    "name": "location",
+                    "description": "原点とする位置情報",
+                    "type": "NCMB.GeoPoint"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "Query<T>"
+        },
+        {
+            "file": "lib/query.js",
+            "line": 222,
+            "description": "検索範囲内(Km)で、指定したキーの位置情報が指定した位置に近い順でオブジェクトを検索します。",
+            "itemtype": "method",
+            "name": "Query<T>#withinKilometers",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "値を比較するキー",
+                    "type": "String"
+                },
+                {
+                    "name": "location",
+                    "description": "原点とする位置情報",
+                    "type": "NCMB.GeoPoint"
+                },
+                {
+                    "name": "maxDistance",
+                    "description": "原点からの検索範囲(Km)",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "Query<T>"
+        },
+        {
+            "file": "lib/query.js",
+            "line": 240,
+            "description": "検索範囲内(ml)で、指定したキーの位置情報が指定した位置に近い順でオブジェクトを検索します。",
+            "itemtype": "method",
+            "name": "Query<T>#withinMiles",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "値を比較するキー",
+                    "type": "String"
+                },
+                {
+                    "name": "location",
+                    "description": "原点とする位置情報",
+                    "type": "NCMB.GeoPoint"
+                },
+                {
+                    "name": "maxDistance",
+                    "description": "原点からの検索範囲(ml)",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "Query<T>"
+        },
+        {
+            "file": "lib/query.js",
+            "line": 258,
+            "description": "検索範囲内(rad)で、指定したキーの位置情報が指定した位置に近い順でオブジェクトを検索します。",
+            "itemtype": "method",
+            "name": "Query<T>#withinRadians",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "値を比較するキー",
+                    "type": "String"
+                },
+                {
+                    "name": "location",
+                    "description": "原点とする位置情報",
+                    "type": "NCMB.GeoPoint"
+                },
+                {
+                    "name": "maxDistance",
+                    "description": "原点からの検索範囲(rad)",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "Query<T>"
+        },
+        {
+            "file": "lib/query.js",
+            "line": 276,
+            "description": "指定したキーの位置情報で、左下（southWestVertex）と右上（northEastVertex）の2地点からなる矩形（長方形）で設定された検索範囲の内部にあるオブジェクトを検索します。",
+            "itemtype": "method",
+            "name": "Query<T>#withinSquare",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "値を比較するキー",
+                    "type": "String"
+                },
+                {
+                    "name": "southWestVertex",
+                    "description": "検索矩形の左下の頂点",
+                    "type": "NCMB.GeoPoint"
+                },
+                {
+                    "name": "northEastVertex",
+                    "description": "検索矩形の右下の頂点",
+                    "type": "NCMB.GeoPoint"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "Query<T>"
+        },
+        {
+            "file": "lib/query.js",
+            "line": 294,
+            "description": "複数の検索条件subqueriesを設定し、その検索結果のいずれかに合致するオブジェクトを検索します\n配列で複数の条件を一度に設定でき、複数回実行することで検索条件を追加できます。",
+            "itemtype": "method",
+            "name": "Query<T>#or",
+            "params": [
+                {
+                    "name": "subqueries",
+                    "description": "検索条件",
+                    "type": "Array<Query<T>>|Query<T>"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "Query<T>"
+        },
+        {
+            "file": "lib/query.js",
+            "line": 315,
+            "description": "subqueriesの検索結果のうち、指定したsubkeyとkeyの値が一致するオブジェクトを検索します。",
+            "itemtype": "method",
+            "name": "Query<T>#select",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "メインクエリのクラスで値を比較するキー",
+                    "type": "String"
+                },
+                {
+                    "name": "subkey",
+                    "description": "サブクエリの検索結果で値を比較するキー",
+                    "type": "String"
+                },
+                {
+                    "name": "subquery",
+                    "description": "検索条件",
+                    "type": "Query"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "Query<T>"
+        },
+        {
+            "file": "lib/query.js",
+            "line": 355,
+            "description": "objectのkeyのプロパティに関連づけられているリレーションの実態（オブジェクト）を検索します。\nobjectはmobile backend に保存済みである必要があります。",
+            "itemtype": "method",
+            "name": "Query<T>#relatedTo",
+            "params": [
+                {
+                    "name": "object",
+                    "description": ""
+                },
+                {
+                    "name": "key",
+                    "description": "オブジェクトが関連づけられているキー",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "Query<T>"
+        },
+        {
+            "file": "lib/query.js",
+            "line": 385,
+            "description": "subqueriesの検索結果のうち、指定したkeyに設定されているポインタの実態（オブジェクト）を検索します。\nobjectはmobile backend に保存済みである必要がある。",
+            "itemtype": "method",
+            "name": "Query<T>#inQuery",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "ポインタを保存したキー",
+                    "type": "String"
+                },
+                {
+                    "name": "subquery",
+                    "description": "検索条件",
+                    "type": "Query<T>"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "Query<T>"
+        },
+        {
+            "file": "lib/query.js",
+            "line": 423,
+            "description": "指定したkeyに設定されているポインタの実態（オブジェクト）を検索し、返却値として返します。\n複数回実行した場合、最後に設定したキーが反映されます。複数のキーを指定することはできません。",
+            "itemtype": "method",
+            "name": "Query<T>#include",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "ポインタの中身を取得するキー",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "Query<T>"
+        },
+        {
+            "file": "lib/query.js",
+            "line": 437,
+            "description": "検索結果の配列と共に、検索結果の総件数を取得するよう設定します。\n検索結果の配列は最大100件までしか取得しませんが、countは検索結果の総件数を表示します。\n検索結果配列にcountプロパティとして付加されます。",
+            "itemtype": "method",
+            "name": "Query<T>#count",
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "Query<T>"
+        },
+        {
+            "file": "lib/query.js",
+            "line": 450,
+            "description": "指定したkeyをソートして検索結果を取得するよう設定します。\n（複数設定可能。先に指定したkeyが優先ソートされる。）\nフラグによって降順ソートも可能です。降順フラグはキーごとに設定できます。",
+            "itemtype": "method",
+            "name": "Query<T>#order",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "ソートするキー",
+                    "type": "String"
+                },
+                {
+                    "name": "descending",
+                    "description": "trueを指定した場合、降順でソートされる。省略可能。"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "Query<T>"
+        },
+        {
+            "file": "lib/query.js",
+            "line": 475,
+            "description": "検索結果の最大取得数を設定します。設定値は1から1000まで、デフォルト値は100です。",
+            "itemtype": "method",
+            "name": "Query<T>#limit",
+            "params": [
+                {
+                    "name": "limit",
+                    "description": "最大取得件数",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "Query<T>"
+        },
+        {
+            "file": "lib/query.js",
+            "line": 493,
+            "description": "指定したskipの件数だけ頭から除いた検索結果を取得するよう設定します。",
+            "itemtype": "method",
+            "name": "Query<T>#skip",
+            "params": [
+                {
+                    "name": "skip",
+                    "description": "検索結果から除く件数",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "Query<T>"
+        },
+        {
+            "file": "lib/query.js",
+            "line": 507,
+            "description": "objectIdから一意のオブジェクトを取得します。",
+            "itemtype": "method",
+            "name": "Query<T>#fetchById",
+            "params": [
+                {
+                    "name": "id",
+                    "description": "取得したいオブジェクトのobjectId",
+                    "type": "String"
+                },
+                {
+                    "name": "callback",
+                    "description": "コールバック関数",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "オブジェクト",
+                "type": "Promise<T>"
+            },
+            "class": "Query<T>"
+        },
+        {
+            "file": "lib/query.js",
+            "line": 542,
+            "description": "検索条件に合致するオブジェクトのうち、先頭の一つだけを取得します。",
+            "itemtype": "method",
+            "name": "Query<T>#fetch",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "コールバック関数",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "検索結果に合致したオブジェクト",
+                "type": "Promise<T>"
+            },
+            "class": "Query<T>"
+        },
+        {
+            "file": "lib/query.js",
+            "line": 564,
+            "description": "検索条件に合致するオブジェクトをすべて取得します。",
+            "itemtype": "method",
+            "name": "Query<T>#fetchAll",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "コールバック関数",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "検索結果に合致したオブジェクトの配列",
+                "type": "Promise<Array<T>>"
+            },
+            "class": "Query<T>"
+        },
+        {
+            "file": "lib/relation.js",
+            "line": 42,
+            "description": "関連オブジェクトに追加するオブジェクトを設定します。",
+            "itemtype": "method",
+            "name": "NCMB.Relation#add",
+            "params": [
+                {
+                    "name": "object",
+                    "description": "追加するオブジェクト"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "NCMB.Relation"
+        },
+        {
+            "file": "lib/relation.js",
+            "line": 50,
+            "description": "関連オブジェクトから削除するオブジェクトを設定します。",
+            "itemtype": "method",
+            "name": "NCMB.Relation#remove",
+            "params": [
+                {
+                    "name": "object",
+                    "description": "削除するオブジェクト"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "NCMB.Relation"
+        },
+        {
+            "file": "lib/relation.js",
+            "line": 88,
+            "interface": "NCMB.RelationConstructor",
+            "extends": "Query<Relation>",
+            "class": "NCMB.Relation"
+        },
+        {
+            "file": "lib/relation.js",
+            "line": 93,
+            "itemtype": "method",
+            "name": "NCMB.RelationConstructor#new",
+            "params": [
+                {
+                    "name": "relatingClass",
+                    "description": "関連づけるクラス名。省略可能",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "NCMB.Relation"
+            },
+            "class": "NCMB.Relation"
+        },
+        {
+            "file": "lib/role.js",
+            "line": 91,
+            "description": "ロールを保存します。",
+            "itemtype": "method",
+            "name": "NCMB.Role#save",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "コールバック関数",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Promise<this>"
+            },
+            "class": "NCMB.Role"
+        },
+        {
+            "file": "lib/role.js",
+            "line": 123,
+            "description": "ロールを更新します。",
+            "itemtype": "method",
+            "name": "NCMB.Role#update",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "コールバック関数",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Promise<this>"
+            },
+            "class": "NCMB.Role"
+        },
+        {
+            "file": "lib/role.js",
+            "line": 164,
+            "description": "ロールを削除します。",
+            "itemtype": "method",
+            "name": "NCMB.Role#delete",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "コールバック関数",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Promise<true>"
+            },
+            "class": "NCMB.Role"
+        },
+        {
+            "file": "lib/role.js",
+            "line": 188,
+            "description": "ロールにユーザを追加します。",
+            "itemtype": "method",
+            "name": "NCMB.Role#addUser",
+            "params": [
+                {
+                    "name": "object",
+                    "description": "追加するユーザ",
+                    "type": "User|Array<User>"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "NCMB.Role"
+        },
+        {
+            "file": "lib/role.js",
+            "line": 196,
+            "description": "ロールに子ロールを追加します。",
+            "itemtype": "method",
+            "name": "NCMB.Role#addRole",
+            "params": [
+                {
+                    "name": "object",
+                    "description": "追加する子ロール",
+                    "type": "Role|Array<Role>"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "NCMB.Role"
+        },
+        {
+            "file": "lib/role.js",
+            "line": 204,
+            "description": "ロールからユーザを削除します。",
+            "itemtype": "method",
+            "name": "NCMB.Role#removeUser",
+            "params": [
+                {
+                    "name": "object",
+                    "description": "削除するユーザ",
+                    "type": "User"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "NCMB.Role"
+        },
+        {
+            "file": "lib/role.js",
+            "line": 212,
+            "description": "ロールから子ロールを削除します。",
+            "itemtype": "method",
+            "name": "NCMB.Role#removeRole",
+            "params": [
+                {
+                    "name": "object",
+                    "description": "削除する子ロール",
+                    "type": "Role"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "This"
+            },
+            "class": "NCMB.Role"
+        },
+        {
+            "file": "lib/role.js",
+            "line": 220,
+            "description": "ロールに登録されているユーザの一覧を取得します。",
+            "itemtype": "method",
+            "name": "NCMB.Role#fetchUser",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "コールバック関数",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "ユーザインスタンスの配列",
+                "type": "Promise<Array<User>>"
+            },
+            "class": "NCMB.Role"
+        },
+        {
+            "file": "lib/role.js",
+            "line": 228,
+            "description": "ロールに登録されている子ロールの一覧を取得します。",
+            "itemtype": "method",
+            "name": "NCMB.Role#fetchRole",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "コールバック関数",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "子ロールインスタンスの配列",
+                "type": "Promise<Array<Role>>"
+            },
+            "class": "NCMB.Role"
+        },
+        {
+            "file": "lib/role.js",
+            "line": 260,
+            "interface": "NCMB.RoleConstructor",
+            "extends": "Query<Role>",
+            "class": "NCMB.Role"
+        },
+        {
+            "file": "lib/role.js",
+            "line": 265,
+            "itemtype": "method",
+            "name": "NCMB.RoleConstructor#new",
+            "params": [
+                {
+                    "name": "roleName",
+                    "description": "ロール名。インスタンス生成時に必須",
+                    "type": "String"
+                },
+                {
+                    "name": "attrs",
+                    "description": "インスタンス生成時に設定するプロパティ",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "NCMB.Role"
+            },
+            "class": "NCMB.Role"
+        },
+        {
+            "file": "lib/script.js",
+            "line": 35,
+            "description": "インスタンスに対してチェインしてリクエストヘッダを付与するメソッドです。",
+            "itemtype": "method",
+            "name": "NCMB.Script#set",
+            "params": [
+                {
+                    "name": "header",
+                    "description": "リクエストヘッダを示すJSON形式のオブジェクト",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "this   引数のリクエストヘッダが付加された実行可能インスタンス",
+                "type": "NCMB.Script"
+            },
+            "class": "NCMB.Script"
+        },
+        {
+            "file": "lib/script.js",
+            "line": 56,
+            "description": "インスタンスに対してチェインしてリクエストボディを付与するメソッドです。",
+            "itemtype": "method",
+            "name": "NCMB.Script#data",
+            "params": [
+                {
+                    "name": "body",
+                    "description": "リクエストボディを示すJSON形式のオブジェクト",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "this 引数のリクエストボディが付加された実行可能インスタンス",
+                "type": "NCMB.Script"
+            },
+            "class": "NCMB.Script"
+        },
+        {
+            "file": "lib/script.js",
+            "line": 74,
+            "description": "インスタンスに対してチェインしてクエリストリングを付与するメソッドです。",
+            "itemtype": "method",
+            "name": "NCMB.Script#query",
+            "params": [
+                {
+                    "name": "query",
+                    "description": "クエリストリングを示すJSON形式のオブジェクト",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "this  引数のクエリストリングが付加された実行可能インスタンス",
+                "type": "NCMB.Script"
+            },
+            "class": "NCMB.Script"
+        },
+        {
+            "file": "lib/script.js",
+            "line": 92,
+            "description": "Scriptを実行するメソッドです。",
+            "itemtype": "method",
+            "name": "NCMB.Script#exec",
+            "params": [
+                {
+                    "name": "method",
+                    "description": "HTTPメソッド",
+                    "type": "String"
+                },
+                {
+                    "name": "scriptName",
+                    "description": "スクリプトファイル名",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "res         Scriptに定義されたレスポンスを内包するJSON形式のオブジェクト",
+                "type": "Object"
+            },
+            "class": "NCMB.Script"
+        },
+        {
+            "file": "lib/script.js",
+            "line": 153,
+            "interface": "NCMB.ScriptConstructor",
+            "class": "NCMB.Script"
+        },
+        {
+            "file": "lib/script.js",
+            "line": 157,
+            "itemtype": "method",
+            "name": "NCMB.ScriptConstructor#new",
+            "return": {
+                "description": "",
+                "type": "NCMB.Script"
+            },
+            "class": "NCMB.Script"
+        },
+        {
+            "file": "lib/user.js",
+            "line": 110,
+            "description": "現在セッションに使用しているユーザの情報を取得します。\nセッションにセッショントークンを利用していない場合、nullが返ります。\nまた、画面遷移などでログイン中にセッショントークン情報が失われてしまった場合、\ngetCurrentUserを実行することで、ローカルに保存されているカレントユーザ情報から\nセッショントークンを設定し直します。",
+            "itemtype": "method",
+            "name": "NCMB.UserConstructor#getCurrentUser",
+            "return": {
+                "description": "セッション中のユーザオブジェクト",
+                "type": "NCMB.User"
+            },
+            "class": "NCMB.User"
+        },
+        {
+            "file": "lib/user.js",
+            "line": 136,
+            "description": "現在セッションに使用しているユーザかどうかを判別します。",
+            "itemtype": "method",
+            "name": "NCMB.User#isCurrentUser",
+            "return": {
+                "description": "true/false",
+                "type": "Boolean"
+            },
+            "class": "NCMB.User"
+        },
+        {
+            "file": "lib/user.js",
+            "line": 147,
+            "description": "ユーザ名とパスワード認証でユーザを登録します。",
+            "itemtype": "method",
+            "name": "NCMB.User#signUpByAccount",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "コールバック関数",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Promise<this>"
+            },
+            "class": "NCMB.User"
+        },
+        {
+            "file": "lib/user.js",
+            "line": 186,
+            "description": "SNS連携認証でユーザを登録します。\nインスタンスのauthDataプロパティに適切なJSONオブジェクトが設定されている場合、providerおよびdataは省略可能です。\n複数のプロバイダ情報を一度に登録することは出来ません。\n会員登録のみ実施し、ログイン処理および、カレントユーザへの反映を行いません。カレントユーザを反映したい場合、ncmb.User.loginWith(user)を行ってください。",
+            "itemtype": "method",
+            "name": "NCMB.User#signUpWith",
+            "params": [
+                {
+                    "name": "provider",
+                    "description": "連携するサービスプロバイダ名 Facebook/Twitter/Google/Apple",
+                    "type": "String"
+                },
+                {
+                    "name": "data",
+                    "description": "認証に必要な情報を保持したJSON形式のオブジェクト",
+                    "type": "Object"
+                },
+                {
+                    "name": "callback",
+                    "description": "コールバック関数",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Promise<this>"
+            },
+            "class": "NCMB.User"
+        },
+        {
+            "file": "lib/user.js",
+            "line": 246,
+            "description": "メールアドレス認証ユーザの登録メールアドレス宛にパスワード再設定のメールを送信します。",
+            "itemtype": "method",
+            "name": "NCMB.User#requestPasswordReset",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "コールバック関数",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "APIレスポンス",
+                "type": "Promise<any>"
+            },
+            "class": "NCMB.User"
+        },
+        {
+            "file": "lib/user.js",
+            "line": 276,
+            "description": "パスワードをリセットするために指定したmailAddressメールアドレスにメールを送信します。",
+            "itemtype": "method",
+            "name": "NCMB.UserConstructor#requestPasswordReset",
+            "params": [
+                {
+                    "name": "mailAddress",
+                    "description": "登録するメールアドレス",
+                    "type": "String"
+                },
+                {
+                    "name": "callback",
+                    "description": "コールバック関数",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "APIレスポンス",
+                "type": "Promise<any>"
+            },
+            "class": "NCMB.User"
+        },
+        {
+            "file": "lib/user.js",
+            "line": 307,
+            "description": "メールアドレス認証の登録メールを送信します。\nメール内でパスワード入力を行い、登録が完了した時点で認証が可能となります。",
+            "itemtype": "method",
+            "name": "NCMB.UserConstructor#requestSignUpEmail",
+            "params": [
+                {
+                    "name": "mailAddress",
+                    "description": "登録するメールアドレス",
+                    "type": "String"
+                },
+                {
+                    "name": "callback",
+                    "description": "コールバック関数",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "APIレスポンス",
+                "type": "Promise<any>"
+            },
+            "class": "NCMB.User"
+        },
+        {
+            "file": "lib/user.js",
+            "line": 333,
+            "description": "ユーザ情報の更新を行います。",
+            "itemtype": "method",
+            "name": "NCMB.User#update",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "コールバック関数",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Promise<this>"
+            },
+            "class": "NCMB.User"
+        },
+        {
+            "file": "lib/user.js",
+            "line": 380,
+            "description": "ユーザ情報の削除を行います。",
+            "itemtype": "method",
+            "name": "NCMB.User#delete",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "コールバック関数",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Promise<true>"
+            },
+            "class": "NCMB.User"
+        },
+        {
+            "file": "lib/user.js",
+            "line": 411,
+            "description": "ログイン（セッショントークンの取得）およびカレントユーザへの設定を行います。\nuserNameおよびpasswordプロパティをもつUserインスタンスを第一引数に設定しそのユーザでログイン可能です。\nその場合、第二引数を省略可能です。\nすでにセッショントークンを保持している場合、更新処理は行いません。\nセッショントークンの期限切れが発生している場合、一度ログアウトしてから再度ログインしてください。",
+            "itemtype": "method",
+            "name": "NCMB.UserConstructor#login",
+            "params": [
+                {
+                    "name": "userName",
+                    "description": "ユーザ名",
+                    "type": "string | NCMB.User"
+                },
+                {
+                    "name": "password",
+                    "description": "パスワード",
+                    "type": "String | function",
+                    "optional": true
+                },
+                {
+                    "name": "callback",
+                    "description": "コールバック関数",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "ログインしたUserインスタンス",
+                "type": "Promise<User>"
+            },
+            "class": "NCMB.User"
+        },
+        {
+            "file": "lib/user.js",
+            "line": 456,
+            "description": "ログイン（セッショントークンの取得）を行います。\nカレントユーザへの設定は行いません。\nuserNameおよびpasswordプロパティを保持している必要があります。\nすでにセッショントークンを保持している場合、更新処理は行いません。\nセッショントークンの期限切れが発生している場合、一度ログアウトしてから再度ログインしてください。",
+            "itemtype": "method",
+            "name": "NCMB.User#login",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "コールバック関数",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Promise<this>"
+            },
+            "class": "NCMB.User"
+        },
+        {
+            "file": "lib/user.js",
+            "line": 503,
+            "description": "ログイン（セッショントークンの取得）およびカレントユーザへの設定を行います。\nmailAddressおよびpasswordプロパティをもつUserインスタンスを第一引数に設定し、そのユーザでログイン可能です。\nその場合、第二引数を省略可能です。\nすでにセッショントークンを保持している場合、更新処理は行いません。\nセッショントークンの期限切れが発生している場合、一度ログアウトしてから再度ログインしてください。",
+            "itemtype": "method",
+            "name": "NCMB.UserConstructor#loginWithMailAddress",
+            "params": [
+                {
+                    "name": "mailAddress",
+                    "description": "メールアドレス",
+                    "type": "string|NCMB.User"
+                },
+                {
+                    "name": "password",
+                    "description": "パスワード",
+                    "type": "String|function",
+                    "optional": true
+                },
+                {
+                    "name": "callback",
+                    "description": "コールバック関数",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "ログインしたUserインスタンス",
+                "type": "Promise<User>"
+            },
+            "class": "NCMB.User"
+        },
+        {
+            "file": "lib/user.js",
+            "line": 545,
+            "description": "ログイン（セッショントークンの取得）を行います。\nカレントユーザへの設定は行いません。\nmailAddressおよびpasswordプロパティを保持している必要があります。\nすでにセッショントークンを保持している場合、更新処理は行いません。\nセッショントークンの期限切れが発生している場合、一度ログアウトしてから再度ログインしてください。",
+            "itemtype": "method",
+            "name": "NCMB.User#loginWithMailAddress",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "コールバック関数",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Promise<this>"
+            },
+            "class": "NCMB.User"
+        },
+        {
+            "file": "lib/user.js",
+            "line": 592,
+            "description": "匿名ユーザとしてログイン（セッショントークンの取得）を行います。\nすでにセッショントークンを保持している場合、更新処理は行いません。\nUUIDは省略可能です。省略した場合、UUIDを乱数で自動生成します。\nUUIDにUserのインスタンスを入力し、そのインスタンスでログイン可能です。\nその場合、userNameもしくはauthDataプロパティを持つインスタンスではログインできません。",
+            "itemtype": "method",
+            "name": "NCMB.UserConstructor#loginAsAnonymous",
+            "params": [
+                {
+                    "name": "uuid",
+                    "description": "端末固有のUUID",
+                    "type": "String"
+                },
+                {
+                    "name": "callback",
+                    "description": "コールバック関数",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "ログインしたUserインスタンス",
+                "type": "Promise<User>"
+            },
+            "class": "NCMB.User"
+        },
+        {
+            "file": "lib/user.js",
+            "line": 631,
+            "description": "匿名ユーザとしてログイン（セッショントークンの取得）を行います。\nすでにセッショントークンを保持している場合、更新処理は行いません。\nUUIDは省略可能です。省略した場合、UUIDを乱数で自動生成します。\nuserNameもしくはauthDataプロパティを持つインスタンスではログインできません。",
+            "itemtype": "method",
+            "name": "NCMB.User#loginAsAnonymous",
+            "params": [
+                {
+                    "name": "uuid",
+                    "description": "端末固有のUUID",
+                    "type": "String"
+                },
+                {
+                    "name": "callback",
+                    "description": "コールバック関数",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Promise<this>"
+            },
+            "class": "NCMB.User"
+        },
+        {
+            "file": "lib/user.js",
+            "line": 696,
+            "description": "SNS連携認証ユーザとしてログイン（セッショントークンの取得）およびカレントユーザへの設定を行います。\nauthDataプロパティをもつUserインスタンスを第一引数に設定し、そのユーザでログイン可能です。\nその場合、第二引数を省略可能です。\nまた、authDataに複数のSNS連携情報を持つインスタンスを設定する場合、第二引数で認証に使用するプロバイダを指定する必要があります。\nすでにセッショントークンを保持している場合、更新処理は行いません。\nセッショントークンの期限切れが発生している場合、一度ログアウトしてから再度ログインしてください。\nメソッドの返却値はログインしているユーザの情報です。",
+            "itemtype": "method",
+            "name": "NCMB.UserConstructor#loginWith",
+            "params": [
+                {
+                    "name": "provider",
+                    "description": "連携するサービスプロバイダ名 Facebook/Twitter/Google/Apple",
+                    "type": "string|NCMB.User"
+                },
+                {
+                    "name": "data",
+                    "description": "認証に必要な情報を保持したJSON形式のオブジェクト",
+                    "type": "Object|function",
+                    "optional": true
+                },
+                {
+                    "name": "callback",
+                    "description": "コールバック関数",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "ログインしたUserインスタンス",
+                "type": "Promise<User>"
+            },
+            "class": "NCMB.User"
+        },
+        {
+            "file": "lib/user.js",
+            "line": 748,
+            "description": "SNS連携認証ユーザとしてログイン（セッショントークンの取得）を行います。\nauthDataプロパティをもつ場合、第一・第二引数を省略可能です。\nまた、authDataに複数のSNS連携情報を持つ場合、第一引数で認証に使用するプロバイダを指定する必要があります。\nauthDataプロパティをもち、かつprovide, dataを入力した場合、入力された情報で認証を行います。\nすでにセッショントークンを保持している場合、更新処理は行いません。\nセッショントークンの期限切れが発生している場合、一度ログアウトしてから再度ログインしてください。\nログインのみ実施しますが、カレントユーザへの反映を行いません。カレントユーザを反映したい場合、ncmb.User.loginWith(user)を行ってください。",
+            "itemtype": "method",
+            "name": "NCMB.User#loginWith",
+            "params": [
+                {
+                    "name": "provider",
+                    "description": "連携するサービスプロバイダ名 Facebook/Twitter/Google/Apple",
+                    "type": "String",
+                    "optional": true
+                },
+                {
+                    "name": "data",
+                    "description": "認証に必要な情報を保持したJSON形式のオブジェクト",
+                    "type": "Object",
+                    "optional": true
+                },
+                {
+                    "name": "callback",
+                    "description": "コールバック関数",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Promise<this>"
+            },
+            "class": "NCMB.User"
+        },
+        {
+            "file": "lib/user.js",
+            "line": 828,
+            "description": "カレントユーザ情報およびセッショントークンの破棄を行います。\nカレントユーザに設定されていたインスタンス自体のセッショントークン情報は保持され続けます。\n別途プロトタイプメソッドでインスタンスのログアウトを実行してください。",
+            "itemtype": "method",
+            "name": "NCMB.UserConstructor#logout",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "コールバック関数",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "ログアウトしたユーザインスタンス",
+                "type": "Promise<User>"
+            },
+            "class": "NCMB.User"
+        },
+        {
+            "file": "lib/user.js",
+            "line": 842,
+            "description": "インスタンスのセッショントークンの破棄を行います。\nカレントユーザに設定されているユーザをこのメソッドでログアウトした場合でもカレントユーザ情報は破棄されません。\nそのままAPIリクエストを行った場合、不正なセッショントークン利用でエラーが返ります。",
+            "itemtype": "method",
+            "name": "NCMB.User#logout",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "コールバック関数",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Promise<this>"
+            },
+            "class": "NCMB.User"
+        },
+        {
+            "file": "lib/user.js",
+            "line": 887,
+            "description": "メールアドレスの確認を行っているかどうかを判別します。",
+            "itemtype": "method",
+            "name": "NCMB.User#isMailAddressConfirmed",
+            "return": {
+                "description": "確認済みの場合はtrue/以外はfalse",
+                "type": "Boolean"
+            },
+            "class": "NCMB.User"
+        },
+        {
+            "file": "lib/user.js",
+            "line": 899,
+            "description": "Facebook/Google/Twiter/Apple等のSNSアカウントと連絡を行います。",
+            "itemtype": "method",
+            "name": "linkWith",
+            "params": [
+                {
+                    "name": "provider",
+                    "description": "連携するサービスプロバイダ名 Facebook/Twitter/Google/Apple",
+                    "type": "String"
+                },
+                {
+                    "name": "data",
+                    "description": "認証に必要な情報を保持したJSON形式のオブジェクト",
+                    "type": "Object"
+                },
+                {
+                    "name": "callback",
+                    "description": "コールバック関数",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "this."
+            },
+            "class": "NCMB.User"
+        },
+        {
+            "file": "lib/user.js",
+            "line": 927,
+            "description": "Facebook/Twitter/Google/Apple等のSNSアカウントの連携を削除します。",
+            "itemtype": "method",
+            "name": "unLinkWith",
+            "params": [
+                {
+                    "name": "provider",
+                    "description": "連携するサービスプロバイダ名 Facebook/Twitter/Google/Apple",
+                    "type": "String"
+                },
+                {
+                    "name": "callback",
+                    "description": "コールバック関数",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "this."
+            },
+            "class": "NCMB.User"
+        },
+        {
+            "file": "lib/user.js",
+            "line": 997,
+            "interface": "NCMB.UserConstructor",
+            "extends": "Query<User>",
+            "class": "NCMB.User"
+        },
+        {
+            "file": "lib/user.js",
+            "line": 1002,
+            "itemtype": "method",
+            "name": "NCMB.UserConstructor#new",
+            "params": [
+                {
+                    "name": "attrs",
+                    "description": "インスタンス生成時に設定するプロパティ",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "NCMB.User"
+            },
+            "class": "NCMB.User"
+        }
+    ],
+    "warnings": [
+        {
+            "message": "unknown tag: name",
+            "line": " lib/acl.js:209"
+        },
+        {
+            "message": "unknown tag: name",
+            "line": " lib/datastore.js:193"
+        },
+        {
+            "message": "unknown tag: name",
+            "line": " lib/geopoint.js:66"
+        },
+        {
+            "message": "unknown tag: name",
+            "line": " lib/installation.js:151"
+        },
+        {
+            "message": "unknown tag: name",
+            "line": " lib/push.js:215"
+        },
+        {
+            "message": "unknown tag: name",
+            "line": " lib/relation.js:93"
+        },
+        {
+            "message": "unknown tag: name",
+            "line": " lib/role.js:265"
+        },
+        {
+            "message": "unknown tag: name",
+            "line": " lib/script.js:157"
+        },
+        {
+            "message": "unknown tag: name",
+            "line": " lib/user.js:1002"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/acl.js:205"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/datastore.js:188"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/geopoint.js:62"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/installation.js:146"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/ncmb.js:51"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/ncmb.js:52"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/ncmb.js:53"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/ncmb.js:54"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/ncmb.js:55"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/ncmb.js:56"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/ncmb.js:57"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/ncmb.js:58"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/ncmb.js:59"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/push.js:210"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/relation.js:88"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/role.js:260"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/script.js:153"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/user.js:997"
+        }
+    ]
+}

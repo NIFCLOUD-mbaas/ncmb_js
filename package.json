@@ -72,6 +72,6 @@
     "build": "browserify -r -p licensify -t [ uglifyify --keep-fname -x .js ] -o ncmb.min.js lib/ncmb.js",
     "stub:start": "stubcell -e test/mbaas.yml --basepath test/stub -p 18000",
     "stub:stop": "kill `ps aux | grep stubc[e]ll | awk '{print $2}'`",
-    "document:generate": "yuidoc ./lib -o ./jsdoc"
+    "document:generate": "yuidoc ./lib -o ./docs"
   }
 }

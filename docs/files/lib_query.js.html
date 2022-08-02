@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>lib/query.js</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+                <h1><img src="../assets/css/logo.png" title="" width="117" height="52"></h1>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/NCMB.html">NCMB</a></li>
+                                <li><a href="../classes/NCMB.Acl.html">NCMB.Acl</a></li>
+                                <li><a href="../classes/NCMB.DataStore.html">NCMB.DataStore</a></li>
+                                <li><a href="../classes/NCMB.File.html">NCMB.File</a></li>
+                                <li><a href="../classes/NCMB.GeoPoint.html">NCMB.GeoPoint</a></li>
+                                <li><a href="../classes/NCMB.Installation.html">NCMB.Installation</a></li>
+                                <li><a href="../classes/NCMB.Push.html">NCMB.Push</a></li>
+                                <li><a href="../classes/NCMB.Relation.html">NCMB.Relation</a></li>
+                                <li><a href="../classes/NCMB.Role.html">NCMB.Role</a></li>
+                                <li><a href="../classes/NCMB.Script.html">NCMB.Script</a></li>
+                                <li><a href="../classes/NCMB.User.html">NCMB.User</a></li>
+                                <li><a href="../classes/Operation.html">Operation</a></li>
+                                <li><a href="../classes/Query&lt;T&gt;.html">Query&lt;T&gt;</a></li>
+                            </ul>
+                
+                
+                            <ul id="api-modules" class="apis modules">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1 class="file-heading">File: lib/query.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&quot;use strict&quot;;
+
+var qs = require(&quot;qs&quot;);
+var Errors = require(&quot;./errors&quot;);
+
+/**
+* オブジェクトの検索を行うモジュールです。
+*
+* DataStore, User, Role, Fileクラスから呼び出し、それぞれのクラスメソッドとして利用します。
+* 検索条件を設定するメソッドに続けてfetch/fetchAllをメソッドチェーンで実行して利用します。
+*
+* @class Query&lt;T&gt;
+*/
+var Query = module.exports = (function(){
+  function Query(ncmb, className){
+    this.__proto__.ncmb = ncmb;
+    this._className = className;
+    this._where  = {};
+    this._limit  = 0;
+    this._skip = 0;
+  };
+
+  /**
+  * クエリを直接記述して設定します。
+  *
+  * @method Query&lt;T&gt;#where
+  * @param {Object} where JSON形式のクエリオブジェクト
+  * @return {this}
+  */
+  Query.prototype.where = function(where){
+    if(typeof where !== &quot;object&quot;)
+      throw new Errors.InvalidWhereError(&quot;First argument must object.&quot;);
+    for(var key in where){
+      if(where.hasOwnProperty(key)){
+        this._where[key] = where[key];
+      }
+    }
+    return this;
+  };
+
+  /**
+  * 指定したkeyの値がvalueと等しいオブジェクトを検索します。
+  *
+  * @method Query&lt;T&gt;#equalTo
+  * @param {string} key 値を比較するキー
+  * @param value 比較する値
+  * @return {this}
+  */
+  Query.prototype.equalTo              = function(key, value){
+    return setOperand(this, key, value);
+  };
+
+  /**
+  * 指定したkeyの値がvalueと等しくないオブジェクトを検索します。
+  *
+  * @method Query&lt;T&gt;#notEqualTo
+  * @param {string} key 値を比較するキー
+  * @param value 比較する値
+  * @return {this}
+  */
+  Query.prototype.notEqualTo           = function(key, value){
+    return setOperand(this, key, value, &quot;$ne&quot;);
+  };
+
+  /**
+  * 指定したkeyの値がvalueより小さいオブジェクトを検索します。
+  *
+  * @method Query&lt;T&gt;#lessThan
+  * @param {string} key 値を比較するキー
+  * @param value 比較する値
+  * @return {this}
+  */
+  Query.prototype.lessThan             = function(key, value){
+    return setOperand(this, key, value, &quot;$lt&quot;);
+  };
+
+  /**
+  * 指定したkeyの値がvalue以下のオブジェクトを検索します。
+  *
+  * @method Query&lt;T&gt;#lessThanOrEqualTo
+  * @param {string} key 値を比較するキー
+  * @param value 比較する値
+  * @return {this}
+  */
+  Query.prototype.lessThanOrEqualTo    = function(key, value){
+    return setOperand(this, key, value, &quot;$lte&quot;);
+  };
+
+  /**
+  * 指定したkeyの値がvalueより大きいオブジェクトを検索します。
+  *
+  * @method Query&lt;T&gt;#greaterThan
+  * @param {string} key 値を比較するキー
+  * @param value 比較する値
+  * @return {this}
+  */
+  Query.prototype.greaterThan          = function(key, value){
+    return setOperand(this, key, value, &quot;$gt&quot;);
+  };
+
+  /**
+  * 指定したkeyの値がvalue以上のオブジェクトを検索します。
+  *
+  * @method Query&lt;T&gt;#greaterThanOrEqualTo
+  * @param {string} key 値を比較するキー
+  * @param value 比較する値
+  * @return {this}
+  */
+  Query.prototype.greaterThanOrEqualTo = function(key, value){
+    return setOperand(this, key, value, &quot;$gte&quot;);
+  };
+
+  /**
+  * 指定したkeyの値が、配列values内のいずれかと等しいオブジェクトを検索します
+  *
+  * @method Query&lt;T&gt;#in
+  * @param {string} key 値を比較するキー
+  * @param {Array} values 比較する値
+  * @return {this}
+  */
+  Query.prototype.in                   = function(key, values){
+    if(!Array.isArray(values)) throw new Errors.InvalidArgumentError();
+    return setOperand(this, key, values, &quot;$in&quot;);
+  };
+
+  /**
+  * 指定したkeyの値が、配列values内のいずれとも等しくないオブジェクトを検索します。
+  *
+  * @method Query&lt;T&gt;#notIn
+  * @param {string} key 値を比較するキー
+  * @param {Array} values 比較する値
+  * @return {this}
+  */
+  Query.prototype.notIn                = function(key, values){
+    if(!Array.isArray(values)) throw new Errors.InvalidArgumentError();
+    return setOperand(this, key, values, &quot;$nin&quot;);
+  };
+
+  /**
+  * 指定したキーに値が存在するオブジェクトを検索します。
+  * existがtrue(false)の場合、指定したkeyに値が存在する(しない)オブジェクトを検索します。
+  * 第二引数は省略可。省略時はtrueを指定した場合と同意となります。
+  *
+  * @method Query&lt;T&gt;#exists
+  * @param {string} key 値を比較するキー
+  * @param {boolean} exist true(false)を設定した場合、値が存在する（しない）オブジェクトを検索する。省略可能。
+  * @return {this}
+  */
+  Query.prototype.exists               = function(key, exist){
+    if(typeof exist === &quot;undefined&quot; ) exist = true;
+    if(typeof exist !== &quot;boolean&quot;) throw new Errors.InvalidArgumentError();
+    return setOperand(this, key, exist, &quot;$exists&quot;);
+  };
+
+  /**
+  * 指定したkeyの値が正規表現regexに合致するオブジェクトを検索します。
+  *
+  * @method Query&lt;T&gt;#regularExpressionTo
+  * @param {string} key 値を比較するキー
+  * @param {string} regex 検索する正規表現
+  * @return {this}
+  */
+  Query.prototype.regularExpressionTo  = function(key, regex){
+    if(typeof regex !== &quot;string&quot;) throw new Errors.InvalidArgumentError();
+    return setOperand(this, key, regex, &quot;$regex&quot;);
+  };
+
+  /**
+  * 指定したkeyの値が、配列values内のいずれかと等しいオブジェクトを検索します
+  *
+  * @method Query&lt;T&gt;#inArray
+  * @param {string} key 値を比較するキー
+  * @param {Array} values 比較する値
+  * @return {this}
+  */
+  Query.prototype.inArray              = function(key, values){
+    if(!Array.isArray(values)) values = [values];
+    return setOperand(this, key, values, &quot;$inArray&quot;);
+  };
+
+  /**
+  * 指定したkeyの値が、配列values内のいずれとも等しくないオブジェクトを検索します。
+  *
+  * @method Query&lt;T&gt;#notInArray
+  * @param {string} key 値を比較するキー
+  * @param {Array} values 比較する値
+  * @return {this}
+  */
+  Query.prototype.notInArray           = function(key, values){
+    if(!Array.isArray(values)) values = [values];
+    return setOperand(this, key, values, &quot;$ninArray&quot;);
+  };
+
+  /**
+  * 指定したkeyの値が、配列values内のすべての値を含むオブジェクトを検索します。
+  *
+  * @method Query&lt;T&gt;#allInArray
+  * @param {string} key 値を比較するキー
+  * @param {Array} values 比較する値
+  * @return {this}
+  */
+  Query.prototype.allInArray           = function(key, values){
+    if(!Array.isArray(values)) values = [values];
+    return setOperand(this, key, values, &quot;$all&quot;);
+  };
+
+  /**
+  * 指定したキーの位置情報が指定した位置に近い順でオブジェクトを検索します。
+  *
+  * @method Query&lt;T&gt;#near
+  * @param {string} key 値を比較するキー
+  * @param {NCMB.GeoPoint} location 原点とする位置情報
+  * @return {this}
+  */
+  Query.prototype.near  = function(key, location){
+    if(!(location instanceof this.ncmb.GeoPoint)){
+      throw new this.ncmb.Errors.InvalidArgumentError(&quot;Second argument must be instance of ncmb.GeoPoint.&quot;);
+    }
+    return setOperand(this, key, location.toJSON(), &quot;$nearSphere&quot;);
+  };
+
+  /**
+  * 検索範囲内(Km)で、指定したキーの位置情報が指定した位置に近い順でオブジェクトを検索します。
+  *
+  * @method Query&lt;T&gt;#withinKilometers
+  * @param {string} key 値を比較するキー
+  * @param {NCMB.GeoPoint} location 原点とする位置情報
+  * @param {number} maxDistance 原点からの検索範囲(Km)
+  * @return {this}
+  */
+  Query.prototype.withinKilometers = function(key, location, maxDistance){
+    if(!(location instanceof this.ncmb.GeoPoint)){
+      throw new Errors.InvalidArgumentError(&quot;Location must be instance of ncmb.GeoPoint.&quot;);
+    }
+    setOperand(this, key, location.toJSON(), &quot;$nearSphere&quot;);
+    this._where[key][&quot;$maxDistanceInKilometers&quot;] = maxDistance;
+    return this;
+  };
+
+  /**
+  * 検索範囲内(ml)で、指定したキーの位置情報が指定した位置に近い順でオブジェクトを検索します。
+  *
+  * @method Query&lt;T&gt;#withinMiles
+  * @param {string} key 値を比較するキー
+  * @param {NCMB.GeoPoint} location 原点とする位置情報
+  * @param {number} maxDistance 原点からの検索範囲(ml)
+  * @return {this}
+  */
+  Query.prototype.withinMiles = function(key, location, maxDistance){
+    if(!(location instanceof this.ncmb.GeoPoint)){
+      throw new Errors.InvalidArgumentError(&quot;Location must be instance of ncmb.GeoPoint.&quot;);
+    }
+    setOperand(this, key, location.toJSON(), &quot;$nearSphere&quot;);
+    this._where[key][&quot;$maxDistanceInMiles&quot;] = maxDistance;
+    return this;
+  };
+
+  /**
+  * 検索範囲内(rad)で、指定したキーの位置情報が指定した位置に近い順でオブジェクトを検索します。
+  *
+  * @method Query&lt;T&gt;#withinRadians
+  * @param {string} key 値を比較するキー
+  * @param {NCMB.GeoPoint} location 原点とする位置情報
+  * @param {number} maxDistance 原点からの検索範囲(rad)
+  * @return {this}
+  */
+  Query.prototype.withinRadians = function(key, location, maxDistance){
+    if(!(location instanceof this.ncmb.GeoPoint)){
+      throw new Errors.InvalidArgumentError(&quot;Location must be instance of ncmb.GeoPoint.&quot;);
+    }
+    setOperand(this, key, location.toJSON(), &quot;$nearSphere&quot;);
+    this._where[key][&quot;$maxDistanceInRadians&quot;] = maxDistance;
+    return this;
+  };
+
+  /**
+  * 指定したキーの位置情報で、左下（southWestVertex）と右上（northEastVertex）の2地点からなる矩形（長方形）で設定された検索範囲の内部にあるオブジェクトを検索します。
+  *
+  * @method Query&lt;T&gt;#withinSquare
+  * @param {string} key 値を比較するキー
+  * @param {NCMB.GeoPoint} southWestVertex 検索矩形の左下の頂点
+  * @param {NCMB.GeoPoint} northEastVertex 検索矩形の右下の頂点
+  * @return {this}
+  */
+  Query.prototype.withinSquare = function(key, southWestVertex, northEastVertex){
+    if(!(southWestVertex instanceof this.ncmb.GeoPoint) || !(northEastVertex instanceof this.ncmb.GeoPoint)){
+      throw new Errors.InvalidArgumentError(&quot;Location must be instance of ncmb.GeoPoint.&quot;);
+    }
+    var box = {&quot;$box&quot;:[southWestVertex.toJSON(), northEastVertex.toJSON()]};
+    setOperand(this, key, box, &quot;$within&quot;);
+    return this;
+  };
+
+  /**
+  * 複数の検索条件subqueriesを設定し、その検索結果のいずれかに合致するオブジェクトを検索します
+  * 配列で複数の条件を一度に設定でき、複数回実行することで検索条件を追加できます。
+  *
+  * @method Query&lt;T&gt;#or
+  * @param {Array&lt;Query&lt;T&gt;&gt;|Query&lt;T&gt;} subqueries 検索条件
+  * @return {this}
+  */
+  Query.prototype.or = function(subqueries){
+    if(!Array.isArray(subqueries)){
+      subqueries = [subqueries];
+    }
+    this._where        = this._where        || {};
+    this._where[&quot;$or&quot;] = this._where[&quot;$or&quot;] || [];
+    for(var i = 0; i &lt; subqueries.length; i++){
+      if(!subqueries[i]._where) throw new Errors.InvalidArgumentError(&quot;Argument is invalid. Input query or array of query.&quot;);
+      this._where[&quot;$or&quot;].push(subqueries[i]._where);
+    }
+    return this;
+  };
+
+  /**
+  * subqueriesの検索結果のうち、指定したsubkeyとkeyの値が一致するオブジェクトを検索します。
+  *
+  * @method Query&lt;T&gt;#select
+  * @param {string} key メインクエリのクラスで値を比較するキー
+  * @param {string} subkey サブクエリの検索結果で値を比較するキー
+  * @param {Query} subquery 検索条件
+  * @return {this}
+  */
+  Query.prototype.select = function(key, subkey, subquery){
+    if(typeof key !== &quot;string&quot; || typeof subkey !== &quot;string&quot;){
+      throw new Errors.InvalidArgumentError(&quot;Key and subkey must be string&quot;);
+    }
+    if(!subquery._className) throw new Errors.InvalidArgumentError(&quot;Third argument is invalid. Input query.&quot;);
+    var className = null;
+    if(subquery._className === &quot;/users&quot;){
+      className = &quot;user&quot;;
+    }else if(subquery._className === &quot;/roles&quot;){
+      className = &quot;role&quot;;
+    }else if(subquery._className === &quot;/installations&quot;){
+      className = &quot;installation&quot;;
+    }else if(subquery._className === &quot;/files&quot;){
+      className = &quot;file&quot;;
+    }else{
+      className = subquery._className.slice(9);
+    }
+    this._where                 = this._where      || {};
+    this._where[key]            = this._where[key] || {};
+    if(subquery._limit &gt; 0 &amp;&amp; subquery._skip &gt; 0){
+      this._where[key][&quot;$select&quot;] = {query:{className: className, where: subquery._where, limit:subquery._limit, skip:subquery._skip} , key: subkey};
+    }else if(subquery._limit &gt; 0){
+      this._where[key][&quot;$select&quot;] = {query:{className: className, where: subquery._where, limit:subquery._limit} , key: subkey};
+    }else if(subquery._skip &gt; 0){
+      this._where[key][&quot;$select&quot;] = {query:{className: className, where: subquery._where, skip:subquery._skip} , key: subkey};
+    }else{
+      this._where[key][&quot;$select&quot;] = {query:{className: className, where: subquery._where} , key: subkey};
+    }
+    return this;
+  };
+
+  /**
+  * objectのkeyのプロパティに関連づけられているリレーションの実態（オブジェクト）を検索します。
+  * objectはmobile backend に保存済みである必要があります。
+  *
+  * @method Query&lt;T&gt;#relatedTo
+  * @param object
+  * @param {string} key オブジェクトが関連づけられているキー
+  * @return {this}
+  */
+  Query.prototype.relatedTo = function(object, key){
+    var className = null;
+    if(typeof key !== &quot;string&quot;) throw new Errors.InvalidArgumentError(&quot;Key must be string.&quot;);
+    if(!object.className)       throw new Errors.InvalidArgumentError(&quot;First argument requires saved object.&quot;);
+    if(!object.objectId){
+      throw new Errors.NoObjectIdError(&quot;First argument requires saved object.&quot;);
+    }
+    if(object instanceof this.ncmb.User){
+      className = &quot;user&quot;;
+    }else if(object instanceof this.ncmb.Role){
+      className = &quot;role&quot;;
+    }else if(object instanceof this.ncmb.Installation){
+      className = &quot;installation&quot;;
+    }else{
+      className = object.className.slice(9);
+    }
+    this._where = this._where || {};
+    this._where[&quot;$relatedTo&quot;] = {object: {__type: &quot;Pointer&quot;, className: className, objectId: object.objectId}, key: key};
+    return this;
+  };
+
+  /**
+  * subqueriesの検索結果のうち、指定したkeyに設定されているポインタの実態（オブジェクト）を検索します。
+  * objectはmobile backend に保存済みである必要がある。
+  *
+  * @method Query&lt;T&gt;#inQuery
+  * @param {string} key ポインタを保存したキー
+  * @param {Query&lt;T&gt;} subquery 検索条件
+  * @return {this}
+  */
+  Query.prototype.inQuery = function(key, subquery){
+    if(typeof key !== &quot;string&quot;) throw new Errors.InvalidArgumentError(&quot;Key must be string.&quot;);
+    if(!subquery._className)    throw new Errors.InvalidArgumentError(&quot;Second argument is invalid. Input query.&quot;);
+    var className = null;
+    if(subquery._className === &quot;/users&quot;){
+      className = &quot;user&quot;;
+    }else if(subquery._className === &quot;/roles&quot;){
+      className = &quot;role&quot;;
+    }else if(subquery._className === &quot;/installations&quot;){
+      className = &quot;installation&quot;;
+    }else if(subquery._className === &quot;/files&quot;){
+      className = &quot;file&quot;;
+    }else{
+      className = subquery._className.slice(9);
+    }
+    this._where = this._where || {};
+    this._where[key] = this._where[key] ||{};
+    if(subquery._limit &gt; 0 &amp;&amp; subquery._skip &gt; 0){
+        this._where[key][&quot;$inQuery&quot;]= {where: subquery._where, className: className, limit:subquery._limit, skip:subquery._skip};
+    }else if(subquery._limit &gt; 0){
+        this._where[key][&quot;$inQuery&quot;]= {where: subquery._where, className: className, limit:subquery._limit};
+    }else if(subquery._skip &gt; 0){
+        this._where[key][&quot;$inQuery&quot;]= {where: subquery._where, className: className, skip:subquery._skip};
+    }else{
+        this._where[key][&quot;$inQuery&quot;]= {where: subquery._where, className: className};
+    }
+    return this;
+  };
+
+  /**
+  * 指定したkeyに設定されているポインタの実態（オブジェクト）を検索し、返却値として返します。
+  * 複数回実行した場合、最後に設定したキーが反映されます。複数のキーを指定することはできません。
+  *
+  * @method Query&lt;T&gt;#include
+  * @param {string} key ポインタの中身を取得するキー
+  * @return {this}
+  */
+  Query.prototype.include = function(key){
+    if(typeof key !== &quot;string&quot;) throw new Errors.InvalidArgumentError(&quot;Key must be string.&quot;);
+    this._include = key;
+    return this;
+  };
+
+  /**
+  * 検索結果の配列と共に、検索結果の総件数を取得するよう設定します。
+  * 検索結果の配列は最大100件までしか取得しませんが、countは検索結果の総件数を表示します。
+  * 検索結果配列にcountプロパティとして付加されます。
+  *
+  * @method Query&lt;T&gt;#count
+  * @return {this}
+  */
+  Query.prototype.count = function(){
+    this._count = 1;
+    return this;
+  };
+
+  /**
+  * 指定したkeyをソートして検索結果を取得するよう設定します。
+  *（複数設定可能。先に指定したkeyが優先ソートされる。）
+  * フラグによって降順ソートも可能です。降順フラグはキーごとに設定できます。
+  *
+  * @method Query&lt;T&gt;#order
+  * @param {string} key ソートするキー
+  * @param descending trueを指定した場合、降順でソートされる。省略可能。
+  * @return {this}
+  */
+  Query.prototype.order = function(key, descending){
+    var symbol = &quot;&quot;;
+    if(typeof key !== &quot;string&quot;) throw new Errors.InvalidArgumentError(&quot;Key must be string.&quot;);
+    if(descending &amp;&amp; typeof descending !== &quot;boolean&quot;){
+      throw new Errors.InvalidArgumentError(&quot;Second argument must be boolean.&quot;);
+    }
+    if(descending === true) symbol = &quot;-&quot;;
+    if(!this._order){
+      this._order = symbol + key;
+    }else{
+      this._order = this._order + &quot;,&quot; + symbol + key;
+    }
+    return this;
+  };
+
+  /**
+  * 検索結果の最大取得数を設定します。設定値は1から1000まで、デフォルト値は100です。
+  *
+  * @method Query&lt;T&gt;#limit
+  * @param {number} limit 最大取得件数
+  * @return {this}
+  */
+  Query.prototype.limit = function(limit){
+    if(typeof limit !== &quot;number&quot;){
+      throw new Errors.InvalidLimitError(&quot;Limit must be number.&quot;);
+    }
+    if(limit &lt; 1 || limit &gt;1000){
+      throw new Errors.InvalidLimitError(&quot;Limit must be renge of 1~1000.&quot;);
+    }
+    this._limit = limit;
+    return this;
+  };
+
+  /**
+  * 指定したskipの件数だけ頭から除いた検索結果を取得するよう設定します。
+  *
+  * @method Query&lt;T&gt;#skip
+  * @param {number} skip 検索結果から除く件数
+  * @return {this}
+  */
+  Query.prototype.skip = function(skip){
+    if(typeof skip !== &quot;number&quot;) throw new Errors.InvalidskipError(&quot;Skip must be number.&quot;);
+    if(skip &lt; 0) throw new Errors.InvalidskipError(&quot;Skip must be greater than 0.&quot;);
+    this._skip = skip;
+    return this;
+  };
+
+  /**
+  * objectIdから一意のオブジェクトを取得します。
+  *
+  * @method Query&lt;T&gt;#fetchById
+  * @param {string} id 取得したいオブジェクトのobjectId
+  * @param {function} [callback] コールバック関数
+  * @return {Promise&lt;T&gt;} オブジェクト
+  */
+  Query.prototype.fetchById = function(id, callback){
+    var path = &quot;/&quot; + this.ncmb.version + this._className + &quot;/&quot; + id;
+    var Klass = this.ncmb.collections[this._className];
+    if(typeof Klass === &quot;undefined&quot;){
+      return Promise.reject(new Error(&quot;no class definition &#x60;&quot; + this._className +&quot;&#x60;&quot;));
+    }
+
+    return this.ncmb.request({
+      path: path,
+      method: &quot;GET&quot;
+    }).then(function(data){
+      var obj = null;
+      try{
+        obj = JSON.parse(data);
+      }catch(err){
+        throw err;
+      }
+      var object = new Klass(obj);
+      if(object.acl) object.acl = new this.ncmb.Acl(object.acl);
+      if(callback) return callback(null, object);
+      return object;
+    }.bind(this)).catch(function(err){
+      if(callback) return callback(err, null);
+      throw err;
+    });
+  };
+
+  /**
+  * 検索条件に合致するオブジェクトのうち、先頭の一つだけを取得します。
+  *
+  * @method Query&lt;T&gt;#fetch
+  * @param {function} [callback] コールバック関数
+  * @return {Promise&lt;T&gt;} 検索結果に合致したオブジェクト
+  */
+  Query.prototype.fetch = function(callback){
+    this._limit = 1;
+    return this.fetchAll().then(function(objects){
+      if(!objects[0]){
+        if(callback) return callback(null, {});
+        return {};
+      }
+      if(callback) return callback(null, objects[0]);
+      return objects[0];
+    }).catch(function(err){
+      if(callback) return callback(err, null);
+      throw err;
+    });
+  };
+
+  /**
+  * 検索条件に合致するオブジェクトをすべて取得します。
+  *
+  * @method Query&lt;T&gt;#fetchAll
+  * @param {function} [callback] コールバック関数
+  * @return {Promise&lt;Array&lt;T&gt;&gt;} 検索結果に合致したオブジェクトの配列
+  */
+  Query.prototype.fetchAll = function(callback){
+    var path = &quot;/&quot; + this.ncmb.version + this._className;
+    var opts = [];
+    if(Object.keys(this._where).length !== 0) opts.push(&quot;where=&quot; + JSON.stringify(this._where));
+    if(this._limit)    opts.push(&quot;limit=&quot;   + this._limit);
+    if(this._skip)     opts.push(&quot;skip=&quot;    + this._skip);
+    if(this._count)    opts.push(&quot;count=&quot;   + this._count);
+    if(this._include)  opts.push(&quot;include=&quot; + this._include);
+    if(this._order)    opts.push(&quot;order=&quot;   + this._order);
+
+    var Klass = this.ncmb.collections[this._className];
+    if(typeof Klass === &quot;undefined&quot;){
+      return Promise.reject(new Error(&quot;no class definition &#x60;&quot; + this._className +&quot;&#x60;&quot;));
+    }
+    return this.ncmb.request({
+      path: path,
+      method: &quot;GET&quot;,
+      query: qs.parse(opts.join(&quot;&amp;&quot;))
+    }).then(function(data){
+      var objects = null;
+      try{
+        objects = JSON.parse(data).results;
+        objects = objects.map(function(obj){
+          if(Klass.className === &quot;/files&quot;) return obj;
+          var object = new Klass(obj);
+          if(object.acl) object.acl = new this.ncmb.Acl(object.acl);
+          return object;
+        }.bind(this));
+        var parsedData = JSON.parse(data)
+        if(&quot;count&quot; in parsedData){
+          objects.count = parsedData.count;
+        }
+      }catch(err){
+        if(callback) return callback(err, null);
+        throw err;
+      }
+      if(callback) return callback(null, objects);
+      return objects;
+    }.bind(this)).catch(function(err){
+      if(callback) return callback(err, null);
+      throw err;
+    });
+  };
+
+  var setOperand = function(query, key, value, operand){
+    if(typeof key !== &quot;string&quot;){
+      throw new Errors.InvalidArgumentError(&quot;Key must be string.&quot;);
+    }
+    if(value instanceof Date) {
+      value = {__type: &quot;Date&quot;, iso: value.toJSON()};
+    }
+    if(operand === undefined){
+      query._where      = query._where || {};
+      query._where[key] = value;
+      return query;
+    }
+    query._where               = query._where      || {};
+    query._where[key]          = query._where[key] || {};
+    query._where[key][operand] = value;
+    return query;
+  };
+  return Query;
+})();
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

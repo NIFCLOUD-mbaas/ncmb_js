@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>lib/relation.js</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+                <h1><img src="../assets/css/logo.png" title="" width="117" height="52"></h1>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/NCMB.html">NCMB</a></li>
+                                <li><a href="../classes/NCMB.Acl.html">NCMB.Acl</a></li>
+                                <li><a href="../classes/NCMB.DataStore.html">NCMB.DataStore</a></li>
+                                <li><a href="../classes/NCMB.File.html">NCMB.File</a></li>
+                                <li><a href="../classes/NCMB.GeoPoint.html">NCMB.GeoPoint</a></li>
+                                <li><a href="../classes/NCMB.Installation.html">NCMB.Installation</a></li>
+                                <li><a href="../classes/NCMB.Push.html">NCMB.Push</a></li>
+                                <li><a href="../classes/NCMB.Relation.html">NCMB.Relation</a></li>
+                                <li><a href="../classes/NCMB.Role.html">NCMB.Role</a></li>
+                                <li><a href="../classes/NCMB.Script.html">NCMB.Script</a></li>
+                                <li><a href="../classes/NCMB.User.html">NCMB.User</a></li>
+                                <li><a href="../classes/Operation.html">Operation</a></li>
+                                <li><a href="../classes/Query&lt;T&gt;.html">Query&lt;T&gt;</a></li>
+                            </ul>
+                
+                
+                            <ul id="api-modules" class="apis modules">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1 class="file-heading">File: lib/relation.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&quot;use strict&quot;;
+var errors = require(&quot;./errors&quot;);
+
+/**
+* リレーションについて扱うクラスです。
+*
+* オブジェクトのプロパティに対してインスタンスを設定することで、同一クラスに限り複数のオブジェクトを関連づけることができます。
+* 関連づけるオブジェクトがすべて同一クラスであれば、関連づけられるオブジェクトとは別クラスでも指定可能です。
+*
+* インスタンス生成時に関連づけるクラス名を指定可能です。指定しなかった場合、最初に追加したオブジェクトのクラスが指定されます。
+* 指定した以外のクラスのインスタンスを入力した場合、エラーが返ります。
+*
+* ※注意：
+* ２種類のメソッド（インスタンスメソッド Instance method とスタティックメソッド Static method）があります。
+* それぞれリファレンス上の表記と利用時のメソッドが異なりますので、下記を参考にご利用ください。
+*
+*   - リファレンス上の表記が「NCMB.Relation#メソッド名」: インスタンスメソッド Instance method
+*      - 利用例）NCMB.Relation#add
+*        &#x60;&#x60;&#x60;
+*       var relation = new ncmb.Relation();
+*       relation.add(food1).add(food2);
+*        &#x60;&#x60;&#x60;
+*   - リファレンス上の表記が「NCMB.RelationConstructor#メソッド名」: スタティックメソッド Static method
+*      - Relationの場合は、お客様に提供するスタティックメソッドはありません。
+*
+* @class NCMB.Relation
+* @param {string} relatingClass 関連づけるクラス名。省略可能
+*/
+var Relation = module.exports = function(ncmb){
+  function Relation(relatingClass){
+    if(relatingClass === &quot;user&quot;){
+      this.relatingClass = &quot;/users&quot;;
+    }else if(relatingClass === &quot;role&quot;){
+      this.relatingClass = &quot;/roles&quot;;
+    }else if(relatingClass === &quot;installation&quot;){
+      this.relatingClass = &quot;/installations&quot;;
+    }else if(relatingClass){
+      this.relatingClass = &quot;/classes/&quot; + relatingClass;
+    }
+  }
+
+  /**
+  * 関連オブジェクトに追加するオブジェクトを設定します。
+  *
+  * @method NCMB.Relation#add
+  * @param object 追加するオブジェクト
+  * @return {this}
+  */
+
+  /**
+  * 関連オブジェクトから削除するオブジェクトを設定します。
+  *
+  * @method NCMB.Relation#remove
+  * @param object 削除するオブジェクト
+  * @return {this}
+  */
+  [&quot;add&quot;, &quot;remove&quot;].forEach(function(method){
+    var opName = method[0].toUpperCase() + method.substr(1) + &quot;Relation&quot;;
+    Relation.prototype[method] = function(object){
+      if(this.__op !== opName){
+        this.__op = opName;
+        this.objects = [];
+      }
+      if(!Array.isArray(object)) object = [object];
+      for (var i = 0, elem; elem = object[i]; i+=1) {
+        pushToObjects(this, elem);
+      }
+      return this;
+    };
+  });
+
+  var pushToObjects = function(relation, object){
+    if(!object.className){
+      throw new errors.InvalidArgumentError(&quot;Related object must be instance of ncmb providing classes.&quot;);
+    }
+    if(!relation.relatingClass){
+        relation.relatingClass = object.className;
+    }else if(relation.relatingClass !== object.className){
+      throw new errors.DifferentClassError(&quot;Relation objects can be input just from instance of same class with first input.&quot;);
+    }
+    relation.objects.push(object);
+  };
+
+  ncmb.collections.Relation = Relation;
+  return Relation;
+};
+
+/**
+ * @interface NCMB.RelationConstructor
+ * @extends Query&lt;Relation&gt;
+ */
+
+/**
+ * @method
+ * @name NCMB.RelationConstructor#new
+ * @param {string} [relatingClass] 関連づけるクラス名。省略可能
+ * @return {NCMB.Relation}
+ */
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

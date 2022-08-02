@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>lib/acl.js</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+                <h1><img src="../assets/css/logo.png" title="" width="117" height="52"></h1>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/NCMB.html">NCMB</a></li>
+                                <li><a href="../classes/NCMB.Acl.html">NCMB.Acl</a></li>
+                                <li><a href="../classes/NCMB.DataStore.html">NCMB.DataStore</a></li>
+                                <li><a href="../classes/NCMB.File.html">NCMB.File</a></li>
+                                <li><a href="../classes/NCMB.GeoPoint.html">NCMB.GeoPoint</a></li>
+                                <li><a href="../classes/NCMB.Installation.html">NCMB.Installation</a></li>
+                                <li><a href="../classes/NCMB.Push.html">NCMB.Push</a></li>
+                                <li><a href="../classes/NCMB.Relation.html">NCMB.Relation</a></li>
+                                <li><a href="../classes/NCMB.Role.html">NCMB.Role</a></li>
+                                <li><a href="../classes/NCMB.Script.html">NCMB.Script</a></li>
+                                <li><a href="../classes/NCMB.User.html">NCMB.User</a></li>
+                                <li><a href="../classes/Operation.html">Operation</a></li>
+                                <li><a href="../classes/Query&lt;T&gt;.html">Query&lt;T&gt;</a></li>
+                            </ul>
+                
+                
+                            <ul id="api-modules" class="apis modules">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1 class="file-heading">File: lib/acl.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&quot;use strict&quot;;
+
+var Errors = require(&quot;./errors&quot;);
+
+/**
+* オブジェクトへのアクセス権限を設定するクラスです。
+*
+* DataStoreやUserクラスのインスタンスに付加して利用します。&lt;br&gt;
+* 指定するユーザおよびロールはmobile backendに保存済みである必要があります。
+* 
+* @class NCMB.Acl
+* 
+* @param {Object} permissions Acl情報のJSONオブジェクト
+*/
+var Acl = module.exports = function(ncmb) {
+  var reserved = [
+    &quot;set&quot;, &quot;setReadAccess&quot;, &quot;setWriteAccess&quot;,
+    &quot;setPublicReadAccess&quot;, &quot;setPublicWriteAccess&quot;,
+    &quot;setUserReadAccess&quot;, &quot;setUserWriteAccess&quot;,
+    &quot;setRoleReadAccess&quot;, &quot;setRoleWriteAccess&quot;,
+    &quot;toJSON&quot;];
+  var isReserved = function(key){
+    return reserved.indexOf(key) &gt; -1;
+  };
+
+  function Acl(permissions) {
+    if(permissions) {
+      Object.keys(permissions).forEach(function(key){
+        if(isReserved(key)){
+          throw new Errors.UnReplaceableKeyError(key + &quot; cannot be set, it is reserved.&quot;);
+        }
+        if(permissions[key] &amp;&amp; (permissions[key].read || permissions[key].write)){
+          if(permissions[key].read== false){
+            permissions[key].read = true;
+          }else if(permissions[key].write== false){
+            permissions[key].write = true;
+          }
+          this[key] = permissions[key];
+        }else{
+          throw new Errors.InvalidArgumentError(&quot;Argument format is invalid.&quot;);
+        }
+      }.bind(this));
+    }
+  };
+
+  Acl.prototype.set = function(target, type, allowed) {
+    if(isReserved(target)){
+      throw new Errors.UnReplaceableKeyError(target + &quot; cannot be set, it is reserved.&quot;);
+    }
+    if (allowed == false) {
+      if (this[target] &amp;&amp; this[target][type] ) delete this[target][type];
+      if (this[target] &amp;&amp; Object.keys(this[target]).length == 0 ) delete this[target];
+      return ;
+    }
+    this[target] = this[target] || {}; 
+    this[target][type] = allowed;
+    return this;
+  };
+  Acl.prototype.setReadAccess        = function(target, allowed) {
+    return this.set(target, &quot;read&quot;, allowed); 
+  };
+  Acl.prototype.setWriteAccess       = function(target, allowed) {
+    return this.set(target, &quot;write&quot;, allowed);
+  };
+
+  /**
+  * 全体への読み込み権限を設定します。
+  *
+  * @method NCMB.Acl#setPublicReadAccess
+  * @param {boolean} allowed true/false
+  * @return {NCMB.Acl} 権限追加後のインスタンス
+  */
+  Acl.prototype.setPublicReadAccess  = function(allowed) {
+    return this.setReadAccess(&quot;*&quot;, allowed);
+  };
+
+  /**
+  * 全体への書き込み権限を設定します。
+  *
+  * @method NCMB.Acl#setPublicWriteAccess
+  * @param {boolean} allowed true/false
+  * @return {NCMB.Acl} 権限追加後のインスタンス
+  */
+  Acl.prototype.setPublicWriteAccess = function(allowed) {
+    return this.setWriteAccess(&quot;*&quot;, allowed);
+  };
+
+  /**
+  * 特定ユーザへの読み込み権限を設定します。
+  *
+  * @method NCMB.Acl#setUserReadAccess
+  * @param {NCMB.User} user Userのインスタンス
+  * @param {boolean} allowed true/false
+  * @return {NCMB.Acl} 権限追加後のインスタンス
+  */
+  Acl.prototype.setUserReadAccess    = function(user, allowed) {
+    if(!(user instanceof ncmb.User)){
+      throw new Errors.InvalidArgumentError(&quot;First argument must be instance of ncmb.User.&quot;);
+    }
+    if(!user.objectId){
+      throw new errors.NoObjectIdError(&quot;This user doesn&#x27;t have objectId. Input user must be saved.&quot;);
+    }
+    return this.setReadAccess(user.objectId, allowed);
+  };
+
+  /**
+  * 特定ユーザへの書き込み権限を設定します。
+  *
+  * @method NCMB.Acl#setUserWriteAccess
+  * @param {NCMB.User} user Userのインスタンス
+  * @param {boolean} allowed true/false
+  * @return {NCMB.Acl} 権限追加後のインスタンス
+  */
+  Acl.prototype.setUserWriteAccess   = function(user, allowed) {
+    if(!(user instanceof ncmb.User)){
+      throw new Errors.InvalidArgumentError(&quot;First argument must be instance of ncmb.User.&quot;);
+    }
+    if(!user.objectId){
+      throw new errors.NoObjectIdError(&quot;This user doesn&#x27;t have objectId. Input user must be saved.&quot;);
+    }
+    return this.setWriteAccess(user.objectId, allowed);
+  };
+
+  /**
+  * 特定ロールへの読み込み権限を設定します。
+  * roleNameにロールのインスタンスを入力することもできます。
+  *
+  * @method NCMB.Acl#setRoleReadAccess
+  * @param {string} roleName ロール名
+  * @param {boolean} allowed true/false
+  * @return {NCMB.Role} 権限追加後のインスタンス
+  */
+  Acl.prototype.setRoleReadAccess    = function(roleName, allowed) {
+    if(roleName instanceof ncmb.Role){
+      roleName = roleName.roleName;
+    }
+    if(typeof roleName !== &quot;string&quot; || roleName === &quot;&quot;){
+      throw new Errors.NoRoleNameError(&quot;First argument must be roleName string or ncmb.Role instance that has roleName.&quot;);
+    }
+    var role = &quot;role:&quot; + roleName;
+    return this.setReadAccess(role, allowed);
+  };
+
+  /**
+  * 特定ロールへの書き込み権限を設定します。
+  * roleNameにロールのインスタンスを入力することもできます。
+  *
+  * @method NCMB.Acl#setRoleWriteAccess
+  * @param {string} roleName ロール名
+  * @param {boolean} allowed true/false
+  * @return {NCMB.Role} 権限追加後のインスタンス
+  */
+  Acl.prototype.setRoleWriteAccess   = function(roleName, allowed) {
+    if(roleName instanceof ncmb.Role){
+      roleName = roleName.roleName;
+    }
+    if(typeof roleName !== &quot;string&quot; || roleName === &quot;&quot;){
+      throw new Errors.NoRoleNameError(&quot;First argument must be roleName string or ncmb.Role instance that has roleName.&quot;);
+    }
+    var role = &quot;role:&quot; + roleName;
+    return this.setWriteAccess(role, allowed);
+  };
+
+  /**
+  * 指定したユーザもしくはロールに設定されている権限を取得します。
+  *
+  * @method NCMB.Acl#get
+  * @param {NCMB.User|NCMB.Role|string} target 権限を取得するユーザもしくはロールのインスタンス。全体の権限を取得する場合は&quot;public&quot;を入力
+  * @param {string} type read/write
+  * @return {NCMB.Role} true/false
+  */
+  Acl.prototype.get = function(target, type){
+    if(target instanceof ncmb.Role &amp;&amp; target.roleName){
+      target = &quot;role:&quot; + target.roleName;
+    }else if(target instanceof ncmb.User &amp;&amp; target.objectId){
+      target = target.objectId;
+    }
+    if(typeof target !== &quot;string&quot;){
+      throw new Errors.InvalidArgumentError(&quot;First argument must be string or saved object.&quot;);
+    }
+    if(type !== &quot;read&quot; &amp;&amp; type !== &quot;write&quot;){
+      throw new Errors.InvalidArgumentError(&quot;Secondargument must be &#x27;read&#x27; or &#x27;write&#x27; only.&quot;);
+    }
+    if(target === &quot;public&quot;) target = &quot;*&quot;;
+    if(!this[target]) return null;
+    if(this[target][type] === false){
+      return false;
+    }else if(!this[target][type]){
+      return null;
+    }
+    return this[target][type];
+  };
+  Acl.prototype.toJSON = function() {
+    var permissions = {};
+    for(var target in this){
+      if(typeof this[target] !== &quot;function&quot;){
+        permissions[target] = this[target];
+      }
+    }
+    return permissions;
+  };
+  return Acl;
+};
+
+/**
+ * @interface NCMB.AclConstructor
+ */
+
+/**
+ * @method
+ * @name NCMB.AclConstructor#new
+ * @param {Object} [permissions] Acl情報のJSONオブジェクト
+ * @return {NCMB.Acl}
+ */
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

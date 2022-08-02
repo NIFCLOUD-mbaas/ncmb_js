@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>NCMB.File</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+                <h1><img src="../assets/css/logo.png" title="" width="117" height="52"></h1>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/NCMB.html">NCMB</a></li>
+                                <li><a href="../classes/NCMB.Acl.html">NCMB.Acl</a></li>
+                                <li><a href="../classes/NCMB.DataStore.html">NCMB.DataStore</a></li>
+                                <li><a href="../classes/NCMB.File.html">NCMB.File</a></li>
+                                <li><a href="../classes/NCMB.GeoPoint.html">NCMB.GeoPoint</a></li>
+                                <li><a href="../classes/NCMB.Installation.html">NCMB.Installation</a></li>
+                                <li><a href="../classes/NCMB.Push.html">NCMB.Push</a></li>
+                                <li><a href="../classes/NCMB.Relation.html">NCMB.Relation</a></li>
+                                <li><a href="../classes/NCMB.Role.html">NCMB.Role</a></li>
+                                <li><a href="../classes/NCMB.Script.html">NCMB.Script</a></li>
+                                <li><a href="../classes/NCMB.User.html">NCMB.User</a></li>
+                                <li><a href="../classes/Operation.html">Operation</a></li>
+                                <li><a href="../classes/Query&lt;T&gt;.html">Query&lt;T&gt;</a></li>
+                            </ul>
+                
+                
+                            <ul id="api-modules" class="apis modules">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1>NCMB.File Class</h1>
+<div class="box meta">
+
+
+        <div class="foundat">
+            Defined in: <a href="../files/lib_file.js.html#l6"><code>lib&#x2F;file.js:6</code></a>
+        </div>
+
+
+</div>
+
+
+<div class="box intro">
+    <p>ファイルストアへの入出力を扱うクラスです。</p>
+<p>このクラスはすべてクラスメソッドで構成されており、インスタンスを生成せずに利用します。
+Queryではファイルの付加情報（ファイル名、更新日時など）のみを検索・取得し、ファイルのバイナリデータそのものは取得しません。
+バイナリデータを取得したい場合はdownloadメソッドを利用してください。</p>
+<p>※注意：
+２種類のメソッド（インスタンスメソッド Instance method とスタティックメソッド Static method）があります。
+それぞれリファレンス上の表記と利用時のメソッドが異なりますので、下記を参考にご利用ください。</p>
+<ul>
+<li>リファレンス上の表記が「NCMB.File#メソッド名」: インスタンスメソッド Instance method
+<ul>
+<li>Fileの場合は、お客様に提供するインスタンスメソッドはありません</li>
+</ul>
+</li>
+<li>リファレンス上の表記が「NCMB.FileConstructor#メソッド名」: スタティックメソッド Static method
+<ul>
+<li>利用例）NCMB.FileConstructor#download<pre class="code prettyprint"><code>ncmb.File.download(&quot;abc.txt&quot;)
+.then(function(fileData){
+// ファイル取得後処理
+})
+.catch(function(err){
+// エラー処理
+});
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+
+<div id="classdocs" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#index">Index</a></li>
+
+            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+    </ul>
+
+    <div>
+        <div id="index" class="api-class-tabpanel index">
+            <h2 class="off-left">Item Index</h2>
+
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods">
+                            <li class="index-item method">
+                                <a href="#method_NCMB.FileConstructor#delete">NCMB.FileConstructor#delete</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_NCMB.FileConstructor#download">NCMB.FileConstructor#download</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_NCMB.FileConstructor#updateACL">NCMB.FileConstructor#updateACL</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_NCMB.FileConstructor#upload">NCMB.FileConstructor#upload</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+
+
+        </div>
+
+            <div id="methods" class="api-class-tabpanel">
+                <h2 class="off-left">Methods</h2>
+
+<div id="method_NCMB.FileConstructor#delete" class="method item">
+    <h3 class="name"><code>NCMB.FileConstructor#delete</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>fileName</code>
+                </li>
+                <li class="arg">
+                        <code class="optional">[callback]</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Promise<void></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_file.js.html#l162"><code>lib&#x2F;file.js:162</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>指定したファイルを削除します。</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">fileName</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>削除するファイル名</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name optional">[callback]</code>
+                        <span class="type">Function</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+
+
+                    <div class="param-description">
+                        <p>コールバック関数</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Promise<void></span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_NCMB.FileConstructor#download" class="method item">
+    <h3 class="name"><code>NCMB.FileConstructor#download</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>fileName</code>
+                </li>
+                <li class="arg">
+                        <code class="optional">[responseType]</code>
+                </li>
+                <li class="arg">
+                        <code class="optional">[callback]</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Promise<any></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_file.js.html#l90"><code>lib&#x2F;file.js:90</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>指定したファイルのバイナリデータを取得します。</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">fileName</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>取得するバイナリデータのファイル名</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name optional">[responseType]</code>
+                        <span class="type">String</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+
+
+                    <div class="param-description">
+                        <p>レスポンスバイナリのデータ形式 arraybuffer/blob (ブラウザ/Monaca利用時のみ必要)</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name optional">[callback]</code>
+                        <span class="type">Function</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+
+
+                    <div class="param-description">
+                        <p>コールバック関数</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Promise<any></span>:
+                    <p>ファイルのバイナリデータ（付加情報は取得しません）</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_NCMB.FileConstructor#updateACL" class="method item">
+    <h3 class="name"><code>NCMB.FileConstructor#updateACL</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>fileName</code>
+                </li>
+                <li class="arg">
+                        <code>acl</code>
+                </li>
+                <li class="arg">
+                        <code class="optional">[callback]</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Promise<any></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_file.js.html#l126"><code>lib&#x2F;file.js:126</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>指定したファイルのACL情報を更新します。</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">fileName</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>更新するファイル名</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">acl</code>
+                        <span class="type"><a href="../classes/NCMB.Acl.html" class="crosslink">NCMB.Acl</a></span>
+
+
+                    <div class="param-description">
+                        <p>更新後のacl情報を設定したncmb.ACLインスタンス</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name optional">[callback]</code>
+                        <span class="type">Function</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+
+
+                    <div class="param-description">
+                        <p>コールバック関数</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Promise<any></span>:
+                    <p>APIレスポンス</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_NCMB.FileConstructor#upload" class="method item">
+    <h3 class="name"><code>NCMB.FileConstructor#upload</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>fileName</code>
+                </li>
+                <li class="arg">
+                        <code>fileData</code>
+                </li>
+                <li class="arg">
+                        <code class="optional">[acl]</code>
+                </li>
+                <li class="arg">
+                        <code class="optional">[callback]</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Promise<any></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_file.js.html#l46"><code>lib&#x2F;file.js:46</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>ファイルストアにファイルを保存します。</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">fileName</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>取得するバイナリデータのファイル名</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">fileData</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>保存するファイルデータ</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name optional">[acl]</code>
+                        <span class="type"><a href="../classes/NCMB.Acl.html" class="crosslink">NCMB.Acl</a> | Function</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+
+
+                    <div class="param-description">
+                        <p>ファイルに対するアクセス権減</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name optional">[callback]</code>
+                        <span class="type">Function</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Promise<any></span>:
+                    <p>APIレスポンス</p>
+
+            </div>
+        </div>
+
+
+</div>
+            </div>
+
+
+
+    </div>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

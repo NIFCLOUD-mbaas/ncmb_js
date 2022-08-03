@@ -3760,11 +3760,13 @@ describe("NCMB Users", function(){
       beforeEach(function(){
         user = new ncmb.User({ mailAddress: "test@example.com" });
       });
+
       it("callback でレスポンスを取得できる", function(done){
         user.requestPasswordReset(function(err, data){
           done(err ? err : null);
         });
       });
+
       it("promise でレスポンスを取得できる", function(done){
         user.requestPasswordReset()
         .then(function(data){
@@ -3774,6 +3776,23 @@ describe("NCMB Users", function(){
           done(err);
         });
       });
+
+      it("ncmb.User.requestPasswordReset: callback でレスポンスを取得できる", function(done){
+        ncmb.User.requestPasswordReset("test@example.com", function(err, data){
+          done(err ? err : null);
+        });
+      });
+
+      it("ncmb.User.requestPasswordReset: promise でレスポンスを取得できる", function(done){
+        ncmb.User.requestPasswordReset("test@example.com")
+        .then(function(data){
+          done();
+        })
+        .catch(function(err){
+          done(err);
+        });
+      });
+
     });
 
     context("失敗した理由が", function(){

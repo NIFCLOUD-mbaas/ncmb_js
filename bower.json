@@ -28,6 +28,7 @@
     "lib",
     "test",
     "CONTRIBUTING.md",
-    "package.json"
+    "package.json",
+    "docs"
   ]
 }

@@ -3,7 +3,7 @@ name: Generate Reference
 on: [push]
 
 jobs:
-  generate_reference:
+  generate_reference-and-push_ncmb_doc:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -39,3 +39,17 @@ jobs:
       with:
         name: docs
         path: docs.zip
+
+    - name: Setup git
+        env:
+          EMAIL: ${{ secrets.EMAIL }}
+        run: |
+          git config --global user.email "$EMAIL"
+          git config --global user.name "tanaka-kokoro"
+
+    - name: Commit docs
+      run: |
+        git add.
+        git commit -m "Replace jsdoc"
+        git pull
+        git push origin master

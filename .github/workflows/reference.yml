@@ -37,5 +37,5 @@ jobs:
     - name: Archive artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: docs.zip
+        name: docs
         path: docs.zip

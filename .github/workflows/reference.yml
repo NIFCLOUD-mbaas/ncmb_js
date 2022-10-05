@@ -41,8 +41,8 @@ jobs:
     - name: Commit docs
       run: |
         git status
-        git add .
-        git commit -m "Replace jsdoc"
+        git add ./docs/
+        git commit -m "Replace docs"
         git pull
         git push origin master
 

@@ -31,15 +31,6 @@ jobs:
     - name: generate reference
       run: npm run document:generate
 
-    - name: zip docs
-      run: zip -r docs.zip docs/
-
-    - name: Archive artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        name: docs
-        path: docs.zip
-
     - name: Setup git
       env:
           EMAIL: ${{ secrets.EMAIL }}
@@ -49,7 +40,17 @@ jobs:
 
     - name: Commit docs
       run: |
+        git status
         git add .
         git commit -m "Replace jsdoc"
         git pull
         git push origin master
+
+    - name: zip docs
+      run: zip -r docs.zip docs/
+
+    - name: Archive artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: docs
+        path: docs.zip

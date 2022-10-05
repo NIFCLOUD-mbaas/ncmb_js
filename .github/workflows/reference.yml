@@ -49,7 +49,7 @@ jobs:
 
     - name: Commit docs
       run: |
-        git add.
+        git add .
         git commit -m "Replace jsdoc"
         git pull
         git push origin master

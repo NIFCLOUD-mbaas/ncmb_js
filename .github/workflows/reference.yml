@@ -41,11 +41,11 @@ jobs:
         path: docs.zip
 
     - name: Setup git
-        env:
+      env:
           EMAIL: ${{ secrets.EMAIL }}
-        run: |
-          git config --global user.email "$EMAIL"
-          git config --global user.name "tanaka-kokoro"
+      run: |
+        git config --global user.email "$EMAIL"
+        git config --global user.name "tanaka-kokoro"
 
     - name: Commit docs
       run: |

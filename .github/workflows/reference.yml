@@ -41,12 +41,12 @@ jobs:
 
     - name: Commit docs
       run: |
-        git add -N ./docs/
+        git add .
         if ! git diff --exit-code --quiet
         then
           git commit -m "Replace docs"
           git pull
-          git push origin master
+          git push origin test_chenge_reference 
         fi
 
     - name: zip docs

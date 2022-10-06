@@ -20,6 +20,7 @@ jobs:
           ${{ runner.os }}-build-${{ env.cache-name }}-
           ${{ runner.os }}-build-
           ${{ runner.os }}-
+
     - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
       name: List the state of node modules
       continue-on-error: true
@@ -40,11 +41,13 @@ jobs:
 
     - name: Commit docs
       run: |
-        git status
-        git add ./docs/
-        git commit -m "Replace docs"
-        git pull
-        git push origin master
+        git add -N ./docs/
+        if ! git diff --exit-code --quiet
+        then
+          git commit -m "Replace docs"
+          git pull
+          git push origin master
+        fi
 
     - name: zip docs
       run: zip -r docs.zip docs/

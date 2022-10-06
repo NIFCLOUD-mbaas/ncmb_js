@@ -1,4 +1,4 @@
-name: Generate Reference 
+name: Auto Generate and Replace Reference 
 
 on:
   push:
@@ -39,13 +39,13 @@ jobs:
           EMAIL: ${{ secrets.EMAIL }}
       run: |
         git config --global user.email "$EMAIL"
-        git config --global user.name "tanaka-kokoro"
+        git config --global user.name "ncmbadmin"
     - name: Commit docs
       run: |
         if ! git diff --exit-code --quiet
         then
           git add .
-          git commit -m "Auto replace refarence files"
+          git commit -m "Auto replace reference files"
           git pull
           git push origin develop
         fi

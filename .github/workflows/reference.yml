@@ -41,9 +41,9 @@ jobs:
 
     - name: Commit docs
       run: |
-        pwd
+        ls 
         git status
-        git add .
+        git add /home/runner/work/ncmb_js/ncmb_js
         if ! git diff --exit-code --quiet
         then
           git commit -m "Replace docs"

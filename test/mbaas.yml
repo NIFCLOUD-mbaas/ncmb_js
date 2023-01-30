@@ -342,8 +342,8 @@
 -
   request:
     url: '/2013-09-01/login'
-    method: GET
-    query:
+    method: POST
+    form:
       userName: name
       password: passwd
   response:
@@ -353,8 +353,8 @@
 -
   request:
     url: '/2013-09-01/login'
-    method: GET
-    query:
+    method: POST
+    form:
       "userName": "test"
       "password": "test!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~test"
   response:
@@ -364,8 +364,8 @@
 -
   request:
     url: '/2013-09-01/login'
-    method: GET
-    query:
+    method: POST
+    form:
       "userName": "Yamada Tarou"
       "password": "password"
   response:
@@ -375,8 +375,8 @@
 -
   request:
     url: '/2013-09-01/login'
-    method: GET
-    query:
+    method: POST
+    form:
       mailAddress: mail@example.com
       password: passwd
   response:
@@ -2095,8 +2095,8 @@
 -
   request:
     url: /2013-09-01/login
-    method: GET
-    query:
+    method: POST
+    form:
       userName: wronguser
       password: wrongpassword
   response:
@@ -2122,7 +2122,7 @@
 -
   request:
     url: /2013-09-01/users/userlogindummyid
-    method: GET
+    method: POST
   response:
     status: 401
     file: 2013-09-01_authentication_error_user.json
@@ -2165,8 +2165,8 @@
 -
   request:
     url: '/2013-09-01/login'
-    method: GET
-    query:
+    method: POST
+    form:
       userName: userLoginName
       password: userPasswd
   response:
@@ -2175,7 +2175,7 @@
 -
   request:
     url: /2013-09-01/users/dummyCurrentUserId
-    method: GET
+    method: POST
   response:
     status: 200
     file: 2013-09-01_user_login_name_password_success.json
@@ -2221,8 +2221,8 @@
 -
   request:
     url: '/2013-09-01/login'
-    method: GET
-    query:
+    method: POST
+    form:
       userName: userDummyLogin
       password: userPasswd
   response:

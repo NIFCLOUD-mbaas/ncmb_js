@@ -3823,7 +3823,7 @@ describe("NCMB Users", function(){
     });
   });
 
-  describe("カレントユーザ確認",function(){
+  describe("カレントユーザー確認",function(){
     var currentName = null;
     var currentPassword = null;
     describe("getCurrentUser", function(){
@@ -3859,7 +3859,7 @@ describe("NCMB Users", function(){
         });
       });
       context("非ログイン状態でローカルにcurrentUser情報が保存されているとき、", function(){
-        it("カレントユーザでログイン状態になる", function(done){
+        it("カレントユーザーでログイン状態になる", function(done){
           if(!ncmb.stub){
             currentName = callback_name;
             currentPassword = callback_password;
@@ -3882,7 +3882,7 @@ describe("NCMB Users", function(){
           });
         });
       });
-      it("取得したカレントユーザが不正なJSONの場合エラーが返る", function(done){
+      it("取得したカレントユーザーが不正なJSONの場合エラーが返る", function(done){
         var localStorage = new require("node-localstorage").LocalStorage("./scratch");
         var path = "NCMB/" + ncmb.apikey + "/currentUser";
         localStorage.setItem(path, '{"userName":aaa}');
@@ -3895,7 +3895,7 @@ describe("NCMB Users", function(){
       });
     });
     describe("isCurrentUser", function(){
-      context("インスタンスがカレントユーザか確認し、", function(){
+      context("インスタンスがカレントユーザーか確認し、", function(){
         var user = null;
         beforeEach(function(){
           if(!ncmb.stub){
@@ -3907,7 +3907,7 @@ describe("NCMB Users", function(){
           }
           user = new ncmb.User({userName:currentName,password:currentPassword});
         });
-        it("カレントユーザなら true が返る", function(done){
+        it("カレントユーザーなら true が返る", function(done){
           ncmb.User.login(user, function(err, data){
             try{
               expect(user.isCurrentUser()).to.be.eql(true);
@@ -3917,7 +3917,7 @@ describe("NCMB Users", function(){
             }
           });
         });
-        it("カレントユーザでなければ false が返る", function(done){
+        it("カレントユーザーでなければ false が返る", function(done){
           ncmb.User.logout(function(){
             try{
               expect(user.isCurrentUser()).to.be.eql(false);

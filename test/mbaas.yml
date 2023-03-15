@@ -2122,7 +2122,7 @@
 -
   request:
     url: /2013-09-01/users/userlogindummyid
-    method: POST
+    method: GET
   response:
     status: 401
     file: 2013-09-01_authentication_error_user.json
@@ -2175,7 +2175,7 @@
 -
   request:
     url: /2013-09-01/users/dummyCurrentUserId
-    method: POST
+    method: GET
   response:
     status: 200
     file: 2013-09-01_user_login_name_password_success.json

@@ -341,20 +341,20 @@
 
 -
   request:
-    url: '/2013-09-01/login'
-    method: GET
-    query:
-      userName: name
-      password: passwd
+    url: /2013-09-01/login
+    method: POST
+    body:
+      userName: "name"
+      password: "passwd"
   response:
     status: 200
     file: 2013-09-01_user_login_namepw_success.json
 
 -
   request:
-    url: '/2013-09-01/login'
-    method: GET
-    query:
+    url: /2013-09-01/login
+    method: POST
+    body:
       "userName": "test"
       "password": "test!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~test"
   response:
@@ -363,9 +363,9 @@
 
 -
   request:
-    url: '/2013-09-01/login'
-    method: GET
-    query:
+    url: /2013-09-01/login
+    method: POST
+    body:
       "userName": "Yamada Tarou"
       "password": "password"
   response:
@@ -374,11 +374,11 @@
 
 -
   request:
-    url: '/2013-09-01/login'
-    method: GET
-    query:
-      mailAddress: mail@example.com
-      password: passwd
+    url: /2013-09-01/login
+    method: POST
+    body:
+      mailAddress: "mail@example.com"
+      password: "passwd"
   response:
     status: 200
     file: 2013-09-01_user_login_mailpw_success.json
@@ -2095,10 +2095,10 @@
 -
   request:
     url: /2013-09-01/login
-    method: GET
-    query:
-      userName: wronguser
-      password: wrongpassword
+    method: POST
+    body:
+      userName: "wronguser"
+      password: "wrongpassword"
   response:
     status: 401
     file: 2013-09-01_responseErrorTest_authenticationWithIdPwdIncorrect_error.json
@@ -2164,11 +2164,11 @@
 
 -
   request:
-    url: '/2013-09-01/login'
-    method: GET
-    query:
-      userName: userLoginName
-      password: userPasswd
+    url: /2013-09-01/login
+    method: POST
+    body:
+      userName: "userLoginName"
+      password: "userPasswd"
   response:
     status: 200
     file: 2013-09-01_user_login_name_password_success.json
@@ -2220,11 +2220,11 @@
     file: 2013-09-01_user_allow_fetch_success copy.json
 -
   request:
-    url: '/2013-09-01/login'
-    method: GET
-    query:
-      userName: userDummyLogin
-      password: userPasswd
+    url: /2013-09-01/login
+    method: POST
+    body:
+      userName: "userDummyLogin"
+      password: "userPasswd"
   response:
     status: 200
     file: 2013-09-01_user_login_name_password_dummyid_success.json

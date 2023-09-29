@@ -9,17 +9,17 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x, 18.x, 20.x]
+        node-npm: [{node: '16.x', npm: '7.x'}, {node: '18.x', npm: '8.x'}, {node: '20.x', npm: '9.x'}]
 
     steps:
     - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js ${{ matrix.node-npm.node }}
       uses: actions/setup-node@v3
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: ${{ matrix.node-npm.node }}
     - name: install latest npm
       run: |
-        npm install -g npm &&
+        npm install -g npm@${{ matrix.node-npm.npm }} &&
         npm --version &&
         npm list -g --depth 0
     - run: npm install
